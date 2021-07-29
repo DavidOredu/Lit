@@ -1,0 +1,233 @@
+﻿using Mirror;
+using System.Collections.Generic;
+using UnityEngine;
+public class Player : Racer
+{
+    #region State Variables
+    [HideInInspector]
+    public int currentHealth;
+    public GameObject powerupSlot { get; set; }
+
+    public PowerupButton powerupButton;
+
+    #endregion
+
+    #region Components
+    //  public SoundManager soundManager { get; private set; }
+    //  public HealthBar healthBar { get; private set; }
+
+    #endregion
+    #region Check Variables
+
+
+    // public GameObject dustPS;
+
+
+    #endregion
+
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        playerIdleState = new PlayerNetwork_IdleState(null, StateMachine, "idle", this, playerData, null);
+        playerMoveState = new PlayerNetwork_MoveState(null, StateMachine, "move", this, playerData, null);
+        playerJumpState = new PlayerNetwork_JumpState(null, StateMachine, "inAir", this, playerData, null);
+        playerInAirState = new PlayerNetwork_InAirState(null, StateMachine, "inAir", this, playerData, null);
+        playerLandState = new PlayerNetwork_LandState(null, StateMachine, "land", this, playerData, null);
+        playerKnockbackState = new PlayerNetwork_KnockbackState(null, StateMachine, "knockback", this, playerData, null);
+        playerSlideState = new PlayerNetwork_SlideState(null, StateMachine, "slide", this, playerData, null);
+        playerQuickHaltState = new PlayerNetwork_QuickHaltState(null, StateMachine, "quickHalt", this, playerData, null);
+        playerShadowedState = new PlayerNetwork_ShadowedState(null, StateMachine, "shadowed", this, playerData, null);
+        playerBurningState = new PlayerNetwork_BurningState(null, StateMachine, "burning", this, playerData, null);
+        playerFrozenState = new PlayerNetwork_FrozenState(null, StateMachine, "frozen", this, playerData, null);
+        playerChokingState = new PlayerNetwork_ChokingState(null, StateMachine, "choking", this, playerData, null);
+        playerBlindedState = new PlayerNetwork_BlindedState(null, StateMachine, "blinded", this, playerData, null);
+        playerElectrocutedState = new PlayerNetwork_ElectrocutedState(null, StateMachine, "electrocuted", this, playerData, null);
+        playerBlownState = new PlayerNetwork_BlownState(null, StateMachine, "blown", this, playerData, null);
+        playerCursedState = new PlayerNetwork_CursedState(null, StateMachine, "cursed", this, playerData, null);
+        playerLazeredState = new PlayerNetwork_LazeredState(null, StateMachine, "lazered", this, playerData, null);
+        playerStunState = new PlayerNetwork_StunState(null, StateMachine, "stun", this, playerData, null);
+        playerDeadState = new PlayerNetwork_DeadState(null, StateMachine, "dead", this, playerData, null);
+
+        playerDamageStates = new List<State>
+        {
+            // shadow-affected state
+        /* 0 */   playerShadowedState,
+            // burning state
+        /* 1 */   playerBurningState,
+            // frozen state
+        /* 2 */   playerFrozenState,
+            // poisoned state
+        /* 3 */   playerChokingState,
+            // blinded state
+        /* 4 */   playerBlindedState,
+            // electrocuted state
+        /* 5 */   playerElectrocutedState,
+            // blown state
+        /* 6 */   playerBlownState,
+            // cursed state
+        /* 7 */    playerCursedState,
+            // lazered state
+        /* 8 */   playerLazeredState,
+            // death state
+        /* 9 */   playerDeadState,
+        };
+
+        accelRatePerSec = playerData.topSpeed / playerData.timeZeroToMax;
+        decelRatePerSec = -playerData.topSpeed / playerData.timeMaxToZero;
+        brakeRatePerSec = -playerData.topSpeed / playerData.timeBrakeToZero;
+        movementVelocity = 0f;
+        jumpVelocity = 0f;
+        playerData.knockbackVelocity = Vector2.zero;
+
+        moveVelocityResource = playerData.topSpeed;
+        jumpVelocityResource = playerData.maxJumpVelocity;
+
+        powerupSlot = powerupButton.gameObject;
+
+    }
+
+
+
+
+
+    [Client]
+    public override void Start()
+    {
+        base.Start();
+
+        StateMachine.Initialize(playerMoveState);
+    }
+
+
+    [Client]
+    public override void Update()
+    {
+        StateMachine.CurrentState.LogicUpdate();
+        base.Update();
+
+        Debug.Log(StateMachine.CurrentState);
+        Debug.Log(runner.stickmanNet.currentColor.colorID);
+    }
+    [Client]
+    public override void LateUpdate()
+    {
+        StateMachine.CurrentState.LateUpdate();
+        base.LateUpdate();
+    }
+    [Client]
+    public override void FixedUpdate()
+    {
+        if (inputHandler == null)
+            inputHandler = GetComponent<PlayerInputHandlerNetwork>();
+
+        StateMachine.CurrentState.PhysicsUpdate();
+
+        base.FixedUpdate();
+
+
+        if (isOnPower && StateMachine.CurrentState != playerKnockbackState && StateMachine.CurrentState != playerSlideState && poweredPlatform != null && CheckIfGrounded())
+        {
+            //    testImage.gameObject.SetActive(true);
+            if (inputHandler.JumpInput)
+            {
+                poweredPlatform.DefinePower(this);
+            }
+
+        }
+        if (FinishLine.hasCrossedLine)
+        {
+            StateMachine.ChangeState(playerQuickHaltState);
+            FinishLine.hasCrossedLine = false;
+        }
+    }
+
+    public virtual void AnimationTrigger()
+    {
+        StateMachine.CurrentState.AnimationTrigger();
+    }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        StateMachine.CurrentState.AnimationFinishTrigger();
+    }
+
+
+    #region Check Functions
+    public virtual void CheckIfShouldFlip(int XInput)
+    {
+        if (XInput != 0 && XInput != FacingDirection)
+        {
+            Flip();
+        }
+
+    }
+
+    public virtual void CheckIfMoveLeft(int XInput)
+    {
+        if (XInput < 0)
+        {
+            SetVelocityX(movementVelocity * -1);
+        }
+        if (XInput != 0 && XInput != FacingDirection && CurrentVelocity.x <= 2f)
+        {
+            Flip();
+        }
+    }
+
+
+
+
+    public virtual void CheckIfMoveRight(int XInput)
+    {
+        if (XInput > 0)
+        {
+            SetVelocityX(movementVelocity * 1);
+        }
+    }
+
+
+
+    public override void OnCollisionEnter2D(Collision2D other)
+    {
+        StateMachine.CurrentState.OnCollisionEnter(other);
+        base.OnCollisionEnter2D(other);
+
+
+        if (other.collider.CompareTag("Wall") && StateMachine.CurrentState != playerSlideState)
+        {
+            StateMachine.ChangeState(playerKnockbackState);
+        }
+    }
+
+    public override void OnCollisionStay2D(Collision2D other)
+    {
+        StateMachine.CurrentState.OnCollisionStay(other);
+        base.OnCollisionStay2D(other);
+    }
+
+    public override void OnCollisionExit2D(Collision2D other)
+    {
+        StateMachine.CurrentState.OnCollisionExit(other);
+        base.OnCollisionExit2D(other);
+    }
+
+
+
+    #endregion
+
+    #region PlaySound Functions
+    private void PlayFootstepSound()
+    {
+        //  soundManager.PlaySound("Walk");
+
+    }
+
+    private void PlayJumpScoff()
+    {
+        //  soundManager.PlaySound("JumpScoff");
+    }
+
+    #endregion
+}

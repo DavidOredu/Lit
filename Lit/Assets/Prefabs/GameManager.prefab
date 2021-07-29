@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6890965572976724749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6890965572976724755}
+  - component: {fileID: 6890965572976724754}
+  - component: {fileID: 8723895619452169931}
+  - component: {fileID: 6890965572976724758}
+  - component: {fileID: 1721703881}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6890965572976724755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890965572976724749}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.11233124, y: 1.0883255, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6890965572976724754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890965572976724749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917a5fcdd3f6d4c4da63729fb8cd7702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8723895619452169931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890965572976724749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7286e3042d9af3246999faaaa1681df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {x: 0, y: 0, z: 0}
+  endPoint: {x: 0, y: 0, z: 0}
+  pointsOffset: {x: 0, y: 0, z: 0}
+  powerupManager: {fileID: 0}
+  deathLaser: {fileID: 0}
+  allNetworkPlayers: []
+--- !u!114 &6890965572976724758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890965572976724749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8693ba2b6733be842bbb1f2be80bf129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1721703881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890965572976724749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2233e1931410a3b418962e98d11e33d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSaveDataPath: /game_save
+  saveFilesExtension: .kgs
+  saveData:
+  - fileName: /PlayerData
+    savePath: /PlayerDataSave
+    scriptableData: {fileID: 11400000, guid: e3a2277f47bd37040ae14937ef8585c8, type: 2}
+  - fileName: /LevelsData
+    savePath: /LevelDataSave
+    scriptableData: {fileID: 11400000, guid: d6f6027f4bcf52347b277b9f84144abd, type: 2}
+  - fileName: /GameSettings
+    savePath: /GameSettingsSave
+    scriptableData: {fileID: 11400000, guid: 5f8af726dc9f6d940a6521bf2792941d, type: 2}
+  - fileName: /XPData
+    savePath: /XPDataSave
+    scriptableData: {fileID: 11400000, guid: 8b6ca26228560b64185f9632f89d3be0, type: 2}
+  defaultData:
+  - fileName: /PlayerDataDefault
+    savePath: /Defaults
+    scriptableData: {fileID: 11400000, guid: e3a2277f47bd37040ae14937ef8585c8, type: 2}
+  - fileName: /LevelsDataDefault
+    savePath: /Defaults
+    scriptableData: {fileID: 11400000, guid: d6f6027f4bcf52347b277b9f84144abd, type: 2}
+  - fileName: /GameSettingsDefault
+    savePath: /Defaults
+    scriptableData: {fileID: 11400000, guid: 5f8af726dc9f6d940a6521bf2792941d, type: 2}
+  - fileName: /XPDataDefault
+    savePath: /Defaults
+    scriptableData: {fileID: 11400000, guid: 8b6ca26228560b64185f9632f89d3be0, type: 2}
+  saveButton: {fileID: 0}
+  loadButton: {fileID: 0}
+  resetButton: {fileID: 0}

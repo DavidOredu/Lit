@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18dda081a837e3f448d20033fbefe645, type: 3}
+  m_Name: Normal
+  m_EditorClassIdentifier: 
+  topSpeed: 3
+  timeZeroToMax: 3
+  timeMaxToZero: 4
+  timeBrakeToZero: 1
+  maxJumpVelocity: 24
+  minIdleTime: 0.5
+  maxIdleTime: 3
+  laserStunTime: 4
+  wallStunTime: 3
+  jumpAddition: 0
+  litSpeedUpLimit: 0
+  litSlowDownLimit: 0
+  otherOnLitIncreaseValue: 0
+  resetSpeedTime: 0
+  knockbackVelocity: {x: 0, y: 0}
+  maxKnockbackVelocity: {x: 0, y: 0}
+  groundCheckRadius: 0.3
+  jumpCheckRadius: 0.3
+  litCheckDistance: 0.5
+  powerCheckDistance: 0.5
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 3584
+  whatIsLit:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsPower:
+    serializedVersion: 2
+    m_Bits: 0
+  whatToJumpTo:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpCheckPosition: {x: 0, y: 0}
+  powerupRadius: 3.4
+  whatToDamage:
+    serializedVersion: 2
+    m_Bits: 0

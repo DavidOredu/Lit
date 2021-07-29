@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - ChatWindow
+  - LitPlatform
+  - BasePlatform
+  - PowerPlatform
+  - BodyPart
+  - Wall
+  - GameManager
+  - CMvcam
+  - ColorPicker
+  - NetworkManager
+  - PlayerSpawnSystem
+  - PowerupController
+  - FlagPoint
+  - AudioManager
+  - LevelLoader
+  - LevelButton
+  - Opponent
+  - Powerup
+  - DeathLaser
+  - PowerupHolder
+  - LevelManager
+  - RunnerCenter
+  - UICamera
+  - PostProcessingCamera
+  - MainCamera1
+  - Projectile
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Ground
+  - LitPlatform
+  - PowerPlatform
+  - Obstacle
+  - Opponent
+  - VFX
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2367197297
+    locked: 0
+  - name: Foreground
+    uniqueID: 20926027
+    locked: 0

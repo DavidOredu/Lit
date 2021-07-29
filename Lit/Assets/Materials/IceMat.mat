@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: IceMat
+  m_Shader: {fileID: -6465566751694194690, guid: 10c3def1f6f2f114e9dce6c190bc0d64,
+    type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_CD6A049F:
+        m_Texture: {fileID: 2800000, guid: 2ea3f557fd9a46c49bfe3c385c01578b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_54584C3: -3
+    - Vector1_8CA708CB: 0.02
+    - Vector1_CCC3E22D: 1
+    - Vector1_FC6A89B: 0.797
+    - Vector1_FD3A071D: 0
+    m_Colors:
+    - Color_95CD0961: {r: 0, g: 0.7244892, b: 2, a: 1}
+    - Color_D78AA242: {r: 0, g: 1.2785785, b: 3.018868, a: 1}
+    - Vector2_2F9AE16: {r: -5.93, g: 13.24, b: 0, a: 0}
