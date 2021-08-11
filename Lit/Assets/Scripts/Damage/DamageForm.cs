@@ -31,5 +31,6 @@ public class DamageForm
         Wind,
         Magic,
         Shadow,
+        knockout,
     }
 }

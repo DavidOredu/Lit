@@ -27,13 +27,15 @@ public class Enemy_JumpState : Enemy_AbilityState
     {
         base.Enter();
 
-        racerEntity.SetVelocityY(racerEntity.jumpVelocity);
-        isAbilityDone = true;
+        
+            racerEntity.SetVelocityY(racerEntity.jumpVelocity);
+            isAbilityDone = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+
     }
 
     public override void LateUpdate()

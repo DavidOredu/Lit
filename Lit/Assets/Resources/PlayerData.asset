@@ -19,6 +19,7 @@ MonoBehaviour:
   timeBrakeToZero: 1
   maxJumpVelocity: 26
   amountOfJumps: 1
+  actionForce: 50
   coyoteTime: 0.2
   variableJumpHeightMultuplier: 0.2
   laserStunTime: 2
@@ -27,9 +28,9 @@ MonoBehaviour:
   litSlowDownLimit: 8
   jumpAddition: 5
   otherOnLitIncreaseValue: 5
-  ResetSpeedTime: 1
+  litSpeedAlterRate: 4
   groundCheckRadius: 0.3
-  litCheckDistance: 100
+  litCheckDistance: 3
   powerCheckDistance: 5
   whatIsGround:
     serializedVersion: 2
@@ -45,5 +46,5 @@ MonoBehaviour:
   powerupRadius: 3.4
   whatToDamage:
     serializedVersion: 2
-    m_Bits: 8448
-  colorCode: 10
+    m_Bits: 24832
+  colorCode: 3

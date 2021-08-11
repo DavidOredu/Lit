@@ -20,7 +20,9 @@ public class Racer : NetworkBehaviour
     public PlayerNetwork_LandState playerLandState { get; set; }
     public PlayerNetwork_KnockbackState playerKnockbackState { get; set; }
     public PlayerNetwork_SlideState playerSlideState { get; set; }
+    public PlayerNetwork_ActionState playerActionState { get; set; }
     public PlayerNetwork_QuickHaltState playerQuickHaltState { get; set; }
+    public PlayerNetwork_FullStopState playerFullStopState { get; set; }
     public PlayerNetwork_ShadowedState playerShadowedState { get; set; }
     public PlayerNetwork_BurningState playerBurningState { get; set; }
     public PlayerNetwork_FrozenState playerFrozenState { get; set; }
@@ -45,7 +47,9 @@ public class Racer : NetworkBehaviour
     public Enemy_JumpState opponentJumpState { get; set; }
     public Enemy_KnockbackState opponentKnockbackState { get; set; }
     public Enemy_QuickHaltState opponentQuickHaltState { get; set; }
+    public Enemy_FullStopState opponentFullStopState { get; set; }
     public Enemy_SlideState opponentSlideState { get; set; }
+    public Enemy_ActionState opponentActionState { get; set; }
     public Enemy_ShadowedState opponentShadowedState { get; set; }
     public Enemy_BurningState opponentBurningState { get; set; }
     public Enemy_FrozenState opponentFrozenState { get; set; }
@@ -64,12 +68,13 @@ public class Racer : NetworkBehaviour
 
     public Dictionary<RacerType, List<State>> damageStates;
     public Dictionary<RacerType, Dictionary<Vector2, State>> dynamicDamageStates;
+
     // The type of racer the object is... is it a player, or an opponent
     public RacerType currentRacerType;
     // The player data and stats holder for the player object, in case its a player racer
-    public PlayerData playerData { get; private set; }
+    public PlayerData playerData;
     // The opponent data and stats holder for the opponent object, in case its an opponent racer
-    public D_DifficultyData difficultyData { get; set; }
+    public D_DifficultyData difficultyData;
 
 
     public event Action OnLitPlatformChanged;
@@ -100,6 +105,7 @@ public class Racer : NetworkBehaviour
     public bool isStayingOnLit { get; private set; }
     public bool hasJustLeftLitplatform { get; private set; }
     public bool canSpeedUp { get; private set; }
+    public bool timeToReset { get; private set; }
     public bool isOnPower { get; private set; }
     public bool isInvulnerable { get; set; } = false;
     public bool overdrive { get; private set; }
@@ -246,6 +252,7 @@ public class Racer : NetworkBehaviour
         {
             isStayingOnLit = false;
         }
+
         isOnPower = OnPowerPlatform();
         CurrentVelocity = RB.velocity;
     }
@@ -258,13 +265,18 @@ public class Racer : NetworkBehaviour
         CheckHighestOtherOnLitCount();
 
         #region Collision Effects
-        if (!isStayingOnLit && litPlatform != null && hasJustLeftLitplatform)
+
+        if (OnLitPlatform())
+        {
+        }
+        if (!OnLitPlatform() && litPlatform != null && hasJustLeftLitplatform)
         {
             isOnLit = false;
             hasJustLeftLitplatform = false;
-            StartCoroutine(Reseter());
+            timeToReset = true;
         }
-
+        if (timeToReset && !isOnLit)
+            Reseter();
         #endregion
 
         currentPosition = transform.position.x;
@@ -365,6 +377,11 @@ public class Racer : NetworkBehaviour
         jumpVelocity = 0f;
         movementVelocity = Mathf.Max(movementVelocity, 0);
     }
+    public virtual void SetStop()
+    {
+        movementVelocity = 0f;
+        jumpVelocity = 0f;
+    }
     #endregion
 
     #region Collision Functions
@@ -378,12 +395,17 @@ public class Racer : NetworkBehaviour
 
                 if (!isOnLit)
                 {
+                    timeToReset = false;
+                    hasJustLeftLitplatform = false;
+                    canSpeedUp = false;
                     //   if (!hasAuthority) { return; }
                     litPlatform = other.gameObject.GetComponent<LitPlatformNetwork>();
 
                     litHandler.litPlatform = litPlatform;
 
                     networkIdentity = other.gameObject.GetComponent<NetworkIdentity>();
+
+                    // try to light up the platform
                     if (!litPlatform.isLit || runner.stickmanNet.currentColor.colorID == 0)
                     {
                         if (GetComponent<NetworkIdentity>().hasAuthority || currentRacerType == RacerType.Opponent)
@@ -397,11 +419,13 @@ public class Racer : NetworkBehaviour
 
                     }
 
+                    // add litplatforms to list of your own litplatforms
                     if (!litPlatforms.Contains(litPlatform) && litPlatform.colorStateCode.colorID == runner.stickmanNet.currentColor.colorID)
                     {
                         litPlatforms.Add(litPlatform);
 
                     }
+                    // if we are the dark runner, override the former color to ours
                     if (runner.stickmanNet.currentColor.colorID == 0)
                     {
                         BlackOverrider.instance.Override();
@@ -409,6 +433,7 @@ public class Racer : NetworkBehaviour
 
                     isOnLit = true;
 
+                    // speed up or slow down
                     WaitToChangeStats(litPlatform);
                 }
 
@@ -439,6 +464,17 @@ public class Racer : NetworkBehaviour
             canSpeedUp = true;
         }
     }
+
+    public void PowerTriggerEnter(PoweredPlatform poweredPlatform)
+    {
+        isOnPower = true;
+
+        this.poweredPlatform = poweredPlatform;
+    }
+    public void PowerTriggerExit(PoweredPlatform poweredPlatform)
+    {
+        isOnPower = false;
+    }
     #endregion
 
     #region Check Functions
@@ -447,7 +483,6 @@ public class Racer : NetworkBehaviour
         if (runner.stickmanNet.currentColor.colorID == litPlatform.colorStateCode.colorID && litPlatform.isLit)
         {
             SpeedUp();
-
         }
         else
         {
@@ -483,23 +518,10 @@ public class Racer : NetworkBehaviour
     {
         return Physics2D.Raycast(litCheck.position, Vector2.down, playerData.powerCheckDistance, playerData.whatIsPower);
     }
-    public virtual IEnumerator Reseter()
+    public virtual void Reseter()
     {
-        switch (currentRacerType)
-        {
-            case RacerType.Player:
-                yield return new WaitForSeconds(playerData.ResetSpeedTime);
-                ResetStats();
-                canSpeedUp = false;
-                break;
-            case RacerType.Opponent:
-                yield return new WaitForSeconds(difficultyData.resetSpeedTime);
-                ResetStats();
-                canSpeedUp = false;
-                break;
-            default:
-                break;
-        }
+        ResetStats();
+        canSpeedUp = false;
     }
 
 
@@ -514,13 +536,13 @@ public class Racer : NetworkBehaviour
                 moveVelocityResource = playerData.topSpeed;
                 jumpVelocityResource = playerData.maxJumpVelocity;
                 jumpVelocityResource += playerData.jumpAddition;
-                moveVelocityResource += playerData.litSpeedUpLimit;
+                moveVelocityResource = playerData.topSpeed + playerData.litSpeedUpLimit;
                 break;
             case RacerType.Opponent:
                 moveVelocityResource = difficultyData.topSpeed;
                 jumpVelocityResource = difficultyData.maxJumpVelocity;
                 jumpVelocityResource += difficultyData.jumpAddition;
-                moveVelocityResource += difficultyData.litSpeedUpLimit;
+                moveVelocityResource = difficultyData.topSpeed + difficultyData.litSpeedUpLimit;
                 break;
             default:
                 break;
@@ -533,12 +555,12 @@ public class Racer : NetworkBehaviour
             case RacerType.Player:
                 moveVelocityResource = playerData.topSpeed;
                 jumpVelocityResource = playerData.maxJumpVelocity;
-                moveVelocityResource -= playerData.litSlowDownLimit;
+                moveVelocityResource = playerData.topSpeed - playerData.litSlowDownLimit;
                 break;
             case RacerType.Opponent:
                 moveVelocityResource = difficultyData.topSpeed;
                 jumpVelocityResource = difficultyData.maxJumpVelocity;
-                moveVelocityResource -= difficultyData.litSlowDownLimit;
+                moveVelocityResource = difficultyData.topSpeed - difficultyData.litSlowDownLimit;
                 break;
             default:
                 break;
@@ -549,12 +571,38 @@ public class Racer : NetworkBehaviour
         switch (currentRacerType)
         {
             case RacerType.Player:
-                moveVelocityResource = playerData.topSpeed;
-                jumpVelocityResource = playerData.maxJumpVelocity;
+                if (moveVelocityResource < playerData.topSpeed && timeToReset)
+                {
+                    moveVelocityResource += playerData.litSpeedAlterRate * Time.deltaTime;
+                    moveVelocityResource = Mathf.Min(moveVelocityResource, playerData.topSpeed);
+                }
+                if (moveVelocityResource > playerData.topSpeed && timeToReset)
+                {
+                    moveVelocityResource -= playerData.litSpeedAlterRate * Time.deltaTime;
+                    moveVelocityResource = Mathf.Max(moveVelocityResource, playerData.topSpeed);
+
+                }
+                if (moveVelocityResource == playerData.topSpeed && timeToReset)
+                {
+                    timeToReset = false;
+                }
                 break;
             case RacerType.Opponent:
-                moveVelocityResource = difficultyData.topSpeed;
-                jumpVelocityResource = difficultyData.maxJumpVelocity;
+                if (moveVelocityResource < difficultyData.topSpeed && timeToReset)
+                {
+                    moveVelocityResource += difficultyData.litSpeedAlterRate * Time.deltaTime;
+                    moveVelocityResource = Mathf.Min(moveVelocityResource, difficultyData.topSpeed);
+                }
+                if (moveVelocityResource > difficultyData.topSpeed && timeToReset)
+                {
+                    moveVelocityResource -= difficultyData.litSpeedAlterRate * Time.deltaTime;
+                    moveVelocityResource = Mathf.Max(moveVelocityResource, difficultyData.topSpeed);
+
+                }
+                if (moveVelocityResource == difficultyData.topSpeed && timeToReset)
+                {
+                    timeToReset = false;
+                }
                 break;
             default:
                 break;
@@ -585,7 +633,7 @@ public class Racer : NetworkBehaviour
         {
             isOnAnotherLit = true;
         }
-        else
+        else if ((isOnLit && litPlatform.colorStateCode.colorID != runner.stickmanNet.currentColor.colorID) || !isOnLit)
         {
             isOnAnotherLit = false;
         }
@@ -662,9 +710,9 @@ public class Racer : NetworkBehaviour
         newDamage.damaged = true;
         newDamage.damageTime = damage.damageTime;
 
-        if(damage.negativeGravityScale != 0f)
-        newDamage.negativeGravityScale = damage.negativeGravityScale;
-        
+        if (damage.negativeGravityScale != 0f)
+            newDamage.negativeGravityScale = damage.negativeGravityScale;
+
         StateMachine.ChangeState(stateToChangeTo);
         StopCoroutine(RecoverRunner());
         StartCoroutine(RecoverRunner());
@@ -737,7 +785,7 @@ public class Racer : NetworkBehaviour
                     StopCoroutine(RecoverRunner());
                     StartCoroutine(RecoverRunner());
                     StateMachine.ChangeState(stateToChangeTo);
-                   
+
                 }
             }
         }
@@ -755,7 +803,7 @@ public class Racer : NetworkBehaviour
 
         CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
     }
-    public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent) 
+    public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent)
     {
         GameObject entity = Instantiate(original, position, rotation, parent);
         return entity;

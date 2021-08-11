@@ -25,12 +25,12 @@ MonoBehaviour:
   litSpeedUpLimit: 20
   litSlowDownLimit: 8
   otherOnLitIncreaseValue: 5
-  resetSpeedTime: 1
+  resetSpeedTime: 3
   knockbackVelocity: {x: 22, y: 12}
   maxKnockbackVelocity: {x: 22, y: 12}
   groundCheckRadius: 0.5
   jumpCheckRadius: 1.46
-  litCheckDistance: 24
+  litCheckDistance: 3
   powerCheckDistance: 5
   whatIsGround:
     serializedVersion: 2

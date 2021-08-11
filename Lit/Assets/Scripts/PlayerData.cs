@@ -18,6 +18,9 @@ public class PlayerData : ScriptableObject
     public float maxJumpVelocity = 15;
     public int amountOfJumps = 1;
 
+    [Header("ACTION STATE")]
+    public float actionForce = 20f;
+
     [Header("IN AIR STATE")]
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMultuplier = 0.5f;
@@ -34,7 +37,7 @@ public class PlayerData : ScriptableObject
     public float litSlowDownLimit;
     public float jumpAddition;
     public float otherOnLitIncreaseValue;
-    public float ResetSpeedTime;
+    public float litSpeedAlterRate = 6f;
 
     [Header("CHECK VARIABLES")]
     public float groundCheckRadius = 0.3f;

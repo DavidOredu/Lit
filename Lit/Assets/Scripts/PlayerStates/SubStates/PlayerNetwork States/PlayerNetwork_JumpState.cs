@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
 {
-
     protected int amountOfJumpsLeft;
 
     public PlayerNetwork_JumpState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
@@ -30,17 +29,19 @@ public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
     {
         base.Enter();
         
-        racer.SetVelocityY(racer.jumpVelocity);
-        isAbilityDone = true;
-        amountOfJumpsLeft--;
-       
-        racer.playerInAirState.SetIsJumping();
+            racer.SetVelocityY(racer.jumpVelocity);
+            isAbilityDone = true;
+            amountOfJumpsLeft--;
+
+            racer.playerInAirState.SetIsJumping();
+        
       //  playerData.spawnDust = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+
     }
 
     public override void LogicUpdate()

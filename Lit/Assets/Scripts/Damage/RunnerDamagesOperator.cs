@@ -14,6 +14,7 @@ public struct RunnerDamagesOperator
     public DamageForm shadow;
     public DamageForm laser;
     public DamageForm deathLaser;
+    public DamageForm knockout;
 
     public List<DamageForm> Damages;
     public void InitDamages()
@@ -28,6 +29,7 @@ public struct RunnerDamagesOperator
         shadow = new DamageForm("shadow", false, DamageForm.DamagerType.Shadow);
         laser = new DamageForm("laser", false, DamageForm.DamagerType.Laser);
         deathLaser = new DamageForm("deathLaser", false, DamageForm.DamagerType.DeathLaser);
+        knockout = new DamageForm("knockout", false, DamageForm.DamagerType.knockout);
 
         Damages = new List<DamageForm>
         {
@@ -40,7 +42,8 @@ public struct RunnerDamagesOperator
             wind,
             magic,
             laser,
-            deathLaser
+            deathLaser,
+            knockout
         };
     }
     public bool SimilarDamages(RunnerDamagesOperator otherRunnerDamages)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "NewDamageData", menuName = "Data/Damage Data")]
+// This script is pretty useless now. Should be deleted
 public class DamageData : ScriptableObject
 {
     // used as an identifier

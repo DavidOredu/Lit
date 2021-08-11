@@ -20,12 +20,15 @@ public class D_DifficultyData : ScriptableObject
     public float laserStunTime = 4f;
     public float wallStunTime = 3f;
 
+    [Header("ACTION STATE")]
+    public float actionForce = 20f;
+
     [Header("LIT VARIABLES")]
     public float jumpAddition;
     public float litSpeedUpLimit;
     public float litSlowDownLimit;
     public float otherOnLitIncreaseValue;
-    public float resetSpeedTime;
+    public float litSpeedAlterRate = 6f;
 
     [Header("KNOCKBACK VARIABLES")]
     public Vector2 knockbackVelocity;

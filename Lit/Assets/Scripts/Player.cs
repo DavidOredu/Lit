@@ -25,7 +25,6 @@ public class Player : Racer
 
     #endregion
 
-
     public override void Awake()
     {
         base.Awake();
@@ -37,7 +36,9 @@ public class Player : Racer
         playerLandState = new PlayerNetwork_LandState(null, StateMachine, "land", this, playerData, null);
         playerKnockbackState = new PlayerNetwork_KnockbackState(null, StateMachine, "knockback", this, playerData, null);
         playerSlideState = new PlayerNetwork_SlideState(null, StateMachine, "slide", this, playerData, null);
+        playerActionState = new PlayerNetwork_ActionState(null, StateMachine, "action", this, playerData, null);
         playerQuickHaltState = new PlayerNetwork_QuickHaltState(null, StateMachine, "quickHalt", this, playerData, null);
+        playerFullStopState = new PlayerNetwork_FullStopState(null, StateMachine, "fullStop", this, playerData, null);
         playerShadowedState = new PlayerNetwork_ShadowedState(null, StateMachine, "shadowed", this, playerData, null);
         playerBurningState = new PlayerNetwork_BurningState(null, StateMachine, "burning", this, playerData, null);
         playerFrozenState = new PlayerNetwork_FrozenState(null, StateMachine, "frozen", this, playerData, null);
@@ -72,6 +73,8 @@ public class Player : Racer
         /* 8 */   playerLazeredState,
             // death state
         /* 9 */   playerDeadState,
+            // knockout state
+        /* 10 */ playerKnockbackState,
         };
 
         accelRatePerSec = playerData.topSpeed / playerData.timeZeroToMax;

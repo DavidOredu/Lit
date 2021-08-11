@@ -5,7 +5,7 @@ using UnityEngine;
 public class Timer
 {
     public bool timerStarted = false;
-    public bool isTimeUp = false;
+    public bool isTimeUp { get; private set; } = false;
     bool pause = false;
 
     float _time;

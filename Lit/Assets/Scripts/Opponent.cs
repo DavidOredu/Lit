@@ -18,7 +18,9 @@ public class Opponent : Entity
         opponentJumpState = new Enemy_JumpState(this, StateMachine, "inAir", this, null, difficultyData);
         opponentKnockbackState = new Enemy_KnockbackState(this, StateMachine, "knockback", this, null, difficultyData);
         opponentSlideState = new Enemy_SlideState(this, StateMachine, "slide", this, null, difficultyData);
+        opponentActionState = new Enemy_ActionState(this, StateMachine, "action", this, null, difficultyData);
         opponentQuickHaltState = new Enemy_QuickHaltState(this, StateMachine, "quickHalt", this, null, difficultyData);
+        opponentFullStopState = new Enemy_FullStopState(this, StateMachine, "fullStop", this, null, difficultyData);
         opponentShadowedState = new Enemy_ShadowedState(this, StateMachine, "shadowed", this, null, difficultyData);
         opponentBurningState = new Enemy_BurningState(this, StateMachine, "burning", this, null, difficultyData);
         opponentFrozenState = new Enemy_FrozenState(this, StateMachine, "frozen", this, null, difficultyData);
@@ -53,6 +55,8 @@ public class Opponent : Entity
         /* 8 */   opponentLazeredState,
             // death state
         /* 9 */   opponentDeadState,
+            // knockout state
+        /* 10 */ playerKnockbackState,
         };
 
         movementVelocity = 0f;

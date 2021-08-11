@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: 5
   m_Shader: {fileID: 4800000, guid: 23d75a8f47c814140998e9ede087121f, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _EMISSION
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA PIXELSNAP_ON _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -68,7 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - PixelSnap: 0
+    - PixelSnap: 1
     - _AlphaClip: 0
     - _Blend: 3
     - _BumpScale: 1

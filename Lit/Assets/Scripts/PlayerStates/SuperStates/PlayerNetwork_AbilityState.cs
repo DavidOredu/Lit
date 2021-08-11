@@ -10,6 +10,7 @@ public class PlayerNetwork_AbilityState : State
     protected bool isGrounded;
     protected bool attackInput;
     protected int XInput;
+    protected bool jumpInputStop;
     protected bool firstAttack;
 
     public PlayerNetwork_AbilityState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
@@ -69,7 +70,7 @@ public class PlayerNetwork_AbilityState : State
         base.LogicUpdate();
         attackInput = racer.inputHandler.AttackInput;
         XInput = racer.inputHandler.NormalizedInputX;
-
+        jumpInputStop = racer.inputHandler.JumpInputStop;
         
     }
 

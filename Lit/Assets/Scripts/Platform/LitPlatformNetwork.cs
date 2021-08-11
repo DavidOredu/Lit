@@ -1,7 +1,12 @@
 ﻿using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.U2D;
 
+[RequireComponent(typeof(SpriteShapeRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlatformEffector2D))]
+[RequireComponent(typeof(EdgeCollider2D))]
 public class LitPlatformNetwork : NetworkBehaviour
 {
     public float WaitToDetectPlatform;
@@ -14,7 +19,8 @@ public class LitPlatformNetwork : NetworkBehaviour
     public SpriteRenderer spriteRendererOfBloom { get; set; }
     public SpriteRenderer spriteRendererOfGameObject { get; set; }
 
-    private Runner runner;
+    public Runner runner { get; set; }
+    public SpriteShapeRenderer spriteShapeRenderer { get; set; }
 
     public Runner firstRunner { get; set; }
     
@@ -33,7 +39,7 @@ public class LitPlatformNetwork : NetworkBehaviour
     private Racer player;
     private StickmanNet stickman;
     private SpriteRenderer spriteRendererOfRunner;
-
+    Rigidbody2D rb;
 
     private void Awake()
     {
@@ -45,18 +51,10 @@ public class LitPlatformNetwork : NetworkBehaviour
 
     void OnEnable()
     {
-       
+        rb = GetComponent<Rigidbody2D>();
+        spriteShapeRenderer = GetComponent<SpriteShapeRenderer>();
 
-        glow = transform.Find("Glow").gameObject;
-        bloom = transform.Find("Bloom").gameObject;
-        spriteRendererOfGlow = glow.GetComponent<SpriteRenderer>();
-        spriteRendererOfGameObject = gameObject.GetComponent<SpriteRenderer>();
-        spriteRendererOfBloom = bloom.GetComponent<SpriteRenderer>();
-
-        glow.SetActive(false);
-        bloom.SetActive(false);
-
-
+        rb.bodyType = RigidbodyType2D.Static;
     }
 
     private void Update()
@@ -88,11 +86,8 @@ public class LitPlatformNetwork : NetworkBehaviour
             player = other.gameObject.GetComponent<Racer>();
             stickman = other.gameObject.GetComponent<StickmanNet>();
 
-            runner = new Runner(null, stickman, spriteRendererOfRunner, player);
-            if (runner.stickmanNet.currentColor.colorID == 0)
-            {
-                changed = true;
-            }
+            if(isLit)
+            runner = new Runner(null, stickman, null, player);
         }
 
     }
