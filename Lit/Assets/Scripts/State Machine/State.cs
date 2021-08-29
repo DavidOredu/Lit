@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class State 
 {
     protected FiniteStateMachine StateMachine;
     protected Entity racerEntity;
     protected PlayerData playerData;
     protected D_DifficultyData difficultyData;
-    protected Racer racer;
+    public Racer racer { get; private set; }
 
     public float startTime { get; protected set; }
 

@@ -12,6 +12,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dda081a837e3f448d20033fbefe645, type: 3}
   m_Name: Easy
   m_EditorClassIdentifier: 
+  maxStrength: 20
+  strengthToTopSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedToJumpVelocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   topSpeed: 24
   timeZeroToMax: 3.17
   timeMaxToZero: 4
@@ -21,11 +70,12 @@ MonoBehaviour:
   maxIdleTime: 3
   laserStunTime: 2
   wallStunTime: 3
+  actionForce: 20
   jumpAddition: 5
   litSpeedUpLimit: 20
   litSlowDownLimit: 8
   otherOnLitIncreaseValue: 5
-  resetSpeedTime: 3
+  litSpeedAlterRate: 6
   knockbackVelocity: {x: 22, y: 12}
   maxKnockbackVelocity: {x: 22, y: 12}
   groundCheckRadius: 0.5

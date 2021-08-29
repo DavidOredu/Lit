@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Opponent : Entity
 {
-   
+
     public override void Awake()
     {
         base.Awake();
@@ -32,6 +32,10 @@ public class Opponent : Entity
         opponentLazeredState = new Enemy_LazeredState(this, StateMachine, "lazered", this, null, difficultyData);
         opponentStunState = new Enemy_StunState(this, StateMachine, "stun", this, null, difficultyData);
         opponentDeadState = new Enemy_DeadState(this, StateMachine, "dead", this, null, difficultyData);
+        opponentDamageKnockDownState = new Enemy_DamageKnockDownState(this, StateMachine, "damageKnockDown", this, null, difficultyData);
+        opponentRevivedState = new Enemy_RevivedState(this, StateMachine, "revived", this, null, difficultyData);
+        opponentAwakenedState = new Enemy_AwakenedState(this, StateMachine, "awakened", this, null, difficultyData);
+        opponentNullState = new Enemy_NullState(this, StateMachine, "null", this, null, difficultyData);
 
         opponentDamageStates = new List<State>
         {
@@ -65,17 +69,17 @@ public class Opponent : Entity
         brakeRatePerSec = -difficultyData.topSpeed / difficultyData.timeBrakeToZero;
 
         moveVelocityResource = difficultyData.topSpeed;
+        strengthResource = difficultyData.maxStrength;
         jumpVelocityResource = difficultyData.maxJumpVelocity;
+        strength = strengthResource;
     }
     public override void Start()
     {
         base.Start();
 
-        
-
         StateMachine.Initialize(opponentMoveState);
-
-
+        StateMachine.InitializeDamage(opponentNullState);
+        StateMachine.InitializeAwakened(opponentNullState);
     }
 
     public override void FixedUpdate()
@@ -116,10 +120,5 @@ public class Opponent : Entity
     public override void OnCollisionEnter2D(Collision2D other)
     {
         base.OnCollisionEnter2D(other);
-
-        if (other.collider.CompareTag("Wall") && StateMachine.CurrentState != opponentSlideState)
-        {
-            StateMachine.ChangeState(opponentKnockbackState);
-        }
     }
 }

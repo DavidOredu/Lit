@@ -1,14 +1,15 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class Player : Racer
 {
     #region State Variables
-    [HideInInspector]
-    public int currentHealth;
+    
     public GameObject powerupSlot { get; set; }
 
     public PowerupButton powerupButton;
+    public Button awakenedStateButton;
 
     #endregion
 
@@ -50,6 +51,10 @@ public class Player : Racer
         playerLazeredState = new PlayerNetwork_LazeredState(null, StateMachine, "lazered", this, playerData, null);
         playerStunState = new PlayerNetwork_StunState(null, StateMachine, "stun", this, playerData, null);
         playerDeadState = new PlayerNetwork_DeadState(null, StateMachine, "dead", this, playerData, null);
+        playerDamageKnockDownState = new PlayerNetwork_DamageKnockDownState(null, StateMachine, "damageKnockDown", this, playerData, null);
+        playerRevivedState = new PlayerNetwork_RevivedState(null, StateMachine, "revived", this, playerData, null);
+        playerAwakenedState = new PlayerNetwork_AwakenedState(null, StateMachine, "awakened", this, playerData, null);
+        playerNullState = new PlayerNetwork_NullState(null, StateMachine, "null", this, playerData, null);
 
         playerDamageStates = new List<State>
         {
@@ -85,10 +90,14 @@ public class Player : Racer
         playerData.knockbackVelocity = Vector2.zero;
 
         moveVelocityResource = playerData.topSpeed;
+        strengthResource = playerData.maxStrength;
         jumpVelocityResource = playerData.maxJumpVelocity;
+        strength = strengthResource;
 
         powerupSlot = powerupButton.gameObject;
 
+        awakenedStateButton.onClick.AddListener(() => Awaken());
+        awakenedStateButton.interactable = false;
     }
 
 
@@ -101,6 +110,8 @@ public class Player : Racer
         base.Start();
 
         StateMachine.Initialize(playerMoveState);
+        StateMachine.InitializeDamage(playerNullState);
+        StateMachine.InitializeAwakened(playerNullState);
     }
 
 
@@ -108,15 +119,21 @@ public class Player : Racer
     public override void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
+        StateMachine.DamagedState.LogicUpdate();
+        StateMachine.AwakenedState.LogicUpdate();
         base.Update();
 
         Debug.Log(StateMachine.CurrentState);
         Debug.Log(runner.stickmanNet.currentColor.colorID);
+
+        awakenedStateButton.interactable = canAwaken;
     }
     [Client]
     public override void LateUpdate()
     {
         StateMachine.CurrentState.LateUpdate();
+        StateMachine.DamagedState.LateUpdate();
+        StateMachine.AwakenedState.LateUpdate();
         base.LateUpdate();
     }
     [Client]
@@ -126,11 +143,11 @@ public class Player : Racer
             inputHandler = GetComponent<PlayerInputHandlerNetwork>();
 
         StateMachine.CurrentState.PhysicsUpdate();
-
+        StateMachine.DamagedState.PhysicsUpdate();
+        StateMachine.AwakenedState.PhysicsUpdate();
         base.FixedUpdate();
 
-
-        if (isOnPower && StateMachine.CurrentState != playerKnockbackState && StateMachine.CurrentState != playerSlideState && poweredPlatform != null && CheckIfGrounded())
+        if (isOnPower && StateMachine.CurrentState != playerKnockbackState && StateMachine.CurrentState != playerSlideState && poweredPlatform != null && hasAuthority)
         {
             //    testImage.gameObject.SetActive(true);
             if (inputHandler.JumpInput)
@@ -141,19 +158,26 @@ public class Player : Racer
         }
         if (FinishLine.hasCrossedLine)
         {
-            StateMachine.ChangeState(playerQuickHaltState);
+         //   StateMachine.ChangeState(playerQuickHaltState);
             FinishLine.hasCrossedLine = false;
         }
     }
-
-    public virtual void AnimationTrigger()
+    
+    public virtual void CurrentStateAnimationTrigger()
     {
         StateMachine.CurrentState.AnimationTrigger();
     }
-
-    public virtual void AnimationFinishTrigger()
+    public virtual void DamageStateAnimationTrigger()
+    {
+        StateMachine.DamagedState.AnimationTrigger();
+    }
+    public virtual void CurrentStateAnimationFinishTrigger()
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
+    }
+    public virtual void DamageStateAnimationFinishTrigger()
+    {
+        StateMachine.DamagedState.AnimationFinishTrigger();
     }
 
 
@@ -195,24 +219,27 @@ public class Player : Racer
     public override void OnCollisionEnter2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionEnter(other);
+        StateMachine.DamagedState.OnCollisionEnter(other);
+        StateMachine.AwakenedState.OnCollisionEnter(other);
         base.OnCollisionEnter2D(other);
 
 
-        if (other.collider.CompareTag("Wall") && StateMachine.CurrentState != playerSlideState)
-        {
-            StateMachine.ChangeState(playerKnockbackState);
-        }
+        
     }
 
     public override void OnCollisionStay2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionStay(other);
+        StateMachine.DamagedState.OnCollisionStay(other);
+        StateMachine.AwakenedState.OnCollisionStay(other);
         base.OnCollisionStay2D(other);
     }
 
     public override void OnCollisionExit2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionExit(other);
+        StateMachine.DamagedState.OnCollisionExit(other);
+        StateMachine.AwakenedState.OnCollisionExit(other);
         base.OnCollisionExit2D(other);
     }
 

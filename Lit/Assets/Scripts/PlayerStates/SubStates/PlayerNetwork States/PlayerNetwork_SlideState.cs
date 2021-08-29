@@ -53,7 +53,7 @@ public class PlayerNetwork_SlideState : PlayerNetwork_AbilityState
     public override void OnCollisionEnter(Collision2D collision)
     {
         base.OnCollisionEnter(collision);
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Obstacle"))
         {
             Physics2D.IgnoreCollision(collision.otherCollider, collision.collider, true);
         }
@@ -62,7 +62,7 @@ public class PlayerNetwork_SlideState : PlayerNetwork_AbilityState
     public override void OnCollisionExit(Collision2D collision)
     {
         base.OnCollisionExit(collision);
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Obstacle"))
         {
             Physics2D.IgnoreCollision(collision.otherCollider, collision.collider, false);
         }
@@ -71,7 +71,7 @@ public class PlayerNetwork_SlideState : PlayerNetwork_AbilityState
     public override void OnCollisionStay(Collision2D collision)
     {
         base.OnCollisionStay(collision);
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Obstacle"))
         {
         //    Physics2D.IgnoreCollision(collision.otherCollider, collision.collider, true);
         }

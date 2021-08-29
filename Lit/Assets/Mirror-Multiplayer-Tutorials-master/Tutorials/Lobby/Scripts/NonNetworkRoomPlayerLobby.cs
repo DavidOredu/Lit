@@ -10,9 +10,6 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
     private LevelManager levelManager;
     private MapHandler mapHandler;
 
-    private bool hasRunOnBef = false;
-
-    private List<int> usedColors = new List<int>();
 
     public LevelButton currentLevel { get; private set; }
     private void Awake()
@@ -50,14 +47,6 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
     }
     private void Update()
     {
-        usedColors.Clear();
-        for (int i = 0; i < Room.RoomPlayers.Count; i++)
-        {
-            usedColors.Add(Room.RoomPlayers[i].currentColorCode);
-        }
-        //if (isLeader && !hasRunOnBef)
-        //    OnBef();
-        //hasRunOnBef = true;
     }
     protected override void UpdateDisplay()
     {

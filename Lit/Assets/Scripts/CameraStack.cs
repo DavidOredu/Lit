@@ -21,9 +21,13 @@ public class CameraStack : MonoBehaviour
     {
         var cameraData = _camera.GetUniversalAdditionalCameraData();
         if (uiCamera == null)
-            uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
+        {
+            if(GameObject.FindGameObjectWithTag("UICamera"))
+                uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
+        }
         if (postProcessingCamera == null)
-            postProcessingCamera = GameObject.FindGameObjectWithTag("PostProcessingCamera").GetComponent<Camera>();
+            if(GameObject.FindGameObjectWithTag("PostProcessingCamera"))
+                postProcessingCamera = GameObject.FindGameObjectWithTag("PostProcessingCamera").GetComponent<Camera>();
 
         if(!cameraData.cameraStack.Contains(uiCamera))
         cameraData.cameraStack.Add(uiCamera);

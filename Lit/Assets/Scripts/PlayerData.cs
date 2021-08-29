@@ -8,6 +8,11 @@ public class PlayerData : ScriptableObject
     [Header("PROFILE")]
     public string playerName;
 
+    [Header("PLAYER STRENGTH")]
+    public int maxStrength = 20;
+    public AnimationCurve strengthToTopSpeedCurve;
+    public AnimationCurve speedToJumpVelocityCurve;
+
     [Header("MOVE STATE")]
     public float topSpeed = 24;
     public float timeZeroToMax = 2.5f;
@@ -29,9 +34,16 @@ public class PlayerData : ScriptableObject
     public float laserStunTime = 4f;
     public float wallStunTime = 3f;
 
-  //  [Header("Land State")]
-  //  public bool spawnDust;
-    
+    [Header("REVIVED STATE")]
+    public float invulnerabilityTimer = 5f;
+
+    [Header("AWAKENED STATE")]
+    public int requiredLitPlatformsToAwaken = 5;
+    public int awakenCount = 1;
+
+    //  [Header("Land State")]
+    //  public bool spawnDust;
+
     [Header("LIT VARIABLES")]
     public float litSpeedUpLimit;
     public float litSlowDownLimit;

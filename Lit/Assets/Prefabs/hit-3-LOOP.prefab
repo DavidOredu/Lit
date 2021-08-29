@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8519148761388339654}
   - component: {fileID: 8519889723022599068}
   - component: {fileID: 8429255242921881416}
-  - component: {fileID: 8429255242921881423}
   - component: {fileID: 8429255242690986485}
+  - component: {fileID: 7712845905144884254}
   m_Layer: 12
   m_Name: hit-3-LOOP
   m_TagString: Projectile
@@ -4713,20 +4713,6 @@ CircleCollider2D:
   m_Offset: {x: -0.008192444, y: 0.0054615973}
   serializedVersion: 2
   m_Radius: 0.12560472
---- !u!114 &8429255242921881423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8428842952291212616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f07f91219357e6e49a0fc88e9ad4735c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserDamageTime: 3.5
-  negativeGravityScale: 1.5
 --- !u!50 &8429255242690986485
 Rigidbody2D:
   serializedVersion: 4
@@ -4748,6 +4734,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &7712845905144884254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428842952291212616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960aed7cac160e14eb8576de6cfe79d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentObstacleType: 1
 --- !u!1 &8428878193681996176
 GameObject:
   m_ObjectHideFlags: 0

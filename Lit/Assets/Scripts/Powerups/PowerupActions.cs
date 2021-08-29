@@ -295,7 +295,7 @@ public class PowerupActions : MonoBehaviour
             var effectInGame = Instantiate(effect, new Vector3(firstRunner.transform.Find("PlayerCenter").position.x, firstRunner.transform.Find("PlayerCenter").position.y + 40), Quaternion.identity);
             var beamScript = effectInGame.GetComponent<BeamProjectileScript>();
 
-            beamScript.damageTime = powerupData.beamDamageTime;
+            beamScript.damageStrength = powerupData.beamDamageStrength;
         }
     }
     public void BeamEndAction(Racer racer)
@@ -333,7 +333,7 @@ public class PowerupActions : MonoBehaviour
         projectile.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
         projectileScript.damageType = racer.runner.stickmanNet.code;
         projectileScript.impactNormal = new Vector3(0, 0, rotationZ);
-        projectileScript.damageTime = powerupData.projectileDamageTime;
+        projectileScript.damageStrength = powerupData.projectileDamageStrength;
         projectileScript.speed = powerupData.projectileSpeed;
         projectileScript.direction = direction;
         

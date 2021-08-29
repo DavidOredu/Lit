@@ -6,11 +6,9 @@ using UnityEngine.VFX;
 public class RunnerEffects
 {
     public VisualEffect runnerVFX;
-    public DamageForm.DamagerType damagerType;
 
-    public RunnerEffects(VisualEffect runnerVFX, DamageForm.DamagerType damagerType)
+    public RunnerEffects(VisualEffect runnerVFX)
     {
         this.runnerVFX = runnerVFX;
-        this.damagerType = damagerType;
     }
 }

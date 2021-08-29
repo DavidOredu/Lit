@@ -42,7 +42,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         
         public List<GamePlayerLobby> GamePlayers { get; } = new List<GamePlayerLobby>();
         public List<StickmanNet> players { get; } = new List<StickmanNet>();
-        public List<int> freeColors = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public List<int> freeColors = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 10};
         public readonly Dictionary<GamePlayerLobby, GameObject> gamePlayerConnect = new Dictionary<GamePlayerLobby, GameObject>();
 
         public int numberOfRoomPlayers;

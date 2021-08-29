@@ -150,7 +150,7 @@ public class StickmanNet : NetworkBehaviour
                     foreach (SpriteRenderer renderer in stickmanColorRenderers)
                     {
                         //renderer.material = material;
-                        renderer.color = currentColor.color;
+                        renderer.color = new Color(currentColor.color.r, currentColor.color.g, currentColor.color.b);
                     }
                     foreach (SpriteRenderer renderer in auraRenderers)
                     {

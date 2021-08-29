@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newDifficultyData", menuName = "Data/Difficulty Data")]
 public class D_DifficultyData : ScriptableObject
 {
+    [Header("OPPONENT STRENGTH")]
+    public int maxStrength = 20;
+    public AnimationCurve strengthToTopSpeedCurve;
+    public AnimationCurve speedToJumpVelocityCurve;
+
     [Header("MOVE STATE")]
     public float topSpeed = 3f;
     public float timeZeroToMax = 3f;
@@ -20,8 +25,15 @@ public class D_DifficultyData : ScriptableObject
     public float laserStunTime = 4f;
     public float wallStunTime = 3f;
 
+    [Header("REVIVED STATE")]
+    public float invulnerabilityTimer = 5f;
+
     [Header("ACTION STATE")]
     public float actionForce = 20f;
+
+    [Header("AWAKENED STATE")]
+    public int requiredLitPlatformsToAwaken = 5;
+    public int awakenCount = 1;
 
     [Header("LIT VARIABLES")]
     public float jumpAddition;

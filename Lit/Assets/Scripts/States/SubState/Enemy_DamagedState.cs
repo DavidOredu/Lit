@@ -45,8 +45,7 @@ public class Enemy_DamagedState : State
     {
         base.LogicUpdate();
 
-        racerEntity.SetBrakes();
-        racerEntity.SetVelocityX(racer.movementVelocity);
+       
     }
 
     public override void OnCollisionEnter(Collision2D collision)
@@ -67,5 +66,6 @@ public class Enemy_DamagedState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
     }
 }

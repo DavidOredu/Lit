@@ -42,12 +42,16 @@ public class Entity : Racer
     public override void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
+        StateMachine.DamagedState.LogicUpdate();
+        StateMachine.AwakenedState.LogicUpdate();
         base.Update();
     }
 
     public override void FixedUpdate()
     {
         StateMachine.CurrentState.PhysicsUpdate();
+        StateMachine.DamagedState.PhysicsUpdate();
+        StateMachine.AwakenedState.PhysicsUpdate();
         base.FixedUpdate();
   
         if (CheckIfHasPowerup())
@@ -61,6 +65,8 @@ public class Entity : Racer
     public override void LateUpdate()
     {
         StateMachine.CurrentState.LateUpdate();
+        StateMachine.DamagedState.LateUpdate();
+        StateMachine.AwakenedState.LateUpdate();
         base.LateUpdate();
         
     }
@@ -68,6 +74,8 @@ public class Entity : Racer
     public override void OnCollisionEnter2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionEnter(other);
+        StateMachine.DamagedState.OnCollisionEnter(other);
+        StateMachine.AwakenedState.OnCollisionEnter(other);
         base.OnCollisionEnter2D(other);
      
     }
@@ -75,21 +83,32 @@ public class Entity : Racer
     public override void OnCollisionStay2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionStay(other);
+        StateMachine.DamagedState.OnCollisionStay(other);
+        StateMachine.AwakenedState.OnCollisionStay(other);
         base.OnCollisionStay2D(other);
     }
     public override void OnCollisionExit2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionExit(other);
+        StateMachine.DamagedState.OnCollisionExit(other);
+        StateMachine.AwakenedState.OnCollisionExit(other);
         base.OnCollisionExit2D(other);
     }
-    public virtual void AnimationTrigger()
+    public virtual void CurrentStateAnimationTrigger()
     {
         StateMachine.CurrentState.AnimationTrigger();
     }
-
-    public virtual void AnimationFinishTrigger()
+    public virtual void DamageStateAnimationTrigger()
+    {
+        StateMachine.DamagedState.AnimationTrigger();
+    }
+    public virtual void CurrentStateAnimationFinishTrigger()
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
+    }
+    public virtual void DamageStateAnimationFinishTrigger()
+    {
+        StateMachine.DamagedState.AnimationFinishTrigger();
     }
     #region Set Functions
     public virtual void SetAllVariables()

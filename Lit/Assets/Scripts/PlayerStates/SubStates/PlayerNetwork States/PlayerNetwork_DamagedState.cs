@@ -12,6 +12,7 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
+        
     }
 
     public override void AnimationTrigger()
@@ -28,6 +29,8 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     {
         racer.Anim.SetBool("damaged", true);
         base.Enter();
+
+       
     }
 
     public override void Exit()
@@ -44,10 +47,10 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+      
 
-        //slow down runner to a slow stop
-        racer.SetBrakes();
-        racer.SetVelocityX(racer.movementVelocity);
+        
+
     }
 
     public override void OnCollisionEnter(Collision2D collision)
@@ -68,5 +71,7 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        
     }
 }

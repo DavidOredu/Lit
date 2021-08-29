@@ -4,20 +4,18 @@ using UnityEngine;
 [System.Serializable]
 public class DamageForm 
 {
-    public DamageForm(string damageName, bool damaged, DamagerType damagerType, float damageTime = 0f, float negativeGravityScale = 0f)
+    public DamageForm(string damageName, bool damaged, DamagerType damagerType, float damageStrength = 0)
     {
         this.damageName = damageName;
         this.damaged = damaged;
         this.damagerType = damagerType;
-        this.damageTime = damageTime;
-        this.negativeGravityScale = negativeGravityScale;
+        this.damageStrength = damageStrength;
     }
 
     public string damageName;
     public DamagerType damagerType;
     public bool damaged;
-    public float damageTime;
-    public float negativeGravityScale;
+    public float damageStrength;
 
         public enum DamagerType
     {

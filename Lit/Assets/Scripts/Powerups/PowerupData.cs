@@ -14,8 +14,8 @@ public class PowerupData : ScriptableObject
 
     [Header("PROJECTILE")]
     public float projectileSpeed = 45f;
-    public float projectileDamageTime = 6f;
+    public int projectileDamageStrength = 6;
 
     [Header("BEAM")]
-    public float beamDamageTime = 6f;
+    public int beamDamageStrength = 6;
 }

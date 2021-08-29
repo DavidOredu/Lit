@@ -31,6 +31,7 @@ TagManager:
   - PostProcessingCamera
   - MainCamera1
   - Projectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -47,7 +48,7 @@ TagManager:
   - Obstacle
   - Opponent
   - VFX
-  - 
+  - DistortionEffect
   - 
   - 
   - 

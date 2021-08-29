@@ -21,7 +21,7 @@ public class MagicProjectileScript : MonoBehaviour
     private RunnerDamagesOperator runnerDamages;
 
     public int damageType;
-    public float damageTime;
+    public int damageStrength;
     public Rigidbody2D rb { get; private set; }
 
     Timer lifetimeTimer;
@@ -86,7 +86,7 @@ public class MagicProjectileScript : MonoBehaviour
                 {
                     // damage hit object
                     runnerDamages.Damages[damageType].damaged = true;
-                    runnerDamages.Damages[damageType].damageTime = damageTime;
+                    runnerDamages.Damages[damageType].damageStrength = damageStrength;
                     hitObject.transform.SendMessage("DamageRunner", runnerDamages);
                 }
             }

@@ -33,8 +33,6 @@ public class PlayerNetwork_LandState : PlayerNetwork_GroundedState
     public override void Exit()
     {
         base.Exit();
-
-        racer.jumpVelocity = racer.jumpVelocityResource;
     }
 
     public override void LateUpdate()

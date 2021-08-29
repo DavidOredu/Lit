@@ -30,7 +30,6 @@ public class Enemy_LazeredState : Enemy_DamagedState
         var damageEffectPrefab = Resources.Load<GameObject>("DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
 
-        racer.RB.gravityScale = racer.myDamages.Damages[8].negativeGravityScale;
     }
 
     public override void Exit()

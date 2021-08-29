@@ -27,7 +27,8 @@ public class BeamProjectileScript : MonoBehaviour
     public float textureScrollSpeed = 8f; //How fast the texture scrolls along the beam
     public float textureLengthScale = 3; //Length of the beam texture
     public float growthSpeed = 100f;
-    public float damageTime;
+
+    public int damageStrength;
 
     [Header("Put Sliders here (Optional)")]
     public Slider endOffSetSlider; //Use UpdateEndOffset function on slider
@@ -81,29 +82,6 @@ public class BeamProjectileScript : MonoBehaviour
         textureScrollSpeed = scrollSpeedSlider.value;
     }
 
-    void ShootBeamInDir(Vector3 start, Vector3 dir)
-    {
-        line.positionCount = 2;
-        line.SetPosition(0, start);
-        beamStart.transform.position = start;
-
-        Vector3 end;
-        RaycastHit hit;
-        if (Physics.Raycast(start, dir, out hit))
-            end = hit.point - (dir.normalized * beamEndOffset);
-        else
-            end = transform.position + (dir * growthSpeed);
-
-        beamEnd.transform.position = end;
-        line.SetPosition(1, end);
-
-        beamStart.transform.LookAt(beamEnd.transform.position);
-        beamEnd.transform.LookAt(beamStart.transform.position);
-
-        float distance = Vector3.Distance(start, end);
-        line.sharedMaterial.mainTextureScale = new Vector2(distance / textureLengthScale, 1);
-        line.sharedMaterial.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0);
-    }
     void UpdateLaser(Vector3 start)
     {
         line.positionCount = 2;
@@ -124,7 +102,7 @@ public class BeamProjectileScript : MonoBehaviour
             if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Opponent")) && damageType != hit.collider.gameObject.GetComponent<Racer>().runner.stickmanNet.code)
             {
                 runnerDamages.Damages[damageType].damaged = true;
-                runnerDamages.Damages[damageType].damageTime = damageTime;
+                runnerDamages.Damages[damageType].damageStrength = damageStrength;
                 hit.collider.transform.SendMessage("DamageRunner", runnerDamages);
             }
         }

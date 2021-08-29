@@ -34,6 +34,10 @@ public class Racer : NetworkBehaviour
     public PlayerNetwork_LazeredState playerLazeredState { get; set; }
     public PlayerNetwork_StunState playerStunState { get; set; }
     public PlayerNetwork_DeadState playerDeadState { get; set; }
+    public PlayerNetwork_DamageKnockDownState playerDamageKnockDownState { get; set; }
+    public PlayerNetwork_RevivedState playerRevivedState { get; set; }
+    public PlayerNetwork_AwakenedState playerAwakenedState { get; set; }
+    public PlayerNetwork_NullState playerNullState { get; set; }
 
     public List<State> playerDamageStates;
     public Dictionary<Vector2, State> playerDynamicDamageStates;
@@ -61,6 +65,10 @@ public class Racer : NetworkBehaviour
     public Enemy_LazeredState opponentLazeredState { get; set; }
     public Enemy_StunState opponentStunState { get; set; }
     public Enemy_DeadState opponentDeadState { get; set; }
+    public Enemy_DamageKnockDownState opponentDamageKnockDownState { get; set; }
+    public Enemy_RevivedState opponentRevivedState { get; set; }
+    public Enemy_AwakenedState opponentAwakenedState { get; set; }
+    public Enemy_NullState opponentNullState { get; set; }
 
     public List<State> opponentDamageStates;
     public Dictionary<Vector2, State> opponentDynamicDamageStates;
@@ -88,6 +96,11 @@ public class Racer : NetworkBehaviour
     [Header("Move State")]
     public float moveVelocityResource;
     public float movementVelocity;
+    public float normalizedMovementVelocity;
+    public float strengthResource;
+    public float strength;
+    public int awakenCount;
+    public float normalizedStrength;
     protected float accelRatePerSec;
     protected float decelRatePerSec;
     protected float brakeRatePerSec;
@@ -97,9 +110,8 @@ public class Racer : NetworkBehaviour
     [Header("Jump State")]
     public float jumpVelocityResource;
     public float jumpVelocity;
+    public float normalizedJumpVelocity;
 
-    public bool isAffectedByLaser { get; set; }
-    public bool isAffectedByDeathLaser { get; set; }
     public bool isOnAnotherLit { get; private set; }
     public bool isOnLit { get; private set; }
     public bool isStayingOnLit { get; private set; }
@@ -109,6 +121,7 @@ public class Racer : NetworkBehaviour
     public bool isOnPower { get; private set; }
     public bool isInvulnerable { get; set; } = false;
     public bool overdrive { get; private set; }
+    public bool canAwaken { get; set; }
 
     public Runner runner;
     #endregion
@@ -123,7 +136,6 @@ public class Racer : NetworkBehaviour
     public Powerup powerup { get; set; } = null;
     public RunnerEffects runnerEffects;
     public VFXConnector VFXConnector;
-    public DamageForm.DamagerType myDamagerType { get; set; }
 
     #region Components
     public Animator Anim { get; private set; }
@@ -206,10 +218,21 @@ public class Racer : NetworkBehaviour
         overdrive = false;
         canSpeedUp = false;
         hasJustLeftLitplatform = false;
+        switch (currentRacerType)
+        {
+            case RacerType.Player:
+                awakenCount = playerData.awakenCount;
+                break;
+            case RacerType.Opponent:
+                awakenCount = difficultyData.awakenCount;
+                break;
+            default:
+                break;
+        }
+        
 
-        SetMyDamagerType();
         var runnerEffectComp = transform.Find("RunnerEffects").GetComponent<VisualEffect>();
-        runnerEffects = new RunnerEffects(runnerEffectComp, myDamagerType);
+        runnerEffects = new RunnerEffects(runnerEffectComp);
         runnerEffects.runnerVFX.Stop();
     }
 
@@ -219,6 +242,7 @@ public class Racer : NetworkBehaviour
     {
         ChangeStatsWhileOnLit();
         ResetOverdrive();
+        CheckAwakenStateRequirements();
         if (myDamages.IsDamaged())
         {
             foreach (var damage in myDamages.DamageList())
@@ -280,40 +304,27 @@ public class Racer : NetworkBehaviour
         #endregion
 
         currentPosition = transform.position.x;
-    }
-    public virtual void SetMyDamagerType()
-    {
-        switch (runner.stickmanNet.code)
+
+        normalizedStrength = strength / playerData.maxStrength;
+        normalizedMovementVelocity = movementVelocity / playerData.topSpeed;
+        normalizedJumpVelocity = jumpVelocity / playerData.maxJumpVelocity;
+
+        if (myDamages.IsDamaged())
         {
-            case 1:
-                myDamagerType = DamageForm.DamagerType.Fire;
-                break;
-            case 2:
-                myDamagerType = DamageForm.DamagerType.Frost;
-                break;
-            case 3:
-                myDamagerType = DamageForm.DamagerType.PoisonGas;
-                break;
-            case 4:
-                myDamagerType = DamageForm.DamagerType.Light;
-                break;
-            case 5:
-                myDamagerType = DamageForm.DamagerType.Lightning;
-                break;
-            case 6:
-                myDamagerType = DamageForm.DamagerType.Wind;
-                break;
-            case 7:
-                myDamagerType = DamageForm.DamagerType.Magic;
-                break;
-            case 0:
-                myDamagerType = DamageForm.DamagerType.Shadow;
-                break;
-            default:
-                myDamagerType = DamageForm.DamagerType.Laser;
-                break;
+            StartCoroutine(DamageEffects());
+            var newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
+            movementVelocity = newMoveVelocityNormalized * playerData.topSpeed;
         }
+     //   var newJumpVelocityNormalized = playerData.speedToJumpVelocityCurve.Evaluate(normalizedMovementVelocity);
+     //   jumpVelocity = newJumpVelocityNormalized * playerData.maxJumpVelocity;
+        
+            var flooredMoveVelocity = Mathf.Floor(normalizedMovementVelocity);
+            var afterDecimal = normalizedMovementVelocity - flooredMoveVelocity;
+            var newJumpVelocityNormalized2 = playerData.speedToJumpVelocityCurve.Evaluate(afterDecimal);
+            jumpVelocity = (newJumpVelocityNormalized2 + flooredMoveVelocity) * playerData.maxJumpVelocity;
+        
     }
+ 
     #endregion
 
     #region Set Functions
@@ -335,7 +346,7 @@ public class Racer : NetworkBehaviour
         {
             case RacerType.Player:
                 movementVelocity += accelRatePerSec * Time.deltaTime;
-                jumpVelocity += accelRatePerSec * Time.deltaTime;
+     //           jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRate = accelRatePerSec;
                 playerData.knockbackVelocity.x += knockbackAccelRate * Time.deltaTime;
                 playerData.knockbackVelocity.y += knockbackAccelRate * Time.deltaTime;
@@ -343,11 +354,11 @@ public class Racer : NetworkBehaviour
                 playerData.knockbackVelocity.x = Mathf.Min(playerData.knockbackVelocity.x, playerData.maxKnockbackVelocity.x);
                 playerData.knockbackVelocity.y = Mathf.Min(playerData.knockbackVelocity.y, playerData.maxKnockbackVelocity.y);
                 movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-                jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+    //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
                 break;
             case RacerType.Opponent:
                 movementVelocity += accelRatePerSec * Time.deltaTime;
-                jumpVelocity += accelRatePerSec * Time.deltaTime;
+    //            jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRateO = accelRatePerSec * 0.667f;
                 difficultyData.knockbackVelocity.x += knockbackAccelRateO * Time.deltaTime;
                 difficultyData.knockbackVelocity.y += knockbackAccelRateO * Time.deltaTime;
@@ -355,7 +366,7 @@ public class Racer : NetworkBehaviour
                 difficultyData.knockbackVelocity.x = Mathf.Min(difficultyData.knockbackVelocity.x, difficultyData.maxKnockbackVelocity.x);
                 difficultyData.knockbackVelocity.y = Mathf.Min(difficultyData.knockbackVelocity.y, difficultyData.maxKnockbackVelocity.y);
                 movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-                jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+    //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
                 break;
             default:
                 break;
@@ -374,13 +385,13 @@ public class Racer : NetworkBehaviour
     public virtual void SetBrakes()
     {
         movementVelocity += brakeRatePerSec * Time.deltaTime;
-        jumpVelocity = 0f;
+    //    jumpVelocity = 0f;
         movementVelocity = Mathf.Max(movementVelocity, 0);
     }
     public virtual void SetStop()
     {
         movementVelocity = 0f;
-        jumpVelocity = 0f;
+    //    jumpVelocity = 0f;
     }
     #endregion
 
@@ -478,6 +489,26 @@ public class Racer : NetworkBehaviour
     #endregion
 
     #region Check Functions
+    public virtual void CheckAwakenStateRequirements()
+    {
+        switch (currentRacerType)
+        {
+            case RacerType.Player:
+                if (litPlatforms.Count >= playerData.requiredLitPlatformsToAwaken && awakenCount > 0)
+                {
+                    canAwaken = true;
+                }
+                break;
+            case RacerType.Opponent:
+                if (litPlatforms.Count >= difficultyData.requiredLitPlatformsToAwaken && awakenCount > 0)
+                {
+                    canAwaken = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
     public virtual void WaitToChangeStats(LitPlatformNetwork litPlatform)
     {
         if (runner.stickmanNet.currentColor.colorID == litPlatform.colorStateCode.colorID && litPlatform.isLit)
@@ -586,6 +617,7 @@ public class Racer : NetworkBehaviour
                 {
                     timeToReset = false;
                 }
+                jumpVelocityResource = playerData.maxJumpVelocity;
                 break;
             case RacerType.Opponent:
                 if (moveVelocityResource < difficultyData.topSpeed && timeToReset)
@@ -603,6 +635,7 @@ public class Racer : NetworkBehaviour
                 {
                     timeToReset = false;
                 }
+                jumpVelocityResource = difficultyData.maxJumpVelocity;
                 break;
             default:
                 break;
@@ -685,7 +718,7 @@ public class Racer : NetworkBehaviour
     #region Damage Functions
     public virtual void DamageRunner(RunnerDamagesOperator runnerDamages)
     {
-        //check if the runner is previously damaged, and if so do damage again, this time going to a special damage state
+        //check if the runner is previously damaged, and if so do damage again, this time instantly depleting the runner's stamina and knocking him out
         if (myDamages.IsDamaged())
         {
             foreach (var damage in runnerDamages.DamageList())
@@ -703,74 +736,84 @@ public class Racer : NetworkBehaviour
             }
         }
     }
-    public virtual void ChangeToDamageState(RunnerDamagesOperator runnerDamages, DamageForm damage, State stateToChangeTo)
+    public virtual void RestoreStrength()
     {
-        var index = runnerDamages.Damages.IndexOf(damage);
-        var newDamage = myDamages.Damages[index];
-        newDamage.damaged = true;
-        newDamage.damageTime = damage.damageTime;
-
-        if (damage.negativeGravityScale != 0f)
-            newDamage.negativeGravityScale = damage.negativeGravityScale;
-
-        StateMachine.ChangeState(stateToChangeTo);
-        StopCoroutine(RecoverRunner());
-        StartCoroutine(RecoverRunner());
-    }
-    public virtual IEnumerator RecoverRunner()
-    {
-        float totalDamageTime = 0f;
-        foreach (var myDamage in myDamages.DamageList())
+        switch (currentRacerType)
         {
-            totalDamageTime += myDamage.damageTime;
+            case RacerType.Player:
+                strength = playerData.maxStrength;
+                break;
+            case RacerType.Opponent:
+                strength = difficultyData.maxStrength;
+                break;
+            default:
+                break;
         }
-        Debug.Log($"Damage count is: {myDamages.DamageList().Count}");
-        yield return new WaitForSeconds(totalDamageTime);
-
-        if (myDamages.IsDamaged())
+    }
+    public virtual IEnumerator DamageEffects()
+    {
+        foreach (var damage in myDamages.DamageList())
         {
-            foreach (var myDamage in myDamages.DamageList())
-            {
-                //     var index = myDamages.Damages.IndexOf(damage);
-                myDamage.damaged = false;
-                myDamage.negativeGravityScale = 0f;
-            }
+            strength -= damage.damageStrength * (Time.deltaTime / 5);
+            strength = Mathf.Max(strength, 0);
+        }
+        if(strength <= 0)
+        {
+            movementVelocity = 0;
+            yield return new WaitForSeconds(3f);
             switch (currentRacerType)
             {
                 case RacerType.Player:
-                    StateMachine.ChangeState(playerStunState);
+                    StateMachine.ChangeDamagedState(playerNullState);
+                    StateMachine.ChangeState(playerDamageKnockDownState);
                     break;
                 case RacerType.Opponent:
-                    StateMachine.ChangeState(opponentStunState);
+                    StateMachine.ChangeDamagedState(opponentNullState);
+                    StateMachine.ChangeState(opponentDamageKnockDownState);
                     break;
                 default:
                     break;
             }
         }
     }
-    public virtual void DoDynamicDamage(RunnerDamagesOperator runnerDamages, DamageForm damage)
+    public virtual void ChangeToDamageState(RunnerDamagesOperator runnerDamages, DamageForm damage, State stateToChangeTo)
     {
-        if (!myDamages.SimilarDamages(runnerDamages))
-        {
-            var index = runnerDamages.Damages.IndexOf(damage);
-            var myNewDamage = myDamages.Damages[index];
-            myNewDamage.damaged = true;
-            myNewDamage.damageTime = damage.damageTime;
-            if (damage.negativeGravityScale != 0f)
-                myNewDamage.negativeGravityScale = damage.negativeGravityScale;
+        var index = runnerDamages.Damages.IndexOf(damage);
+        var newDamage = myDamages.Damages[index];
+        newDamage.damaged = true;
+        newDamage.damageStrength = damage.damageStrength;
 
-            foreach (var previousDamage in myDamages.DamageList())
+        StartCoroutine(DamageEffects());
+        StateMachine.ChangeDamagedState(stateToChangeTo);
+        //    StopCoroutine(RecoverRunner());
+        //     StartCoroutine(RecoverRunner());
+    }
+    public virtual void RecoverRunner()
+    {
+        Debug.Log($"Damage count is: {myDamages.DamageList().Count}");
+
+        if (myDamages.IsDamaged())
+        {
+            foreach (var myDamage in myDamages.DamageList())
             {
-                foreach (var newDamage in runnerDamages.DamageList())
-                {
-                    DynamicDamage(runnerDamages, previousDamage, newDamage);
-                    Debug.Log("Dynamic Damge has run!");
-                }
+                myDamage.damaged = false;
             }
         }
-        else
+    }
+    public virtual void DoDynamicDamage(RunnerDamagesOperator runnerDamages, DamageForm damage)
+    {
+        var index = runnerDamages.Damages.IndexOf(damage);
+        var myNewDamage = myDamages.Damages[index];
+        myNewDamage.damaged = true;
+        myNewDamage.damageStrength = damage.damageStrength;
+
+        foreach (var previousDamage in myDamages.DamageList())
         {
-            Debug.Log("There are similar damages!");
+            foreach (var newDamage in runnerDamages.DamageList())
+            {
+                DynamicDamage(runnerDamages, previousDamage, newDamage);
+                Debug.Log("Dynamic Damage has run!");
+            }
         }
 
     }
@@ -782,12 +825,26 @@ public class Racer : NetworkBehaviour
             {
                 if (boolArray[x, y])
                 {
-                    StopCoroutine(RecoverRunner());
-                    StartCoroutine(RecoverRunner());
-                    StateMachine.ChangeState(stateToChangeTo);
+                    StateMachine.ChangeDamagedState(stateToChangeTo);
 
                 }
             }
+        }
+    }
+    public virtual void StrengthBreak()
+    {
+        strength = 0f;
+        // play guage break animation
+        switch (currentRacerType)
+        {
+            case RacerType.Player:
+                StateMachine.ChangeState(playerDamageKnockDownState);
+                break;
+            case RacerType.Opponent:
+                StateMachine.ChangeState(opponentDamageKnockDownState);
+                break;
+            default:
+                break;
         }
     }
     void DynamicDamage(RunnerDamagesOperator runnerDamages, DamageForm previousDamage, DamageForm newDamage)
@@ -796,12 +853,12 @@ public class Racer : NetworkBehaviour
         var previousDamageIndex = myDamages.Damages.IndexOf(previousDamage);
         var newDamageIndex = runnerDamages.Damages.IndexOf(newDamage);
 
-        // create a matrix to determine the ralationship between the damages
+        // create a matrix to determine the relationship between the damages
         bool[,] damageMatrix = new bool[10, 10];
 
         damageMatrix[previousDamageIndex, newDamageIndex] = true;
-
-        CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
+        StrengthBreak();
+     //   CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
     }
     public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent)
     {
@@ -809,6 +866,22 @@ public class Racer : NetworkBehaviour
         return entity;
     }
     #endregion
+    public void Awaken()
+    {
+        switch (currentRacerType)
+        {
+            case RacerType.Player:
+                StateMachine.ChangeAwakenedState(playerAwakenedState);
+                break;
+            case RacerType.Opponent:
+                StateMachine.ChangeAwakenedState(opponentAwakenedState);
+                break;
+            default:
+                break;
+        }
+        awakenCount--;
+        canAwaken = false;
+    }
     public virtual void OnDrawGizmos()
     {
         switch (currentRacerType)
