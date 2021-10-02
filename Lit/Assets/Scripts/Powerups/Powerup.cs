@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,14 +19,14 @@ public class Powerup
     [SerializeField]
     public float duration;
 
-    
-    public bool isActive { get; set; }
-    
-    
-    public bool isSelected { get; set; }
-
-    [SerializeField]
+    public bool canBeMany;
     public bool isSelectable;
+
+    public PowerupID powerup;
+    public PowerupType powerupType;
+
+    public bool isActive { get; set; }
+    public bool isSelected { get; set; }
 
     [SerializeField]
     public PowerupEvent startAction;
@@ -38,48 +36,62 @@ public class Powerup
 
     [SerializeField]
     public PowerupEvent endAction;
-    
+
     [SerializeField]
-    public PowerupEvent selectedAction;
+    public PowerupEvent selectedStartAction;
+    [SerializeField]
+    public PowerupEvent selectedActiveAction;
+    [SerializeField]
+    public PowerupEvent selectedEndAction;
 
-    public PowerupID powerup;
-    public PowerupType powerupType;
 
-    public PowerupActions powerupActions { get; private set; }
+
+    public PowerupActions PowerupActions { get; private set; }
+
 
     public void ReassignOwner(GameObject gameObject)
     {
-        powerupActions = gameObject.GetComponent<PowerupActions>();
+        PowerupActions = gameObject.GetComponent<PowerupActions>();
         switch (powerup)
         {
             case PowerupID.SpeedUp:
-                startAction.AddListener(powerupActions.SpeedUpStartAction);
-                activeAction.AddListener(powerupActions.SpeedUpActiveAction);
-                endAction.AddListener(powerupActions.SpeedUpEndAction);
+                startAction.AddListener(PowerupActions.SpeedUpStartAction);
+                activeAction.AddListener(PowerupActions.SpeedUpActiveAction);
+                endAction.AddListener(PowerupActions.SpeedUpEndAction);
                 break;
             case PowerupID.Shield:
-                startAction.AddListener(powerupActions.ShieldStartAction);
-                endAction.AddListener(powerupActions.ShieldEndAction);
+                startAction.AddListener(PowerupActions.ShieldStartAction);
+                activeAction.AddListener(PowerupActions.ShieldActiveAction);
+                endAction.AddListener(PowerupActions.ShieldEndAction);
                 break;
             case PowerupID.ElementField:
-                startAction.AddListener(powerupActions.ElementFieldStartAction);
-                activeAction.AddListener(powerupActions.ElementFieldActiveAction);
-                endAction.AddListener(powerupActions.ElementFieldEndAction);
+                startAction.AddListener(PowerupActions.ElementFieldStartAction);
+                activeAction.AddListener(PowerupActions.ElementFieldActiveAction);
+                endAction.AddListener(PowerupActions.ElementFieldEndAction);
                 break;
             case PowerupID.Mine:
-                startAction.AddListener(powerupActions.MineStartAction);
-                activeAction.AddListener(powerupActions.MineActiveAction);
-                endAction.AddListener(powerupActions.MineEndAction);
+                startAction.AddListener(PowerupActions.MineStartAction);
+                activeAction.AddListener(PowerupActions.MineActiveAction);
+                endAction.AddListener(PowerupActions.MineEndAction);
                 break;
             case PowerupID.Projectile:
-                startAction.AddListener(powerupActions.ProjectileStartAction);
-                selectedAction.AddListener(powerupActions.ProjectileSelectedAction);
-                activeAction.AddListener(powerupActions.ProjectileActiveAction);
-                endAction.AddListener(powerupActions.ProjectileEndAction);
+                startAction.AddListener(PowerupActions.ProjectileStartAction);
+                activeAction.AddListener(PowerupActions.ProjectileActiveAction);
+                endAction.AddListener(PowerupActions.ProjectileEndAction);
+                selectedStartAction.AddListener(PowerupActions.ProjectileSelectedStartAction);
+                selectedActiveAction.AddListener(PowerupActions.ProjectileSelectedActiveAction);
+                selectedEndAction.AddListener(PowerupActions.ProjectileSelectedEndAction);
                 break;
             case PowerupID.Beam:
-                startAction.AddListener(powerupActions.BeamStartAction);
-                endAction.AddListener(powerupActions.BeamEndAction);
+                startAction.AddListener(PowerupActions.BeamStartAction);
+                endAction.AddListener(PowerupActions.BeamEndAction);
+                break;
+            case PowerupID.Bomb:
+                startAction.AddListener(PowerupActions.BombStartAction);
+                endAction.AddListener(PowerupActions.BombEndAction);
+                selectedStartAction.AddListener(PowerupActions.BombSelectedStartAction);
+                selectedActiveAction.AddListener(PowerupActions.BombSelectedActiveAction);
+                selectedEndAction.AddListener(PowerupActions.BombSelectedEndAction);
                 break;
             default:
                 break;
@@ -87,30 +99,31 @@ public class Powerup
     }
     public void Start(Racer racer)
     {
-        if (startAction != null)
-            startAction.Invoke(racer);
+            startAction?.Invoke(racer);
     }
     public void Active(Racer racer)
     {
-        if (activeAction != null)
-           if(isActive)
-                activeAction.Invoke(racer);
-    }
-    public void Selected(Racer racer)
-    {
-        if (selectedAction != null)
-        {
-            if (isSelected)
-            {
-                selectedAction.Invoke(racer);
-            }
-        }
+            if (isActive)
+                activeAction?.Invoke(racer);
     }
     public void End(Racer racer)
     {
-        if(endAction != null)
-            endAction.Invoke(racer);
-        
+            endAction?.Invoke(racer);
+    }
+    public void SelectedStart(Racer racer)
+    {
+            if (isSelected)
+                selectedStartAction?.Invoke(racer);
+    }
+    public void SelectedActive(Racer racer)
+    {
+            if (isSelected)
+                selectedActiveAction?.Invoke(racer);
+    }
+    public void SelectedEnd(Racer racer)
+    {
+            if (!isSelected)
+                selectedEndAction?.Invoke(racer);
     }
 
     public enum PowerupType
@@ -127,5 +140,6 @@ public class Powerup
         Mine,
         Projectile,
         Beam,
+        Bomb,
     }
 }

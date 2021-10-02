@@ -96,13 +96,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  playerDamageStates: []
+  opponentDamageStates: []
   currentRacerType: 1
   playerData: {fileID: 0}
   difficultyData: {fileID: 0}
   moveVelocityResource: 0
   movementVelocity: 0
+  normalizedMovementVelocity: 0
+  strengthResource: 0
+  strength: 0
+  awakenCount: 0
+  normalizedStrength: 0
   jumpVelocityResource: 0
   jumpVelocity: 0
+  normalizedJumpVelocity: 0
   runner:
     runner: {fileID: 0}
     stickman: {fileID: 0}
@@ -112,73 +120,68 @@ MonoBehaviour:
   testImage: {fileID: 0}
   runnerEffects:
     runnerVFX: {fileID: 0}
-    damagerType: 0
   VFXConnector: {fileID: 1035017148573032136}
   GroundCheck: {fileID: 5319341248167596168}
   litCheck: {fileID: 5319341248167596169}
   projectileArm: {fileID: 1209207703434183774}
+  bombArm: {fileID: 6559148140647445056}
   litPlatforms: []
   myDamages:
     fire:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     frost:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     poison:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     light:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     lightning:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     wind:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     magic:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     shadow:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     laser:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
     deathLaser:
       damageName: 
       damagerType: 0
       damaged: 0
-      damageTime: 0
-      negativeGravityScale: 0
+      damageStrength: 0
+    knockout:
+      damageName: 
+      damagerType: 0
+      damaged: 0
+      damageStrength: 0
     Damages: []
   enemyDifficulty: 0
   entityData: {fileID: 11400000, guid: f695cf9fa80505b48909a3c42af985c7, type: 2}
@@ -211,6 +214,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 388.839
       objectReference: {fileID: 0}
+    - target: {fileID: 1294715033, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.1242514
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294715033, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9922508
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294715033, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1785.725
+      objectReference: {fileID: 0}
     - target: {fileID: 1557495778, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.031718437
@@ -222,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 243142501825602294, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 805567055077427881, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -247,12 +262,12 @@ PrefabInstance:
     - target: {fileID: 1345783076833789586, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 1959375436217732387, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 36
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2124881514476788247, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -592,7 +607,7 @@ PrefabInstance:
     - target: {fileID: 5801405839098206740, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6007360986374658522, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -602,7 +617,7 @@ PrefabInstance:
     - target: {fileID: 6049798658232972131, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6245332916750453406, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -622,7 +637,7 @@ PrefabInstance:
     - target: {fileID: 7818827512287082817, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 8047081480006267897, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -669,6 +684,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a86df250a103f41adb07ddf0cd7c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6559148140647445056 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2827845242845862735, guid: 5ef45f225d846f446896bf8ad947b75a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8950974900402612495}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1209207703434183774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7854198312653761873, guid: 5ef45f225d846f446896bf8ad947b75a,

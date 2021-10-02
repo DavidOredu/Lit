@@ -164,6 +164,7 @@ public class Stickman : MonoBehaviour
                     {
                         renderer.material = auraMaterial;
                         renderer.color = currentColor.color;
+                        renderer.gameObject.SetActive(false);
                     }
                     return;
                 }

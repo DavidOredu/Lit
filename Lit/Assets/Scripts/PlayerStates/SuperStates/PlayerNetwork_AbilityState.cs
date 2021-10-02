@@ -68,9 +68,9 @@ public class PlayerNetwork_AbilityState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        attackInput = racer.inputHandler.AttackInput;
-        XInput = racer.inputHandler.NormalizedInputX;
-        jumpInputStop = racer.inputHandler.JumpInputStop;
+        attackInput = racer.InputHandler.AttackInput;
+        XInput = racer.InputHandler.NormalizedInputX;
+        jumpInputStop = racer.InputHandler.JumpInputStop;
         
     }
 

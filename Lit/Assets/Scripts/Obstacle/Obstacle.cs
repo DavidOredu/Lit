@@ -29,8 +29,9 @@ public class Obstacle : MonoBehaviour
                 if (other.collider.CompareTag("Player") || other.collider.CompareTag("Opponent"))
                 {
                     Racer racer = other.collider.GetComponent<Racer>();
-                    racer.movementVelocity -= obstacleData.speedReduction;
 
+                    racer.movementVelocity -= obstacleData.speedReduction;
+                    BreakObstacle();
                     Destroy(gameObject);
                     // place a camera shake effect
                     // tell the player to turn the move state bool to false
@@ -51,6 +52,19 @@ public class Obstacle : MonoBehaviour
                     runnerDamages.laser.damageStrength = obstacleData.laserDamageStrength;
                     racer.transform.SendMessage("DamageRunner", runnerDamages);
                     // TODO: play particle hit animation
+                    ExplodeLaserOrb();
+                    Destroy(gameObject);
+                }
+                break;
+            #endregion
+
+            #region Released Laser Barricade
+            case ObstacleType.ReleasedLaserBarricade:
+                if(other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent")
+                {
+                    var racer = other.collider.GetComponent<Racer>();
+                    racer.movementVelocity -= obstacleData.speedReduction;
+                    DestroyBarricade();
                     Destroy(gameObject);
                 }
                 break;
@@ -109,6 +123,7 @@ public class Obstacle : MonoBehaviour
                 {
                     var racer = other.collider.GetComponent<Racer>();
                     runnerDamages.deathLaser.damaged = true;
+                    runnerDamages.deathLaser.damageInt = 9;
                     racer.transform.SendMessage("DamageRunner", runnerDamages);
                 }
                     break;
@@ -140,7 +155,22 @@ public class Obstacle : MonoBehaviour
                 #endregion
         }
     }
-
+    public void BreakObstacle()
+    {
+        // play destroy animation
+        // destroy gamobject
+    }
+    public void ExplodeLaserOrb()
+    {
+        // play laser explosion animation
+        gameObject.SetActive(false);
+        //destroy gameobject
+    }
+    public void DestroyBarricade()
+    {
+        // play barricade destruction animation
+        // destroy gameobject
+    }
     public enum ObstacleType
     {
         Breakable,

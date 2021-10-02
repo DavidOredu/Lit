@@ -3,7 +3,7 @@ using UnityEngine.UI;
 //[ExecuteInEditMode]
 public class BeamProjectileScript : MonoBehaviour
 {
-
+    public Racer ownerRacer;
     [Header("Prefabs")]
     public GameObject[] beamLineRendererPrefab;
     public GameObject[] beamStartPrefab;
@@ -28,7 +28,7 @@ public class BeamProjectileScript : MonoBehaviour
     public float textureLengthScale = 3; //Length of the beam texture
     public float growthSpeed = 100f;
 
-    public int damageStrength;
+    public float damageStrength;
 
     [Header("Put Sliders here (Optional)")]
     public Slider endOffSetSlider; //Use UpdateEndOffset function on slider
@@ -99,10 +99,12 @@ public class BeamProjectileScript : MonoBehaviour
         {
             end = hit.point;
 
-            if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Opponent")) && damageType != hit.collider.gameObject.GetComponent<Racer>().runner.stickmanNet.code)
+            if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Opponent")))
             {
                 runnerDamages.Damages[damageType].damaged = true;
+                runnerDamages.Damages[damageType].damageInt = damageType;
                 runnerDamages.Damages[damageType].damageStrength = damageStrength;
+                runnerDamages.Damages[damageType].racer = ownerRacer;
                 hit.collider.transform.SendMessage("DamageRunner", runnerDamages);
             }
         }

@@ -85,6 +85,7 @@ public class Enemy_RevivedState : Enemy_AbilityState
     {
         base.PhysicsUpdate();
 
-        revivedStateTimer.UpdateTimer();
+        if (!revivedStateTimer.isTimeUp)
+            revivedStateTimer.UpdateTimer();
     }
 }

@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using DapperDino.Mirror.Tutorials.Lobby;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPowerup : MonoBehaviour
 {
-    Opponent opponent;
+    GamePlayerLobby gamePlayer;
     public PowerupBehaviour powerupBehaviour { get; set; }
     // Start is called before the first frame update
     void Start()
     {
-        opponent = transform.root.gameObject.GetComponent<Opponent>();
+        gamePlayer = transform.root.gameObject.GetComponent<GamePlayerLobby>();
     }
 
     // Update is called once per frame
@@ -19,12 +20,20 @@ public class EnemyPowerup : MonoBehaviour
     }
     public void UsePowerup()
     {
-        if (opponent == null)
-            opponent = transform.root.GetComponent<Opponent>();
+        if (gamePlayer == null)
+            gamePlayer = transform.root.GetComponent<GamePlayerLobby>();
         if(powerupBehaviour == null) { return; }
-        powerupBehaviour.ActivatePowerup();
-
-        opponent.powerup = null;
+        if (!gamePlayer.racer.canUsePowerup) { return; }
+        if (gamePlayer.powerup.isSelectable)
+        {
+            gamePlayer.powerup.SelectedStart(gamePlayer.racer);
+        }
+        else
+        {
+            powerupBehaviour.ActivatePowerup();
+        }
+        
+        gamePlayer.powerup = null;
         powerupBehaviour = null;
         
     }

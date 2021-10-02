@@ -21,9 +21,9 @@ public class D_DifficultyData : ScriptableObject
     public float minIdleTime = .5f;
     public float maxIdleTime = 3f;
 
-    [Header("STUN STATE")]
-    public float laserStunTime = 4f;
-    public float wallStunTime = 3f;
+    [Header("DAMAGE KNOCKDOWN STATE")]
+    public float knockoutTime = 4f;
+    public float ultimateDamageKnockoutTime = 10f;
 
     [Header("REVIVED STATE")]
     public float invulnerabilityTimer = 5f;
@@ -37,8 +37,8 @@ public class D_DifficultyData : ScriptableObject
 
     [Header("LIT VARIABLES")]
     public float jumpAddition;
-    public float litSpeedUpLimit;
-    public float litSlowDownLimit;
+    public float litSpeedUpPercentage = .5f;
+    public float litSlowDownPercentage = .3f;
     public float otherOnLitIncreaseValue;
     public float litSpeedAlterRate = 6f;
 

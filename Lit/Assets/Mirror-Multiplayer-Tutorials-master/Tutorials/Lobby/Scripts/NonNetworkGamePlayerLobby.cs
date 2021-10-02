@@ -5,6 +5,7 @@ using DapperDino.Mirror.Tutorials.Lobby;
 
 public class NonNetworkGamePlayerLobby : GamePlayerLobby
 {
+    
     public override void Update()
     {
         base.Update();

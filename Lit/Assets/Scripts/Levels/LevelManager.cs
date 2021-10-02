@@ -115,7 +115,6 @@ public class LevelManager : Singleton<LevelManager>
                 //-------LOADING THE LEVEL AND OVERWRITING-------//
 
                 //Get the position of the level to overwrite with the saved level data
-                var factor = currentMap.Count;
                 var mapPos = mapsList.IndexOf(currentMap);
                 var pos = currentMap.IndexOf(currentLevel);
 
@@ -141,7 +140,7 @@ public class LevelManager : Singleton<LevelManager>
 
                 // Get neccessary components and set them 
                 var levelButtonComponent = levelButton.GetComponent<LevelButton>();
-                levelButtonComponent.levelButton = levelButton.GetComponent<Button>();
+                levelButtonComponent.button = levelButton.GetComponent<Button>();
                 levelButtonComponent.levelText = levelButton.transform.Find("LevelText").GetComponent<TextMeshProUGUI>();
                 levelButtonComponent.gameModeImage = levelButton.transform.Find("GameModeImage").GetComponent<Image>();
                 levelButtonComponent.level = currentLevel;
@@ -250,8 +249,8 @@ public class LevelManager : Singleton<LevelManager>
     public void EnterLevel(LevelButton levelButtonComponent)
     {
         MapHandler mapHandler = new MapHandler(levelButtonComponent.level.levelScene, levelButtonComponent.level.numberOfRounds);
-        levelButtonComponent.levelButton.onClick.AddListener(() => levelLoader.LoadLevel(mapHandler.MapLevel(levelButtonComponent.level.levelPos)));
-        levelButtonComponent.levelButton.onClick.AddListener(() => levelButtonComponent.level.ChangeGameMode());
-        levelButtonComponent.levelButton.onClick.AddListener(() => UIManager.instance.UpdateUI(100));
+      //  levelButtonComponent.levelButton.onClick.AddListener(() => levelLoader.LoadLevel(mapHandler.MapLevel(levelButtonComponent.level.levelPos)));
+        levelButtonComponent.button.onClick.AddListener(() => levelButtonComponent.level.ChangeGameMode());
+        levelButtonComponent.button.onClick.AddListener(() => UIManager.instance.UpdateUI(100));
     }
 }

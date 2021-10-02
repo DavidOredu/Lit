@@ -2,6 +2,7 @@
 
 public class MagicProjectileScript : MonoBehaviour
 {
+    public Racer ownerRacer { get; set; }
     public GameObject impactParticle;
     public GameObject projectileParticle;
     public GameObject muzzleParticle;
@@ -9,6 +10,8 @@ public class MagicProjectileScript : MonoBehaviour
     [HideInInspector]
     public Vector3 impactNormal; //Used to rotate impactparticle.
 
+    public bool hasFired = false;
+    public bool canControl = true;
     private bool hasCollided = false;
 
     public float speed = 0f;
@@ -21,7 +24,7 @@ public class MagicProjectileScript : MonoBehaviour
     private RunnerDamagesOperator runnerDamages;
 
     public int damageType;
-    public int damageStrength;
+    public float damageStrength;
     public Rigidbody2D rb { get; private set; }
 
     Timer lifetimeTimer;
@@ -51,26 +54,28 @@ public class MagicProjectileScript : MonoBehaviour
         }
         if (lifetimeTimer.isTimeUp && !hasCollided)
         {
-            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z)));
-
             Collide(true);
         }
     }
     private void Update()
     {
+        var thisCollider = GetComponent<CircleCollider2D>();
+        var runnerCollider = ownerRacer.GetComponent<CapsuleCollider2D>();
+   //     Physics2D.IgnoreCollision(thisCollider, runnerCollider, true);
         if (!hasCollided)
         {
             //   rb.AddForce(direction * speed);
             rb.velocity = direction * speed;
         }
     }
-    void Collide(bool collideWithDamage)
+    public void Collide(bool collideWithDamage, Collision2D hit = null)
     {
-
-
         hasCollided = true;
-        //  transform.DetachChildren();
-        //Debug.DrawRay(hit.contacts[0].point, hit.contacts[0].normal * 1, Color.yellow);
+        if(hit == null)
+            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z)));
+        else
+            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(hit.transform.rotation.x, hit.transform.rotation.y, hit.transform.rotation.z)));
+
         var hitObjects = Physics2D.OverlapCircleAll(transform.position, damageRadius);
         foreach (var hitObject in hitObjects)
         {
@@ -82,17 +87,26 @@ public class MagicProjectileScript : MonoBehaviour
             if (collideWithDamage)
             {
                 // take the player to the appropriate reaction 
-                if ((hitObject.gameObject.tag == "Player" || hitObject.gameObject.tag == "Opponent") && hitObject.gameObject.GetComponent<Racer>().runner.stickmanNet.code != damageType)
+                if (hitObject.gameObject.tag == "Player" || hitObject.gameObject.tag == "Opponent")
                 {
                     // damage hit object
-                    runnerDamages.Damages[damageType].damaged = true;
-                    runnerDamages.Damages[damageType].damageStrength = damageStrength;
-                    hitObject.transform.SendMessage("DamageRunner", runnerDamages);
+                    Utils.SetDamageVariables(runnerDamages, ownerRacer, damageType, damageStrength, hitObject.gameObject);
                 }
             }
         }
 
-
+        if (canControl)
+        {
+            if (ownerRacer.GamePlayer.enemyPowerup == null)
+            {
+                ownerRacer.GamePlayer.powerupButton.UsePowerup(false);
+                ownerRacer.GamePlayer.powerupButton.UsePowerup(true);
+            }
+            else if(ownerRacer.GamePlayer.powerupButton == null)
+            {
+                ownerRacer.GamePlayer.enemyPowerup.UsePowerup();
+            }
+        }
 
         //yield WaitForSeconds (0.05);
         foreach (GameObject trail in trailParticles)
@@ -127,26 +141,40 @@ public class MagicProjectileScript : MonoBehaviour
             {
                 if (hit.collider.gameObject.GetComponent<Racer>().runner.stickmanNet.code != damageType)
                 {
-                    impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(hit.transform.rotation.x, hit.transform.rotation.y, hit.transform.rotation.z)));
-
-                    Collide(true);
+                    Collide(true, hit);
                 }
                 else
                 {
-                    Physics2D.IgnoreCollision(hit.collider, hit.otherCollider);
+                    Physics2D.IgnoreCollision(hit.collider, hit.otherCollider, true);
                 }
             }
-            else if(hit.collider.CompareTag("Projectile"))
-            {
-                impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(hit.transform.rotation.x, hit.transform.rotation.y, hit.transform.rotation.z)));
+            //else if(hit.collider.CompareTag("Projectile"))
+            //{
+            //    impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(hit.transform.rotation.x, hit.transform.rotation.y, hit.transform.rotation.z)));
 
-                Collide(false);
-            }    
+            //    Collide(false);
+            //}
+            else if (hit.collider.CompareTag("Obstacle"))
+            {
+                var obstacle = hit.collider.GetComponent<Obstacle>();
+
+                Collide(false, hit);
+                if (obstacle.currentObstacleType == Obstacle.ObstacleType.Breakable)
+                {
+                    obstacle.BreakObstacle();
+                }
+                else if (obstacle.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
+                {
+                    obstacle.ExplodeLaserOrb();
+                }
+                else if (obstacle.currentObstacleType == Obstacle.ObstacleType.ReleasedLaserBarricade)
+                {
+                    obstacle.DestroyBarricade();
+                }
+            }
             else
             {
-                impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, new Vector3(hit.transform.rotation.x, hit.transform.rotation.y, hit.transform.rotation.z)));
-
-                Collide(true);
+                Collide(false, hit);
             }
         }
     }

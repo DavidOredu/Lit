@@ -26,11 +26,15 @@ public class PlayerNetwork_KnockedDownState : State
     public override void Enter()
     {
         base.Enter();
+
+            racer.canUsePowerup = false;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+            racer.canUsePowerup = true;
     }
 
     public override void LateUpdate()

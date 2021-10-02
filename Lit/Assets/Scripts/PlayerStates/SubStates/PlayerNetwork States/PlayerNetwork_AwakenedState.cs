@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerNetwork_AwakenedState : State
 {
+    public bool canUseAbility = false;
     public PlayerNetwork_AwakenedState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {
     }
-
+    
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
@@ -27,18 +28,36 @@ public class PlayerNetwork_AwakenedState : State
     {
         base.Enter();
 
-        //slo-mo effect
-        // damage surrounding runners
-        //use ability
-        // power up effect
-        // vfx open
-        //instantiate damage prefab
-        //start activated state timer and control in the cyclic progress bar in the game
+        racer.isAwakened = true;
+
+        // make the powerups infinte if we are already in our homeland
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID)
+            {
+                if (racer.GamePlayer.powerup.canBeMany)
+                {
+                    racer.GamePlayer.powerupButton.powerupBehaviour.powerupAmmo = int.MaxValue;
+                }
+            }
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        racer.isAwakened = false;
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID)
+            {
+                if (racer.GamePlayer.powerup.canBeMany)
+                {
+                    racer.GamePlayer.powerupButton.powerupBehaviour.powerupAmmo = 3;
+                }
+            }
+        }
     }
 
     public override void LateUpdate()
@@ -70,5 +89,12 @@ public class PlayerNetwork_AwakenedState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if (canUseAbility)
+        {
+            racer.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
+            canUseAbility = false;
+        }
     }
+    
 }

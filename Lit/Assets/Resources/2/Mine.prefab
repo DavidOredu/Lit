@@ -14210,6 +14210,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 406284}
+  - component: {fileID: 5960669809880381081}
+  - component: {fileID: 8012027980020190557}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -14236,6 +14238,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5960669809880381081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4519732ff3fb29a4891a0edfe62a8c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: 0
+  damageStrength: 0
+  explosiveForce: 0
+  explosiveRadius: 0
+  upwardsModifier: 0
+  forceMode: 1
+--- !u!58 &8012027980020190557
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139782}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &168800
 GameObject:
   m_ObjectHideFlags: 0

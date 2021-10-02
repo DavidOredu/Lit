@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using DapperDino.Mirror.Tutorials.Lobby;
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,6 +84,8 @@ public class Racer : NetworkBehaviour
     public PlayerData playerData;
     // The opponent data and stats holder for the opponent object, in case its an opponent racer
     public D_DifficultyData difficultyData;
+    public AwakenedData awakenedData;
+    public PowerupData powerupData;
 
 
     public event Action OnLitPlatformChanged;
@@ -91,11 +94,13 @@ public class Racer : NetworkBehaviour
     protected LitPlatformHandler litHandler;
 
     public bool[,] damageMatrix;
+
     #region State Variables
     // move variables related to the player 
     [Header("Move State")]
     public float moveVelocityResource;
     public float movementVelocity;
+    public float alteredVelocity;
     public float normalizedMovementVelocity;
     public float strengthResource;
     public float strength;
@@ -116,15 +121,21 @@ public class Racer : NetworkBehaviour
     public bool isOnLit { get; private set; }
     public bool isStayingOnLit { get; private set; }
     public bool hasJustLeftLitplatform { get; private set; }
-    public bool canSpeedUp { get; private set; }
+    public bool canAlterSpeed { get; private set; }
     public bool timeToReset { get; private set; }
     public bool isOnPower { get; private set; }
     public bool isInvulnerable { get; set; } = false;
+    public bool canUsePowerup { get; set; } = true;
+    public bool isAwakened = false;
     public bool overdrive { get; private set; }
     public bool canAwaken { get; set; }
+    public bool canSpawnDust { get; set; } = false;
+    private bool isFastOnPlatform = false;
+    private bool isSlowOnPlatform = false;
 
     public Runner runner;
     #endregion
+
     public LitPlatformNetwork litPlatform { get; private set; }
     protected PoweredPlatform poweredPlatform;
 
@@ -141,12 +152,13 @@ public class Racer : NetworkBehaviour
     public Animator Anim { get; private set; }
     // public GameManager GM { get; private set; }
     public Rigidbody2D RB { get; private set; }
-    public PlayerInputHandlerNetwork inputHandler { get; set; }
+    public PlayerInputHandlerNetwork InputHandler { get; set; }
     #endregion
     #region Check Variables   
     public Transform GroundCheck;
     public Transform litCheck;
     public Transform projectileArm;
+    public Transform bombArm;
 
     public List<LitPlatformNetwork> litPlatforms = new List<LitPlatformNetwork>();
     #endregion
@@ -162,8 +174,11 @@ public class Racer : NetworkBehaviour
     public int FacingDirection { get; private set; }
     #endregion
     public GameObject powerupManager { get; set; }
+    public GamePlayerLobby GamePlayer { get; set; }
 
     public RunnerDamagesOperator myDamages;
+
+
     public virtual void Awake()
     {
         StateMachine = new FiniteStateMachine();
@@ -216,7 +231,7 @@ public class Racer : NetworkBehaviour
 
         isOnAnotherLit = false;
         overdrive = false;
-        canSpeedUp = false;
+        canAlterSpeed = false;
         hasJustLeftLitplatform = false;
         switch (currentRacerType)
         {
@@ -229,10 +244,12 @@ public class Racer : NetworkBehaviour
             default:
                 break;
         }
-        
+
+
 
         var runnerEffectComp = transform.Find("RunnerEffects").GetComponent<VisualEffect>();
         runnerEffects = new RunnerEffects(runnerEffectComp);
+
         runnerEffects.runnerVFX.Stop();
     }
 
@@ -240,7 +257,7 @@ public class Racer : NetworkBehaviour
     [Client]
     public virtual void Update()
     {
-        ChangeStatsWhileOnLit();
+      //  ChangeStatsWhileOnLit();
         ResetOverdrive();
         CheckAwakenStateRequirements();
         if (myDamages.IsDamaged())
@@ -262,6 +279,10 @@ public class Racer : NetworkBehaviour
         {
             runnerEffects.runnerVFX.Stop();
         }
+        if (awakenedData == null)
+            awakenedData = Resources.Load<AwakenedData>($"{runner.stickmanNet.code}/AwakenedData");
+        if (powerupData == null)
+            powerupData = Resources.Load<PowerupData>($"{runner.stickmanNet.code}/PowerupData");
     }
     [Client]
     public virtual void LateUpdate()
@@ -315,16 +336,16 @@ public class Racer : NetworkBehaviour
             var newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
             movementVelocity = newMoveVelocityNormalized * playerData.topSpeed;
         }
-     //   var newJumpVelocityNormalized = playerData.speedToJumpVelocityCurve.Evaluate(normalizedMovementVelocity);
-     //   jumpVelocity = newJumpVelocityNormalized * playerData.maxJumpVelocity;
-        
-            var flooredMoveVelocity = Mathf.Floor(normalizedMovementVelocity);
-            var afterDecimal = normalizedMovementVelocity - flooredMoveVelocity;
-            var newJumpVelocityNormalized2 = playerData.speedToJumpVelocityCurve.Evaluate(afterDecimal);
-            jumpVelocity = (newJumpVelocityNormalized2 + flooredMoveVelocity) * playerData.maxJumpVelocity;
-        
+        //   var newJumpVelocityNormalized = playerData.speedToJumpVelocityCurve.Evaluate(normalizedMovementVelocity);
+        //   jumpVelocity = newJumpVelocityNormalized * playerData.maxJumpVelocity;
+
+        var flooredMoveVelocity = Mathf.Floor(normalizedMovementVelocity);
+        var afterDecimal = normalizedMovementVelocity - flooredMoveVelocity;
+        var newJumpVelocityNormalized2 = playerData.speedToJumpVelocityCurve.Evaluate(afterDecimal);
+        jumpVelocity = (newJumpVelocityNormalized2 + flooredMoveVelocity) * playerData.maxJumpVelocity;
+
     }
- 
+
     #endregion
 
     #region Set Functions
@@ -346,7 +367,7 @@ public class Racer : NetworkBehaviour
         {
             case RacerType.Player:
                 movementVelocity += accelRatePerSec * Time.deltaTime;
-     //           jumpVelocity += accelRatePerSec * Time.deltaTime;
+                //           jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRate = accelRatePerSec;
                 playerData.knockbackVelocity.x += knockbackAccelRate * Time.deltaTime;
                 playerData.knockbackVelocity.y += knockbackAccelRate * Time.deltaTime;
@@ -354,11 +375,11 @@ public class Racer : NetworkBehaviour
                 playerData.knockbackVelocity.x = Mathf.Min(playerData.knockbackVelocity.x, playerData.maxKnockbackVelocity.x);
                 playerData.knockbackVelocity.y = Mathf.Min(playerData.knockbackVelocity.y, playerData.maxKnockbackVelocity.y);
                 movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-    //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+                //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
                 break;
             case RacerType.Opponent:
                 movementVelocity += accelRatePerSec * Time.deltaTime;
-    //            jumpVelocity += accelRatePerSec * Time.deltaTime;
+                //            jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRateO = accelRatePerSec * 0.667f;
                 difficultyData.knockbackVelocity.x += knockbackAccelRateO * Time.deltaTime;
                 difficultyData.knockbackVelocity.y += knockbackAccelRateO * Time.deltaTime;
@@ -366,7 +387,7 @@ public class Racer : NetworkBehaviour
                 difficultyData.knockbackVelocity.x = Mathf.Min(difficultyData.knockbackVelocity.x, difficultyData.maxKnockbackVelocity.x);
                 difficultyData.knockbackVelocity.y = Mathf.Min(difficultyData.knockbackVelocity.y, difficultyData.maxKnockbackVelocity.y);
                 movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-    //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+                //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
                 break;
             default:
                 break;
@@ -385,13 +406,13 @@ public class Racer : NetworkBehaviour
     public virtual void SetBrakes()
     {
         movementVelocity += brakeRatePerSec * Time.deltaTime;
-    //    jumpVelocity = 0f;
+        //    jumpVelocity = 0f;
         movementVelocity = Mathf.Max(movementVelocity, 0);
     }
     public virtual void SetStop()
     {
         movementVelocity = 0f;
-    //    jumpVelocity = 0f;
+        //    jumpVelocity = 0f;
     }
     #endregion
 
@@ -407,12 +428,12 @@ public class Racer : NetworkBehaviour
                 if (!isOnLit)
                 {
                     timeToReset = false;
+                    canAlterSpeed = true;
                     hasJustLeftLitplatform = false;
-                    canSpeedUp = false;
                     //   if (!hasAuthority) { return; }
                     litPlatform = other.gameObject.GetComponent<LitPlatformNetwork>();
 
-                    litHandler.litPlatform = litPlatform;
+                    OnLitPlatformChanged?.Invoke();
 
                     networkIdentity = other.gameObject.GetComponent<NetworkIdentity>();
 
@@ -425,12 +446,15 @@ public class Racer : NetworkBehaviour
                             litHandler.UpdateColor();
                             Debug.Log("Trying to run Update Color Logic!");
                             litPlatform.colorStateCode.colorID = runner.stickmanNet.currentColor.colorID;
+                            litPlatform.isLit = true;
+                            // litPlatform.colorStateCode.colorID = runner.stickmanNet.currentColor.colorID;
+                            //  litHandler.litPlatform.colorStateCode.colorID = runner.stickmanNet.currentColor.colorID;
                         }
 
 
                     }
-
-                    // add litplatforms to list of your own litplatforms
+                   
+                    // add litplatform to list of your own litplatforms
                     if (!litPlatforms.Contains(litPlatform) && litPlatform.colorStateCode.colorID == runner.stickmanNet.currentColor.colorID)
                     {
                         litPlatforms.Add(litPlatform);
@@ -441,7 +465,6 @@ public class Racer : NetworkBehaviour
                     {
                         BlackOverrider.instance.Override();
                     }
-
                     isOnLit = true;
 
                     // speed up or slow down
@@ -464,7 +487,7 @@ public class Racer : NetworkBehaviour
     {
         if (other.collider.CompareTag("LitPlatform"))
         {
-            other.gameObject.GetComponent<LitPlatformNetwork>();
+           
         }
     }
     public virtual void OnCollisionExit2D(Collision2D other)
@@ -472,7 +495,6 @@ public class Racer : NetworkBehaviour
         if (other.collider.CompareTag("LitPlatform"))
         {
             hasJustLeftLitplatform = true;
-            canSpeedUp = true;
         }
     }
 
@@ -511,13 +533,16 @@ public class Racer : NetworkBehaviour
     }
     public virtual void WaitToChangeStats(LitPlatformNetwork litPlatform)
     {
-        if (runner.stickmanNet.currentColor.colorID == litPlatform.colorStateCode.colorID && litPlatform.isLit)
+        if (litPlatform.isLit)
         {
-            SpeedUp();
-        }
-        else
-        {
-            SlowDown();
+            if (runner.stickmanNet.currentColor.colorID == litPlatform.colorStateCode.colorID)
+            {
+                SpeedUp();
+            }
+            else
+            {
+                SlowDown();
+            }
         }
     }
     public virtual void Flip()
@@ -529,7 +554,7 @@ public class Racer : NetworkBehaviour
     {
         return Physics2D.OverlapCircle(GroundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
     }
-    public RaycastHit2D LitPlatformRaycast()
+    private RaycastHit2D LitPlatformRaycast()
     {
         Debug.DrawRay(transform.position, Vector2.down * playerData.litCheckDistance, Color.green);
         return Physics2D.Raycast(litCheck.position, Vector2.down, playerData.litCheckDistance, playerData.whatIsLit);
@@ -552,7 +577,6 @@ public class Racer : NetworkBehaviour
     public virtual void Reseter()
     {
         ResetStats();
-        canSpeedUp = false;
     }
 
 
@@ -564,74 +588,82 @@ public class Racer : NetworkBehaviour
         switch (currentRacerType)
         {
             case RacerType.Player:
-                moveVelocityResource = playerData.topSpeed;
-                jumpVelocityResource = playerData.maxJumpVelocity;
-                jumpVelocityResource += playerData.jumpAddition;
-                moveVelocityResource = playerData.topSpeed + playerData.litSpeedUpLimit;
+             //   moveVelocityResource = Utils.PercentageIncreaseOrDecrease(playerData.topSpeed, playerData.litSpeedUpPercentage, Utils.AlterType.Increase);
+               moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, playerData.litSpeedUpPercentage);
                 break;
             case RacerType.Opponent:
-                moveVelocityResource = difficultyData.topSpeed;
-                jumpVelocityResource = difficultyData.maxJumpVelocity;
-                jumpVelocityResource += difficultyData.jumpAddition;
-                moveVelocityResource = difficultyData.topSpeed + difficultyData.litSpeedUpLimit;
+              //  moveVelocityResource = Utils.PercentageIncreaseOrDecrease(playerData.topSpeed, difficultyData.litSpeedUpPercentage, Utils.AlterType.Increase);
+                moveVelocityResource += Utils.PercentageValue(difficultyData.topSpeed, difficultyData.litSpeedUpPercentage);
                 break;
             default:
                 break;
         }
+        isFastOnPlatform = true;
+        isSlowOnPlatform = false;
     }
     public virtual void SlowDown()
     {
         switch (currentRacerType)
         {
             case RacerType.Player:
-                moveVelocityResource = playerData.topSpeed;
-                jumpVelocityResource = playerData.maxJumpVelocity;
-                moveVelocityResource = playerData.topSpeed - playerData.litSlowDownLimit;
+            //    moveVelocityResource = Utils.PercentageIncreaseOrDecrease(playerData.topSpeed, playerData.litSlowDownPercentage, Utils.AlterType.Decrease);
+                moveVelocityResource -= Utils.PercentageValue(playerData.topSpeed, playerData.litSlowDownPercentage);
                 break;
             case RacerType.Opponent:
-                moveVelocityResource = difficultyData.topSpeed;
-                jumpVelocityResource = difficultyData.maxJumpVelocity;
-                moveVelocityResource = difficultyData.topSpeed - difficultyData.litSlowDownLimit;
+             //   moveVelocityResource = Utils.PercentageIncreaseOrDecrease(playerData.topSpeed, difficultyData.litSlowDownPercentage, Utils.AlterType.Decrease);
+                moveVelocityResource -= Utils.PercentageValue(difficultyData.topSpeed, difficultyData.litSlowDownPercentage);
                 break;
             default:
                 break;
         }
+        isFastOnPlatform = false;
+        isSlowOnPlatform = true;
+    }
+    private void ResetSpeedBools()
+    {
+        if (!isOnLit)
+        {
+            isFastOnPlatform = false;
+            isSlowOnPlatform = false;
+        }
     }
     public virtual void ResetStats()
     {
+      //  float newMoveVelocity = 0;
         switch (currentRacerType)
         {
             case RacerType.Player:
-                if (moveVelocityResource < playerData.topSpeed && timeToReset)
+                if (isSlowOnPlatform)
                 {
-                    moveVelocityResource += playerData.litSpeedAlterRate * Time.deltaTime;
-                    moveVelocityResource = Mathf.Min(moveVelocityResource, playerData.topSpeed);
+                    //newMoveVelocity = moveVelocityResource + Utils.PercentageValue(playerData.topSpeed, playerData.litSlowDownPercentage);
+                    //moveVelocityResource += playerData.litSpeedAlterRate * Time.deltaTime;
+                    //moveVelocityResource = Mathf.Min(moveVelocityResource, newMoveVelocity);
+                    moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, playerData.litSlowDownPercentage);
                 }
-                if (moveVelocityResource > playerData.topSpeed && timeToReset)
+                else if (isFastOnPlatform)
                 {
-                    moveVelocityResource -= playerData.litSpeedAlterRate * Time.deltaTime;
-                    moveVelocityResource = Mathf.Max(moveVelocityResource, playerData.topSpeed);
-
+                    //newMoveVelocity = moveVelocityResource - Utils.PercentageValue(playerData.topSpeed, playerData.litSpeedUpPercentage);
+                    //moveVelocityResource -= playerData.litSpeedAlterRate * Time.deltaTime;
+                    //moveVelocityResource = Mathf.Max(moveVelocityResource, newMoveVelocity);
+                    moveVelocityResource -= Utils.PercentageValue(playerData.topSpeed, playerData.litSpeedUpPercentage);
                 }
-                if (moveVelocityResource == playerData.topSpeed && timeToReset)
+             //   if(moveVelocityResource == newMoveVelocity)
                 {
-                    timeToReset = false;
+                    ResetSpeedBools();
                 }
                 jumpVelocityResource = playerData.maxJumpVelocity;
                 break;
             case RacerType.Opponent:
-                if (moveVelocityResource < difficultyData.topSpeed && timeToReset)
+                if (isSlowOnPlatform)
                 {
-                    moveVelocityResource += difficultyData.litSpeedAlterRate * Time.deltaTime;
-                    moveVelocityResource = Mathf.Min(moveVelocityResource, difficultyData.topSpeed);
+                    moveVelocityResource += Utils.PercentageValue(difficultyData.topSpeed, difficultyData.litSlowDownPercentage);
                 }
-                if (moveVelocityResource > difficultyData.topSpeed && timeToReset)
+                else if (isFastOnPlatform)
                 {
-                    moveVelocityResource -= difficultyData.litSpeedAlterRate * Time.deltaTime;
-                    moveVelocityResource = Mathf.Max(moveVelocityResource, difficultyData.topSpeed);
+                    moveVelocityResource -= Utils.PercentageValue(difficultyData.topSpeed, difficultyData.litSpeedUpPercentage);
 
                 }
-                if (moveVelocityResource == difficultyData.topSpeed && timeToReset)
+                
                 {
                     timeToReset = false;
                 }
@@ -718,6 +750,8 @@ public class Racer : NetworkBehaviour
     #region Damage Functions
     public virtual void DamageRunner(RunnerDamagesOperator runnerDamages)
     {
+        //completely ignore damaging if is invulnerable
+        if (isInvulnerable || runnerDamages.DamageList()[0].damageInt == runner.stickmanNet.currentColor.colorID) { return; }
         //check if the runner is previously damaged, and if so do damage again, this time instantly depleting the runner's stamina and knocking him out
         if (myDamages.IsDamaged())
         {
@@ -735,6 +769,11 @@ public class Racer : NetworkBehaviour
                 ChangeToDamageState(runnerDamages, damage, damageStates[currentRacerType][runnerDamages.Damages.IndexOf(damage)]);
             }
         }
+    }
+    public virtual void Recover()
+    {
+        RestoreStrength();
+        RecoverRunner();
     }
     public virtual void RestoreStrength()
     {
@@ -757,7 +796,7 @@ public class Racer : NetworkBehaviour
             strength -= damage.damageStrength * (Time.deltaTime / 5);
             strength = Mathf.Max(strength, 0);
         }
-        if(strength <= 0)
+        if (strength <= 0)
         {
             movementVelocity = 0;
             yield return new WaitForSeconds(3f);
@@ -780,8 +819,19 @@ public class Racer : NetworkBehaviour
     {
         var index = runnerDamages.Damages.IndexOf(damage);
         var newDamage = myDamages.Damages[index];
+        newDamage.damageInt = damage.damageInt;
+        newDamage.damageName = damage.damageName;
+        newDamage.damagerType = damage.damagerType;
         newDamage.damaged = true;
         newDamage.damageStrength = damage.damageStrength;
+        if (damage.racer != null)
+        {
+            newDamage.racer = damage.racer;
+            if ((damage.racer.StateMachine.AwakenedState == damage.racer.playerAwakenedState || damage.racer.StateMachine.AwakenedState == damage.racer.opponentAwakenedState) && GameManager.instance.currentLevel.buttonMap == damage.racer.runner.stickmanNet.currentColor.colorID)
+                newDamage.ultimateDamage = true;
+            else if (damage.racer.StateMachine.AwakenedState == damage.racer.playerAwakenedState || damage.racer.StateMachine.AwakenedState == damage.racer.opponentAwakenedState || GameManager.instance.currentLevel.buttonMap == damage.racer.runner.stickmanNet.currentColor.colorID)
+                newDamage.hyperDamage = true;
+        }
 
         StartCoroutine(DamageEffects());
         StateMachine.ChangeDamagedState(stateToChangeTo);
@@ -797,6 +847,11 @@ public class Racer : NetworkBehaviour
             foreach (var myDamage in myDamages.DamageList())
             {
                 myDamage.damaged = false;
+                myDamage.damageInt = 8;
+                myDamage.damageStrength = 0;
+                myDamage.hyperDamage = false;
+                myDamage.ultimateDamage = false;
+                myDamage.racer = null;
             }
         }
     }
@@ -858,16 +913,23 @@ public class Racer : NetworkBehaviour
 
         damageMatrix[previousDamageIndex, newDamageIndex] = true;
         StrengthBreak();
-     //   CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
+        //   CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
     }
-    public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent)
+    public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         GameObject entity = Instantiate(original, position, rotation, parent);
         return entity;
     }
     #endregion
+
+    #region Awaken Functions
     public void Awaken()
     {
+        if (myDamages.IsDamaged())
+        {
+            Recover();
+        }
+
         switch (currentRacerType)
         {
             case RacerType.Player:
@@ -882,8 +944,121 @@ public class Racer : NetworkBehaviour
         awakenCount--;
         canAwaken = false;
     }
+    public void ActivateAwakenEffects()
+    {
+        var powerupData = Resources.Load<PowerupData>($"{runner.stickmanNet.currentColor.colorID}/PowerupData");
+        var awakenedData = Resources.Load<AwakenedData>($"{runner.stickmanNet.currentColor.colorID}/AwakenedData");
+
+        // vfx open
+        VFXConnector.ChangeVFXProperties(runner.stickmanNet.code);
+        runnerEffects.runnerVFX.Play();
+
+        //instantiate damage prefab
+        var damageEffectPrefab = Resources.Load<GameObject>($"{runner.stickmanNet.currentColor.colorID}/DamageEffect");
+        var damageEffect = Instantiate(damageEffectPrefab, transform.position, Quaternion.identity, transform);
+
+        //instantiate explosion effect
+        var explosionEffectPrefab = Resources.Load<GameObject>($"{runner.stickmanNet.currentColor.colorID}/Explosion");
+        var explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity, transform);
+        var explosionScript = explosionEffect.GetComponent<ElementExplosionScript>();
+
+
+        // assign the variables
+        Utils.SetExplosionVariables(this, explosionScript, runner.stickmanNet.currentColor.colorID, powerupData, awakenedData);
+
+        // initialize and do damage
+        explosionScript.runnerDamages.InitDamages();
+        explosionScript.Explode(true);
+    }
+    public void SetAbilityActive()
+    {
+        switch (currentRacerType)
+        {
+            case RacerType.Player:
+                playerAwakenedState.canUseAbility = true;
+                break;
+            case RacerType.Opponent:
+                opponentAwakenedState.canUseAbility = true;
+                break;
+            default:
+                break;
+        }
+    }
+    private void OnParticleCollision(GameObject other)
+    {
+
+    }
+    public void AwakenedGimmick(int colorCode)
+    {
+        switch (colorCode)
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            default:
+                break;
+        }
+    }
+    public void AwakenedAbility(int colorCode)
+    {
+        switch (colorCode)
+        {
+            case 0:
+                break;
+            case 1:
+                moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, awakenedData.redSpeedIncreasePercentage);
+                movementVelocity = moveVelocityResource;
+                break;
+            case 2:
+                moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, awakenedData.blueSpeedIncreasePercentage);
+                break;
+            case 3:
+                break;
+            case 4:
+                var trailGO = Resources.Load<GameObject>("TrailEffect");
+                var trailEffectGO = Instantiate(trailGO, transform.position, Quaternion.identity);
+                var trailEffect = trailEffectGO.GetComponent<TrailRenderer>();
+
+                Transform oldPosition = transform;
+                transform.position = new Vector3(transform.position.x + Utils.PercentageValue(transform.position.x, awakenedData.yellowTeleportationPositionXPercentage), transform.position.y, transform.position.z);
+                Transform newPosition = transform;
+
+                
+
+              //  trailEffect.AddPosition(oldPosition.position);
+                trailEffect.AddPosition(newPosition.position);
+                break;
+            case 5:
+                // spawn electric orb
+                // set its variables
+                // give it active time
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
     public virtual void OnDrawGizmos()
     {
+        var powerupData = Resources.Load<PowerupData>($"{runner.stickmanNet.currentColor.colorID}/PowerupData");
+        Gizmos.DrawWireSphere(transform.position, powerupData.mineExplosiveRadius);
         switch (currentRacerType)
         {
             case RacerType.Player:

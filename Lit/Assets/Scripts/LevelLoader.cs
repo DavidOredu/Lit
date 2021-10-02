@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using DapperDino.Mirror.Tutorials.Lobby;
+using Mirror;
 
 public class LevelLoader : SingletonDontDestroy<LevelLoader>
 {
@@ -11,9 +13,19 @@ public class LevelLoader : SingletonDontDestroy<LevelLoader>
     public TextMeshProUGUI progressText;
     public Slider slider;
     public GameObject loadingScreen;
+    private NetworkManagerLobby room;
+    protected NetworkManagerLobby Room
+    {
+        get
+        {
+            if (room != null) { return room; }
+            return room = NetworkManager.singleton as NetworkManagerLobby;
+        }
+    }
     private void Start()
     {
-       
+        Room.loadingScreen = loadingScreen;
+        Room.slider = slider;
         
     }
     private void Update()

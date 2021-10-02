@@ -28,11 +28,11 @@ public class PlayerData : ScriptableObject
 
     [Header("IN AIR STATE")]
     public float coyoteTime = 0.2f;
-    public float variableJumpHeightMultuplier = 0.5f;
+    public float variableJumpHeightMultiplier = 0.5f;
 
-    [Header("STUN STATE")]
-    public float laserStunTime = 4f;
-    public float wallStunTime = 3f;
+    [Header("DAMAGE KNOCKDOWN STATE")]
+    public float knockoutTime = 4f;
+    public float ultimateDamageKnockoutTime = 10f;
 
     [Header("REVIVED STATE")]
     public float invulnerabilityTimer = 5f;
@@ -45,8 +45,8 @@ public class PlayerData : ScriptableObject
     //  public bool spawnDust;
 
     [Header("LIT VARIABLES")]
-    public float litSpeedUpLimit;
-    public float litSlowDownLimit;
+    public float litSpeedUpPercentage = .5f;
+    public float litSlowDownPercentage = .3f;
     public float jumpAddition;
     public float otherOnLitIncreaseValue;
     public float litSpeedAlterRate = 6f;

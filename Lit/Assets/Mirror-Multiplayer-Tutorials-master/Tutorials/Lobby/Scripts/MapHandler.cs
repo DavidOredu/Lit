@@ -22,7 +22,7 @@ namespace DapperDino.Tutorials.Lobby
         public bool IsComplete => currentRound == numberOfRounds;
         public string MapLevel(int level)
         {
-            if(remainingMaps.Count == 0) { ResetMaps(); }
+            if (remainingMaps.Count == 0) { ResetMaps(); }
             string map = remainingMaps[level - 1];
 
             return map;
@@ -43,6 +43,17 @@ namespace DapperDino.Tutorials.Lobby
 
                 return map;
             }
+        }
+        public string StartMap(int levelPos)
+        {
+
+            if (IsComplete) { return null; }
+            currentRound++;
+
+            if (remainingMaps.Count == 0) { ResetMaps(); }
+            string map = remainingMaps[levelPos];
+            return map;
+
         }
 
         private void ResetMaps() => remainingMaps = maps.ToList();

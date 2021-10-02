@@ -27,12 +27,13 @@ public class Features_Camera : Features_Object<Canvas>
     protected override void UpdateUI()
     {
         base.UpdateUI();
+        component.renderMode = RenderMode.ScreenSpaceCamera;
         if (component.worldCamera == null)
-            if(Camera.main)
-            component.worldCamera = Camera.main;
-            else
+            //if(Camera.main)
+            //component.worldCamera = Camera.main;
+            
             {
-               uiCamera = GameObject.FindGameObjectWithTag("MainCamera1").GetComponent<Camera>();
+               uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
                 component.worldCamera = uiCamera;
             }
         

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using kcp2k;
+using UnityEngine.UI;
+using System.Collections;
 
 namespace Mirror
 {
@@ -12,7 +14,7 @@ namespace Mirror
     /// Enumeration of methods of where to spawn player objects in multiplayer games.
     /// </summary>
     public enum PlayerSpawnMethod { Random, RoundRobin }
-
+   
     /// <summary>
     /// Enumeration of methods of current Network Manager state at runtime.
     /// </summary>
@@ -817,7 +819,7 @@ namespace Mirror
             Transport.activeTransport.enabled = false;
 
             loadingSceneAsync = SceneManager.LoadSceneAsync(newSceneName);
-
+            StartCoroutine(LoadAsynchronouslyNoChange(loadingSceneAsync));
             // ServerChangeScene can be called when stopping the server
             // when this happens the server is not active so does not need to tell clients about the change
             if (NetworkServer.active)
@@ -829,7 +831,28 @@ namespace Mirror
             startPositionIndex = 0;
             startPositions.Clear();
         }
+        public GameObject loadingScreen;
+        public Slider slider;
+        public IEnumerator LoadAsynchronouslyNoChange(AsyncOperation operation)
+        {
 
+            loadingScreen.SetActive(true);
+
+
+            while (!operation.isDone)
+            {
+                float progress = Mathf.Clamp01(operation.progress / .9f);
+
+                slider.value = progress;
+
+                yield return null;
+
+            }
+            if (operation.isDone)
+            {
+                loadingScreen.SetActive(false);
+            }
+        }
         // This is only set in ClientChangeScene below...never on server.
         // We need to check this in OnClientSceneChanged called from FinishLoadSceneClientOnly
         // to prevent AddPlayer message after loading/unloading additive scenes

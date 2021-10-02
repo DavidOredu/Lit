@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96731daf4f0847e44a6ea604b6a9adc0, type: 3}
+  m_Name: AwakenedData
+  m_EditorClassIdentifier: 
+  redExplosiveRadiusPercentageIncrease: 0.5
+  redDamageStrength: 0
+  redSpeedIncreasePercentage: 2
+  blueSpeedIncreasePercentage: 1.5
+  blueOppositionSpeedReductionValue: 0
+  yellowTrailEffect: {fileID: 9003385576051849002, guid: 7d258a66fcf1e2c4dbde485e317f6445,
+    type: 3}
+  yellowSpeedIncreasePercentage: 0
+  yellowTeleportationPositionXPercentage: 1
+  cyanExplosiveForcePercentageIncrease: 0.6
+  cyanExplosiveRadiusPercentageDecrease: 0.4

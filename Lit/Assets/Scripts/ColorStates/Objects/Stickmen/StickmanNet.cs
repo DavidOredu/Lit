@@ -75,6 +75,8 @@ public class StickmanNet : NetworkBehaviour
             }
         }
         displayName = playerData.playerName;
+
+        if(GameObject.FindGameObjectWithTag("GameManager"))
         networkState = GameObject.FindGameObjectWithTag("GameManager").GetComponent<NetworkState>();
 
 
@@ -109,12 +111,12 @@ public class StickmanNet : NetworkBehaviour
         if (player == null)
             player = GetComponent<Racer>();
         if (gameManager == null)
+            if(GameObject.FindGameObjectWithTag("GameManager"))
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         ///     if (stickmenNet == null)
         ///        stickmenNet = GetComponent<StickmenNet>();
         if (gameManager.currentGameState == GameManager.GameState.InGame)
         {
-
             DefineCode();
         }
 

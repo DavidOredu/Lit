@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy_AwakenedState : State
 {
+    public bool canUseAbility = false;
     public Enemy_AwakenedState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {
     }
@@ -26,11 +27,33 @@ public class Enemy_AwakenedState : State
     public override void Enter()
     {
         base.Enter();
+        racer.isAwakened = true;
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID)
+            {
+                if (racer.GamePlayer.powerup.canBeMany)
+                {
+                    racer.GamePlayer.powerupButton.powerupBehaviour.powerupAmmo = int.MaxValue;
+                }
+            }
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
+        racer.isAwakened = false;
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID)
+            {
+                if (racer.GamePlayer.powerup.canBeMany)
+                {
+                    racer.GamePlayer.powerupButton.powerupBehaviour.powerupAmmo = 3;
+                }
+            }
+        }
     }
 
     public override void LateUpdate()
@@ -61,5 +84,11 @@ public class Enemy_AwakenedState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if (canUseAbility)
+        {
+            racer.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
+            canUseAbility = false;
+        }
     }
 }

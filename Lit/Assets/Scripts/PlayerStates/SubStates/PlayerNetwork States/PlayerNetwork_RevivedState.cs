@@ -85,6 +85,7 @@ public class PlayerNetwork_RevivedState : PlayerNetwork_AbilityState
     {
         base.PhysicsUpdate();
 
-        revivedStateTimer.UpdateTimer();
+        if(!revivedStateTimer.isTimeUp)
+            revivedStateTimer.UpdateTimer();
     }
 }

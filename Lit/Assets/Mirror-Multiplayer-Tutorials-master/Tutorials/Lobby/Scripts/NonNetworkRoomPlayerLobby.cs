@@ -19,7 +19,6 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
     }
     private void Start()
     {
-        var rnd = new System.Random();
         playerData = Resources.Load<PlayerData>("PlayerData");
         CmdSetDisplayName(playerData.playerName);
 
@@ -33,11 +32,12 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
 
         if (roomPlayerType == Racer.RacerType.Opponent && Room.freeColors.Count != 0)
         {
-            currentColorCode = Room.freeColors[rnd.Next(Room.freeColors.Count)];
+            currentColorCode = Room.freeColors[UnityEngine.Random.Range(0, Room.freeColors.Count)];
         }
 
         if (!isLeader)
             gameObject.SetActive(false);
+
         Room.RoomPlayers[0].currentColorCode = playerData.colorCode;
         var myIndex = Room.RoomPlayers.IndexOf(this);
 
@@ -55,9 +55,10 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
     }
     public void StartGame()
     {
-        mapHandler = new MapHandler(levelManager.selectedLevel.level.levelScene, levelManager.selectedLevel.level.numberOfRounds);
         levelManager.selectedLevel.level.ChangeGameMode();
-        UIManager.instance.UpdateUI(100);
-        Room.ServerChangeScene(mapHandler.NextMap);
+        mapHandler = new MapHandler(levelManager.selectedLevel.level.levelScene, levelManager.selectedLevel.level.numberOfRounds);
+        
+      //  UIManager.instance.UpdateUI(100);
+        Room.ServerChangeScene(mapHandler.StartMap(levelManager.selectedLevel.level.levelPos - 1));
    }
 }

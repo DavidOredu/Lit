@@ -12,9 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbb2c05530a75f4d9f84ff83c8a4b5e, type: 3}
   m_Name: PowerupData
   m_EditorClassIdentifier: 
+  ammoCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   speedUpValue: 30
-  shieldStartLifetime: 7
-  shieldParticleDuration: 7
+  fieldDamageStrength: 6
+  fieldExplosiveForce: 50
+  fieldForceMode: 0
   projectileSpeed: 45
-  projectileDamageTime: 5
-  beamDamageTime: 6
+  projectileDamageStrength: 6
+  mineDamageStrength: 6
+  mineExplosiveForce: 200
+  mineExplosiveRadius: 12
+  mineUpwardsModifier: 1
+  mineForceMode: 1
+  beamDamageStrength: 6
+  bombThrowForce: 4
+  bombDamageStrength: 9
+  bombExplosiveForce: 200
+  bombExplosiveRadius: 12
+  bombUpwardsModifier: 1
+  bombForceMode: 1

@@ -10,7 +10,7 @@ public class LevelButton : MonoBehaviour
 {
     public NetworkState.State networkState;
 
-    public Button levelButton;
+    public Button button;
     public TextMeshProUGUI levelText;
     public Image gameModeImage;
     public Level level;
@@ -46,12 +46,12 @@ public class LevelButton : MonoBehaviour
         {
             networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManagerLobby>();
         }
-        levelButton.interactable = level.isUnlocked;
+        button.interactable = level.isUnlocked;
         if(networkManager == null) { return; }
 
-        levelButton.onClick.AddListener(() => OnLevelSelected());
-        levelButton.onClick.AddListener(() => SetTheNetworkMode());
-        levelButton.onClick.AddListener(() => networkManager.StartHost());
+        button.onClick.AddListener(() => OnLevelSelected());
+        button.onClick.AddListener(() => SetTheNetworkMode());
+        button.onClick.AddListener(() => networkManager.StartHost());
      //   levelButton.onClick.AddListener(() => networkManager.StartGame());
     }
     // Tells the level manager that this level is the current or most recent level selected

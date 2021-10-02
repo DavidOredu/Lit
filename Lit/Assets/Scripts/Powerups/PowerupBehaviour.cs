@@ -6,19 +6,24 @@ using UnityEngine.UI;
 
 public class PowerupBehaviour : MonoBehaviour
 {
+    PowerupData powerupData;
     public PowerupController powerupController;
     SpriteRenderer image;
-    
-    [SerializeField]
-    private Powerup powerup;
 
-    private Transform transform_;
+    public Probability<int> ammoProbability;
+    List<int> ammoSizes = new List<int> { 1, 2, 3, 4, 5 };
+    
+    public Powerup powerup;
+
+    public int powerupAmmo = 0;
 
     bool isTaken;
     private void Awake()
     {
-        transform_ = transform;
+        powerupData = Resources.Load<PowerupData>("PowerupData");
         image = GetComponent<SpriteRenderer>();
+        ammoProbability = new Probability<int>(powerupData.ammoCurve);
+        ammoProbability.InitDictionary(ammoSizes);
         isTaken = false;
     }
     private void Update()
@@ -43,11 +48,15 @@ public class PowerupBehaviour : MonoBehaviour
                         {
                             var player = other.gameObject.GetComponent<Player>();
 
+                            if (powerup.canBeMany)
+                            {
+                                powerupAmmo = ammoProbability.ProbabilityGenerator();
+                            }
                             PlayerEvents.instance.GottenPowerup();
-                            player.powerupButton.powerupBehaviour = this;
+                            player.GamePlayer.powerupButton.powerupBehaviour = this;
                             var powerupImg = player.powerupSlot.GetComponent<Image>();
                             powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
-                            player.powerup = powerup;
+                            player.GamePlayer.powerup = powerup;
 
                             GameObject powerupMM = null;
 
@@ -75,6 +84,8 @@ public class PowerupBehaviour : MonoBehaviour
 
                         PlayerEvents.instance.GottenPowerup();
                         opponent.enemyPowerup.powerupBehaviour = this;
+                        opponent.GamePlayer.enemyPowerup.powerupBehaviour = this;
+                        opponent.GamePlayer.powerup = powerup;
                         opponent.powerup = powerup;
                         GameObject powerupM = null;
 

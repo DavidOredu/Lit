@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class UIManager : SingletonDontDestroy<UIManager>
 {
+    #region NESTED CLASSES
     // Nested class that governs the properties of a UI screen
     [Serializable]
     public class UIScreen
@@ -15,7 +17,7 @@ public class UIManager : SingletonDontDestroy<UIManager>
             None,
             MainMenu,
             SelectPlay,
-            Profile,
+            Store,
             GameMode_SinglePlayer,
             GameMode_MultiPlayer,
             Map_1_LevelSelect,
@@ -63,11 +65,32 @@ public class UIManager : SingletonDontDestroy<UIManager>
         // All the buttons within this popup
         public List<Button> buttonsOfUiPopUp = new List<Button>();
     }
+    [Serializable]
+    public class UiTab
+    {
+        // Types of Tabs
+        public enum Tab
+        {
+            Profile,
+            Powerup,
+            Currency,
+            Accessory,
+        }
 
+        public GameObject tabPrefab;
+        public Tab tag;
+        public int currentTabType;
+        public Button tabButton;
+    }
+    #endregion
+
+    #region VARIALBES
     // All the UI Screens or windows contained in the game can be found in this list, except for textboxes and pop-ups, that is
     public List<UIScreen> Uis = new List<UIScreen>();
-
+    // All Popup screen can be foun in this list
     public List<UIPopUp> popUps = new List<UIPopUp>();
+    // All tabs can be found in this list
+    public List<UiTab> tabs = new List<UiTab>();
 
 
     // Is the game paused? Is it not?
@@ -76,11 +99,13 @@ public class UIManager : SingletonDontDestroy<UIManager>
     // The current UI screen and UI popup at any point in the game. 
     private UIScreen currentUiScreen;
     private UIPopUp currentUiPopUp;
+    private UiTab currentUiTab;
 
     //Reference to level loader
     private LevelLoader levelLoader;
+    #endregion
 
-
+    #region FUNCTIONS
     // FUNCTION: Used to pause to game using a button or key. Espace key for PC and back button for android
     public void OnPauseInput(InputAction.CallbackContext context)
     {
@@ -134,15 +159,23 @@ public class UIManager : SingletonDontDestroy<UIManager>
     }
     // FUNCTION: Start function. Unity stuff... ;)
     private void Start()
-    {
+    { 
         // Get the level loader
         levelLoader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
 
         // Close any other ui elements and start the "starting" game ui
         CloseAllPopUps();
         SetStartingUI();
+        SubscribeTabButtons();
+        SetStartingTab();
     }
-
+    private void SubscribeTabButtons()
+    {
+        foreach (var tab in tabs)
+        {
+            tab.tabButton.onClick.AddListener(() => UpdateTab(tab.currentTabType));
+        }
+    }
     // FUNCTION: This sets the main UI at the start of the game
     private void SetStartingUI()
     {
@@ -157,6 +190,21 @@ public class UIManager : SingletonDontDestroy<UIManager>
             else
             {
                 uIScreen.UIPrefab.SetActive(false);
+            }
+        }
+    }
+    private void SetStartingTab()
+    {
+        foreach (UiTab tab in tabs)
+        {
+            if(tab.currentTabType == 1)
+            {
+                tab.tabPrefab.SetActive(true);
+                currentUiTab = tab;
+            }
+            else
+            {
+                tab.tabPrefab.SetActive(false);
             }
         }
     }
@@ -205,7 +253,7 @@ public class UIManager : SingletonDontDestroy<UIManager>
         Application.Quit();
         Debug.Log("Has quit Application!");
     }
-    // FUNCTION: Sets the buttons of a current UI inactive. This is useful when a window is displayed so that tapping a button in the current window won't go somewhere else until the is disabled
+    // FUNCTION: Sets the buttons of a current UI inactive. This is useful when a window is displayed so that tapping a button in the current window won't go somewhere else until the screen is disabled
     public void SetInactiveButton(int uiType)
     {
         if (uiType == 1)
@@ -326,6 +374,23 @@ public class UIManager : SingletonDontDestroy<UIManager>
             }
         }
     }
+    public void UpdateTab(int uiType)
+    {
+        if(uiType == 0) { return; }
+
+        foreach (var tab in tabs)
+        {
+            if(tab.currentTabType != uiType)
+            {
+                tab.tabPrefab.SetActive(false);
+            }
+            else
+            {
+                tab.tabPrefab.SetActive(true);
+                currentUiTab = tab;
+            }
+        }
+    }
     // Closes the currently active popup
     public void ClosePopUp()
     {
@@ -359,4 +424,5 @@ public class UIManager : SingletonDontDestroy<UIManager>
         }
         return null;
     }
+    #endregion
 }

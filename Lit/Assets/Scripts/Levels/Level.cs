@@ -13,7 +13,7 @@ public class Level
 
     public int starsToUnlock;
     public int numberOfRounds;
-    [Range(0, 8)]
+    [Range(0, 7)]
     public int numberOfOpponentsInLevel;
 
     [Header("AUTOMATIC SET")]
@@ -32,6 +32,7 @@ public class Level
     public void ChangeGameMode()
     {
         GameManager.instance.currentGameMode = levelGameMode;
+        GameManager.instance.currentLevel = this;
     }
     //public void Init()
     //{

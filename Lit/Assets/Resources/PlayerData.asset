@@ -70,14 +70,14 @@ MonoBehaviour:
   amountOfJumps: 1
   actionForce: 50
   coyoteTime: 0.2
-  variableJumpHeightMultuplier: 0.2
-  laserStunTime: 2
-  wallStunTime: 3
+  variableJumpHeightMultiplier: 0.5
+  knockoutTime: 4
+  ultimateDamageKnockoutTime: 10
   invulnerabilityTimer: 5
   requiredLitPlatformsToAwaken: 3
-  awakenCount: 1
-  litSpeedUpLimit: 20
-  litSlowDownLimit: 8
+  awakenCount: 3
+  litSpeedUpPercentage: 0.5
+  litSlowDownPercentage: 0.3
   jumpAddition: 5
   otherOnLitIncreaseValue: 5
   litSpeedAlterRate: 4
@@ -99,4 +99,4 @@ MonoBehaviour:
   whatToDamage:
     serializedVersion: 2
     m_Bits: 24832
-  colorCode: 4
+  colorCode: 1

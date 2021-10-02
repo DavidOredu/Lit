@@ -43,9 +43,8 @@ public class PlayerNetwork_IdleState : PlayerNetwork_GroundedState
        
      //   player.SetVelocityX(player.movementVelocity);
 
-        if (racer.CurrentVelocity.x != 0f)
+        if (racer.CurrentVelocity.x != 0f && racer.StateMachine.AwakenedState != racer.playerAwakenedState)
         {
-           
             StateMachine.ChangeState(racer.playerMoveState);
         }
     }

@@ -1590,7 +1590,7 @@ MonoBehaviour:
   IsReady: 0
   hasChosenColor: 0
   currentColorCode: 0
-  roomPlayerType: 0
+  roomPlayerType: 1
 --- !u!1 &1728688534331998590
 GameObject:
   m_ObjectHideFlags: 0

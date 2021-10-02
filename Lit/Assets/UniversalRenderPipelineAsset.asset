@@ -24,9 +24,9 @@ MonoBehaviour:
   m_RequireOpaqueTexture: 1
   m_OpaqueDownsampling: 1
   m_SupportsTerrainHoles: 0
-  m_SupportsHDR: 1
-  m_MSAA: 1
-  m_RenderScale: 1.31
+  m_SupportsHDR: 0
+  m_MSAA: 8
+  m_RenderScale: 2
   m_MainLightRenderingMode: 1
   m_MainLightShadowsSupported: 1
   m_MainLightShadowmapResolution: 512

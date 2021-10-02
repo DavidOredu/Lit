@@ -19,12 +19,26 @@ public class PowerupController : MonoBehaviour
     private void Awake()
     {
         SetRunnerPowerupManager();
+        SetupPowerupList();
     }
     private void Update()
     {
         HandleActivePowerups();
         SetRunnerPowerupManager();
        
+    }
+    private void SetupPowerupList()
+    {
+        foreach (var powerup in powerups)
+        {
+            var originalPowerup = powerup.prefab.GetComponent<PowerupBehaviour>();
+            powerup.name = originalPowerup.powerup.name;
+            powerup.isSelectable = originalPowerup.powerup.isSelectable;
+            powerup.duration = originalPowerup.powerup.duration;
+            powerup.canBeMany = originalPowerup.powerup.canBeMany;
+            powerup.powerup = originalPowerup.powerup.powerup;
+            powerup.powerupType = originalPowerup.powerup.powerupType;
+        }
     }
     private void SetRunnerPowerupManager()
     {
@@ -70,7 +84,7 @@ public class PowerupController : MonoBehaviour
         {
             foreach (var powerup in selectedPowerups)
             {
-                powerup.Selected(racer);
+                powerup.SelectedActive(racer);
             }
         }
     }
@@ -86,6 +100,7 @@ public class PowerupController : MonoBehaviour
         }
         else
         {
+            powerup.Start(racer);
             activePowerups[powerup] += powerup.duration;
         }
 

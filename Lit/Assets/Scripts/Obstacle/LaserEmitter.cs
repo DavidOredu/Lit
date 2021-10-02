@@ -40,7 +40,7 @@ public class LaserEmitter : MonoBehaviour
     }
     void SpawnOrb()
     {
-        var orb = Instantiate(laserOrb, transform.position, Quaternion.identity);
+        var orb = ObjectPooler.instance.SpwanFromPool("LaserOrb", transform.position, Quaternion.identity);
         var orbRB = orb.GetComponent<Rigidbody2D>();
         orbRB.AddForce(new Vector2(0f, projectionForce), ForceMode2D.Impulse);
     }

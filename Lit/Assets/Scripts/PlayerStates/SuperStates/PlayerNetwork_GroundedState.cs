@@ -54,7 +54,7 @@ public class PlayerNetwork_GroundedState : State
         if (jumpInput && racer.playerJumpState.CanJump() && !racer.isOnPower && racer.hasAuthority)
         {
             
-            racer.inputHandler.UseJumpInput();
+            racer.InputHandler.UseJumpInput();
             
             StateMachine.ChangeState(racer.playerJumpState);
         }
@@ -80,9 +80,20 @@ public class PlayerNetwork_GroundedState : State
     {
         base.PhysicsUpdate();
 
-        XInput = racer.inputHandler.NormalizedInputX;
-        jumpInput = racer.inputHandler.JumpInput;
-        attackInput = racer.inputHandler.AttackInput;
+        XInput = racer.InputHandler.NormalizedInputX;
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (!racer.GamePlayer.powerup.isSelected)
+                jumpInput = racer.InputHandler.JumpInput;
+            else
+                jumpInput = false;
+        }
+        else
+        {
+            jumpInput = racer.InputHandler.JumpInput;
+        }
+        
+        attackInput = racer.InputHandler.AttackInput;
     }
    
 }

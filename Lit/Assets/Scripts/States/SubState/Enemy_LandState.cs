@@ -16,6 +16,8 @@ public class Enemy_LandState: Enemy_GroundedState
     public override void Enter()
     {
         base.Enter();
+        racer.canSpawnDust = true;
+        SpawnDust();
     }
 
     public override void Exit()
@@ -40,10 +42,30 @@ public class Enemy_LandState: Enemy_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        
     }
+    public void SpawnDust()
+    {
+        if (isGrounded)
+        {
+            if (racer.canSpawnDust)
+            {
+                var dustPrefab = Resources.Load<GameObject>("Dust");
+                racer.InstantiateObject(dustPrefab, racer.GroundCheck.position, Quaternion.identity, racer.transform);
+                racer.canSpawnDust = false;
+            }
+        }
+        else
+        {
+            racer.canSpawnDust = true;
+        }
+
+    }
+
 }

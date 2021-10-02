@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DapperDino.Tutorials.Lobby;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [Serializable]
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonDontDestroy<GameManager>
 {
     [SerializeField]
     private int targetFps = 42;
@@ -32,7 +33,6 @@ public class GameManager : Singleton<GameManager>
 
     private Vector3 pointsOffset;
 
-
     protected Player playerNN { get; private set; }
 
     public GameObject powerupManager;
@@ -47,6 +47,7 @@ public class GameManager : Singleton<GameManager>
     // used when in a non network game
     public List<GameObject> opponents { get; set; } = new List<GameObject>();
     public List<GameObject> powerupManagers { get; private set; } = new List<GameObject>();
+    public Level currentLevel { get; set; }
 
     public override void Awake()
     {
@@ -63,7 +64,7 @@ public class GameManager : Singleton<GameManager>
         powerupManager = Resources.Load<GameObject>("PowerupManager");
 
         isGameCompleted = false;
-        OnGameCompleted += GameManagerNon_OnGameCompleted;
+        OnGameCompleted += GameManager_OnGameCompleted;
 
 
 
@@ -71,7 +72,7 @@ public class GameManager : Singleton<GameManager>
         //   numberOfRunners = players.Count;
 
     }
-    private void GameManagerNon_OnGameCompleted()
+    private void GameManager_OnGameCompleted()
     {
         Debug.Log("Game has ended.Runner reached the finish line!");
         isGameCompleted = true;
@@ -318,37 +319,38 @@ public class GameManager : Singleton<GameManager>
     }
     void AddPlayer(NetworkState.State state)
     {
-        List<GameObject> playersnew;
+        List<GameObject> playersNew;
         switch (state)
         {
             case NetworkState.State.None:
                 break;
             case NetworkState.State.Network:
-                playersnew = GameObject.FindGameObjectsWithTag("Player").ToList();
+                playersNew = GameObject.FindGameObjectsWithTag("Player").ToList();
                 for (int i = 0; i < numberOfRunners; i++)
                 {
                     Debug.Log($"{i} iteration");
-                    var player = playersnew[i].GetComponent<Player>();
+                    var player = playersNew[i].GetComponent<Player>();
 
                     playersList.Insert(playersList.Count, player);
                     allNetworkPlayers.Insert(allNetworkPlayers.Count, player);
                 }
                 allRacers = new List<Racer>(playersList);
-                playersnew.Clear();
+                playersNew.Clear();
                 break;
             case NetworkState.State.NonNetwork:
-                playersnew = GameObject.FindGameObjectsWithTag("Opponent").ToList();
+                playersNew = GameObject.FindGameObjectsWithTag("Opponent").ToList();
                 var player2 = nonNetPlayer.gameObject;
-                playersnew.Add(player2);
+                playersNew.Add(player2);
                 for (int i = 0; i < numberOfRunners; i++)
                 {
                     Debug.Log($"{i} iteration");
-                    var player = playersnew[i].GetComponent<Racer>();
+                    var player = playersNew[i].GetComponent<Racer>();
 
+                    if(!playersList.Contains(player))
                     playersList.Insert(playersList.Count, player);
                 }
                 allRacers = new List<Racer>(playersList);
-                playersnew.Clear();
+                playersNew.Clear();
                 break;
             default:
                 break;

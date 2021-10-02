@@ -123,15 +123,19 @@ public class PoweredPlatform : MonoBehaviour
     {
         if (racer != null)
         {
-            switch (racer.currentRacerType)
+            if ((racer.StateMachine.CurrentState == racer.playerLandState || racer.StateMachine.CurrentState == racer.opponentLandState) || (racer.StateMachine.CurrentState == racer.playerMoveState || racer.StateMachine.CurrentState == racer.opponentMoveState))
             {
-                case Racer.RacerType.Player:
-                    racer.RB.AddForce(new Vector2(speedBoost, 0f), ForceMode2D.Impulse);
-                    break;
-                case Racer.RacerType.Opponent:
-                    break;
-                default:
-                    break;
+                switch (racer.currentRacerType)
+                {
+
+                    case Racer.RacerType.Player:
+                        racer.RB.AddForce(new Vector2(speedBoost, 0f), ForceMode2D.Impulse);
+                        break;
+                    case Racer.RacerType.Opponent:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

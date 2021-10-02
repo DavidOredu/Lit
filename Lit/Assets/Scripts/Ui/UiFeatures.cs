@@ -56,6 +56,13 @@ public class UiFeatures : ScriptableObject
     public ContentSizeFitter.FitMode horizontalFit;
     public ContentSizeFitter.FitMode verticalFit;
 
+    [Header("CANVAS SCALER")]
+    public CanvasScaler.ScaleMode scaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+    public CanvasScaler.ScreenMatchMode screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+    public Vector2 referenceResolution = new Vector2(1920, 1080);
+    [Range(0f, 1f)]
+    public float matchWidthOrHeight = 1f;
+
 
 
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy_JumpState : Enemy_AbilityState
 {
@@ -27,9 +25,11 @@ public class Enemy_JumpState : Enemy_AbilityState
     {
         base.Enter();
 
-        
-            racerEntity.SetVelocityY(racerEntity.jumpVelocity);
-            isAbilityDone = true;
+        racerEntity.SetVelocityY(racerEntity.jumpVelocity);
+        isAbilityDone = true;
+
+     //   racer.canSpawnDust = true;
+     //   racer.opponentLandState.SpawnDust();
     }
 
     public override void Exit()

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerNetwork_InAirState : State
 {
-    protected bool isGrounded;
+    public bool isGrounded { get; protected set; }
     protected int XInput;
+    protected float variableJumpMultiplierNormalized;
     protected bool jumpInputStop;
     protected bool jumpInput;
     protected bool coyoteTime;
@@ -46,27 +47,34 @@ public class PlayerNetwork_InAirState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        
-        
-
-        
-
-
-        
-
-
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        XInput = racer.inputHandler.NormalizedInputX;
-        jumpInput = racer.inputHandler.JumpInput;
-        jumpInputStop = racer.inputHandler.JumpInputStop;
+        XInput = racer.InputHandler.NormalizedInputX;
+        variableJumpMultiplierNormalized = racer.InputHandler.inputHoldTimeNormalized;
+        if (racer.GamePlayer.powerup != null)
+        {
+            if (!racer.GamePlayer.powerup.isSelected)
+            {
+                jumpInput = racer.InputHandler.JumpInput;
+                jumpInputStop = racer.InputHandler.JumpInputStop;
+            }
+            else
+            {
+                jumpInput = false;
+                jumpInputStop = true;
+            }
+        }
+        else
+        {
+            jumpInput = racer.InputHandler.JumpInput;
+            jumpInputStop = racer.InputHandler.JumpInputStop;
+        }
 
-
+        
         if (!isGrounded)
         {
             //player.SetDecelerations();
@@ -120,7 +128,7 @@ public class PlayerNetwork_InAirState : State
         {
             if (jumpInputStop)
             {
-                racer.SetVelocityY(racer.CurrentVelocity.y * playerData.variableJumpHeightMultuplier);
+                racer.SetVelocityY(racer.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
                 isJumping = false;
             }
             else if (racer.CurrentVelocity.y <= 0f)

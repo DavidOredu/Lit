@@ -29,11 +29,20 @@ public class Enemy_IdleState: Enemy_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (racer.CurrentVelocity.x != 0f && racer.StateMachine.AwakenedState != racer.opponentAwakenedState)
+        {
+            StateMachine.ChangeState(racer.opponentMoveState);
+        }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
+    }
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 }

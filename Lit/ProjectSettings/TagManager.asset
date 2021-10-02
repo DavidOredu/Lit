@@ -32,6 +32,7 @@ TagManager:
   - MainCamera1
   - Projectile
   - Obstacle
+  - InputManager
   layers:
   - Default
   - TransparentFX

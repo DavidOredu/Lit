@@ -26,8 +26,8 @@ public class PlayerNetwork_LandState : PlayerNetwork_GroundedState
     public override void Enter()
     {
         base.Enter();
-      //  playerData.spawnDust = true;
-
+        racer.canSpawnDust = true;
+        SpawnDust();
     }
 
     public override void Exit()
@@ -53,7 +53,7 @@ public class PlayerNetwork_LandState : PlayerNetwork_GroundedState
     {
         base.LogicUpdate();
 
-      //  SpawnDust();
+       
     }
 
     public override void PhysicsUpdate()
@@ -62,21 +62,21 @@ public class PlayerNetwork_LandState : PlayerNetwork_GroundedState
 
         
     }
+    public void SpawnDust()
+    {
+        if (isGrounded)
+        {
+            if (racer.canSpawnDust)
+            {
+                var dustPrefab = Resources.Load<GameObject>("Dust");
+                racer.InstantiateObject(dustPrefab, racer.GroundCheck.position, Quaternion.identity, racer.transform);
+                racer.canSpawnDust = false;
+            }
+        }
+        else
+        {
+            racer.canSpawnDust = true;
+        }
 
-   // public void SpawnDust()
-   // {
-     //   if (isGrounded == true)
-     //   {
-     //       if (playerData.spawnDust == true)
-      //      {
-     //           GameObject.Instantiate(player.dustPS, player.GroundCheck.position, Quaternion.identity);
-     //           playerData.spawnDust = false;
-     //       }
-     //   }
-    //    else
-    //    {
-    //        playerData.spawnDust = true;
-    //    }
-
-  //  }
+    }
 }

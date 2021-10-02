@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Player : Racer
 {
     #region State Variables
-    
+
     public GameObject powerupSlot { get; set; }
 
     public PowerupButton powerupButton;
@@ -96,8 +96,7 @@ public class Player : Racer
 
         powerupSlot = powerupButton.gameObject;
 
-        awakenedStateButton.onClick.AddListener(() => Awaken());
-        awakenedStateButton.interactable = false;
+
     }
 
 
@@ -139,8 +138,8 @@ public class Player : Racer
     [Client]
     public override void FixedUpdate()
     {
-        if (inputHandler == null)
-            inputHandler = GetComponent<PlayerInputHandlerNetwork>();
+        if (InputHandler == null)
+            InputHandler = GetComponent<PlayerInputHandlerNetwork>();
 
         StateMachine.CurrentState.PhysicsUpdate();
         StateMachine.DamagedState.PhysicsUpdate();
@@ -150,19 +149,23 @@ public class Player : Racer
         if (isOnPower && StateMachine.CurrentState != playerKnockbackState && StateMachine.CurrentState != playerSlideState && poweredPlatform != null && hasAuthority)
         {
             //    testImage.gameObject.SetActive(true);
-            if (inputHandler.JumpInput)
+            if (InputHandler.JumpInput)
             {
                 poweredPlatform.DefinePower(this);
             }
 
         }
+        if (InputHandler.PowerupInput)
+        {
+            GamePlayer.powerupButton.UsePowerup(false);
+        }
         if (FinishLine.hasCrossedLine)
         {
-         //   StateMachine.ChangeState(playerQuickHaltState);
+            //   StateMachine.ChangeState(playerQuickHaltState);
             FinishLine.hasCrossedLine = false;
         }
     }
-    
+
     public virtual void CurrentStateAnimationTrigger()
     {
         StateMachine.CurrentState.AnimationTrigger();
@@ -224,7 +227,7 @@ public class Player : Racer
         base.OnCollisionEnter2D(other);
 
 
-        
+
     }
 
     public override void OnCollisionStay2D(Collision2D other)

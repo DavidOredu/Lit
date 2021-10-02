@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy_InAirState : State
 {
-    protected bool isGrounded;
+    public bool isGrounded { get; protected set; }
 
     public Enemy_InAirState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {

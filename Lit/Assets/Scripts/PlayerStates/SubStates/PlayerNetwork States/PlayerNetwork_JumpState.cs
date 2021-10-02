@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
+﻿public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
 {
     protected int amountOfJumpsLeft;
 
@@ -28,14 +24,15 @@ public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
     public override void Enter()
     {
         base.Enter();
-        
-            racer.SetVelocityY(racer.jumpVelocity);
-            isAbilityDone = true;
-            amountOfJumpsLeft--;
 
-            racer.playerInAirState.SetIsJumping();
-        
-      //  playerData.spawnDust = true;
+        racer.SetVelocityY(racer.jumpVelocity);
+        isAbilityDone = true;
+        amountOfJumpsLeft--;
+
+        racer.playerInAirState.SetIsJumping();
+
+       // racer.canSpawnDust = true;
+      //  racer.playerLandState.SpawnDust();
     }
 
     public override void Exit()
@@ -56,7 +53,7 @@ public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
 
     public bool CanJump()
     {
-        if(amountOfJumpsLeft > 0)
+        if (amountOfJumpsLeft > 0)
         {
             return true;
         }

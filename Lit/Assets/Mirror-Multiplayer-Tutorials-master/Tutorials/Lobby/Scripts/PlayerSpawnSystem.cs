@@ -36,8 +36,8 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
         public override void OnStartClient()
         {
-            InputManager.Add(ActionMapNames.Player);
-            InputManager.Controls.Player.Look.Enable();
+            DapperDino.Tutorials.Lobby.InputManager.Add(ActionMapNames.Player);
+            DapperDino.Tutorials.Lobby.InputManager.Controls.Player.Look.Enable();
         }
 
         [ServerCallback]

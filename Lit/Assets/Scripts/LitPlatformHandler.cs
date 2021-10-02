@@ -25,6 +25,7 @@ public class LitPlatformHandler : NetworkBehaviour
 
     private void Instance_OnLitPlatformChanged()
     {
+        // litPlatform = GameObject.Find(player.litPlatform.name).GetComponent<LitPlatformNetwork>();
         litPlatform = player.litPlatform;
         Debug.Log("Has run On lit platform changed logic");
     }
@@ -64,17 +65,19 @@ public class LitPlatformHandler : NetworkBehaviour
     [ClientRpc]
     void RpcUpdateColor()
     {
+        //litPlatform.isLit = true;
         litPlatform.material = Resources.Load<Material>($"{stickman.currentColor.colorID}");
         litPlatform.runner = runner;
         litPlatform.firstRunner = runner;
         litPlatform.spriteShapeRenderer.color = stickman.currentColor.color;
+      //  litPlatform.colorStateCode.colorID = stickman.currentColor.colorID;
 
         for (int i = 0; i < litPlatform.spriteShapeRenderer.materials.Length; i++)
         {
             litPlatform.spriteShapeRenderer.materials[i] = litPlatform.material;
         }
 
-        litPlatform.isLit = true;
+        
     }
     void OpponentUpdateColor()
     {
@@ -85,6 +88,7 @@ public class LitPlatformHandler : NetworkBehaviour
         litPlatform.runner = runner;
         litPlatform.firstRunner = runner;
         litPlatform.spriteShapeRenderer.color = stickman.currentColor.color;
+    //    litPlatform.colorStateCode.colorID = stickman.currentColor.colorID;
 
         for (int i = 0; i < litPlatform.spriteShapeRenderer.materials.Length; i++)
         {
@@ -93,6 +97,6 @@ public class LitPlatformHandler : NetworkBehaviour
         }
 
 
-        litPlatform.isLit = true;
+     //   litPlatform.isLit = true;
     }
 }

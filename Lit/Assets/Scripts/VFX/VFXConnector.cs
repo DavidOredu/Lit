@@ -20,9 +20,9 @@ public class VFXConnector : MonoBehaviour
     {
       //  ChangeVFXProperties(debugCode);
     }
-    public void ChangeVFXProperties(int sticmanCode)
+    public void ChangeVFXProperties(int stickmanCode)
     {
-        RunnerEffectsData newEffect = runnerEffectsData[sticmanCode];
+        RunnerEffectsData newEffect = runnerEffectsData[stickmanCode];
         racer.runnerEffects.runnerVFX.SetTexture("_MainTex", newEffect.texture);
         racer.runnerEffects.runnerVFX.SetFloat("Size", newEffect.size);
         //set color

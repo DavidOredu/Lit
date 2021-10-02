@@ -33,7 +33,7 @@ using System.Collections.Generic;
 [AddComponentMenu("Physics 2D/Capsule Collider 2D")]
 
 [RequireComponent(typeof(EdgeCollider2D))]
-public class CapsuleCollider2D : MonoBehaviour {
+public class CapsuleCollider2D : Collider2D {
 
     [HideInInspector]
     public bool bullet = false, flip = false;

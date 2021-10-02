@@ -18,7 +18,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         {
         ///    playerData = Resources.Load<PlayerData>("PlayerData");
         /// Randomly select a color so as to not interfere with the preselected color in player data
-            currentColorCode = Random.Range(1, 10);
+            currentColorCode = 10;
             // this is what sets the ready button active later... set it false on start
             hasChosenColor = false;
         }

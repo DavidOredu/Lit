@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
@@ -26,7 +27,10 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
        bool hasInit = false;
 
-
+        public Powerup powerup;
+        public PowerupButton powerupButton;
+        public Button awakenedStateButton;
+        public EnemyPowerup enemyPowerup;
         private GameManager gameManager;
         protected NetworkManagerLobby room;
         protected NetworkManagerLobby Room
@@ -37,11 +41,16 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 return room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
+
         IEnumerator ChangeBool()
         {
             yield return new WaitUntil(CheckScene);
           //  yield return new WaitForSeconds(3f);
             inGameScene = true;
+        }
+        private void Awake()
+        {
+           
         }
         bool CheckScene()
         {
@@ -82,6 +91,8 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                     if (Room.GamePlayers[i].GetComponent<NetworkIdentity>().hasAuthority && !hasInit && Room.GamePlayers[i].gamePlayerType == Racer.RacerType.Player)
                     {
                         GameManager.instance.InitInGameObjects();
+                        if(gamePlayerType == Racer.RacerType.Player)
+                        awakenedStateButton.onClick.AddListener(() => racer.Awaken());
                         hasInit = true;
                     }
                    else { continue; }
@@ -147,6 +158,11 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             {
                 Room.GamePlayers[i].racer = players[i].gameObject.GetComponent<Racer>();
                 Room.GamePlayers[i].stickman = players[i].gameObject.GetComponent<StickmanNet>();
+                Room.GamePlayers[i].racer.GamePlayer = Room.GamePlayers[i];
+                if (Room.GamePlayers[i].gamePlayerType == Racer.RacerType.Player)
+                {
+                    awakenedStateButton.interactable = Room.GamePlayers[i].racer.canAwaken;
+                }
             }
             
             //var myPosition = Room.GamePlayers.IndexOf(this);
