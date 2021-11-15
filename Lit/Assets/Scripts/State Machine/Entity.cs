@@ -16,17 +16,15 @@ public class Entity : Racer
     private float currentStunResistance;
     private float lastDamageTime;
 
+    public bool canUsePowerPlatform { get; protected set; }
     protected bool isStunned;
 
     
     public EnemyPowerup enemyPowerup { get; private set; }
 
-    public enum Difficulty
-    {
-        Easy,
-        Normal, 
-        Hard,
-    }
+    public Probability<bool> instantaneousPowerPlatformProbability;
+    List<bool> bools = new List<bool> { true, false };
+
     public override void Awake()
     {
         base.Awake();
@@ -36,6 +34,8 @@ public class Entity : Racer
         base.Start();
         
         enemyPowerup = transform.GetComponentInChildren<EnemyPowerup>();
+        instantaneousPowerPlatformProbability = new Probability<bool>(difficultyData.instantaneousPowerPlatformProbabilityCurve);
+        instantaneousPowerPlatformProbability.InitDictionary(bools);
         //  atsm = aliveGO.GetComponent<AnimationToStateMachine>();
     }
 
@@ -56,6 +56,7 @@ public class Entity : Racer
   
         if (CheckIfHasPowerup())
         {
+            // 
             enemyPowerup.UsePowerup();
         }
       
@@ -140,11 +141,10 @@ public class Entity : Racer
 
     #region Check Functions
     
-    public virtual bool CheckIfCanJump()
+    public virtual Collider2D[] CheckIfCanJump()
     {
-        return Physics2D.OverlapCircle(jumpCheck.position, difficultyData.jumpCheckRadius, difficultyData.whatToJumpTo);
+       return Physics2D.OverlapCircleAll(jumpCheck.position, difficultyData.jumpCheckRadius, difficultyData.whatToJumpTo);
     }
-    
     public bool CheckIfHasPowerup()
     {
         if(powerup == null)
@@ -193,9 +193,14 @@ public class Entity : Racer
     {
         return Physics2D.Raycast(playerCheck.position, transform.right, entityData.closeRangeActionDistance, entityData.whatIsPlayer);
     }
-   
-    
-    
+
+    public enum Difficulty
+    {
+        Easy,
+        Normal,
+        Hard,
+    }
+
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

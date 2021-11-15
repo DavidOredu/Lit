@@ -64,22 +64,25 @@ MonoBehaviour:
   topSpeed: 3
   timeZeroToMax: 3
   timeMaxToZero: 4
-  timeBrakeToZero: 1
-  maxJumpVelocity: 24
+  timeBrakeToZero: 0.0001
+  maxJumpVelocity: 20
   minIdleTime: 0.5
   maxIdleTime: 3
-  laserStunTime: 4
-  wallStunTime: 3
+  knockoutTime: 4
+  ultimateDamageKnockoutTime: 10
+  invulnerabilityTimer: 5
   actionForce: 20
+  requiredLitPlatformsToAwaken: 5
+  awakenCount: 1
   jumpAddition: 0
-  litSpeedUpLimit: 0
-  litSlowDownLimit: 0
+  litSpeedUpPercentage: 0.5
+  litSlowDownPercentage: 0.3
   otherOnLitIncreaseValue: 0
   litSpeedAlterRate: 6
   knockbackVelocity: {x: 0, y: 0}
   maxKnockbackVelocity: {x: 0, y: 0}
   groundCheckRadius: 0.3
-  jumpCheckRadius: 0.3
+  jumpCheckRadius: 12
   litCheckDistance: 0.5
   powerCheckDistance: 0.5
   whatIsGround:
@@ -99,3 +102,69 @@ MonoBehaviour:
   whatToDamage:
     serializedVersion: 2
     m_Bits: 0
+  jumpToLitProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.9
+      outSlope: 0.9
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.9
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0.100000024
+      outSlope: 0.100000024
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  instantaneousPowerPlatformProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.9
+      outSlope: 0.9
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.9
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0.100000024
+      outSlope: 0.100000024
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

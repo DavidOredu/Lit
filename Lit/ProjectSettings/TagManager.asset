@@ -33,6 +33,7 @@ TagManager:
   - Projectile
   - Obstacle
   - InputManager
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

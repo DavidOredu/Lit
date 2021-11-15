@@ -4747,6 +4747,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObstacleType: 1
+  laserLifeTimer:
+    timerStarted: 0
+  laserStartTimer:
+    timerStarted: 0
+  timeToStartLaser: 2
+  laserLifeTime: 3
+  beamProjectileScript: {fileID: 0}
 --- !u!1 &8428878193681996176
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,8 +4975,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.19607843, b: 0.023529412, a: 0}
-      maxColor: {r: 1, g: 0.15294118, b: 0.023529412, a: 1}
+      minColor: {r: 0.02352941, g: 0.09898272, b: 1, a: 0}
+      maxColor: {r: 0.02352941, g: 0.4316338, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

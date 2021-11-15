@@ -35,6 +35,8 @@ public class Opponent : Entity
         opponentDamageKnockDownState = new Enemy_DamageKnockDownState(this, StateMachine, "damageKnockDown", this, null, difficultyData);
         opponentRevivedState = new Enemy_RevivedState(this, StateMachine, "revived", this, null, difficultyData);
         opponentAwakenedState = new Enemy_AwakenedState(this, StateMachine, "awakened", this, null, difficultyData);
+        opponentHoverGlideState = new Enemy_HoverGlideState(this, StateMachine, "hoverGlide", this, null, difficultyData);
+        opponentSlideGlideState = new Enemy_SlideGlideState(this, StateMachine, "slideGlide", this, null, difficultyData);
         opponentNullState = new Enemy_NullState(this, StateMachine, "null", this, null, difficultyData);
 
         opponentDamageStates = new List<State>
@@ -64,14 +66,15 @@ public class Opponent : Entity
         };
 
         movementVelocity = 0f;
-        accelRatePerSec = difficultyData.topSpeed / difficultyData.timeZeroToMax;
-        decelRatePerSec = -difficultyData.topSpeed / difficultyData.timeMaxToZero;
+        acceleration = difficultyData.topSpeed / difficultyData.timeZeroToMax;
+        deceleration = -difficultyData.topSpeed / difficultyData.timeMaxToZero;
         brakeRatePerSec = -difficultyData.topSpeed / difficultyData.timeBrakeToZero;
 
         moveVelocityResource = difficultyData.topSpeed;
         strengthResource = difficultyData.maxStrength;
         jumpVelocityResource = difficultyData.maxJumpVelocity;
-        strength = strengthResource;
+        jumpVelocity = jumpVelocityResource;
+        strength = difficultyData.maxStrength;
     }
     public override void Start()
     {
@@ -90,14 +93,23 @@ public class Opponent : Entity
         {
             // some check should be put here to determine difficulty to know the rate at which the ai should respond
             {
+                switch (poweredPlatform.currentPowerAid)
+                {
+                    case PoweredPlatform.PowerAid.Instantaneous:
+                        canUsePowerPlatform = instantaneousPowerPlatformProbability.ProbabilityGenerator();
+                        break;
+                    case PoweredPlatform.PowerAid.Continuous:
+                        if(poweredPlatform.currentPower == PoweredPlatform.Power.Stop)
+                        {
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 poweredPlatform.DefinePower(this);
             }
 
-        }
-        if (FinishLine.hasCrossedLine)
-        {
-            //        stateMachine.ChangeState(quickHaltState);
-            //       FinishLine.hasCrossedLine = false;
         }
     }
 

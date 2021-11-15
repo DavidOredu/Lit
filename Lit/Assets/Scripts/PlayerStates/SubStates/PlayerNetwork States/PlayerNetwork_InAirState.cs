@@ -36,7 +36,8 @@ public class PlayerNetwork_InAirState : State
     public override void Enter()
     {
         base.Enter();
-      
+
+        racer.SetVelocityX(racer.movementVelocity);
     }
 
     public override void Exit()
@@ -78,15 +79,13 @@ public class PlayerNetwork_InAirState : State
         if (!isGrounded)
         {
             //player.SetDecelerations();
-            //player.SetVelocityX(player.movementVelocity);
-
-
+            
             racer.Anim.SetFloat("yVelocity", racer.CurrentVelocity.y);
             racer.Anim.SetFloat("xVelocity", Mathf.Abs(racer.CurrentVelocity.x));
         }
     }
 
-    public void CheckCoyoteTIme()
+    public void CheckCoyoteTime()
     {
         if(coyoteTime && Time.time > startTime + playerData.coyoteTime)
         {
@@ -109,7 +108,7 @@ public class PlayerNetwork_InAirState : State
     public override void LateUpdate()
     {
         base.LateUpdate();
-        CheckCoyoteTIme();
+        CheckCoyoteTime();
         CheckJumpMultiplier();
 
         if (isGrounded && racer.CurrentVelocity.y < 0.01f)
@@ -128,8 +127,17 @@ public class PlayerNetwork_InAirState : State
         {
             if (jumpInputStop)
             {
-                racer.SetVelocityY(racer.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
-                isJumping = false;
+                if (!racer.playerJumpState.poweredJump)
+                {
+                    racer.SetVelocityY(racer.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
+                    isJumping = false;
+                }
+                else
+                {
+                    racer.SetVelocityY(racer.CurrentVelocity.y);
+                    isJumping = false;
+                    racer.playerJumpState.poweredJump = false;
+                }
             }
             else if (racer.CurrentVelocity.y <= 0f)
             {

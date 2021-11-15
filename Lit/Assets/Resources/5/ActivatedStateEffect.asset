@@ -77,8 +77,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  velocityRandomA: {x: -2, y: -2, z: 0}
-  velocityRandomB: {x: 2, y: 2, z: 0}
+  velocityRandomA: {x: -2, y: 2, z: 0}
+  velocityRandomB: {x: 2, y: 4, z: 0}
   lifetimeRandomA: 0.4
   lifetimeRandomB: 1.2
   radius: 2

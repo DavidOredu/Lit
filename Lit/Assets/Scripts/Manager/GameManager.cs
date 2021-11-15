@@ -49,6 +49,8 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public List<GameObject> powerupManagers { get; private set; } = new List<GameObject>();
     public Level currentLevel { get; set; }
 
+    public List<Racer> finishedRacers = new List<Racer>();
+
     public override void Awake()
     {
         base.Awake();

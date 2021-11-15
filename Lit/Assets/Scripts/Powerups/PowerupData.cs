@@ -9,7 +9,7 @@ public class PowerupData : ScriptableObject
     public AnimationCurve ammoCurve;
 
     [Header("SPEED BOOST")]
-    public float speedUpValue = 30f;
+    public float speedUpPercentageIncrease = .5f;
 
     [Header("ELEMENT FIELD")]
     public float fieldDamageStrength = 6f;
@@ -22,6 +22,7 @@ public class PowerupData : ScriptableObject
 
     [Header("MINE")]
     public float mineDamageStrength = 6f;
+    public float mineExplosiveRadiusDecreasePercentage = 0.5f;
     public float mineExplosiveForce = 200f;
     public float mineExplosiveRadius = 12f;
     public float mineUpwardsModifier = 1f;

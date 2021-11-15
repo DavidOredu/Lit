@@ -5076,6 +5076,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.9939682
       objectReference: {fileID: 0}
+    - target: {fileID: 771425460, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 38.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 771425460, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 771425461, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 911813761, guid: 5ef45f225d846f446896bf8ad947b75a, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.2490177
@@ -5231,6 +5243,11 @@ PrefabInstance:
       propertyPath: VFXConnector
       value: 
       objectReference: {fileID: 2691573530830841201}
+    - target: {fileID: 3885015011641506180, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: vCam
+      value: 
+      objectReference: {fileID: 6286811216395523587}
     - target: {fileID: 3885015011641506181, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_AssetId
@@ -5390,6 +5407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[9].m_ActionName
       value: Touch/TouchPosition[/Touchscreen/primaryTouch/position]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885015011641506189, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3885015011641506194, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -5632,6 +5654,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88a86df250a103f41adb07ddf0cd7c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6286811216395523587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 771425461, guid: 5ef45f225d846f446896bf8ad947b75a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6286811216858403510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &4365960840127873045 stripped

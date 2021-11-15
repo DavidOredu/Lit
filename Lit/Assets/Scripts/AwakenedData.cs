@@ -18,6 +18,13 @@ public class AwakenedData : ScriptableObject
     public float yellowSpeedIncreasePercentage;
     public float yellowTeleportationPositionXPercentage = 1f;
 
+    [Header("PURPLE")]
+    public float purpleOrbSpeed = 40f;
+    public float purpleOrbRadius = 40f;
+    public float purpleOrbLifeTime = 7f;
+    public float purpleBeamDamageStrength = 10f;
+    public LayerMask purpleWhatToHit;
+
     [Header("CYAN")]
     public float cyanExplosiveForcePercentageIncrease = .6f;
     public float cyanExplosiveRadiusPercentageDecrease = .4f;

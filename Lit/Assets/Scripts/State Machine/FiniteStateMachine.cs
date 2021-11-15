@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// Base class for the state setting mechanic for runners. Holds state setting for ForeStates (i.e states whose animations are physically seen irrespective of the current state of other states, thus the main state). The damaged state ( state the player will be in when he's damaged) and The awakened state (state that handles the awakened state of different runner colors).
+/// </summary>
 [System.Serializable]
 public class FiniteStateMachine
 {

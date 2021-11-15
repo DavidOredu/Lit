@@ -6,9 +6,10 @@ using UnityEngine;
 public class ObstacleData : ScriptableObject
 {
     [Header("BREAKABLE OBSTACLES")]
-    public float speedReduction;
+    public float speedReductionPercentage = .1f;
 
     [Header("LASER")]
-    public int laserDamageStrength;
+    public float laserDamagePercentage = .1f;
+    public float laserDamageRate;
 
 }

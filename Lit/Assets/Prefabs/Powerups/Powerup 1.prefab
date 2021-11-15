@@ -50,7 +50,10 @@ MonoBehaviour:
     prefab: {fileID: 3765488261685951142}
     name: SpeedUp
     duration: 5
+    canBeMany: 1
     isSelectable: 0
+    powerup: 0
+    powerupType: 1
     startAction:
       m_PersistentCalls:
         m_Calls: []
@@ -60,11 +63,16 @@ MonoBehaviour:
     endAction:
       m_PersistentCalls:
         m_Calls: []
-    selectedAction:
+    selectedStartAction:
       m_PersistentCalls:
         m_Calls: []
-    powerup: 0
-    powerupType: 1
+    selectedActiveAction:
+      m_PersistentCalls:
+        m_Calls: []
+    selectedEndAction:
+      m_PersistentCalls:
+        m_Calls: []
+  powerupAmmo: 0
 --- !u!212 &3765488261685951137
 SpriteRenderer:
   m_ObjectHideFlags: 0

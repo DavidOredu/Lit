@@ -7,6 +7,8 @@ public class D_DifficultyData : ScriptableObject
 {
     [Header("OPPONENT STRENGTH")]
     public int maxStrength = 20;
+
+    [Header("ANIMATION CURVES")]
     public AnimationCurve strengthToTopSpeedCurve;
     public AnimationCurve speedToJumpVelocityCurve;
 
@@ -15,7 +17,7 @@ public class D_DifficultyData : ScriptableObject
     public float timeZeroToMax = 3f;
     public float timeMaxToZero = 4f;
     public float timeBrakeToZero = 1f;
-    public float maxJumpVelocity = 24;
+    public float maxJumpVelocity = 10;
 
     [Header("IDLE STATE")]
     public float minIdleTime = .5f;
@@ -48,13 +50,14 @@ public class D_DifficultyData : ScriptableObject
 
     [Header("CHECK VARIABLES")]
     public float groundCheckRadius = 0.3f;
-    public float jumpCheckRadius = .3f;
+    public float jumpCheckRadius = .5f;
     public float litCheckDistance = .5f;
     public float powerCheckDistance = .5f;
     public LayerMask whatIsGround;
     public LayerMask whatIsLit;
     public LayerMask whatIsPower;
     public LayerMask whatToJumpTo;
+    public LayerMask whatIsSlope;
 
     [Header("TRANSFORM VARIABLES")]
     public Vector2 jumpCheckPosition;
@@ -62,4 +65,8 @@ public class D_DifficultyData : ScriptableObject
     [Header("POWERUP VARIABLES")]
     public float powerupRadius = .5f;
     public LayerMask whatToDamage;
+
+    [Header("PROBABILITIES")]
+    public AnimationCurve jumpToLitProbabilityCurve;
+    public AnimationCurve instantaneousPowerPlatformProbabilityCurve;
 }

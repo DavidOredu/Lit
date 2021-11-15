@@ -1391,31 +1391,31 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 0
+      - m_Value: 2
         m_Name: Size
         m_Overridden: 1
-      - m_Value: 0
+      - m_Value: 2.4
         m_Name: LifetimeRandomA
         m_Overridden: 1
-      - m_Value: 0
+      - m_Value: 3
         m_Name: LifetimeRandomB
         m_Overridden: 1
-      - m_Value: 0
+      - m_Value: 2.3
         m_Name: Radius
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 0, y: 0, z: 0}
+      - m_Value: {x: -1, y: -1, z: 0}
         m_Name: VelocityRandomA
         m_Overridden: 1
-      - m_Value: {x: 0, y: 0, z: 0}
+      - m_Value: {x: 1, y: 1, z: 0}
         m_Name: VelocityRandomB
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 2, y: 2, z: 2, w: 1}
+      - m_Value: {x: 0.82784104, y: 0, z: 5.270588, w: 1}
         m_Name: Color
         m_Overridden: 1
     m_Uint:
@@ -1431,10 +1431,10 @@ VisualEffect:
           m_Curve:
           - serializedVersion: 3
             time: 0
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 34
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
@@ -1443,7 +1443,7 @@ VisualEffect:
             value: 1
             inSlope: 0
             outSlope: 0
-            tangentMode: 34
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
@@ -1457,23 +1457,23 @@ VisualEffect:
       - m_Value:
           serializedVersion: 2
           key0: {r: 1, g: 1, b: 1, a: 1}
-          key1: {r: 1, g: 1, b: 1, a: 1}
-          key2: {r: 1, g: 1, b: 1, a: 1}
+          key1: {r: 0, g: 0, b: 0, a: 0}
+          key2: {r: 1, g: 1, b: 1, a: 0}
           key3: {r: 0, g: 0, b: 0, a: 0}
           key4: {r: 1, g: 1, b: 1, a: 1}
           key5: {r: 0, g: 0, b: 0, a: 0}
           key6: {r: 0, g: 0, b: 0, a: 0}
           key7: {r: 0, g: 0, b: 0, a: 0}
-          ctime0: 0
-          ctime1: 29105
+          ctime0: 16384
+          ctime1: 37201
           ctime2: 65535
           ctime3: 39321
           ctime4: 45875
           ctime5: 65535
           ctime6: 0
           ctime7: 0
-          atime0: 0
-          atime1: 65535
+          atime0: 16384
+          atime1: 36237
           atime2: 65535
           atime3: 39321
           atime4: 45875
@@ -1482,12 +1482,12 @@ VisualEffect:
           atime7: 0
           m_Mode: 0
           m_NumColorKeys: 3
-          m_NumAlphaKeys: 2
+          m_NumAlphaKeys: 3
         m_Name: ColorOverLife
         m_Overridden: 1
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 2800000, guid: e5b652022882eb344a694f326841768b, type: 3}
+      - m_Value: {fileID: 2800000, guid: cfeca3bee262b5e4887a1b44669ddceb, type: 3}
         m_Name: _MainTex
         m_Overridden: 1
     m_Bool:
@@ -7710,7 +7710,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 4
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
@@ -7913,8 +7913,11 @@ MonoBehaviour:
   currentRacerType: 0
   playerData: {fileID: 0}
   difficultyData: {fileID: 0}
+  awakenedData: {fileID: 0}
+  powerupData: {fileID: 0}
   moveVelocityResource: 0
   movementVelocity: 0
+  alteredVelocity: 0
   normalizedMovementVelocity: 0
   strengthResource: 0
   strength: 0
@@ -7922,7 +7925,6 @@ MonoBehaviour:
   normalizedStrength: 0
   jumpVelocityResource: 0
   jumpVelocity: 0
-  normalizedJumpVelocity: 0
   isAwakened: 0
   runner:
     runner: {fileID: 0}
@@ -7938,7 +7940,12 @@ MonoBehaviour:
   litCheck: {fileID: 3885015011641506182}
   projectileArm: {fileID: 7854198312653761873}
   bombArm: {fileID: 2827845242845862735}
+  checkpoint: {fileID: 0}
   litPlatforms: []
+  noFriction: {fileID: 6200000, guid: 6262bc286ac893b40a05113690d6e259, type: 2}
+  fullFriction: {fileID: 6200000, guid: 6bcbca31f3f078d4f865b2731429a1df, type: 2}
+  slopeCheckDistance: 0.5
+  maxSlopeAngle: 0
   myDamages:
     fire:
       damageName: 
@@ -8042,6 +8049,7 @@ MonoBehaviour:
     Damages: []
   powerupButton: {fileID: 2237340322320044001}
   awakenedStateButton: {fileID: 0}
+  vCam: {fileID: 0}
 --- !u!114 &3885015011641506181
 MonoBehaviour:
   m_ObjectHideFlags: 0

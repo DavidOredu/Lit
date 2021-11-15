@@ -95,6 +95,7 @@ public class PlayerNetwork_AwakenedState : State
             racer.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
             canUseAbility = false;
         }
+        racer.AwakenedGimmick(racer.runner.stickmanNet.currentColor.colorID);
     }
     
 }

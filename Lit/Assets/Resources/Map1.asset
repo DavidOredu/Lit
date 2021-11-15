@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Map1
   m_EditorClassIdentifier: 
   maps:
+  - Assets/Scenes/Scene_Game_Sample1.unity
   - Assets/Scenes/Scene_Game_SampleScene.unity
-  - 
   - 
   - 
   - 

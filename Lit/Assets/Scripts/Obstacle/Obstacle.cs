@@ -8,17 +8,54 @@ public class Obstacle : MonoBehaviour
 
     private RunnerDamagesOperator runnerDamages;
     private ObstacleData obstacleData;
+
+    public Timer laserLifeTimer;
+    public Timer laserStartTimer;
+
+    public float timeToStartLaser = 2f;
+    public float laserLifeTime = 3f;
+
+    public BeamProjectileScript beamProjectileScript;
     // Start is called before the first frame update
     void Start()
     {
         obstacleData = Resources.Load<ObstacleData>("ObstacleData");
         runnerDamages.InitDamages();
+
+        laserStartTimer = new Timer(timeToStartLaser);
+        laserLifeTimer = new Timer(laserLifeTime);
+
+        laserStartTimer.SetTimer();
+        laserLifeTimer.SetTimer();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if(currentObstacleType == ObstacleType.LaserBeam)
+        {
+            beamProjectileScript = GetComponent<BeamProjectileScript>();
+
+            if(beamProjectileScript.canExtend && !laserLifeTimer.isTimeUp)
+            {
+                laserLifeTimer.UpdateTimer();
+            }
+            else if (laserLifeTimer.isTimeUp)
+            {
+                beamProjectileScript.canExtend = false;
+                laserLifeTimer.ResetTimer();
+            }
+
+            if(!beamProjectileScript.canExtend && !laserStartTimer.isTimeUp)
+            {
+                laserStartTimer.UpdateTimer();
+            }
+            else if (laserStartTimer.isTimeUp)
+            {
+                beamProjectileScript.canExtend = true;
+                laserStartTimer.ResetTimer();
+            }
+        }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -30,8 +67,10 @@ public class Obstacle : MonoBehaviour
                 {
                     Racer racer = other.collider.GetComponent<Racer>();
 
-                    racer.movementVelocity -= obstacleData.speedReduction;
+                    racer.movementVelocity -= obstacleData.speedReductionPercentage;
                     BreakObstacle();
+
+                    // remove this destruction when animation is made
                     Destroy(gameObject);
                     // place a camera shake effect
                     // tell the player to turn the move state bool to false
@@ -45,15 +84,14 @@ public class Obstacle : MonoBehaviour
             #region Laser Orbs
             case ObstacleType.LaserOrb:
                 
-                if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent") && !other.collider.GetComponent<Racer>().isInvulnerable)
+                if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent"))
                 {
                     var racer = other.collider.GetComponent<Racer>();
-                    runnerDamages.laser.damaged = true;
-                    runnerDamages.laser.damageStrength = obstacleData.laserDamageStrength;
-                    racer.transform.SendMessage("DamageRunner", runnerDamages);
+                    Utils.SetDamageVariables(runnerDamages, null, 8, obstacleData.laserDamagePercentage, obstacleData.laserDamageRate, racer.gameObject);
                     // TODO: play particle hit animation
                     ExplodeLaserOrb();
                     Destroy(gameObject);
+                    
                 }
                 break;
             #endregion
@@ -63,7 +101,7 @@ public class Obstacle : MonoBehaviour
                 if(other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent")
                 {
                     var racer = other.collider.GetComponent<Racer>();
-                    racer.movementVelocity -= obstacleData.speedReduction;
+                    racer.movementVelocity -= obstacleData.speedReductionPercentage;
                     DestroyBarricade();
                     Destroy(gameObject);
                 }
@@ -181,5 +219,6 @@ public class Obstacle : MonoBehaviour
         FinalWall,
         HardPlatform,
         DeathLaser,
+        LaserBeam,
     }
 }

@@ -1,0 +1,3 @@
+Note
+
+	• GUI Animator for Unity UI 1.0.0 or higher does not require "GSuiEditor" script. Upgraded users can delete "Scripts/Editor/GSuiEditor" file from Project tab.

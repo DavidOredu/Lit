@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96731daf4f0847e44a6ea604b6a9adc0, type: 3}
   m_Name: AwakenedData
   m_EditorClassIdentifier: 
-  redExplosiveRadius: 0
+  redExplosiveRadiusPercentageIncrease: 0.6
   redDamageStrength: 0
-  blueSpeedReductionValue: 0
+  redSpeedIncreasePercentage: 6
+  blueSpeedIncreasePercentage: 1.5
+  blueOppositionSpeedReductionValue: 0
   yellowTrailEffect: {fileID: 0}
-  yellowSpeedIncreaseNormalized: 0
-  yellowTeleportationTransform: {fileID: 0}
-  cyanExplosiveForce: 0
-  cyanExplosiveRadius: 0
+  yellowSpeedIncreasePercentage: 0
+  yellowTeleportationPositionXPercentage: 1
+  purpleOrbSpeed: 40
+  purpleOrbRadius: 40
+  purpleOrbLifeTime: 7
+  purpleBeamDamageStrength: 10
+  purpleWhatToHit:
+    serializedVersion: 2
+    m_Bits: 0
+  cyanExplosiveForcePercentageIncrease: 0.6
+  cyanExplosiveRadiusPercentageDecrease: 0.4

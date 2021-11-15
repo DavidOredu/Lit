@@ -66,7 +66,7 @@ MonoBehaviour:
   timeZeroToMax: 3
   timeMaxToZero: 4
   timeBrakeToZero: 1
-  maxJumpVelocity: 26
+  maxJumpVelocity: 40
   amountOfJumps: 1
   actionForce: 50
   coyoteTime: 0.2
@@ -93,10 +93,13 @@ MonoBehaviour:
   whatIsPower:
     serializedVersion: 2
     m_Bits: 2048
+  whatIsSlope:
+    serializedVersion: 2
+    m_Bits: 3584
   knockbackVelocity: {x: 22, y: 12}
   maxKnockbackVelocity: {x: 22, y: 12}
   powerupRadius: 3.4
   whatToDamage:
     serializedVersion: 2
     m_Bits: 24832
-  colorCode: 1
+  colorCode: 4

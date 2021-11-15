@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 public class Player : Racer
 {
     #region State Variables
@@ -14,6 +15,7 @@ public class Player : Racer
     #endregion
 
     #region Components
+    public CinemachineVirtualCamera vCam;
     //  public SoundManager soundManager { get; private set; }
     //  public HealthBar healthBar { get; private set; }
 
@@ -54,6 +56,8 @@ public class Player : Racer
         playerDamageKnockDownState = new PlayerNetwork_DamageKnockDownState(null, StateMachine, "damageKnockDown", this, playerData, null);
         playerRevivedState = new PlayerNetwork_RevivedState(null, StateMachine, "revived", this, playerData, null);
         playerAwakenedState = new PlayerNetwork_AwakenedState(null, StateMachine, "awakened", this, playerData, null);
+        playerHoverGlideState = new PlayerNetwork_HoverGlideState(null, StateMachine, "hoverGlide", this, playerData, null);
+        playerSlideGlideState = new PlayerNetwork_SlideGlideState(null, StateMachine, "slideGlide", this, playerData, null);
         playerNullState = new PlayerNetwork_NullState(null, StateMachine, "null", this, playerData, null);
 
         playerDamageStates = new List<State>
@@ -82,21 +86,21 @@ public class Player : Racer
         /* 10 */ playerKnockbackState,
         };
 
-        accelRatePerSec = playerData.topSpeed / playerData.timeZeroToMax;
-        decelRatePerSec = -playerData.topSpeed / playerData.timeMaxToZero;
+        acceleration = playerData.topSpeed / playerData.timeZeroToMax;
+        deceleration = -playerData.topSpeed / playerData.timeMaxToZero;
         brakeRatePerSec = -playerData.topSpeed / playerData.timeBrakeToZero;
         movementVelocity = 0f;
-        jumpVelocity = 0f;
         playerData.knockbackVelocity = Vector2.zero;
 
         moveVelocityResource = playerData.topSpeed;
         strengthResource = playerData.maxStrength;
         jumpVelocityResource = playerData.maxJumpVelocity;
-        strength = strengthResource;
+        jumpVelocity = jumpVelocityResource;
+        strength = playerData.maxStrength;
 
         powerupSlot = powerupButton.gameObject;
 
-
+        vCam.transform.SetParent(null);
     }
 
 
@@ -158,11 +162,6 @@ public class Player : Racer
         if (InputHandler.PowerupInput)
         {
             GamePlayer.powerupButton.UsePowerup(false);
-        }
-        if (FinishLine.hasCrossedLine)
-        {
-            //   StateMachine.ChangeState(playerQuickHaltState);
-            FinishLine.hasCrossedLine = false;
         }
     }
 
@@ -229,7 +228,15 @@ public class Player : Racer
 
 
     }
+    public override void SlopeCheckVertical(Vector2 checkPos)
+    {
+        base.SlopeCheckVertical(checkPos);
 
+        if (isOnSlope)
+        {
+            
+        }
+    }
     public override void OnCollisionStay2D(Collision2D other)
     {
         StateMachine.CurrentState.OnCollisionStay(other);

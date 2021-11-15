@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680885001440326883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.64, y: 2.31, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede43347e5e422d4692b421d77e89d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerRacer: {fileID: 0}
   beamLineRendererPrefab:
   - {fileID: 168570, guid: 1f7452042ec77d94ea7cece5cc4816fc, type: 3}
   - {fileID: 168570, guid: 3827d5026e528924493e36340309f078, type: 3}
@@ -78,15 +79,19 @@ MonoBehaviour:
   - {fileID: 100050, guid: 325422360e5730141adac507f0c6a393, type: 3}
   - {fileID: 133292, guid: 75d3878d3e4132f41966e0e54fa81406, type: 3}
   currentBeam: 4
+  damageType: 0
+  beamType: 1
   whatToHit:
     serializedVersion: 2
     m_Bits: 9984
   startVFXOffset: {x: 0, y: 0, z: 0}
   extensionSpeed: {x: 0, y: -4, z: 0}
+  directionToHit: {x: 0, y: -1}
   beamEndOffset: 2
   textureScrollSpeed: 4
   textureLengthScale: 12
   growthSpeed: 100
+  damageStrength: 0
   endOffSetSlider: {fileID: 0}
   scrollSpeedSlider: {fileID: 0}
   textBeamName: {fileID: 0}

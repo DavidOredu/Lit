@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282976477101791826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.14, y: 6.31, z: 0}
+  m_LocalPosition: {x: 15.1, y: 10.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5319341248167596189}
@@ -101,8 +101,11 @@ MonoBehaviour:
   currentRacerType: 1
   playerData: {fileID: 0}
   difficultyData: {fileID: 0}
+  awakenedData: {fileID: 0}
+  powerupData: {fileID: 0}
   moveVelocityResource: 0
   movementVelocity: 0
+  alteredVelocity: 0
   normalizedMovementVelocity: 0
   strengthResource: 0
   strength: 0
@@ -111,6 +114,7 @@ MonoBehaviour:
   jumpVelocityResource: 0
   jumpVelocity: 0
   normalizedJumpVelocity: 0
+  isAwakened: 0
   runner:
     runner: {fileID: 0}
     stickman: {fileID: 0}
@@ -125,63 +129,108 @@ MonoBehaviour:
   litCheck: {fileID: 5319341248167596169}
   projectileArm: {fileID: 1209207703434183774}
   bombArm: {fileID: 6559148140647445056}
+  checkpoint: {fileID: 0}
   litPlatforms: []
   myDamages:
     fire:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     frost:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     poison:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     light:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     lightning:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     wind:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     magic:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     shadow:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     laser:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     deathLaser:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     knockout:
       damageName: 
       damagerType: 0
+      damageInt: 0
       damaged: 0
+      racer: {fileID: 0}
       damageStrength: 0
+      hyperDamage: 0
+      ultimateDamage: 0
     Damages: []
   enemyDifficulty: 0
   entityData: {fileID: 11400000, guid: f695cf9fa80505b48909a3c42af985c7, type: 2}

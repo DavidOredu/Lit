@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4519732ff3fb29a4891a0edfe62a8c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerRacer: {fileID: 0}
   damageType: 0
   damageStrength: 0
   explosiveForce: 0

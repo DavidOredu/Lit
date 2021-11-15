@@ -11,8 +11,14 @@ public class PoweredPlatform : MonoBehaviour
         SpeedBooster,
         Action
     }
-
+    public enum PowerAid
+    {
+        Instantaneous,
+        Continuous
+    }
+    public Platform.PlatformType platformType = Platform.PlatformType.PowerPlatform;
     public Power currentPower;
+    public PowerAid currentPowerAid;
 
     [Header("SUPER JUMP AND JUMP BOOSTER POWER")]
     public float jumpForce;
@@ -27,7 +33,7 @@ public class PoweredPlatform : MonoBehaviour
 
     private void Update()
     {
-
+        
     }
 
     public void DefinePower(Racer racer)
@@ -89,10 +95,12 @@ public class PoweredPlatform : MonoBehaviour
             {
                 case Racer.RacerType.Player:
                     racer.jumpVelocity = jumpForce;
+                    racer.playerJumpState.poweredJump = true;
                     racer.StateMachine.ChangeState(racer.playerJumpState);
                     break;
                 case Racer.RacerType.Opponent:
                     racer.jumpVelocity = jumpForce;
+              //      racer.opponentJumpState.poweredJump = true;
                     racer.StateMachine.ChangeState(racer.opponentJumpState);
                     break;
                 default:
@@ -174,9 +182,10 @@ public class PoweredPlatform : MonoBehaviour
         }
     }
     #endregion
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent")
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
         {
             Racer racer = other.GetComponent<Racer>();
             racer.PowerTriggerEnter(this);
@@ -184,7 +193,7 @@ public class PoweredPlatform : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent")
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
         {
             Racer racer = other.GetComponent<Racer>();
             racer.PowerTriggerExit(this);

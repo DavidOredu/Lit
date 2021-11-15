@@ -1,0 +1,3 @@
+Note
+
+	• GUI Animator for Unity UI 1.0.0 or higher does not need "Scripts/Editor/GSuiEditor.cs" file. Please delete it, if you find it.

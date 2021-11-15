@@ -47,20 +47,26 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if (isGrounded)
+        if (isGrounded && !racer.isOnSlope)
         {
 
             racer.SetAccelerations(Racer.RacerType.Player);
             racer.SetVelocityX(racer.movementVelocity);
-
+        }
+        else if(isGrounded && racer.isOnSlope)
+        {
+                
+            
+            racer.SetAccelerations(Racer.RacerType.Player);
+            racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
+            racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
         }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        
 
+        
     }
 }

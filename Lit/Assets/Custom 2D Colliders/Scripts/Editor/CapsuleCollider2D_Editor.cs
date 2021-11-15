@@ -32,14 +32,14 @@ using System.Collections;
 [CustomEditor (typeof(CapsuleCollider2D))]
 public class CapsuleCollider_Editor : Editor {
 
-    CapsuleCollider2D capCol;
+    CapsuleCollider2DCustom capCol;
     EdgeCollider2D edgeCollider;
     Vector2 off;
     bool advanced;
 
     void OnEnable()
     {
-        capCol = (CapsuleCollider2D)target;
+        capCol = (CapsuleCollider2DCustom)target;
 
         edgeCollider = capCol.GetComponent<EdgeCollider2D>();
         if (edgeCollider == null) {

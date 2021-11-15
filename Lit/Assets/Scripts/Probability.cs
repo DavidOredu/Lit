@@ -4,9 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class Probability<T>
 {
-    public Dictionary<T, int> probabilityPair;
+    public Dictionary<T, int> probabilityPair = new Dictionary<T, int>();
     public List<T> array = new List<T>();
-    public List<bool> withinRange = new List<bool>();
     public AnimationCurve probability;
 
     bool hasFound = false;
@@ -15,7 +14,6 @@ public class Probability<T>
 
     public Probability(AnimationCurve probability)
     {
-        probabilityPair = new Dictionary<T, int>();
         this.probability = probability;
     }
     public void InitDictionary(List<T> array)
@@ -25,7 +23,6 @@ public class Probability<T>
         for (int i = 0; i < array.Count; i++)
         {
             probabilityPair.Add(array[i], position);
-            withinRange.Add(false);
             position++;
         }
         this.array = array;

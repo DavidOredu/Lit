@@ -23,14 +23,21 @@ public class MagicProjectileScript : MonoBehaviour
 
     private RunnerDamagesOperator runnerDamages;
 
-    public int damageType;
-    public float damageStrength;
+    public int damageInt;
+    public float damagePercentage;
+    public float damageRate;
     public Rigidbody2D rb { get; private set; }
 
     Timer lifetimeTimer;
     public float lifetime = 5f;
 
     Collision2D defaultCollision;
+
+    #region Homing Variables
+    public Transform target;
+    public bool isHomingMissile = false;
+    #endregion
+
     void Start()
     {
         lifetimeTimer = new Timer(lifetime);
@@ -48,6 +55,16 @@ public class MagicProjectileScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (isHomingMissile)
+        {
+            Vector2 direction = transform.position - target.position;
+            direction.Normalize();
+
+            float cross = Vector3.Cross(direction, transform.right).z;
+
+            rb.angularVelocity = 360 * cross;
+        }
+
         if (!hasCollided)
         {
             lifetimeTimer.UpdateTimer();
@@ -90,7 +107,7 @@ public class MagicProjectileScript : MonoBehaviour
                 if (hitObject.gameObject.tag == "Player" || hitObject.gameObject.tag == "Opponent")
                 {
                     // damage hit object
-                    Utils.SetDamageVariables(runnerDamages, ownerRacer, damageType, damageStrength, hitObject.gameObject);
+                    Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, hitObject.gameObject);
                 }
             }
         }
@@ -139,7 +156,7 @@ public class MagicProjectileScript : MonoBehaviour
         {
             if(hit.collider.CompareTag("Player") || hit.collider.CompareTag("Opponent"))
             {
-                if (hit.collider.gameObject.GetComponent<Racer>().runner.stickmanNet.code != damageType)
+                if (hit.collider.gameObject.GetComponent<Racer>().runner.stickmanNet.code != damageInt)
                 {
                     Collide(true, hit);
                 }

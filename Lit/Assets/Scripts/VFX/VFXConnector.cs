@@ -8,6 +8,8 @@ public class VFXConnector : MonoBehaviour
     public Racer racer;
     public List<RunnerEffectsData> runnerEffectsData = new List<RunnerEffectsData>();
     public int debugCode;
+
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,10 @@ public class VFXConnector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //  ChangeVFXProperties(debugCode);
+        if (gameManager == null)
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        if(gameManager.currentGameState != GameManager.GameState.InGame)
+            ChangeVFXProperties(debugCode);
     }
     public void ChangeVFXProperties(int stickmanCode)
     {

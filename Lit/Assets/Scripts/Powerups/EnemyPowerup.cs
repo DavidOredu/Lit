@@ -21,7 +21,7 @@ public class EnemyPowerup : MonoBehaviour
     public void UsePowerup()
     {
         if (gamePlayer == null)
-            gamePlayer = transform.root.GetComponent<GamePlayerLobby>();
+            gamePlayer = transform.root.gameObject.GetComponent<GamePlayerLobby>();
         if(powerupBehaviour == null) { return; }
         if (!gamePlayer.racer.canUsePowerup) { return; }
         if (gamePlayer.powerup.isSelectable)
@@ -32,7 +32,6 @@ public class EnemyPowerup : MonoBehaviour
         {
             powerupBehaviour.ActivatePowerup();
         }
-        
         gamePlayer.powerup = null;
         powerupBehaviour = null;
         

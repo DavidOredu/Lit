@@ -152,8 +152,8 @@ public class BombScript : MonoBehaviour
         var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
 
         explosionComp.ownerRacer = OwnerRacer;
-        explosionComp.damageType = damageType;
-        explosionComp.damageStrength = damageStrength;
+        explosionComp.damageInt = damageType;
+        explosionComp.damagePercentage = damageStrength;
         explosionComp.explosiveForce = explosiveForce;
         explosionComp.explosiveRadius = explosiveRadius;
         explosionComp.upwardsModifier = upwardsModifier;

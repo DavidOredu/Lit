@@ -9,9 +9,10 @@ using UnityEngine.U2D;
 [RequireComponent(typeof(EdgeCollider2D))]
 public class LitPlatformNetwork : NetworkBehaviour
 {
+    public Platform.PlatformType platformType = Platform.PlatformType.LitPlatform;
+
     public float WaitToDetectPlatform;
     
-
     public ColorStateCode colorStateCode;
     public GameObject glow { get; private set; }
     public GameObject bloom { get; private set; }
@@ -74,7 +75,7 @@ public class LitPlatformNetwork : NetworkBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.CompareTag("Player"))
+        if (other.collider.CompareTag("Player") || other .collider.CompareTag("Opponent"))
         {
 
 

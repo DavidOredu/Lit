@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
+    private GameManager gameManager;
     [SerializeField] private float lineDistance;
     public static bool hasCrossedLine = false;
 
+    public BoxCollider2D finishArea;
     public LayerMask whatIsRunner;
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameManager.instance;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player") || other.CompareTag("Opponent"))
+        {
+            var racer = other.GetComponent<Racer>();
+            if (!gameManager.finishedRacers.Contains(racer))
+            {
+                gameManager.finishedRacers.Insert(gameManager.finishedRacers.Count, racer);
+
+                switch (racer.currentRacerType)
+                {
+                    case Racer.RacerType.Player:
+                        racer.StateMachine.ChangeState(racer.playerQuickHaltState);
+                        break;
+                    case Racer.RacerType.Opponent:
+                        racer.StateMachine.ChangeState(racer.opponentQuickHaltState);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
     private bool hasCrossed()
     {

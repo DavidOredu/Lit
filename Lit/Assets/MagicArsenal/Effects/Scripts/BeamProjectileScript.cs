@@ -11,6 +11,7 @@ public class BeamProjectileScript : MonoBehaviour
 
     public int currentBeam = 0;
     public int damageType;
+    public BeamType beamType = BeamType.BeamPowerup;
 
     private RunnerDamagesOperator runnerDamages;
 
@@ -23,12 +24,13 @@ public class BeamProjectileScript : MonoBehaviour
     public LayerMask whatToHit;
     public Vector3 startVFXOffset;
     public Vector3 extensionSpeed;
+    public Vector2 directionToHit = Vector2.down;
     public float beamEndOffset = 1f; //How far from the raycast hit point the end effect is positioned
     public float textureScrollSpeed = 8f; //How fast the texture scrolls along the beam
     public float textureLengthScale = 3; //Length of the beam texture
     public float growthSpeed = 100f;
-
     public float damageStrength;
+    public bool canExtend = true;
 
     [Header("Put Sliders here (Optional)")]
     public Slider endOffSetSlider; //Use UpdateEndOffset function on slider
@@ -68,9 +70,9 @@ public class BeamProjectileScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(canExtend)
         UpdateLaser(transform.position);
     }
-
 
     public void UpdateEndOffset()
     {
@@ -88,10 +90,9 @@ public class BeamProjectileScript : MonoBehaviour
         line.SetPosition(0, start);
         beamStart.transform.position = start - startVFXOffset;
 
-        Vector2 direction = Vector2.down * -(line.GetPosition(1) - line.GetPosition(0));
+        Vector2 direction = directionToHit * -(line.GetPosition(1) - line.GetPosition(0));
         Vector2 end = Vector3.zero;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, whatToHit);
-
 
 
         Debug.DrawRay(transform.position, direction, Color.green);
@@ -103,10 +104,12 @@ public class BeamProjectileScript : MonoBehaviour
             {
                 runnerDamages.Damages[damageType].damaged = true;
                 runnerDamages.Damages[damageType].damageInt = damageType;
-                runnerDamages.Damages[damageType].damageStrength = damageStrength;
+                runnerDamages.Damages[damageType].damagePercentage = damageStrength;
                 runnerDamages.Damages[damageType].racer = ownerRacer;
                 hit.collider.transform.SendMessage("DamageRunner", runnerDamages);
             }
+            if(beamType == BeamType.ElectricOrb)
+                Destroy(gameObject);
         }
         else
         {
@@ -126,5 +129,11 @@ public class BeamProjectileScript : MonoBehaviour
         float distance = Vector3.Distance(start, end);
         line.sharedMaterial.mainTextureScale = new Vector2(distance / textureLengthScale, 1);
         line.sharedMaterial.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0);
+    }
+
+    public enum BeamType
+    {
+        ElectricOrb, 
+        BeamPowerup
     }
 }

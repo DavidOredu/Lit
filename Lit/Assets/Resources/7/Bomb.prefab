@@ -14154,7 +14154,7 @@ GameObject:
   - component: {fileID: -3190281236625788219}
   m_Layer: 0
   m_Name: Bomb
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

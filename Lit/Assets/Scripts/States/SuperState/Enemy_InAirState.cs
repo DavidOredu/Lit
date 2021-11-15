@@ -20,6 +20,8 @@ public class Enemy_InAirState : State
     public override void Enter()
     {
         base.Enter();
+
+        racer.SetVelocityX(racer.movementVelocity);
     }
 
     public override void Exit()
@@ -47,10 +49,6 @@ public class Enemy_InAirState : State
 
         if (!isGrounded)
         {
-
-            //  player.SetVelocityX(player.movementVelocity);
-
-
             racerEntity.Anim.SetFloat("yVelocity", racerEntity.CurrentVelocity.y);
             racerEntity.Anim.SetFloat("xVelocity", Mathf.Abs(racerEntity.CurrentVelocity.x));
         }

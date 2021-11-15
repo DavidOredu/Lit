@@ -6281,8 +6281,8 @@ ScriptedImporter:
   documentPivot: {x: 0, y: 0}
   documentAlignment: 0
   importHiddenLayers: 0
-  importedTextureWidth: 256
-  importedTextureHeight: 512
+  importedTextureWidth: 128
+  importedTextureHeight: 256
   documentSize: {x: 1920, y: 1080}
   paperDollMode: 0
   keepDupilcateSpriteName: 0

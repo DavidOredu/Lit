@@ -14163,7 +14163,7 @@ GameObject:
   - component: {fileID: 6432720003581588835}
   m_Layer: 0
   m_Name: Bomb
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18875,6 +18875,7 @@ MonoBehaviour:
   col: {fileID: 1097752220475120688}
   isDragging: 0
   hasFired: 0
+  isDiscarded: 0
   canExplode: 1
   canControl: 1
   damageType: 0

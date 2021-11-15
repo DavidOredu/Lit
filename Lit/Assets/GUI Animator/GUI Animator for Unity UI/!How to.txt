@@ -1,0 +1,3 @@
+All contents in this file are moved to Manual.chm and GUIAnimator.chm files which are in "GUI Animator\GUI Animator for Unity UI" folder.
+
+Windows users can use Microsoft Edge or other browsers to open chm file, for macOS users may require CMH Reader (https://itunes.apple.com/us/app/chm-reader/id424182884?mt=12) which is free.

@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8757154755284425650}
   - component: {fileID: 8757154755284425653}
-  - component: {fileID: 8757154755284425652}
-  - component: {fileID: 8757154755284425655}
   m_Layer: 0
   m_Name: Laser Beam
   m_TagString: Untagged
@@ -130,40 +128,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &8757154755284425652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8757154755284425651}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbb79327d9692a4aa8130406ff6ad80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 8757154755284425653}
-  firePoint: {fileID: 8757154755284425650}
-  extensionSpeed: {x: 0, y: -5, z: 0}
-  startVFX: {fileID: 0}
-  startVFXOffset: {x: 0.37, y: 0, z: 0}
-  endVFX: {fileID: 0}
-  whatToHit:
-    serializedVersion: 2
-    m_Bits: 12032
-  laserBeam: {fileID: 8757154755284425655}
-  laserLimit: {fileID: 0}
---- !u!114 &8757154755284425655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8757154755284425651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628a02d95bd96ec41a8596031e8080e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserDamageTime: 3.5
-  negativeGravityScale: 3

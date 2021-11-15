@@ -2,6 +2,7 @@
 
 public class Enemy_JumpState : Enemy_AbilityState
 {
+    public bool poweredJump;
     public Enemy_JumpState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {
     }

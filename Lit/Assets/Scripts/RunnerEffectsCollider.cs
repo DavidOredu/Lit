@@ -7,7 +7,8 @@ public class RunnerEffectsCollider : MonoBehaviour
     private ParticleSystem pSystem;
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
-    public float damageStrength;
+    public float damagePercentage;
+    public float damageRate;
     private RunnerDamagesOperator runnerDamages;
 
     Racer racer;
@@ -31,14 +32,15 @@ public class RunnerEffectsCollider : MonoBehaviour
     { 
         if(racer == null)
             racer = transform.root.GetComponent<Racer>();
-        var damageType = racer.runner.stickmanNet.currentColor.colorID;
+        var damageInt = racer.runner.stickmanNet.currentColor.colorID;
+
         if (racer.isAwakened)
         {
             if (other.CompareTag("Player") || other.CompareTag("Opponent"))
             {
                 if (!other.GetComponent<Racer>().myDamages.IsDamaged())
                 {
-                    Utils.SetDamageVariables(runnerDamages, racer, damageType, damageStrength, other);
+                    Utils.SetDamageVariables(runnerDamages, racer, damageInt, damagePercentage, damageRate, other);
                 }
             }
             else if (other.CompareTag("Obstacle"))

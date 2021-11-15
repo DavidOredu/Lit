@@ -7,13 +7,14 @@ public class MineScript : MonoBehaviour
     public Racer ownerRacer;
     public int damageType;
     public float damageStrength;
-
+    public float explosiveRadiusDecreasePercentage;
     public float explosiveForce;
     public float explosiveRadius;
     public float upwardsModifier;
     public ForceMode2D forceMode = ForceMode2D.Impulse;
 
     private GameObject explosionGO = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,33 +24,76 @@ public class MineScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (explosionGO == null)
-            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
+           
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
-        var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
+        //--------------FOR PLAYER OBJECTS-----------------//
+        if (other.CompareTag("Player") || other.CompareTag("Opponent"))
+        {
+            if(ownerRacer == other.GetComponent<Racer>()) { return; }
 
-        explosionComp.ownerRacer = ownerRacer;
-        explosionComp.damageType = damageType;
-        explosionComp.damageStrength = damageStrength;
-        explosionComp.explosiveForce = explosiveForce;
-        explosionComp.explosiveRadius = explosiveRadius;
-        explosionComp.upwardsModifier = upwardsModifier;
-        explosionComp.forceMode = forceMode;
+            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
+            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
+            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
 
-        explosionComp.runnerDamages.InitDamages();
-        explosionComp.Explode(true);
-        Destroy(gameObject);
-        //if(other.collider.CompareTag("Player") || other.collider.CompareTag("Opponent"))
-        //{
-        //    // instantiate explosive damage
-        //}
-        //if (other.collider.CompareTag("Projectile"))
-        //{
+            Utils.SetMineToBombVariables(explosionComp, this);
 
-        //}
-        //instantiate explosive effect
+            explosionComp.runnerDamages.InitDamages();
+            explosionComp.Explode(true);
+            Destroy(gameObject);
+        }
+        //------------------------------------------------//
+
+        //---------------FOR OBSTACLE OBJECTS--------------//
+        else if (other.CompareTag("Obstacle"))
+        {
+            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
+            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
+            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
+
+            Utils.SetMineToBombVariables(explosionComp, this);
+            var obstacleScript = other.GetComponent<Obstacle>();
+
+            if(obstacleScript.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
+            {
+                obstacleScript.ExplodeLaserOrb();
+                explosionComp.Explode(false);
+                Destroy(gameObject);
+            }
+            else if(obstacleScript.currentObstacleType == Obstacle.ObstacleType.Breakable)
+            {
+                obstacleScript.BreakObstacle();
+                explosionComp.Explode(false);
+                Destroy(gameObject);
+            }
+        }
+        //----------------------------------------------------//
+
+        //-------------------FOR PROJECTILE OBJECTS----------------------//
+        else if (other.CompareTag("Projectile"))
+        {
+            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
+            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
+            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
+
+            Utils.SetMineToBombVariables(explosionComp, this);
+
+            if (other.GetComponent<MagicProjectileScript>())
+            {
+                var projectileScript = other.GetComponent<MagicProjectileScript>();
+                projectileScript.Collide(false);
+                explosionComp.Explode(false);
+                Destroy(gameObject);
+            }
+            else if (other.GetComponent<BombScript>())
+            {
+                var bombScript = other.GetComponent<BombScript>();
+                bombScript.Explode(false);
+                explosionComp.Explode(false);
+                Destroy(gameObject);
+            }
+        }
+        //------------------------------------------------------//
     }
 }

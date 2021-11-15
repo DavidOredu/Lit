@@ -5,8 +5,9 @@ using UnityEngine;
 public class ElementExplosionScript : MonoBehaviour
 {
     public Racer ownerRacer;
-    public int damageType;
-    public float damageStrength;
+    public int damageInt;
+    public float damagePercentage;
+    public float damageRate;
 
     public float explosiveForce;
     public float explosiveRadius;
@@ -31,16 +32,12 @@ public class ElementExplosionScript : MonoBehaviour
                 {
                     if (explodeWithDamage)
                     {
-                        if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageType)
+                        if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageInt)
                         {
                             objectRB.AddExplosionForce(explosiveForce, transform.position, explosiveRadius, upwardsModifier, forceMode);
                             Debug.Log($"Has exploded! BOOM!: {objectToBlow.name}");
-                            Debug.Log($"Damage Type at point of explosion is: {damageType}");
-                            runnerDamages.Damages[damageType].damaged = true;
-                            runnerDamages.Damages[damageType].damageInt = damageType;
-                            runnerDamages.Damages[damageType].damageStrength = damageStrength;
-                            runnerDamages.Damages[damageType].racer = ownerRacer;
-                            objectRB.transform.SendMessage("DamageRunner", runnerDamages);
+                            Debug.Log($"Damage Type at point of explosion is: {damageInt}");
+                            Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, objectRB.gameObject);
                         }
                     }
                 }

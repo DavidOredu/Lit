@@ -28,14 +28,12 @@ public class Enemy_DamagedState : State
     {
         racer.Anim.SetBool("damaged", true);
         base.Enter();
-            racer.canUsePowerup = false;
     }
 
     public override void Exit()
     {
         racer.Anim.SetBool("damaged", false);
         base.Exit();
-            racer.canUsePowerup = true;
     }
 
     public override void LateUpdate()
