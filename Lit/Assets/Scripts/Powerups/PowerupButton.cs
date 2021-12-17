@@ -17,12 +17,14 @@ public class PowerupButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        button = transform.Find("Button").GetComponent<Button>();
-        image = transform.Find("Button").transform.Find("Image").GetComponent<Image>();
+        var buttonGO = transform.Find("PowerupButton");
+        button = buttonGO.GetComponent<Button>();
+        image = button.transform.Find("Image").GetComponent<Image>();
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         rotateSpeedTemp = justRotate.rotateSpeed;
 
         isSelected = false;
+     //   button.onClick.AddListener(() => UsePowerup(false));
     }
 
     // Update is called once per frame
@@ -48,13 +50,16 @@ public class PowerupButton : MonoBehaviour
             // remove display
         }
     }
+    [ContextMenu("UsePowerup")]
     public void UsePowerup(bool endPowerup)
     {
+        Debug.Log("UsePowerupCalled");
         if (powerupBehaviour == null) { return; }
         if (gamePlayer == null)
             gamePlayer = transform.root.gameObject.GetComponent<GamePlayerLobby>();
         if (!gamePlayer.racer.canUsePowerup) { return; }
-    //    gamePlayer.racer.InputHandler.UsePowerupInput();
+       
+        gamePlayer.racer.InputHandler.UsePowerupInput();
         if (gamePlayer.powerup.isSelectable && isSelected && !endPowerup)
         {
             gamePlayer.powerup.isSelected = false;
@@ -80,7 +85,9 @@ public class PowerupButton : MonoBehaviour
                 isSelected = false;
                 gamePlayer.powerup = null;
                 powerupBehaviour = null;
+                Destroy(powerupBehaviour.gameObject);
             }
         }
+        
     }
 }

@@ -351,8 +351,9 @@ MonoBehaviour:
     duration: 0
     canBeMany: 0
     isSelectable: 0
-    powerup: 0
+    powerupID: 0
     powerupType: 0
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []
@@ -2224,7 +2225,7 @@ GameObject:
   - component: {fileID: 8088749048483784895}
   - component: {fileID: 5374447364381602387}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PowerupButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2848,6 +2849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &6395793306939458148
 GameObject:
@@ -2988,6 +2990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &6526397064964249176
 GameObject:
@@ -3859,6 +3862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &9112972862884934109
 GameObject:

@@ -27,6 +27,7 @@ public class Enemy_JumpState : Enemy_AbilityState
         base.Enter();
 
         racerEntity.SetVelocityY(racerEntity.jumpVelocity);
+        racer.runnerFeedbacks.jumpFeedback?.PlayFeedbacks();
         isAbilityDone = true;
 
      //   racer.canSpawnDust = true;

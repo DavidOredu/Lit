@@ -27,6 +27,7 @@
         base.Enter();
 
         racer.SetVelocityY(racer.jumpVelocity);
+        racer.runnerFeedbacks.jumpFeedback?.PlayFeedbacks();
         isAbilityDone = true;
         amountOfJumpsLeft--;
 

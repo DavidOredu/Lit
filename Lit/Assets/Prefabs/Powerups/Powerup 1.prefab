@@ -49,11 +49,12 @@ MonoBehaviour:
   powerup:
     prefab: {fileID: 3765488261685951142}
     name: SpeedUp
-    duration: 5
+    duration: 10
     canBeMany: 1
     isSelectable: 0
-    powerup: 0
+    powerupID: 0
     powerupType: 1
+    powerupActiveType: 1
     startAction:
       m_PersistentCalls:
         m_Calls: []

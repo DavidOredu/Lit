@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6480c3a11ef13143b71f9c64c7da64c, type: 3}
   m_Name: DrumSequence
   m_EditorClassIdentifier: 
-  Length: 3.2
+  Length: 2.625
   OriginalSequence:
     Line: []
   EndSilenceDuration: 0.3
@@ -88,77 +88,41 @@ MonoBehaviour:
   QuantizedSequence:
   - Line:
     - Timestamp: 0
-      ID: 0
+      ID: -1
     - Timestamp: 0.2
-      ID: 0
+      ID: -1
     - Timestamp: 0.4
-      ID: 0
+      ID: -1
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
-      ID: 0
+      ID: -1
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
-      ID: 0
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: 0
-    - Timestamp: 1.8000001
-      ID: 0
-    - Timestamp: 2
-      ID: 0
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: 0
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: 0
-    - Timestamp: 3
       ID: -1
   - Line:
     - Timestamp: 0
-      ID: 1
+      ID: -1
     - Timestamp: 0.2
       ID: 1
     - Timestamp: 0.4
       ID: -1
     - Timestamp: 0.6
-      ID: -1
+      ID: 1
     - Timestamp: 0.8
       ID: 1
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
       ID: -1
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: 1
-    - Timestamp: 1.8000001
-      ID: 1
-    - Timestamp: 2
-      ID: -1
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: 1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
-      ID: -1
   - Line:
     - Timestamp: 0
+      ID: -1
+    - Timestamp: 0.2
       ID: 2
-    - Timestamp: 0.2
-      ID: -1
     - Timestamp: 0.4
-      ID: 2
+      ID: -1
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
@@ -166,57 +130,21 @@ MonoBehaviour:
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
-      ID: -1
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: 2
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: 2
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
       ID: -1
   - Line:
     - Timestamp: 0
-      ID: 3
+      ID: -1
     - Timestamp: 0.2
       ID: -1
     - Timestamp: 0.4
-      ID: -1
+      ID: 3
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
-      ID: 3
+      ID: -1
     - Timestamp: 1
-      ID: -1
+      ID: 3
     - Timestamp: 1.2
-      ID: -1
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: 3
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: -1
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: 3
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
       ID: -1
   - Line:
     - Timestamp: 0
@@ -232,24 +160,6 @@ MonoBehaviour:
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
-      ID: 4
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: -1
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: -1
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: 4
-    - Timestamp: 3
       ID: -1
   - Line:
     - Timestamp: 0
@@ -257,7 +167,7 @@ MonoBehaviour:
     - Timestamp: 0.2
       ID: -1
     - Timestamp: 0.4
-      ID: 5
+      ID: -1
     - Timestamp: 0.6
       ID: 5
     - Timestamp: 0.8
@@ -265,32 +175,14 @@ MonoBehaviour:
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
-      ID: 5
-    - Timestamp: 1.4
-      ID: 5
-    - Timestamp: 1.6
       ID: -1
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: 5
-    - Timestamp: 2.2
-      ID: 5
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: 5
-    - Timestamp: 3
-      ID: 5
   - Line:
     - Timestamp: 0
       ID: -1
     - Timestamp: 0.2
       ID: -1
     - Timestamp: 0.4
-      ID: 6
+      ID: -1
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
@@ -299,93 +191,39 @@ MonoBehaviour:
       ID: -1
     - Timestamp: 1.2
       ID: 6
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: -1
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: 6
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: 6
-    - Timestamp: 3
-      ID: -1
   - Line:
     - Timestamp: 0
-      ID: 7
+      ID: -1
     - Timestamp: 0.2
-      ID: 7
-    - Timestamp: 0.4
       ID: -1
-    - Timestamp: 0.6
-      ID: 7
-    - Timestamp: 0.8
-      ID: -1
-    - Timestamp: 1
-      ID: -1
-    - Timestamp: 1.2
-      ID: 7
-    - Timestamp: 1.4
-      ID: 7
-    - Timestamp: 1.6
-      ID: 7
-    - Timestamp: 1.8000001
-      ID: 7
-    - Timestamp: 2
-      ID: -1
-    - Timestamp: 2.2
-      ID: 7
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: 7
-    - Timestamp: 3
-      ID: 7
-  - Line:
-    - Timestamp: 0
-      ID: 8
-    - Timestamp: 0.2
-      ID: 8
     - Timestamp: 0.4
       ID: -1
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
-      ID: -1
+      ID: 7
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
       ID: -1
-    - Timestamp: 1.4
+  - Line:
+    - Timestamp: 0
       ID: -1
-    - Timestamp: 1.6
+    - Timestamp: 0.2
+      ID: -1
+    - Timestamp: 0.4
+      ID: -1
+    - Timestamp: 0.6
+      ID: -1
+    - Timestamp: 0.8
       ID: 8
-    - Timestamp: 1.8000001
-      ID: 8
-    - Timestamp: 2
+    - Timestamp: 1
       ID: -1
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: 8
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
+    - Timestamp: 1.2
       ID: -1
   - Line:
     - Timestamp: 0
-      ID: 9
+      ID: -1
     - Timestamp: 0.2
       ID: -1
     - Timestamp: 0.4
@@ -398,31 +236,13 @@ MonoBehaviour:
       ID: -1
     - Timestamp: 1.2
       ID: -1
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: 9
-    - Timestamp: 1.8000001
-      ID: -1
-    - Timestamp: 2
-      ID: -1
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
-      ID: -1
   - Line:
     - Timestamp: 0
       ID: -1
     - Timestamp: 0.2
-      ID: 10
+      ID: -1
     - Timestamp: 0.4
-      ID: 10
+      ID: -1
     - Timestamp: 0.6
       ID: -1
     - Timestamp: 0.8
@@ -430,23 +250,5 @@ MonoBehaviour:
     - Timestamp: 1
       ID: -1
     - Timestamp: 1.2
-      ID: -1
-    - Timestamp: 1.4
-      ID: -1
-    - Timestamp: 1.6
-      ID: -1
-    - Timestamp: 1.8000001
-      ID: 10
-    - Timestamp: 2
-      ID: 10
-    - Timestamp: 2.2
-      ID: -1
-    - Timestamp: 2.4
-      ID: -1
-    - Timestamp: 2.6000001
-      ID: -1
-    - Timestamp: 2.8
-      ID: -1
-    - Timestamp: 3
       ID: -1
   RandomizeTrackColorsButton: 0

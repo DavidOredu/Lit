@@ -6,7 +6,7 @@ using Mirror;
 
 public class CameraFollowNetwork : NetworkBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera camera1;
+    [SerializeField] private CinemachineVirtualCamera _camera;
     
     private CinemachineTransposer transposer;
 
@@ -14,9 +14,12 @@ public class CameraFollowNetwork : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        transposer = camera1.GetCinemachineComponent<CinemachineTransposer>();
-        camera1.gameObject.SetActive(true);
+        _camera = GameObject.FindGameObjectWithTag("CMvcam").GetComponent<CinemachineVirtualCamera>();
+        _camera.gameObject.SetActive(true);
+        transposer = _camera.GetCinemachineComponent<CinemachineTransposer>();
         enabled = true;
+        _camera.Follow = gameObject.transform;
+      //  _camera.LookAt = gameObject.transform;
     }
     void Start()
     {

@@ -52,6 +52,9 @@ MonoBehaviour:
     duration: 0
     canBeMany: 1
     isSelectable: 1
+    powerupID: 6
+    powerupType: 0
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []
@@ -61,11 +64,15 @@ MonoBehaviour:
     endAction:
       m_PersistentCalls:
         m_Calls: []
-    selectedAction:
+    selectedStartAction:
       m_PersistentCalls:
         m_Calls: []
-    powerup: 6
-    powerupType: 0
+    selectedActiveAction:
+      m_PersistentCalls:
+        m_Calls: []
+    selectedEndAction:
+      m_PersistentCalls:
+        m_Calls: []
   powerupAmmo: 0
 --- !u!212 &3765488261685951137
 SpriteRenderer:

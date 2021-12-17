@@ -35,6 +35,8 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     {
         racer.Anim.SetBool("damaged", false);
         base.Exit();
+
+        Utils.ParticleSystemAction(damageEffect, Utils.ParticleSystemActions.TurnOffLooping);
     }
 
     public override void LateUpdate()

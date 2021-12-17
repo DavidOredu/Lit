@@ -119,6 +119,12 @@ public static class Utils
         return particleList;
         
     }
+    /// <summary>
+    /// Neccessary actions needed to be taken on particle systems during runtime.
+    /// </summary>
+    /// <param name="particleObject">The main object.</param>
+    /// <param name="actions">The type of action to be carried out.</param>
+    /// <param name="alterPercentage">by how much do you want to change something. Usually used for Increase Particle Size, Decrease Particle Size actions.</param>
     public static void ParticleSystemAction(GameObject particleObject, ParticleSystemActions actions, float alterPercentage = 0f)
     {
         var particle = particleObject.GetComponent<ParticleSystem>();

@@ -441,8 +441,9 @@ MonoBehaviour:
     duration: 0
     canBeMany: 0
     isSelectable: 0
-    powerup: 0
+    powerupID: 0
     powerupType: 0
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []
@@ -924,6 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &2151252123659648588
 GameObject:
@@ -1924,6 +1926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &4137872249863193345
 GameObject:
@@ -2641,6 +2644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f038eca21917e8a4b8b3fae275990700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRotate: 1
   rotateSpeed: 15
 --- !u!1 &6340884607812002048
 GameObject:

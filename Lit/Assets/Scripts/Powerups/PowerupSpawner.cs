@@ -37,7 +37,6 @@ public class PowerupSpawner : MonoBehaviour
             _spawnTime = spawnTime;       
             hasPowerup = true;
         }
-        Debug.Log($"{controller.powerups.Count}");
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

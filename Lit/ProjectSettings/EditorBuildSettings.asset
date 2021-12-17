@@ -24,41 +24,65 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene_Game_Map7.unity
     guid: 6c2527bb5b2278c4b9bd3c6bf28faa74
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo00 (960x600px).unity
-    guid: bc72c7ce576754d9ab28c4fbd10141ad
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/01_Title.unity
+    guid: fef50687cc9534f9d9703e4e4c1074a0
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo01 (960x600px).unity
-    guid: 380394b486b96446a8a843038db91827
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/02_Login.unity
+    guid: 11871e20fcf60455bae1b90f48f7bbcf
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo02 (960x600px).unity
-    guid: e4a84e386d8394e53889d52065047ed1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/03_Stage.unity
+    guid: f9b4c53adabba43ecbdb6718b70ccd36
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo03 (960x600px).unity
-    guid: b22ccf16c7c2447fa9a5b1c2612cf279
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/04_StageStart.unity
+    guid: bc333e5d44de646b2b43359a9918dc7e
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo04 (960x600px).unity
-    guid: 5f99967198ae64fb991fa3038b6c1c69
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/05_Complete.unity
+    guid: fdb5e213caed14c1e891514e1666581d
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo05 (960x600px).unity
-    guid: fecc9439dbca04ea1b0ebf5fe8b8ff4f
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/06_Levelup.unity
+    guid: 2ce1a1af7e3c74481867fe267adb247f
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo06 (960x600px).unity
-    guid: 70d3956a7a625451589ba06dbd17a798
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/07_Achievements.unity
+    guid: f0a10f093de1b4d40b66073f2b80ccac
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo07 (960x600px).unity
-    guid: f9a66dceabf0044afb2a68b8e3b9b17c
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/08_ShopCoin.unity
+    guid: db746cc8b177d4c7192125ddd33fccd3
   - enabled: 1
-    path: Assets/GUI Animator/GUI Animator for Unity UI/Demo (CSharp)/Scenes/GA UUI
-      - Demo08 (960x600px).unity
-    guid: ca97717d3f579419eb82e27284408860
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/09_ShopGem.unity
+    guid: 4bdc27adc8421454d926a83e5bbddd98
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/10_ShopLife.unity
+    guid: a68853da2fca042e38e75060aab61d88
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/11_Item.unity
+    guid: fb65fc96d65754868bbecde8233c1ca3
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/12_Message.unity
+    guid: 45ca531f9b34d4ae183a2573f4037fef
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/13_Setting.unity
+    guid: a706bd49549444db7b1c20360856832c
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/14_Pause.unity
+    guid: 83383b8bae08643b0abefa685b0c8c28
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/15_Icons.unity
+    guid: 788676ec9f9bb45d5b786ac9d262d516
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/16_Rank.unity
+    guid: cc6cf756dbf6049f088f3a253be6b6ef
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/17_FunctionButton.unity
+    guid: 5ca0cdc9fd2b84c238cf7dfb3adddf51
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/18_ActionText.unity
+    guid: eaabd43d2422f4205a0d6e253fe7d01a
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/19_Component.unity
+    guid: 28192e3e6e1b74c1aaf7c5688dfd1e55
+  - enabled: 1
+    path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/20_Popup.unity
+    guid: 6e32219dc4a2c458891f415b7702988e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f513a57a5a8581f40a514ff40fb178ef,
       type: 2}

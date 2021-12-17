@@ -101,9 +101,9 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
             }
             
-            Debug.Log($"{Room.GamePlayers.Count} Game Players exist!");
-            Debug.Log($"{Room.RoomPlayers.Count} Room player exist!");
-            Debug.Log($"{Room.players.Count} Stickman Players exist!");
+            //Debug.Log($"{Room.GamePlayers.Count} Game Players exist!");
+            //Debug.Log($"{Room.RoomPlayers.Count} Room player exist!");
+            //Debug.Log($"{Room.players.Count} Stickman Players exist!");
 
             UpdateDisplay();
         }

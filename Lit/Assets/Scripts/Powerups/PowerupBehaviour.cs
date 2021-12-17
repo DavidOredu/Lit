@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Controls powerup in-game interaction and activation.
+/// </summary>
 public class PowerupBehaviour : MonoBehaviour
 {
     PowerupData powerupData;
+    PowerupInformation powerupInformation;
     public PowerupController powerupController;
     SpriteRenderer image;
 
@@ -38,7 +41,7 @@ public class PowerupBehaviour : MonoBehaviour
     {
         if (!isTaken)
         {
-            if (other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent")
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
             {
                 isTaken = true;
                 switch (other.GetComponent<Racer>().currentRacerType)
@@ -54,8 +57,8 @@ public class PowerupBehaviour : MonoBehaviour
                             }
                             PlayerEvents.instance.GottenPowerup();
                             player.GamePlayer.powerupButton.powerupBehaviour = this;
-                            var powerupImg = player.powerupSlot.GetComponent<Image>();
-                            powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
+                            //var powerupImg = player.GamePlayer.powerupButton.i.powerupSlot.GetComponent<Image>();
+                            //powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
                             player.GamePlayer.powerup = powerup;
 
                             GameObject powerupMM = null;
@@ -73,10 +76,12 @@ public class PowerupBehaviour : MonoBehaviour
                                 }
                             }
                             powerupController = powerupMM.GetComponent<PowerupController>();
+                         //   if (player != powerup.PowerupActions.racer)
                             powerup.ReassignOwner(powerupMM);
                             // Call this function insteaad when we click gthe powerup button
                             //  ActivatePowerup();
                             image.enabled = false;
+                            image.gameObject.GetComponent<Collider2D>().enabled = false;
                         }
                         break;
                     case Racer.RacerType.Opponent:
@@ -86,7 +91,6 @@ public class PowerupBehaviour : MonoBehaviour
                         opponent.enemyPowerup.powerupBehaviour = this;
                         opponent.GamePlayer.enemyPowerup.powerupBehaviour = this;
                         opponent.GamePlayer.powerup = powerup;
-                        opponent.powerup = powerup;
                         GameObject powerupM = null;
 
                         foreach (var powerupManager in GameManager.instance.powerupManagers)
@@ -107,6 +111,7 @@ public class PowerupBehaviour : MonoBehaviour
                         // Call this function insteaad when we click the powerup button
                         //  ActivatePowerup();
                         image.enabled = false;
+                        image.gameObject.GetComponent<Collider2D>().enabled = false;
                         break;
                     default:
                         break;
@@ -120,7 +125,8 @@ public class PowerupBehaviour : MonoBehaviour
 
     public void ActivatePowerup()
     {
-        powerupController.ActivatePowerup(powerup);
+        powerupInformation = new PowerupInformation(powerup, powerup.duration);
+        powerupController.ActivatePowerup(powerupInformation);
     }
 
 

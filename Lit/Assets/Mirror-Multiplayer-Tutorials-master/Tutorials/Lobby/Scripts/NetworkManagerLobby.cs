@@ -61,7 +61,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         }
         private void Update()
         {
-            Debug.Log($"{RoomPlayers.Count} room players exist in the list!");
+         //   Debug.Log($"{RoomPlayers.Count} room players exist in the list!");
         }
         [Server]
         public override void OnStartServer()

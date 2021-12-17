@@ -458,9 +458,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -526,9 +534,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1013,7 +1029,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &115952805
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1033,9 +1051,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1071,9 +1097,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1174,9 +1208,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1196,6 +1238,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &115952808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,9 +1283,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1272,9 +1348,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1310,9 +1394,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -1321,6 +1413,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -2272,8 +2365,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &115952811
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -2293,9 +2412,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -2470,7 +2597,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -2497,7 +2626,34 @@ MonoBehaviour:
   - {fileID: 115952803}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &121177555
 GameObject:
@@ -2968,7 +3124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sequence: {fileID: 11400000, guid: 2563bec7af20480498217ee7cd699b29, type: 2}
   BPM: 160
-  SequencerLength: 16
+  SequencerLength: 7
   Loop: 1
   RandomSequence: 0
   PlayOnStart: 0
@@ -3002,9 +3158,9 @@ MonoBehaviour:
   BeatThisFrame: 0
   LastBeatIndex: 0
   LastBPM: 160
-  LastTracksCount: 3
-  LastSequencerLength: 16
-  LastSequence: {fileID: 11400000, guid: bafc49ff570e80444831b61dc9e4513e, type: 2}
+  LastTracksCount: 11
+  LastSequencerLength: 7
+  LastSequence: {fileID: 11400000, guid: 2563bec7af20480498217ee7cd699b29, type: 2}
   CurrentSequenceIndex: 0
   LastBeatTimestamp: 0
   AudioSources:
@@ -3419,9 +3575,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -3487,9 +3651,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -3974,7 +4146,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &376389805
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -3994,9 +4168,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4032,9 +4214,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4135,9 +4325,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4157,6 +4355,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &376389808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4176,9 +4400,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4233,9 +4465,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4271,9 +4511,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -4282,6 +4530,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -5233,8 +5482,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &376389811
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -5254,9 +5529,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -5431,7 +5714,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -5458,7 +5743,34 @@ MonoBehaviour:
   - {fileID: 376389803}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &425467982
 GameObject:
@@ -5519,9 +5831,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -5587,9 +5907,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6074,7 +6402,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &425467986
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6094,9 +6424,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6132,9 +6470,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6235,9 +6581,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6257,6 +6611,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &425467989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6276,9 +6656,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6333,9 +6721,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6371,9 +6767,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -6382,6 +6786,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -7333,8 +7738,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &425467992
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -7354,9 +7785,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -7531,7 +7970,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -7558,7 +7999,34 @@ MonoBehaviour:
   - {fileID: 425467984}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &471276842
 GameObject:
@@ -7878,9 +8346,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -7946,9 +8422,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8433,7 +8917,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &518400210
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -8453,9 +8939,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8491,9 +8985,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8594,9 +9096,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8616,6 +9126,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &518400213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8635,9 +9171,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8692,9 +9236,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8730,9 +9282,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -8741,6 +9301,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -9692,8 +10253,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &518400216
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -9713,9 +10300,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -9890,7 +10485,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -9917,7 +10514,34 @@ MonoBehaviour:
   - {fileID: 518400208}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &594936574
 GameObject:
@@ -9978,9 +10602,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10046,9 +10678,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10533,7 +11173,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &594936578
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -10553,9 +11195,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10591,9 +11241,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10694,9 +11352,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10716,6 +11382,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &594936581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10735,9 +11427,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10792,9 +11492,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10830,9 +11538,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -10841,6 +11557,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -11792,8 +12509,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &594936584
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -11813,9 +12556,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -11990,7 +12741,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -12017,7 +12770,34 @@ MonoBehaviour:
   - {fileID: 594936576}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &612435985
 GameObject:
@@ -12066,6 +12846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2436c2ba147129746badf6cfa2ee2d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimescaleMode: 0
 --- !u!114 &612435988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12158,7 +12939,9 @@ MonoBehaviour:
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: MK.Glow.LWRP.MKGlow, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_AfterStackBundles: []
 --- !u!81 &612435990
 AudioListener:
@@ -12259,7 +13042,34 @@ MonoBehaviour:
   - {fileID: 671629013}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!4 &671629004
 Transform:
@@ -12294,9 +13104,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -12471,7 +13289,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -12495,9 +13315,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -12506,6 +13334,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -13457,8 +14286,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &671629007
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -13478,9 +14333,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -13516,9 +14379,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -13619,9 +14490,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -13676,9 +14555,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -13698,6 +14585,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &671629011
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -13717,9 +14630,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -13755,9 +14676,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -14242,7 +15171,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &671629013
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -14262,9 +15193,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -14486,6 +15425,7 @@ MonoBehaviour:
   TargetRenderer: {fileID: 7718390322990954521}
   TargetMaterialID: 0
   TargetImage: {fileID: 0}
+  UseMaterialForRendering: 0
   TargetRawImage: {fileID: 0}
   TargetText: {fileID: 0}
   CacheMaterial: 0
@@ -14502,6 +15442,8 @@ MonoBehaviour:
   AddToInitialValue: 0
   UseUnscaledTime: 1
   RevertToInitialValueAfterEnd: 1
+  UseMaterialPropertyBlocks: 0
+  SafeMode: 0
   Curve:
     MMTweenDefinitionType: 0
     MMTweenCurve: 0
@@ -14519,6 +15461,9 @@ MonoBehaviour:
   Amplitude: {x: 1, y: 1}
   Frequency: {x: 1, y: 1}
   Shift: {x: 0, y: 1}
+  RemapNoiseValues: 0
+  RemapNoiseZero: 0
+  RemapNoiseOne: 1
   OneTimeDuration: 1
   OneTimeAmplitude: 1
   OneTimeRemapMin: 0
@@ -14594,6 +15539,7 @@ MonoBehaviour:
   DisableAfterToDestination: 0
   InitialValue: 0
   CurrentValue: 0
+  CurrentValueNormalized: 0
   InitialColor: {r: 0, g: 0, b: 0, a: 0}
   PropertyID: 0
   PropertyFound: 0
@@ -15179,6 +16125,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -15585,7 +16532,34 @@ MonoBehaviour:
   - {fileID: 1089175778}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!4 &1089175771
 Transform:
@@ -15620,9 +16594,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -15797,7 +16779,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 0, z: 1}
   InitialPositionTransform: {fileID: 0}
@@ -15821,9 +16805,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -15832,6 +16824,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 1257324396}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -16783,8 +17776,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1089175774
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -16804,9 +17823,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -16842,9 +17869,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -16880,9 +17915,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -16903,6 +17946,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0296fb91bec5d5042bdb1f4c2c089ca7, type: 2}
   - {fileID: 2100000, guid: 9b99e0d3f9ba0e747ae9e6c229f25a82, type: 2}
   - {fileID: 2100000, guid: 0d11a8d904e77af4bbbac066d6455c5a, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1089175777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16922,9 +17991,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -17025,9 +18102,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -17512,7 +18597,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!1 &1116026498
 GameObject:
   m_ObjectHideFlags: 0
@@ -17865,9 +18952,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -17933,9 +19028,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18420,7 +19523,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &1152659672
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -18440,9 +19545,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18478,9 +19591,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18581,9 +19702,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18603,6 +19732,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1152659675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18622,9 +19777,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18679,9 +19842,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18717,9 +19888,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -18728,6 +19907,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -19679,8 +20859,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1152659678
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -19700,9 +20906,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -19877,7 +21091,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -19904,7 +21120,34 @@ MonoBehaviour:
   - {fileID: 1152659670}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &1185183345
 GameObject:
@@ -20193,6 +21436,7 @@ MonoBehaviour:
   TargetRenderer: {fileID: 245078394}
   TargetMaterialID: 0
   TargetImage: {fileID: 0}
+  UseMaterialForRendering: 0
   TargetRawImage: {fileID: 0}
   TargetText: {fileID: 0}
   CacheMaterial: 0
@@ -20209,6 +21453,8 @@ MonoBehaviour:
   AddToInitialValue: 0
   UseUnscaledTime: 1
   RevertToInitialValueAfterEnd: 1
+  UseMaterialPropertyBlocks: 0
+  SafeMode: 0
   Curve:
     MMTweenDefinitionType: 0
     MMTweenCurve: 0
@@ -20226,6 +21472,9 @@ MonoBehaviour:
   Amplitude: {x: 1, y: 1}
   Frequency: {x: 1, y: 1}
   Shift: {x: 0, y: 1}
+  RemapNoiseValues: 0
+  RemapNoiseZero: 0
+  RemapNoiseOne: 1
   OneTimeDuration: 1
   OneTimeAmplitude: 1
   OneTimeRemapMin: 0
@@ -20301,6 +21550,7 @@ MonoBehaviour:
   DisableAfterToDestination: 0
   InitialValue: 0
   CurrentValue: 0
+  CurrentValueNormalized: 0
   InitialColor: {r: 0, g: 0, b: 0, a: 0}
   PropertyID: 0
   PropertyFound: 0
@@ -20517,6 +21767,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -20684,9 +21935,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -20760,6 +22019,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.53333336, g: 0.62001604, b: 0.6784314, a: 0}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -20922,9 +22182,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 3
     RepeatForever: 0
     DelayBetweenRepeats: 0
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 11400000, guid: bafc49ff570e80444831b61dc9e4513e, type: 2}
     TrackID: 0
     Quantized: 1
@@ -20957,7 +22225,34 @@ MonoBehaviour:
   - {fileID: 1583700495}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!4 &1583700497
 Transform:
@@ -21032,9 +22327,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21100,9 +22403,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21587,7 +22898,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &1586483543
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -21607,9 +22920,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21645,9 +22966,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21748,9 +23077,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21770,6 +23107,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1586483546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21789,9 +23152,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21846,9 +23217,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21884,9 +23263,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -21895,6 +23282,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -22846,8 +24234,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1586483549
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -22867,9 +24281,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -23044,7 +24466,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -23071,7 +24495,34 @@ MonoBehaviour:
   - {fileID: 1586483541}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &1620464800
 GameObject:
@@ -23412,9 +24863,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -23789,7 +25248,34 @@ MonoBehaviour:
   - {fileID: 1889385029}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!4 &1889385022
 Transform:
@@ -23824,9 +25310,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -24001,7 +25495,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 0, z: 1}
   InitialPositionTransform: {fileID: 0}
@@ -24025,9 +25521,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -24036,6 +25540,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 2020251361}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -24987,8 +26492,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1889385025
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -25008,9 +26539,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -25046,9 +26585,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -25084,9 +26631,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -25107,6 +26662,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d27c02d0cdd147245be0de863bd68637, type: 2}
   - {fileID: 2100000, guid: c010297598d35b24ea0bf283a1f77386, type: 2}
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1889385028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25126,9 +26707,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -25229,9 +26818,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -25716,7 +27313,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!1001 &1895061595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26142,6 +27741,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.7176471}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -26225,6 +27825,7 @@ MonoBehaviour:
   TargetRenderer: {fileID: 1561756054}
   TargetMaterialID: 0
   TargetImage: {fileID: 0}
+  UseMaterialForRendering: 0
   TargetRawImage: {fileID: 0}
   TargetText: {fileID: 0}
   CacheMaterial: 0
@@ -26241,6 +27842,8 @@ MonoBehaviour:
   AddToInitialValue: 0
   UseUnscaledTime: 1
   RevertToInitialValueAfterEnd: 1
+  UseMaterialPropertyBlocks: 0
+  SafeMode: 0
   Curve:
     MMTweenDefinitionType: 0
     MMTweenCurve: 0
@@ -26258,6 +27861,9 @@ MonoBehaviour:
   Amplitude: {x: 1, y: 1}
   Frequency: {x: 1, y: 1}
   Shift: {x: 0, y: 1}
+  RemapNoiseValues: 0
+  RemapNoiseZero: 0
+  RemapNoiseOne: 1
   OneTimeDuration: 1
   OneTimeAmplitude: 1
   OneTimeRemapMin: 0
@@ -26333,6 +27939,7 @@ MonoBehaviour:
   DisableAfterToDestination: 0
   InitialValue: 0
   CurrentValue: 0
+  CurrentValueNormalized: 0
   InitialColor: {r: 0, g: 0, b: 0, a: 0}
   PropertyID: 0
   PropertyFound: 0
@@ -26397,9 +28004,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -26465,9 +28080,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -26952,7 +28575,9 @@ MonoBehaviour:
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
   Velocity: {x: 0.2, y: 0.2, z: 0.2}
+  ClearImpulseOnStop: 0
 --- !u!114 &2103931214
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -26972,9 +28597,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.15
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27010,9 +28643,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27113,9 +28754,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.1
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27135,6 +28784,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e5b54aaf95dc544996bd98919f83491, type: 2}
   - {fileID: 2100000, guid: aa24205135c86be4792f70af431b8638, type: 2}
   - {fileID: 2100000, guid: 1a56e529cc6f9354ebe7986cb56493be, type: 2}
+  InterpolateTransition: 0
+  TransitionDuration: 1
+  TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2103931217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27154,9 +28829,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27211,9 +28894,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0.2
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27249,9 +28940,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -27260,6 +28959,7 @@ MonoBehaviour:
   AnimateRotationTarget: {fileID: 773672494}
   Mode: 0
   TimeScale: 0
+  RotationSpace: 0
   AnimateRotationDuration: 0.2
   RemapCurveZero: 0
   RemapCurveOne: 90
@@ -28211,8 +29911,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineRotationOnPlay: 0
   ToDestinationSpace: 0
   DestinationAngles: {x: 0, y: 180, z: 0}
+  ToDestinationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2103931220
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -28232,9 +29958,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -28409,7 +30143,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AllowAdditivePlays: 0
   RelativePosition: 1
+  DeterminePositionsOnPlay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
   DestinationPosition: {x: 0, y: 3, z: -3}
   InitialPositionTransform: {fileID: 0}
@@ -28436,7 +30172,34 @@ MonoBehaviour:
   - {fileID: 2103931212}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &2130812381
 GameObject:
@@ -28519,7 +30282,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2130812384}
   m_HandleRect: {fileID: 1015468896}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -28540,6 +30303,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -28598,9 +30362,17 @@ MonoBehaviour:
     TimescaleMode: 0
     InitialDelay: 0
     CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
     NumberOfRepeats: 0
     RepeatForever: 0
     DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
     Sequence: {fileID: 0}
     TrackID: 0
     Quantized: 0
@@ -28630,7 +30402,34 @@ MonoBehaviour:
   - {fileID: 1707173353}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!114 &740943787200860762
 MonoBehaviour:
@@ -28648,7 +30447,34 @@ MonoBehaviour:
   - {fileID: 1402331373}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0
 --- !u!1 &784546004574669136
 GameObject:
@@ -28683,6 +30509,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.19862808, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -28717,6 +30544,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -28975,6 +30803,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29040,6 +30869,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29125,6 +30955,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29480,6 +31311,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29516,6 +31348,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29585,6 +31418,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.19862808, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29619,6 +31453,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.19862808, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -29783,5 +31618,32 @@ MonoBehaviour:
   - {fileID: 535761268051198270}
   InitializationMode: 2
   SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
   DebugActive: 0

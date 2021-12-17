@@ -7,11 +7,6 @@ public class Player : Racer
 {
     #region State Variables
 
-    public GameObject powerupSlot { get; set; }
-
-    public PowerupButton powerupButton;
-    public Button awakenedStateButton;
-
     #endregion
 
     #region Components
@@ -97,10 +92,6 @@ public class Player : Racer
         jumpVelocityResource = playerData.maxJumpVelocity;
         jumpVelocity = jumpVelocityResource;
         strength = playerData.maxStrength;
-
-        powerupSlot = powerupButton.gameObject;
-
-        vCam.transform.SetParent(null);
     }
 
 
@@ -128,8 +119,6 @@ public class Player : Racer
 
         Debug.Log(StateMachine.CurrentState);
         Debug.Log(runner.stickmanNet.currentColor.colorID);
-
-        awakenedStateButton.interactable = canAwaken;
     }
     [Client]
     public override void LateUpdate()
@@ -184,39 +173,6 @@ public class Player : Racer
 
 
     #region Check Functions
-    public virtual void CheckIfShouldFlip(int XInput)
-    {
-        if (XInput != 0 && XInput != FacingDirection)
-        {
-            Flip();
-        }
-
-    }
-
-    public virtual void CheckIfMoveLeft(int XInput)
-    {
-        if (XInput < 0)
-        {
-            SetVelocityX(movementVelocity * -1);
-        }
-        if (XInput != 0 && XInput != FacingDirection && CurrentVelocity.x <= 2f)
-        {
-            Flip();
-        }
-    }
-
-
-
-
-    public virtual void CheckIfMoveRight(int XInput)
-    {
-        if (XInput > 0)
-        {
-            SetVelocityX(movementVelocity * 1);
-        }
-    }
-
-
 
     public override void OnCollisionEnter2D(Collision2D other)
     {

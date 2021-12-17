@@ -192,7 +192,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""89472c99-814b-4c59-8c47-5a49049a3ef9"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

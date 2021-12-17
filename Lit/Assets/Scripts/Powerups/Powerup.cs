@@ -7,6 +7,9 @@ public class PowerupEvent : UnityEvent<Racer>
 {
 
 }
+/// <summary>
+/// Holds all neccessary information needed for the powerup game mechanic.
+/// </summary>
 [Serializable]
 public class Powerup
 {
@@ -22,8 +25,9 @@ public class Powerup
     public bool canBeMany;
     public bool isSelectable;
 
-    public PowerupID powerup;
+    public PowerupID powerupID;
     public PowerupType powerupType;
+    public PowerupActiveType powerupActiveType;
 
     public bool isActive { get; set; }
     public bool isSelected { get; set; }
@@ -51,8 +55,10 @@ public class Powerup
 
     public void ReassignOwner(GameObject gameObject)
     {
+        Debug.Log($"Has reassigned ownership to {gameObject.name}!");
+        if(PowerupActions == gameObject.GetComponent<PowerupActions>()) { return; }
         PowerupActions = gameObject.GetComponent<PowerupActions>();
-        switch (powerup)
+        switch (powerupID)
         {
             case PowerupID.SpeedUp:
                 startAction.AddListener(PowerupActions.SpeedUpStartAction);
@@ -141,5 +147,19 @@ public class Powerup
         Projectile,
         Beam,
         Bomb,
+    }
+    /// <summary>
+    /// The way a powerup will behave if the powerup is already enabled on a runner.
+    /// </summary>
+    public enum PowerupActiveType
+    {
+        /// <summary>
+        /// Add to the time of the already existing powerup.
+        /// </summary>
+        Additive,
+        /// <summary>
+        /// Create a new instance of the same powerup like a seperate powerup.
+        /// </summary>
+        Instance,
     }
 }

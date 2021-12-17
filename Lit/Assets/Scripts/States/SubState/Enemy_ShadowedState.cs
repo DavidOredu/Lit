@@ -34,22 +34,6 @@ public class Enemy_ShadowedState : Enemy_DamagedState
     public override void Exit()
     {
         base.Exit();
-
-        var damageEffectPS = damageEffect.GetComponent<ParticleSystem>();
-        if (damageEffectPS != null)
-        {
-            var main = damageEffectPS.main;
-            main.loop = false;
-        }
-        var PSInDamageEffect = damageEffect.GetComponentsInChildren<ParticleSystem>();
-        if (PSInDamageEffect != null)
-        {
-            foreach (var ps in PSInDamageEffect)
-            {
-                var main = ps.main;
-                main.loop = false;
-            }
-        }
     }
 
     public override void LateUpdate()

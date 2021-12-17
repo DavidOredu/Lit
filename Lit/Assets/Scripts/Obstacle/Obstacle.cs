@@ -84,12 +84,13 @@ public class Obstacle : MonoBehaviour
             #region Laser Orbs
             case ObstacleType.LaserOrb:
                 
-                if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Opponent"))
+                if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
                 {
                     var racer = other.collider.GetComponent<Racer>();
                     Utils.SetDamageVariables(runnerDamages, null, 8, obstacleData.laserDamagePercentage, obstacleData.laserDamageRate, racer.gameObject);
                     // TODO: play particle hit animation
                     ExplodeLaserOrb();
+                    Debug.Log("Runner has collided with laser orb. Runner is taking damage!");
                     Destroy(gameObject);
                     
                 }

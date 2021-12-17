@@ -50,11 +50,11 @@ MonoBehaviour:
     prefab: {fileID: 3765488261685951142}
     name: Shield
     duration: 10
-    canBeMany: 0
+    canBeMany: 1
     isSelectable: 0
-    canUsePowerup: 1
-    powerup: 1
+    powerupID: 1
     powerupType: 1
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []

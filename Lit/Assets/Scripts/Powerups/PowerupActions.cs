@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-
+/// <summary>
+/// Contains logic for all powerup properties.
+/// </summary>
 public class PowerupActions : MonoBehaviour
 {
     public Racer racer;
@@ -21,6 +23,9 @@ public class PowerupActions : MonoBehaviour
 
     private RunnerDamagesOperator runnerDamages;
 
+    /// <summary>
+    /// Class to hold related effect names to their gameobjects.
+    /// </summary>
     private class GraphicsEffects
     {
         public GameObject effectGO;
@@ -190,6 +195,8 @@ public class PowerupActions : MonoBehaviour
             racer.RB.AddForce(new Vector2(20f, 0f), ForceMode2D.Impulse);
             racer.moveVelocityResource += Utils.PercentageValue(racer.playerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
             racer.movementVelocity = racer.moveVelocityResource;
+
+            Debug.Log("Has run 'SpeedUpStartAction' function!");
         }
     }
     public void SpeedUpActiveAction(Racer racer)
@@ -202,13 +209,14 @@ public class PowerupActions : MonoBehaviour
         //    racer.movementVelocity += powerupData.speedUpPercentageIncrease;
         //    racer.moveVelocityResource += powerupData.speedUpPercentageIncrease;
         //}
-        Debug.Log("Is constantly running 'SpeedUpActiveAction' function!");
+      //  Debug.Log("Is constantly running 'SpeedUpActiveAction' function!");
     }
     public void SpeedUpEndAction(Racer racer)
     {
         if (racer != null)
         {
             racer.moveVelocityResource -= Utils.PercentageValue(racer.playerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
+            Debug.Log("Has ended speedup powerup!");
         }
     }
     #endregion
@@ -425,7 +433,7 @@ public class PowerupActions : MonoBehaviour
         #region Checks
         if (racer == null) { return; }
         if (racer.GamePlayer.powerup != null)
-            if (racer.GamePlayer.powerup.powerup != Powerup.PowerupID.Projectile) { return; }
+            if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
         if (!racer.GamePlayer.powerup.isSelected) { return; }
         #endregion
 
@@ -448,7 +456,7 @@ public class PowerupActions : MonoBehaviour
         #region Checks
         if (racer == null) { return; }
         if (racer.GamePlayer.powerup != null)
-            if (racer.GamePlayer.powerup.powerup != Powerup.PowerupID.Projectile) { return; }
+            if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
         if (!racer.GamePlayer.powerup.isSelected) { return; }
         #endregion
 

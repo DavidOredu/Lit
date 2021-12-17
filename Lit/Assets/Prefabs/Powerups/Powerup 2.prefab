@@ -52,9 +52,9 @@ MonoBehaviour:
     duration: 10
     canBeMany: 0
     isSelectable: 0
-    canUsePowerup: 1
-    powerup: 2
+    powerupID: 2
     powerupType: 0
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []

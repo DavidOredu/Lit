@@ -49,8 +49,12 @@ MonoBehaviour:
   powerup:
     prefab: {fileID: 3765488261685951142}
     name: Mine
-    duration: 5
+    duration: 0
+    canBeMany: 0
     isSelectable: 0
+    powerupID: 3
+    powerupType: 0
+    powerupActiveType: 0
     startAction:
       m_PersistentCalls:
         m_Calls: []
@@ -60,11 +64,16 @@ MonoBehaviour:
     endAction:
       m_PersistentCalls:
         m_Calls: []
-    selectedAction:
+    selectedStartAction:
       m_PersistentCalls:
         m_Calls: []
-    powerup: 3
-    powerupType: 0
+    selectedActiveAction:
+      m_PersistentCalls:
+        m_Calls: []
+    selectedEndAction:
+      m_PersistentCalls:
+        m_Calls: []
+  powerupAmmo: 0
 --- !u!212 &3765488261685951137
 SpriteRenderer:
   m_ObjectHideFlags: 0

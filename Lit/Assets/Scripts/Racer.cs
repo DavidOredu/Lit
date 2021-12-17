@@ -108,10 +108,11 @@ public class Racer : NetworkBehaviour
     [Header("Move State")]
     public float moveVelocityResource;
     public float movementVelocity;
-    public float alteredVelocity;
     public float normalizedMovementVelocity;
+    public float recentNormalizedMovementVelocity;
     public float strengthResource;
     public float strength;
+    public float recentStrength;
     public int awakenCount;
     public float normalizedStrength;
     protected float acceleration;
@@ -140,6 +141,7 @@ public class Racer : NetworkBehaviour
     public bool canAwaken { get; set; }
     public bool canSpawnDust { get; set; } = false;
     public bool isOnSlope { get; set; }
+    public bool reducingStrength { get; private set; }
     public bool canWalkOnSlope { get; set; }
     private bool isFastOnPlatform = false;
     private bool isSlowOnPlatform = false;
@@ -156,7 +158,7 @@ public class Racer : NetworkBehaviour
     public int otherIsOnLitCount { get; private set; }
     public int highestOtherIsOnLitCount { get; private set; } = 0;
 
-    public Powerup powerup { get; set; } = null;
+   // public Powerup powerup { get; set; } = null;
     public RunnerEffects runnerEffects;
     public VFXConnector VFXConnector;
 
@@ -203,9 +205,11 @@ public class Racer : NetworkBehaviour
     public int FacingDirection { get; private set; }
     #endregion
     public GameObject powerupManager { get; set; }
+    public PowerupController powerupController { get; private set; }
     public GamePlayerLobby GamePlayer { get; set; }
 
     public RunnerDamagesOperator myDamages;
+    public RunnerFeedbacks runnerFeedbacks;
 
     #endregion
 
@@ -319,6 +323,13 @@ public class Racer : NetworkBehaviour
             awakenedData = Resources.Load<AwakenedData>($"{runner.stickmanNet.code}/AwakenedData");
         if (powerupData == null || powerupData != Resources.Load<PowerupData>($"{runner.stickmanNet.code}/PowerupData"))
             powerupData = Resources.Load<PowerupData>($"{runner.stickmanNet.code}/PowerupData");
+        if (powerupController == null)
+        {
+            if (powerupManager != null)
+                powerupController = powerupManager.GetComponent<PowerupController>();
+        }
+                 
+
     }
     [Client]
     public virtual void LateUpdate()
@@ -382,9 +393,11 @@ public class Racer : NetworkBehaviour
         
         if (myDamages.IsDamaged())
             StartCoroutine(DamageEffectsOnStrength());
-           
-        var newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
-        movementVelocity = newMoveVelocityNormalized * playerData.topSpeed;
+        if (!(normalizedStrength >= 1) && reducingStrength)
+        {
+            //var newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
+            //moveVelocityResource = newMoveVelocityNormalized * playerData.topSpeed;
+        }
         //   var newJumpVelocityNormalized = playerData.speedToJumpVelocityCurve.Evaluate(normalizedMovementVelocity);
         //   jumpVelocity = newJumpVelocityNormalized * playerData.maxJumpVelocity;
         switch (currentRacerType)
@@ -930,6 +943,25 @@ public class Racer : NetworkBehaviour
         //completely ignore damaging if is invulnerable or damage type is identical to our color
         if (isInvulnerable || runnerDamages.DamageList()[0].damageInt == runner.stickmanNet.currentColor.colorID) { return; }
 
+        for (int i = 0; i < powerupController.activePowerups.Count; i++)
+        {
+            switch (powerupController.activePowerups[i].powerup.powerupID)
+            {
+                case Powerup.PowerupID.SpeedUp:
+                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
+                    continue;
+                case Powerup.PowerupID.ElementField:
+                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
+                    continue;
+                case Powerup.PowerupID.Projectile:
+                    // TODO: change to disable powerup selected nature
+                    continue;
+                case Powerup.PowerupID.Bomb:
+                    // TODO: change to disable powerup selected nature
+                    continue;
+            }
+            
+        }
         //check if the runner is previously damaged, and if so do damage again, this time instantly depleting the runner's stamina and knocking him out
         if (myDamages.IsDamaged())
         {
@@ -955,7 +987,7 @@ public class Racer : NetworkBehaviour
     public virtual void Recover()
     {
         RestoreStrength();
-        RecoverRunner();
+        RemoveDamage();
     }
     /// <summary>
     /// Replenishes runner's strength.
@@ -965,9 +997,11 @@ public class Racer : NetworkBehaviour
         switch (currentRacerType)
         {
             case RacerType.Player:
+                strengthResource = playerData.maxStrength;
                 strength = playerData.maxStrength;
                 break;
             case RacerType.Opponent:
+                strengthResource = difficultyData.maxStrength;
                 strength = difficultyData.maxStrength;
                 break;
             default:
@@ -976,23 +1010,48 @@ public class Racer : NetworkBehaviour
     }
     public virtual IEnumerator DamageEffectsOnStrength()
     {
+        float finalStrength = 0;
         foreach (var damage in myDamages.DamageList())
         {
-            float finalStrength = 0;
             switch (currentRacerType)
             {
                 case RacerType.Player:
-                    finalStrength = strengthResource - Utils.PercentageValue(playerData.maxStrength, damage.damagePercentage);
+                    finalStrength = recentStrength - Utils.PercentageValue(playerData.maxStrength, damage.damagePercentage);
                     Debug.Log($"Final strength is: {finalStrength}");
                     break;
                 case RacerType.Opponent:
-                    finalStrength = strengthResource - Utils.PercentageValue(difficultyData.maxStrength, damage.damagePercentage);
+                    finalStrength = recentStrength - Utils.PercentageValue(difficultyData.maxStrength, damage.damagePercentage);
                     break;
                 default:
                     break;
             }
             if (strength > finalStrength)
+            {
                 strength -= damage.damageRate * (Time.deltaTime /* / 5*/ );
+                float newMoveVelocityNormalized = 0;
+                switch (currentRacerType)
+                {
+                    case RacerType.Player:
+                        normalizedStrength = strength / playerData.maxStrength;
+                        newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
+                        moveVelocityResource += recentNormalizedMovementVelocity * playerData.topSpeed;
+                        recentNormalizedMovementVelocity = 1 - newMoveVelocityNormalized;
+                        moveVelocityResource -= recentNormalizedMovementVelocity * playerData.topSpeed;
+                        break;
+                    case RacerType.Opponent:
+                        normalizedStrength = strength / difficultyData.maxStrength;
+                        newMoveVelocityNormalized = difficultyData.strengthToTopSpeedCurve.Evaluate(normalizedStrength);
+                        moveVelocityResource += recentNormalizedMovementVelocity * difficultyData.topSpeed;
+                        recentNormalizedMovementVelocity = 1 - newMoveVelocityNormalized;
+                        moveVelocityResource -= recentNormalizedMovementVelocity * difficultyData.topSpeed;
+                        break;
+                    default:
+                        break;
+                }
+                
+                reducingStrength = strength > finalStrength;
+            }
+
             if (strength <= 0)
                 strength = Mathf.Max(strength, 0);
             else
@@ -1016,6 +1075,22 @@ public class Racer : NetworkBehaviour
                     break;
             }
         }
+        else if(strength <= finalStrength)
+        {
+            switch (currentRacerType)
+            {
+                case RacerType.Player:
+                    StateMachine.ChangeDamagedState(playerNullState);
+                    RemoveDamage();
+                    break;
+                case RacerType.Opponent:
+                    StateMachine.ChangeDamagedState(opponentNullState);
+                    RemoveDamage();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     public virtual void ChangeToDamageState(RunnerDamagesOperator runnerDamages, DamageForm damage, State stateToChangeTo)
     {
@@ -1027,6 +1102,7 @@ public class Racer : NetworkBehaviour
         newDamage.damagePercentage = damage.damagePercentage;
         newDamage.damageRate = damage.damageRate;
         newDamage.damaged = true;
+        reducingStrength = true;
         if (damage.racer != null)
         {
             newDamage.racer = damage.racer;
@@ -1037,14 +1113,15 @@ public class Racer : NetworkBehaviour
         }
 
         //   StartCoroutine(DamageEffectsOnStrength());
-        strengthResource = strength;
+        recentStrength = strength;
         StateMachine.ChangeDamagedState(stateToChangeTo);
-        //    StopCoroutine(RecoverRunner());
-        //     StartCoroutine(RecoverRunner());
     }
-    public virtual void RecoverRunner()
+    /// <summary>
+    /// Resets damage data in the "myDamages" struct.
+    /// </summary>
+    public virtual void RemoveDamage()
     {
-        Debug.Log($"Damage count is: {myDamages.DamageList().Count}");
+      //  Debug.Log($"Damage count is: {myDamages.DamageList().Count}");
 
         if (myDamages.IsDamaged())
         {
@@ -1057,6 +1134,7 @@ public class Racer : NetworkBehaviour
                 myDamage.ultimateDamage = false;
                 myDamage.racer = null;
             }
+            recentStrength = strength;
         }
     }
     public virtual void DoDynamicDamage(RunnerDamagesOperator runnerDamages, DamageForm damage)
@@ -1312,6 +1390,7 @@ public class Racer : NetworkBehaviour
     }
     #endregion
 
+    #region Other Functions
     public enum RacerType
     {
         Player,
@@ -1343,5 +1422,7 @@ public class Racer : NetworkBehaviour
         }
 
     }
+    #endregion
+
     #endregion
 }

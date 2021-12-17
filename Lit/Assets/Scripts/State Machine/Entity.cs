@@ -147,7 +147,7 @@ public class Entity : Racer
     }
     public bool CheckIfHasPowerup()
     {
-        if(powerup == null)
+        if(GamePlayer.powerup == null)
         {
             return false;
         }

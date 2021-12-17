@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// Logic holder for damage information for all runners.
+/// </summary>
 [System.Serializable]
 public struct RunnerDamagesOperator
 {

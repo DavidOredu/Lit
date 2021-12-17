@@ -82,6 +82,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ed158e6db108c448642a246d7941b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4269688503778143852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813363231950930894}
+  m_Layer: 0
+  m_Name: PlayerCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813363231950930894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269688503778143852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6225661, y: 2.2274468, z: -1.1699669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5319341248167596189}
+  m_RootOrder: 41
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-505225184817380498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,15 +135,15 @@ MonoBehaviour:
   powerupData: {fileID: 0}
   moveVelocityResource: 0
   movementVelocity: 0
-  alteredVelocity: 0
   normalizedMovementVelocity: 0
+  recentNormalizedMovementVelocity: 0
   strengthResource: 0
   strength: 0
+  recentStrength: 0
   awakenCount: 0
   normalizedStrength: 0
   jumpVelocityResource: 0
   jumpVelocity: 0
-  normalizedJumpVelocity: 0
   isAwakened: 0
   runner:
     runner: {fileID: 0}
@@ -131,6 +161,10 @@ MonoBehaviour:
   bombArm: {fileID: 6559148140647445056}
   checkpoint: {fileID: 0}
   litPlatforms: []
+  noFriction: {fileID: 0}
+  fullFriction: {fileID: 0}
+  slopeCheckDistance: 0.5
+  maxSlopeAngle: 0
   myDamages:
     fire:
       damageName: 
@@ -138,7 +172,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     frost:
@@ -147,7 +182,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     poison:
@@ -156,7 +192,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     light:
@@ -165,7 +202,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     lightning:
@@ -174,7 +212,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     wind:
@@ -183,7 +222,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     magic:
@@ -192,7 +232,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     shadow:
@@ -201,7 +242,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     laser:
@@ -210,7 +252,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     deathLaser:
@@ -219,7 +262,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     knockout:
@@ -228,13 +272,14 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     Damages: []
   enemyDifficulty: 0
   entityData: {fileID: 11400000, guid: f695cf9fa80505b48909a3c42af985c7, type: 2}
-  playerCheck: {fileID: 4472679589262109041}
+  playerCheck: {fileID: 813363231950930894}
   jumpCheck: {fileID: 9062928021041912596}
 --- !u!1001 &8950974900402612495
 PrefabInstance:
@@ -286,7 +331,7 @@ PrefabInstance:
     - target: {fileID: 243142501825602294, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 805567055077427881, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -311,12 +356,12 @@ PrefabInstance:
     - target: {fileID: 1345783076833789586, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1959375436217732387, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 2124881514476788247, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -331,7 +376,7 @@ PrefabInstance:
     - target: {fileID: 2171681914516731427, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 34
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 2896439315106084881, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -351,7 +396,7 @@ PrefabInstance:
     - target: {fileID: 3753190241897030164, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 41
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: 3885015010728900040, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -656,12 +701,12 @@ PrefabInstance:
     - target: {fileID: 5801405839098206740, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 6007360986374658522, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6049798658232972131, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -682,6 +727,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7777197230722742348, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7818827512287082817, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
@@ -754,12 +804,6 @@ Transform:
 --- !u!4 &5319341248167596169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3885015011641506182, guid: 5ef45f225d846f446896bf8ad947b75a,
-    type: 3}
-  m_PrefabInstance: {fileID: 8950974900402612495}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &4472679589262109041 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4767735704135712894, guid: 5ef45f225d846f446896bf8ad947b75a,
     type: 3}
   m_PrefabInstance: {fileID: 8950974900402612495}
   m_PrefabAsset: {fileID: 0}
