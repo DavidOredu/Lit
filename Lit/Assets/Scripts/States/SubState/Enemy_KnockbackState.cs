@@ -43,7 +43,7 @@ public class Enemy_KnockbackState : Enemy_AbilityState
     {
         base.LateUpdate();
 
-        racerEntity.jumpVelocity = 0f;
+        //racerEntity.jumpVelocity = 0f;
         if (isAnimationFinished)
         {
             difficultyData.knockbackVelocity = Vector2.zero;

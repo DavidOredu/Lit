@@ -5,15 +5,17 @@ using UnityEngine;
 public class ProbabilityTest : MonoBehaviour
 {
     public GameObject racerObj;
-    public Probability<int> racerSpawnProbability;
-    public List<int> colorCodes = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+    public Probability<bool> racerSpawnProbability;
+    public List<bool> colorCodes = new List<bool> ();
     public AnimationCurve probabilityCurve;
     public RangeInt range;
+
+    public Vector2 force;
 
     // Start is called before the first frame update
     void Start()
     {
-        racerSpawnProbability = new Probability<int>(probabilityCurve);
+        racerSpawnProbability = new Probability<bool>(probabilityCurve);
         racerSpawnProbability.InitDictionary(colorCodes);
     }
 
@@ -22,13 +24,17 @@ public class ProbabilityTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            var colorCode = racerSpawnProbability.ProbabilityGenerator();
-            var racerInGame = Instantiate(racerObj);
-            var racer = racerInGame.GetComponent<Racer>();
-            racer.runner.stickmanNet.dynamicUpdate = true;
-            racer.runner.stickmanNet.code = colorCode;
-            Debug.Log(racerSpawnProbability.maximumProbabilityRange);
-            Debug.Log($"Color code is: {colorCode}");
+            var jump = racerSpawnProbability.ProbabilityGenerator();
+            Debug.Log(jump);
+            //   var racerInGame = Instantiate(racerObj);
+            //   var racer = racerInGame.GetComponent<Racer>();
+            //   racer.runner.stickmanNet.enabled = true;
+            //   racer.runner.stickmanNet.dynamicUpdate = true;
+            //   racer.runner.stickmanNet.code = colorCode;
+            //   Debug.Log(racerSpawnProbability.maximumProbabilityRange);
+            //   Debug.Log($"Color code is: {colorCode}");
+
+            racerObj.SetActive(jump);
         }
     }
 }

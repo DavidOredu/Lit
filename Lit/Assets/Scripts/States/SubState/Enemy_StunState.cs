@@ -57,7 +57,6 @@ public class Enemy_StunState: Enemy_AbilityState
     {
         base.Exit();
 
-        racerEntity.ResetStunResistance();
         
     }
 

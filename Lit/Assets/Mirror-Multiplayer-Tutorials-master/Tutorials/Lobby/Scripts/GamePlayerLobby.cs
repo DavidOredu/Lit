@@ -24,6 +24,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         public GameObject gameStatsPanel;
         public Racer racer;
         public StickmanNet stickman;
+        public Entity.Difficulty difficulty;
 
        bool hasInit = false;
 

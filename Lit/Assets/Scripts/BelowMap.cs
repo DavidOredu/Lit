@@ -20,7 +20,8 @@ public class BelowMap : MonoBehaviour
     }
     void ResetRunner(Racer racer)
     {
-        racer.movementVelocity = 0;
+        racer.movementVelocity = 0f;
+
         racer.transform.position = racer.checkpoint.transform.position;
 
         switch (racer.currentRacerType)

@@ -65,7 +65,7 @@ MonoBehaviour:
   timeZeroToMax: 3.17
   timeMaxToZero: 4
   timeBrakeToZero: 0.0001
-  maxJumpVelocity: 20
+  maxJumpVelocity: 40
   minIdleTime: 0.5
   maxIdleTime: 3
   knockoutTime: 4
@@ -81,10 +81,19 @@ MonoBehaviour:
   litSpeedAlterRate: 6
   knockbackVelocity: {x: 22, y: 12}
   maxKnockbackVelocity: {x: 22, y: 12}
+  playerDefenseCheckRadius: 0.5
+  playerAttackCheckRadius: 0.5
   groundCheckRadius: 0.5
+  higherPlatformCheckDistance: 15
+  ledgeCheckDistance: 0.5
+  obstacleCheckRadius: 8
+  projectileCheckRadius: 0.8
   jumpCheckRadius: 12
   litCheckDistance: 3
   powerCheckDistance: 5
+  higherPlatformCheckDirection: {x: 0, y: 1}
+  ledgeCheckDirection: {x: 0, y: -1}
+  powerCheckDirection: {x: 0, y: -1}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 3584
@@ -96,8 +105,19 @@ MonoBehaviour:
     m_Bits: 2048
   whatToJumpTo:
     serializedVersion: 2
-    m_Bits: 1024
-  jumpCheckPosition: {x: 0, y: 0}
+    m_Bits: 3584
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 8448
+  whatIsObstacle:
+    serializedVersion: 2
+    m_Bits: 4096
+  whatIsProjectile:
+    serializedVersion: 2
+    m_Bits: 4096
+  whatIsSlope:
+    serializedVersion: 2
+    m_Bits: 3584
   powerupRadius: 3.4
   whatToDamage:
     serializedVersion: 2
@@ -108,15 +128,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.3
-      outSlope: 0.3
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.3
+      value: 0.5
       inSlope: 0.5
       outSlope: 0.5
       tangentMode: 34
@@ -126,8 +146,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 2
       value: 1
-      inSlope: 0.7
-      outSlope: 0.7
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -135,21 +155,21 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  instantaneousPowerPlatformProbabilityCurve:
+  jumpToLitIfLitProbabilityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.3
-      outSlope: 0.3
+      inSlope: 0.7
+      outSlope: 0.7
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.3
+      value: 0.7
       inSlope: 0.5
       outSlope: 0.5
       tangentMode: 34
@@ -159,12 +179,177 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 2
       value: 1
-      inSlope: 0.7
-      outSlope: 0.7
+      inSlope: 0.3
+      outSlope: 0.3
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpToLitIfDarkProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.4
+      outSlope: 0.4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.4
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0.6
+      outSlope: 0.6
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpToPowerProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 50
+      inSlope: 0.9586538
+      outSlope: 0.9586538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20789301
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 100
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpToBaseProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 50
+      inSlope: 0.9586538
+      outSlope: 0.9586538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20789301
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 100
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  boosterPowerPlatformProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 40
+      outSlope: 40
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 40
+      inSlope: 0.9586538
+      outSlope: 0.9586538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20789301
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 100
+      inSlope: 60
+      outSlope: 60
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  defensivePowerPlatformProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 50
+      inSlope: 0.9586538
+      outSlope: 0.9586538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20789301
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 100
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

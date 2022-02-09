@@ -6,7 +6,8 @@ public class MineScript : MonoBehaviour
 {
     public Racer ownerRacer;
     public int damageType;
-    public float damageStrength;
+    public float damagePercentage;
+    public float damageRate;
     public float explosiveRadiusDecreasePercentage;
     public float explosiveForce;
     public float explosiveRadius;

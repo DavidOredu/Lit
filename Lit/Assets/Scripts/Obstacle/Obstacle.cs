@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class holding the properties and logic of in-game obstacles, traps, debuffs, etc.
+/// </summary>
 public class Obstacle : MonoBehaviour
 {
     public ObstacleType currentObstacleType;
@@ -11,11 +14,12 @@ public class Obstacle : MonoBehaviour
 
     public Timer laserLifeTimer;
     public Timer laserStartTimer;
+    public bool isLaserActive;
 
     public float timeToStartLaser = 2f;
     public float laserLifeTime = 3f;
 
-    public BeamProjectileScript beamProjectileScript;
+    private BeamProjectileScript beamProjectileScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,9 @@ public class Obstacle : MonoBehaviour
 
         laserStartTimer.SetTimer();
         laserLifeTimer.SetTimer();
+
+        if (beamProjectileScript == null)
+            beamProjectileScript = GetComponent<BeamProjectileScript>();
     }
 
     // Update is called once per frame
@@ -34,8 +41,6 @@ public class Obstacle : MonoBehaviour
     {
         if(currentObstacleType == ObstacleType.LaserBeam)
         {
-            beamProjectileScript = GetComponent<BeamProjectileScript>();
-
             if(beamProjectileScript.canExtend && !laserLifeTimer.isTimeUp)
             {
                 laserLifeTimer.UpdateTimer();
@@ -55,6 +60,8 @@ public class Obstacle : MonoBehaviour
                 beamProjectileScript.canExtend = true;
                 laserStartTimer.ResetTimer();
             }
+
+            isLaserActive = beamProjectileScript.canExtend;
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -86,7 +93,7 @@ public class Obstacle : MonoBehaviour
                 
                 if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
                 {
-                    var racer = other.collider.GetComponent<Racer>();
+                    var racer = other.collider.gameObject.GetComponent<Racer>();
                     Utils.SetDamageVariables(runnerDamages, null, 8, obstacleData.laserDamagePercentage, obstacleData.laserDamageRate, racer.gameObject);
                     // TODO: play particle hit animation
                     ExplodeLaserOrb();
@@ -218,6 +225,9 @@ public class Obstacle : MonoBehaviour
         RotatingLaserBeam,
         Wall,
         FinalWall,
+        /// <summary>
+        /// Platforms within base platforms that cause damage when collided with.
+        /// </summary>
         HardPlatform,
         DeathLaser,
         LaserBeam,

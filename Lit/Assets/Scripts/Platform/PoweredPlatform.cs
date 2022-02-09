@@ -9,16 +9,29 @@ public class PoweredPlatform : MonoBehaviour
         Stop,
         JumpBooster,
         SpeedBooster,
-        Action
+        Action,
+        Null,
     }
-    public enum PowerAid
+    /// <summary>
+    /// Determines if the power platform is good for defense or self-aid
+    /// </summary>
+    public enum PowerPlatformAidType
     {
-        Instantaneous,
-        Continuous
+        /// <summary>
+        /// This type only defends the platform against incoming or potential danger and not meant to elevate the player directly
+        /// </summary>
+        Defensive,
+        /// <summary>
+        /// This type boosts a certain player stat in response to input or contact.
+        /// </summary>
+        Booster,
     }
     public Platform.PlatformType platformType = Platform.PlatformType.PowerPlatform;
     public Power currentPower;
-    public PowerAid currentPowerAid;
+    /// <summary>
+    /// Determines the usage nature of the power platform.
+    /// </summary>
+    public PowerPlatformAidType currentPowerAidType;
 
     [Header("SUPER JUMP AND JUMP BOOSTER POWER")]
     public float jumpForce;

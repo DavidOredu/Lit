@@ -49,15 +49,26 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
         base.LogicUpdate();
         if (isGrounded && !racer.isOnSlope)
         {
-
-            racer.SetAccelerations(Racer.RacerType.Player);
+            if(racer.moveVelocityResource > racer.movementVelocity)
+            {
+                racer.SetAccelerations(Racer.RacerType.Player, racer.moveVelocityResource);
+            }
+            else if (racer.moveVelocityResource < racer.movementVelocity)
+            {
+                racer.SetDecelerations(racer.moveVelocityResource);
+            }
             racer.SetVelocityX(racer.movementVelocity);
         }
         else if(isGrounded && racer.isOnSlope)
         {
-                
-            
-            racer.SetAccelerations(Racer.RacerType.Player);
+            if (racer.moveVelocityResource > racer.movementVelocity)
+            {
+                racer.SetAccelerations(Racer.RacerType.Player, racer.moveVelocityResource);
+            }
+            else if (racer.moveVelocityResource < racer.movementVelocity)
+            {
+                racer.SetDecelerations(racer.moveVelocityResource);
+            }
             racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
             racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
         }

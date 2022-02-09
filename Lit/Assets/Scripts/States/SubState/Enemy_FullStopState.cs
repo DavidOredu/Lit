@@ -43,7 +43,15 @@ public class Enemy_FullStopState : Enemy_AbilityState
         base.LogicUpdate();
 
         // Check if the player should stop for an obstacle, depending on the player's current difficulty and therefore intelligence
-        // tell the player to change state if the obstacle is gone
+        // tell the player to change state if the obstacle is 
+
+        if(!racerEntity.canUsePowerPlatform)
+            racer.StateMachine.ChangeState(racer.opponentMoveState);
+        else
+        {
+            racer.SetStop();
+            racer.SetVelocityX(racer.movementVelocity);
+        }
     }
 
     public override void OnCollisionEnter(Collision2D collision)

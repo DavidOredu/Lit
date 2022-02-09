@@ -83,6 +83,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GUI_Sci_FI/WebDemo/_DemoScene/20_Popup.unity
     guid: 6e32219dc4a2c458891f415b7702988e
+  - enabled: 1
+    path: Assets/Scenes/Scene_Game_SampleScene2.unity
+    guid: 4b27ef1c6d5038f4e8ab4b9e47a0f9be
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f513a57a5a8581f40a514ff40fb178ef,
       type: 2}

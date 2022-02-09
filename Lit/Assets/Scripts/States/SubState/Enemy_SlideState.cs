@@ -47,7 +47,7 @@ public class Enemy_SlideState: Enemy_AbilityState
     {
         base.LogicUpdate();
 
-        racerEntity.SetAccelerations(Racer.RacerType.Opponent);
+        racerEntity.SetAccelerations(Racer.RacerType.Opponent, racerEntity.moveVelocityResource);
         racerEntity.SetVelocityX(racerEntity.movementVelocity);
         racerEntity.SetVelocityY(0);
     }

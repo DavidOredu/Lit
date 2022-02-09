@@ -88,7 +88,6 @@ public class PowerupBehaviour : MonoBehaviour
                         var opponent = other.gameObject.GetComponent<Opponent>();
 
                         PlayerEvents.instance.GottenPowerup();
-                        opponent.enemyPowerup.powerupBehaviour = this;
                         opponent.GamePlayer.enemyPowerup.powerupBehaviour = this;
                         opponent.GamePlayer.powerup = powerup;
                         GameObject powerupM = null;

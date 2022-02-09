@@ -214,6 +214,7 @@ public class LevelManager : Singleton<LevelManager>
         changing.starsToUnlock = changer.starsToUnlock;
         changing.OnClick = changer.OnClick;
         changing.numberOfOpponentsInLevel = changer.numberOfOpponentsInLevel;
+        changing.difficulties = changer.difficulties;
     }
     private void AdjustLevelsDataLevelNumbers() 
     {

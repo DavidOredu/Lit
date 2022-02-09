@@ -28,7 +28,8 @@ public class BombScript : MonoBehaviour
     private Vector2 force;
     public float distance;
 
-    public float damageStrength;
+    public float damagePercentage;
+    public float damageRate;
     public float explosiveForce;
     public float explosiveRadius;
     public float upwardsModifier;
@@ -153,7 +154,8 @@ public class BombScript : MonoBehaviour
 
         explosionComp.ownerRacer = OwnerRacer;
         explosionComp.damageInt = damageType;
-        explosionComp.damagePercentage = damageStrength;
+        explosionComp.damagePercentage = damagePercentage;
+        explosionComp.damageRate = damageRate;
         explosionComp.explosiveForce = explosiveForce;
         explosionComp.explosiveRadius = explosiveRadius;
         explosionComp.upwardsModifier = upwardsModifier;

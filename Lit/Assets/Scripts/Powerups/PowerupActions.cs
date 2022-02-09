@@ -151,7 +151,7 @@ public class PowerupActions : MonoBehaviour
                                 Debug.Log($"Damage Type at point of contact is: {damageType}");
                                 runnerDamages.Damages[damageType].damaged = true;
                                 runnerDamages.Damages[damageType].damageInt = damageType;
-                                runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamageStrength;
+                                runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamagePercentage;
                                 runnerDamages.Damages[damageType].racer = racer;
                                 objectRB.transform.SendMessage("DamageRunner", runnerDamages);
                             }
@@ -272,7 +272,7 @@ public class PowerupActions : MonoBehaviour
                                     Debug.Log($"Damage Type at point of contact is: {damageType}");
                                     runnerDamages.Damages[damageType].damaged = true;
                                     runnerDamages.Damages[damageType].damageInt = damageType;
-                                    runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamageStrength;
+                                    runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamagePercentage;
                                     runnerDamages.Damages[damageType].racer = racer;
                                     objectRB.transform.SendMessage("DamageRunner", runnerDamages);
                                 }
@@ -696,7 +696,7 @@ public class PowerupActions : MonoBehaviour
             projectile.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
             projectileScript.damageInt = racer.runner.stickmanNet.code;
             projectileScript.impactNormal = new Vector3(0, 0, rotationZ);
-            projectileScript.damagePercentage = powerupData.projectileDamageStrength;
+            projectileScript.damagePercentage = powerupData.projectileDamagePercentage;
             projectileScript.speed = powerupData.projectileSpeed;
             projectileScript.direction = direction;
             if (!projectileScript.canControl)

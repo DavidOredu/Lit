@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &8155915
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -212,86 +212,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8ea3407f8aabf4cb18004d6fbccf9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  racerObj: {fileID: 100002, guid: 354f2e0752dca8747a81116a1511b937, type: 3}
-  colorCodes: 01000000020000000300000004000000050000000600000007000000
+  racerObj: {fileID: 392411000}
+  colorCodes: 0100
   probabilityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
+      inSlope: 70
+      outSlope: 70
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
+      value: 70
+      inSlope: 50
+      outSlope: 50
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 2
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 3
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 4
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 5
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 6
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 7
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
+      value: 100
+      inSlope: 30
+      outSlope: 30
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  force: {x: 0, y: 100}
 --- !u!4 &61567166
 Transform:
   m_ObjectHideFlags: 0
@@ -306,6 +262,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &392411000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 354f2e0752dca8747a81116a1511b937,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619500106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &588785746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1090,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.48548627, y: 0.45514178}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 4.0699997, y: 4.39, z: 4.99, w: 3.53}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 19.2, y: 11.02}
     newSize: {x: 19.2, y: 11.02}
@@ -1439,7 +1401,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1619500106}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 392411000}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86f8302be34866043a7f296c841577b0, type: 3}

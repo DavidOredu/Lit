@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newDifficultyData", menuName = "Data/Difficulty Data")]
-public class D_DifficultyData : ScriptableObject
+public class D_DifficultyData : RacerData
 {
     [Header("OPPONENT STRENGTH")]
     public int maxStrength = 20;
@@ -41,26 +41,35 @@ public class D_DifficultyData : ScriptableObject
     public float jumpAddition;
     public float litSpeedUpPercentage = .5f;
     public float litSlowDownPercentage = .3f;
-    public float otherOnLitIncreaseValue;
-    public float litSpeedAlterRate = 6f;
+    public float overdriveIncreasePercentage = 1.5f;
+    public float otherOnLitIncreasePercentage = .5f;
 
     [Header("KNOCKBACK VARIABLES")]
     public Vector2 knockbackVelocity;
     public Vector2 maxKnockbackVelocity;
 
     [Header("CHECK VARIABLES")]
+    public float playerDefenseCheckRadius = .5f;
+    public float playerAttackCheckRadius = .5f;
     public float groundCheckRadius = 0.3f;
+    public float higherPlatformCheckDistance = .6f;
+    public float ledgeCheckDistance = .5f;
+    public float obstacleCheckRadius = .8f;
+    public float projectileCheckRadius = .8f;
     public float jumpCheckRadius = .5f;
     public float litCheckDistance = .5f;
     public float powerCheckDistance = .5f;
+    public Vector2 higherPlatformCheckDirection = Vector2.up;
+    public Vector2 ledgeCheckDirection = Vector2.down;
+    public Vector2 powerCheckDirection = Vector2.down;
     public LayerMask whatIsGround;
     public LayerMask whatIsLit;
     public LayerMask whatIsPower;
     public LayerMask whatToJumpTo;
+    public LayerMask whatIsPlayer;
+    public LayerMask whatIsObstacle;
+    public LayerMask whatIsProjectile;
     public LayerMask whatIsSlope;
-
-    [Header("TRANSFORM VARIABLES")]
-    public Vector2 jumpCheckPosition;
 
     [Header("POWERUP VARIABLES")]
     public float powerupRadius = .5f;
@@ -68,5 +77,10 @@ public class D_DifficultyData : ScriptableObject
 
     [Header("PROBABILITIES")]
     public AnimationCurve jumpToLitProbabilityCurve;
-    public AnimationCurve instantaneousPowerPlatformProbabilityCurve;
+    public AnimationCurve jumpToLitIfLitProbabilityCurve;
+    public AnimationCurve jumpToLitIfDarkProbabilityCurve;
+    public AnimationCurve jumpToPowerProbabilityCurve;
+    public AnimationCurve jumpToBaseProbabilityCurve;
+    public AnimationCurve boosterPowerPlatformProbabilityCurve;
+    public AnimationCurve defensivePowerPlatformProbabilityCurve;
 }

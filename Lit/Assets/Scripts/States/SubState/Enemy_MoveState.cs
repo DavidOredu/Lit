@@ -37,12 +37,7 @@ public class Enemy_MoveState: Enemy_GroundedState
     {
         base.LateUpdate();
 
-        if (isGrounded)
-        {
-            racerEntity.SetAccelerations(Racer.RacerType.Opponent);
-            racerEntity.SetVelocityX(racerEntity.movementVelocity);
-        }
-        else
+        if (!isGrounded)
         {
             StateMachine.ChangeState(racer.opponentInAirState);
         }
@@ -52,8 +47,31 @@ public class Enemy_MoveState: Enemy_GroundedState
     {
         base.LogicUpdate();
 
-       
-       
+        if (isGrounded && !racer.isOnSlope)
+        {
+            if (racer.moveVelocityResource > racer.movementVelocity)
+            {
+                racer.SetAccelerations(Racer.RacerType.Opponent, racer.moveVelocityResource);
+            }
+            else if (racer.moveVelocityResource < racer.movementVelocity)
+            {
+                racer.SetDecelerations(racer.moveVelocityResource);
+            }
+            racer.SetVelocityX(racer.movementVelocity);
+        }
+        else if (isGrounded && racer.isOnSlope)
+        {
+            if (racer.moveVelocityResource > racer.movementVelocity)
+            {
+                racer.SetAccelerations(Racer.RacerType.Opponent, racer.moveVelocityResource);
+            }
+            else if (racer.moveVelocityResource < racer.movementVelocity)
+            {
+                racer.SetDecelerations(racer.moveVelocityResource);
+            }
+            racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
+            racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
+        }
     }
 
     public override void PhysicsUpdate()

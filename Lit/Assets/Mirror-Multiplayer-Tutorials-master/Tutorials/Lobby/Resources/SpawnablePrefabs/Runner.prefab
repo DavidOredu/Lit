@@ -7315,6 +7315,7 @@ MonoBehaviour:
   runnerEffects:
     runnerVFX: {fileID: 4107688344322215066}
   VFXConnector: {fileID: 8243098749405853639}
+  playerCenter: {fileID: 3753190241897030164}
   GroundCheck: {fileID: 3885015011641506183}
   litCheck: {fileID: 3885015011641506182}
   projectileArm: {fileID: 7854198312653761873}
@@ -7573,7 +7574,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3885015011641506177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad225009ad414e1428332cab226f38fd, type: 3}
   m_Name: 
@@ -10025,7 +10026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d102a8ddc40ec4ba58311b11501a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Active: 1
+  Active: 0
   Label: Rotation
   Chance: 64
   Timing:

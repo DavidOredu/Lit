@@ -30,7 +30,7 @@ public class Enemy_GroundedState : State
     {
         base.Enter();
 
-        canJumpToLitIfIsLit = new Probability<bool>(difficultyData.jumpToLitProbabilityCurve);
+        canJumpToLitIfIsLit = new Probability<bool>(difficultyData.jumpToLitIfLitProbabilityCurve);
         canJumpToLitIfIsLit.InitDictionary(bools);
     }
 
@@ -43,37 +43,37 @@ public class Enemy_GroundedState : State
         base.LateUpdate();
 
         #region Jump Logic
-        if (canJump && !racerEntity.isOnPower && isGrounded)
-        {
-            // check current speed
-            if (racer.movementVelocity >= .8 * racer.playerData.topSpeed)
-                jump = true;
-            // check if litplatform is lit ||  check if opponent color is "black"
-            jump = canJumpToLitIfIsLit.ProbabilityGenerator() || racer.runner.stickmanNet.currentColor.colorID == 0;
+        //if (canJump && !racerEntity.isOnPower && isGrounded)
+        //{
+        //    // check current speed
+        //    if (racer.movementVelocity >= .8 * racer.playerData.topSpeed)
+        //        jump = true;
+        //    // check if litplatform is lit ||  check if opponent color is "black"
+        //    jump = canJumpToLitIfIsLit.ProbabilityGenerator() || racer.runner.stickmanNet.currentColor.colorID == 0;
 
-            // check if is already on lit and if so, check if the lit being found is not the one he's on
-            foreach (var platform in racerEntity.CheckIfCanJump())
-            {
-                if (platform == racerEntity.currentPlatform)
-                {
-                    jump = false;
-                    continue;
-                }
-                else
-                {
-                    jump = true;
-                    break;
-                }
-            }
-            // adjust with difficulty
+        //    // check if is already on lit and if so, check if the lit being found is not the one he's on
+        //    foreach (var platform in racerEntity.CheckIfCanJump())
+        //    {
+        //        if (platform == racerEntity.currentPlatform)
+        //        {
+        //            jump = false;
+        //            continue;
+        //        }
+        //        else
+        //        {
+        //            jump = true;
+        //            break;
+        //        }
+        //    }
+        //    // adjust with difficulty
 
-            if(jump)
-            StateMachine.ChangeState(racer.opponentJumpState);
+        //    if(jump)
+        //    StateMachine.ChangeState(racer.opponentJumpState);
             
-        }
+        //}
         #endregion
 
-        else if (!isGrounded)
+        if (!isGrounded)
         {
             StateMachine.ChangeState(racer.opponentInAirState);
         }

@@ -29,7 +29,8 @@ public class BeamProjectileScript : MonoBehaviour
     public float textureScrollSpeed = 8f; //How fast the texture scrolls along the beam
     public float textureLengthScale = 3; //Length of the beam texture
     public float growthSpeed = 100f;
-    public float damageStrength;
+    public float damagePercentage;
+    public float damageRate;
     public bool canExtend = true;
 
     [Header("Put Sliders here (Optional)")]
@@ -70,8 +71,10 @@ public class BeamProjectileScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(canExtend)
-        UpdateLaser(transform.position);
+        if (canExtend)
+            UpdateLaser(transform.position);
+        else
+            StopLaser(transform.position);
     }
 
     public void UpdateEndOffset()
@@ -102,11 +105,7 @@ public class BeamProjectileScript : MonoBehaviour
 
             if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Opponent")))
             {
-                runnerDamages.Damages[damageType].damaged = true;
-                runnerDamages.Damages[damageType].damageInt = damageType;
-                runnerDamages.Damages[damageType].damagePercentage = damageStrength;
-                runnerDamages.Damages[damageType].racer = ownerRacer;
-                hit.collider.transform.SendMessage("DamageRunner", runnerDamages);
+                Utils.SetDamageVariables(runnerDamages, ownerRacer, damageType, damagePercentage, damageRate, hit.collider.gameObject);
             }
             if(beamType == BeamType.ElectricOrb)
                 Destroy(gameObject);
@@ -130,7 +129,14 @@ public class BeamProjectileScript : MonoBehaviour
         line.sharedMaterial.mainTextureScale = new Vector2(distance / textureLengthScale, 1);
         line.sharedMaterial.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0);
     }
+    void StopLaser(Vector3 start)
+    {
+        line.positionCount = 2;
+        line.SetPosition(0, start);
+        beamStart.transform.position = start - startVFXOffset;
 
+        line.SetPosition(1, start);
+    }
     public enum BeamType
     {
         ElectricOrb, 

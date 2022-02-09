@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class Entity : Racer
 {
-    public Difficulty enemyDifficulty;
+    [Header("DIFFICULTY")]
+    public Difficulty currentDifficulty;
     public D_Entity entityData;
     
     //private Transform ledgeCheck;
+    [Header("CHECK TRANSFORMS")]
     [SerializeField]
     private Transform playerCheck;
     [SerializeField]
+    private Transform ledgeCheck;
+    [SerializeField]
     private Transform jumpCheck;
+    [SerializeField]
+    private Transform obstacleCheck;
 
-    private float currentStunResistance;
-    private float lastDamageTime;
+    [Header("SENSORS")]
+    public AISensor powerPlatformSensor;
+    public AISensor higherPlatformSensor;
+    public AISensor obstacleSensor;
+    public AISensor ledgeSensor;
+    public AISensor projectileSensor;
+    public AISensor playerDefenseSensor;
+    public AISensor playerAttackSensor;
+    public Dictionary<Sensors, AISensor> aISensors = new Dictionary<Sensors, AISensor>();
 
-    public bool canUsePowerPlatform { get; protected set; }
-    protected bool isStunned;
+    public bool canUsePowerPlatform { get; set; }
+    protected bool hasUsedPower;
+    public PoweredPlatform oldPowerPlatform;
 
-    
     public EnemyPowerup enemyPowerup { get; private set; }
 
-    public Probability<bool> instantaneousPowerPlatformProbability;
-    List<bool> bools = new List<bool> { true, false };
+    public Probability<bool> boosterPowerPlatformUseProbability;
 
     public override void Awake()
     {
@@ -34,9 +46,24 @@ public class Entity : Racer
         base.Start();
         
         enemyPowerup = transform.GetComponentInChildren<EnemyPowerup>();
-        instantaneousPowerPlatformProbability = new Probability<bool>(difficultyData.instantaneousPowerPlatformProbabilityCurve);
-        instantaneousPowerPlatformProbability.InitDictionary(bools);
-        //  atsm = aliveGO.GetComponent<AnimationToStateMachine>();
+
+        boosterPowerPlatformUseProbability = new Probability<bool>(difficultyData.boosterPowerPlatformProbabilityCurve);
+        boosterPowerPlatformUseProbability.InitDictionary(new List<bool> { true, false });
+
+        powerPlatformSensor = new AISensor(GroundCheck, difficultyData.whatIsPower, AISensor.SensorType.Linear, difficultyData.powerCheckDistance, difficultyData.powerCheckDirection);
+        higherPlatformSensor = new AISensor(jumpCheck, difficultyData.whatToJumpTo, AISensor.SensorType.Linear, difficultyData.higherPlatformCheckDistance, difficultyData.higherPlatformCheckDirection);
+        obstacleSensor = new AISensor(obstacleCheck, difficultyData.whatIsObstacle, AISensor.SensorType.Radial, sensorRadius: difficultyData.obstacleCheckRadius);
+        ledgeSensor = new AISensor(ledgeCheck, difficultyData.whatIsGround, AISensor.SensorType.Linear, difficultyData.ledgeCheckDistance, difficultyData.ledgeCheckDirection);
+        projectileSensor = new AISensor(playerCenter, difficultyData.whatIsProjectile, AISensor.SensorType.Radial, sensorRadius: difficultyData.projectileCheckRadius);
+        playerDefenseSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerDefenseCheckRadius);
+        playerAttackSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerAttackCheckRadius);
+
+        aISensors.Add(Sensors.HigherPlatformSensor, higherPlatformSensor);
+        aISensors.Add(Sensors.ObstacleSensor, obstacleSensor);
+        aISensors.Add(Sensors.LedgeSensor, ledgeSensor);
+        aISensors.Add(Sensors.ProjectileSensor, projectileSensor);
+        aISensors.Add(Sensors.PlayerDefenseSensor, playerDefenseSensor);
+        aISensors.Add(Sensors.PlayerAttackSensor, playerAttackSensor);
     }
 
     public override void Update()
@@ -46,7 +73,7 @@ public class Entity : Racer
         StateMachine.AwakenedState.LogicUpdate();
         base.Update();
     }
-
+    
     public override void FixedUpdate()
     {
         StateMachine.CurrentState.PhysicsUpdate();
@@ -57,10 +84,10 @@ public class Entity : Racer
         if (CheckIfHasPowerup())
         {
             // 
-            enemyPowerup.UsePowerup();
+            GamePlayer.enemyPowerup.UsePowerup();
         }
-      
-        
+        poweredPlatform = PowerPlatform();
+
     }
 
     public override void LateUpdate()
@@ -78,7 +105,6 @@ public class Entity : Racer
         StateMachine.DamagedState.OnCollisionEnter(other);
         StateMachine.AwakenedState.OnCollisionEnter(other);
         base.OnCollisionEnter2D(other);
-     
     }
     
     public override void OnCollisionStay2D(Collision2D other)
@@ -94,6 +120,11 @@ public class Entity : Racer
         StateMachine.DamagedState.OnCollisionExit(other);
         StateMachine.AwakenedState.OnCollisionExit(other);
         base.OnCollisionExit2D(other);
+
+        if (other.collider.CompareTag("PowerPlatform"))
+        {
+            hasUsedPower = false;
+        }
     }
     public virtual void CurrentStateAnimationTrigger()
     {
@@ -116,12 +147,10 @@ public class Entity : Racer
     {
         runner.player = GetComponent<Opponent>();
         runner.stickman = GetComponent<Stickman>();
-
-        jumpCheck.position = difficultyData.jumpCheckPosition;
     }
     public virtual void SetAIDifficulty()
     {
-        switch (enemyDifficulty)
+        switch (currentDifficulty)
         {
             case Difficulty.Easy:
                 difficultyData = Resources.Load<D_DifficultyData>("DifficultyData/Easy");
@@ -136,6 +165,11 @@ public class Entity : Racer
                 break;
         }
     }
+    public void ChangeDifficulty(Difficulty newDifficulty)
+    {
+        currentDifficulty = newDifficulty;
+        SetAIDifficulty();
+    }
     #endregion
 
 
@@ -147,14 +181,7 @@ public class Entity : Racer
     }
     public bool CheckIfHasPowerup()
     {
-        if(GamePlayer.powerup == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return GamePlayer.powerup != null;
     }
     
     #endregion
@@ -168,12 +195,6 @@ public class Entity : Racer
     //}
    
  
-    public virtual void ResetStunResistance()
-    {
-        isStunned = false;
-        currentStunResistance = entityData.stunResistance;
-    }
-   
     public virtual bool CheckPlayerInTooCloseAgroRange()
     {
         return Physics2D.Raycast(playerCheck.position, transform.right, entityData.tooCloseAgroDistance, entityData.whatIsPlayer);
@@ -200,7 +221,15 @@ public class Entity : Racer
         Normal,
         Hard,
     }
-
+    public enum Sensors
+    {
+        HigherPlatformSensor,
+        ObstacleSensor,
+        LedgeSensor,
+        ProjectileSensor,
+        PlayerDefenseSensor,
+        PlayerAttackSensor,
+    }
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

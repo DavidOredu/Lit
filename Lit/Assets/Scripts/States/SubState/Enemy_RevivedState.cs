@@ -27,11 +27,12 @@ public class Enemy_RevivedState : Enemy_AbilityState
     public override void Enter()
     {
         base.Enter();
+        racer.RemovePowerups();
         racer.Recover();
         revivedStateTimer = new Timer(difficultyData.invulnerabilityTimer);
         revivedStateTimer.SetTimer();
 
-        racer.moveVelocityResource = difficultyData.topSpeed;
+     //   racer.moveVelocityResource = difficultyData.topSpeed;
         racer.isInvulnerable = true;
     }
 

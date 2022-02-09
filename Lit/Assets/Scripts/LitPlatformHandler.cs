@@ -67,7 +67,6 @@ public class LitPlatformHandler : NetworkBehaviour
     {
         //litPlatform.isLit = true;
         litPlatform.material = Resources.Load<Material>($"{stickman.currentColor.colorID}");
-        litPlatform.runner = runner;
         litPlatform.firstRunner = runner;
         litPlatform.spriteShapeRenderer.color = stickman.currentColor.color;
       //  litPlatform.colorStateCode.colorID = stickman.currentColor.colorID;
@@ -85,7 +84,6 @@ public class LitPlatformHandler : NetworkBehaviour
 
         litPlatform.material = Resources.Load<Material>($"{stickman.currentColor.colorID}");
 
-        litPlatform.runner = runner;
         litPlatform.firstRunner = runner;
         litPlatform.spriteShapeRenderer.color = stickman.currentColor.color;
     //    litPlatform.colorStateCode.colorID = stickman.currentColor.colorID;

@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.U2D;
@@ -20,7 +21,7 @@ public class LitPlatformNetwork : NetworkBehaviour
     public SpriteRenderer spriteRendererOfBloom { get; set; }
     public SpriteRenderer spriteRendererOfGameObject { get; set; }
 
-    public Runner runner { get; set; }
+    public List<Runner> runners { get; set; } = new List<Runner>();
     public SpriteShapeRenderer spriteShapeRenderer { get; set; }
 
     public Runner firstRunner { get; set; }
@@ -60,13 +61,13 @@ public class LitPlatformNetwork : NetworkBehaviour
 
     private void Update()
     { 
-        if(runner == null) { return; }
+        if(runners.Count == 0) { return; }
         
     }
 
     private void FixedUpdate()
     {
-        if (runner == null) { return; }
+        if (runners.Count == 0) { return; }
 
         CheckRunnerOnLit();
 
@@ -87,51 +88,35 @@ public class LitPlatformNetwork : NetworkBehaviour
             player = other.gameObject.GetComponent<Racer>();
             stickman = other.gameObject.GetComponent<StickmanNet>();
 
-            if(isLit)
-            runner = new Runner(null, stickman, null, player);
+            if (player.runner != firstRunner && !runners.Contains(player.runner))
+                runners.Add(player.runner);
         }
 
     }
-    //[Server]
-    //void Check()
-    //{
-    //    EventStateChanged?.Invoke(runner);
-    //    CmdUpdateColor();
-    //}
-
-    
-    [Client]
-    void UpdateColor()
+    private void OnCollisionExit2D(Collision2D other)
     {
-       
-            if (runner.player.isStayingOnLit)
-            {
-            
-                EventStateChanged?.Invoke(runner);
-            //    RpcUpdateColor();
-                
-            }
-        
-    }
-    
- 
+        if (other.collider.CompareTag("Player") || other.collider.CompareTag("Opponent"))
+        {
+            player = other.gameObject.GetComponent<Racer>();
+            stickman = other.gameObject.GetComponent<StickmanNet>();
 
+            if (runners.Contains(player.runner))
+                runners.Remove(player.runner);
+        }
+    }
     void CheckRunnerOnLit()
     {
-
-        if (runner != firstRunner && runner.player != null)
+        foreach (var runner in runners)
         {
-            if (runner.player.isOnAnotherLit && runner.player.isStayingOnLit)
+            if (runner != firstRunner && runner.player != null)
             {
-                otherIsOnLit = true;
-            }
-            else
-            {
-                otherIsOnLit = false;
+                if (runner.player.isOnAnotherLit && runner.player.isStayingOnLit)
+                {
+                    otherIsOnLit = true;
+                    return;
+                }
             }
         }
-
-
     }
 
 

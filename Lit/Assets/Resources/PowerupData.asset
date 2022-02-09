@@ -72,14 +72,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speedUpValue: 30
-  shieldStartLifetime: 7
-  shieldParticleDuration: 7
+  speedUpPercentageIncrease: 0.5
+  fieldDamageStrength: 6
+  fieldExplosiveForce: 50
+  fieldForceMode: 0
   projectileSpeed: 45
   projectileDamageStrength: 6
   mineDamageStrength: 6
+  mineExplosiveRadiusDecreasePercentage: 0.5
   mineExplosiveForce: 50
   mineExplosiveRadius: 16.5
   mineUpwardsModifier: 0.5
   mineForceMode: 1
   beamDamageStrength: 6
+  bombThrowForce: 4
+  bombDamageStrength: 9
+  bombExplosiveForce: 200
+  bombExplosiveRadius: 12
+  bombUpwardsModifier: 1
+  bombForceMode: 1

@@ -154,6 +154,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                         for (int i = 0; i < nonNetworkRoomPlayer.currentLevel.level.numberOfOpponentsInLevel; i++)
                         {
                             var opponentRoomPlayer = Instantiate(opponentRoomPlayerPrefab);
+                            opponentRoomPlayer.difficulty = nonNetworkRoomPlayer.currentLevel.level.difficulties[i];
                             opponentRoomPlayer.IsLeader = false;
                         }
                     }
@@ -255,6 +256,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                             var conn = RoomPlayers[i].connectionToClient;
                             var gameplayerInstance = Instantiate(networkGamePlayerPrefab);
                             gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+                           
                             //TODO: change back to normal
                             gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
 
@@ -277,6 +279,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                                     var gameplayerInstance = Instantiate(nonNetworkGamePlayerPrefab);
                                     gameplayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
                                     gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+                                    
                                     //TODO: change back to normal
                                     gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
 
@@ -290,6 +293,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                                     var gameplayerInstance2 = Instantiate(opponentGamePlayerPrefab);
                                     gameplayerInstance2.gamePlayerType = RoomPlayers[i].roomPlayerType;
                                     gameplayerInstance2.SetDisplayName(RoomPlayers[i].DisplayName);
+                                    gameplayerInstance2.difficulty = RoomPlayers[i].difficulty;
                                     //TODO: change back to normal
                                     gameplayerInstance2.SetColor(RoomPlayers[i].currentColorCode);
 

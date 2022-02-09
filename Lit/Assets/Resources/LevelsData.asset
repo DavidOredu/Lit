@@ -17,6 +17,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 1
     numberOfOpponentsInLevel: 1
+    difficulties: 01000000
     levelNumber: 1
     OnClick:
       m_PersistentCalls:
@@ -30,6 +31,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 1
     numberOfOpponentsInLevel: 2
+    difficulties: 0100000001000000
     levelNumber: 2
     OnClick:
       m_PersistentCalls:
@@ -39,10 +41,11 @@ MonoBehaviour:
     buttonMap: 1
     levelScene: {fileID: 11400000, guid: 85a699955ab3ce6438874282d31cf30c, type: 2}
     isUnlocked: 1
-  - levelGameMode: 0
+  - levelGameMode: 2
     starsToUnlock: 0
-    numberOfRounds: 0
-    numberOfOpponentsInLevel: 0
+    numberOfRounds: 1
+    numberOfOpponentsInLevel: 1
+    difficulties: 00000000
     levelNumber: 3
     OnClick:
       m_PersistentCalls:
@@ -56,6 +59,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 4
     OnClick:
       m_PersistentCalls:
@@ -69,6 +73,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 5
     OnClick:
       m_PersistentCalls:
@@ -82,6 +87,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 6
     OnClick:
       m_PersistentCalls:
@@ -95,6 +101,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 7
     OnClick:
       m_PersistentCalls:
@@ -108,6 +115,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 8
     OnClick:
       m_PersistentCalls:
@@ -121,6 +129,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 9
     OnClick:
       m_PersistentCalls:
@@ -134,6 +143,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 10
     OnClick:
       m_PersistentCalls:
@@ -147,6 +157,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 11
     OnClick:
       m_PersistentCalls:
@@ -160,6 +171,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 12
     OnClick:
       m_PersistentCalls:
@@ -173,6 +185,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 13
     OnClick:
       m_PersistentCalls:
@@ -186,6 +199,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 14
     OnClick:
       m_PersistentCalls:
@@ -199,6 +213,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 15
     OnClick:
       m_PersistentCalls:
@@ -212,6 +227,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 16
     OnClick:
       m_PersistentCalls:
@@ -225,6 +241,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 17
     OnClick:
       m_PersistentCalls:
@@ -238,6 +255,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 18
     OnClick:
       m_PersistentCalls:
@@ -251,6 +269,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 19
     OnClick:
       m_PersistentCalls:
@@ -264,6 +283,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 20
     OnClick:
       m_PersistentCalls:
@@ -277,6 +297,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 21
     OnClick:
       m_PersistentCalls:
@@ -290,6 +311,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 22
     OnClick:
       m_PersistentCalls:
@@ -303,6 +325,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 23
     OnClick:
       m_PersistentCalls:
@@ -316,6 +339,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 24
     OnClick:
       m_PersistentCalls:
@@ -329,6 +353,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 25
     OnClick:
       m_PersistentCalls:
@@ -342,6 +367,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 26
     OnClick:
       m_PersistentCalls:
@@ -355,6 +381,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 27
     OnClick:
       m_PersistentCalls:
@@ -368,6 +395,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 28
     OnClick:
       m_PersistentCalls:
@@ -381,6 +409,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 29
     OnClick:
       m_PersistentCalls:
@@ -394,6 +423,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 30
     OnClick:
       m_PersistentCalls:
@@ -407,6 +437,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 31
     OnClick:
       m_PersistentCalls:
@@ -420,6 +451,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 32
     OnClick:
       m_PersistentCalls:
@@ -433,6 +465,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 33
     OnClick:
       m_PersistentCalls:
@@ -446,6 +479,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 34
     OnClick:
       m_PersistentCalls:
@@ -459,6 +493,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 35
     OnClick:
       m_PersistentCalls:
@@ -472,6 +507,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 36
     OnClick:
       m_PersistentCalls:
@@ -485,6 +521,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 37
     OnClick:
       m_PersistentCalls:
@@ -498,6 +535,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 38
     OnClick:
       m_PersistentCalls:
@@ -511,6 +549,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 39
     OnClick:
       m_PersistentCalls:
@@ -524,6 +563,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 40
     OnClick:
       m_PersistentCalls:
@@ -537,6 +577,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 41
     OnClick:
       m_PersistentCalls:
@@ -550,6 +591,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 42
     OnClick:
       m_PersistentCalls:
@@ -563,6 +605,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 43
     OnClick:
       m_PersistentCalls:
@@ -576,6 +619,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 44
     OnClick:
       m_PersistentCalls:
@@ -589,6 +633,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 45
     OnClick:
       m_PersistentCalls:
@@ -602,6 +647,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 46
     OnClick:
       m_PersistentCalls:
@@ -615,6 +661,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 47
     OnClick:
       m_PersistentCalls:
@@ -628,6 +675,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 48
     OnClick:
       m_PersistentCalls:
@@ -641,6 +689,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 49
     OnClick:
       m_PersistentCalls:
@@ -654,6 +703,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 50
     OnClick:
       m_PersistentCalls:
@@ -667,6 +717,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 51
     OnClick:
       m_PersistentCalls:
@@ -680,6 +731,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 52
     OnClick:
       m_PersistentCalls:
@@ -693,6 +745,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 53
     OnClick:
       m_PersistentCalls:
@@ -706,6 +759,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 54
     OnClick:
       m_PersistentCalls:
@@ -719,6 +773,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 55
     OnClick:
       m_PersistentCalls:
@@ -732,6 +787,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 56
     OnClick:
       m_PersistentCalls:
@@ -745,6 +801,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 57
     OnClick:
       m_PersistentCalls:
@@ -758,6 +815,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 58
     OnClick:
       m_PersistentCalls:
@@ -771,6 +829,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 59
     OnClick:
       m_PersistentCalls:
@@ -784,6 +843,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 60
     OnClick:
       m_PersistentCalls:
@@ -797,6 +857,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 61
     OnClick:
       m_PersistentCalls:
@@ -810,6 +871,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 62
     OnClick:
       m_PersistentCalls:
@@ -823,6 +885,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 63
     OnClick:
       m_PersistentCalls:
@@ -836,6 +899,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 64
     OnClick:
       m_PersistentCalls:
@@ -849,6 +913,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 65
     OnClick:
       m_PersistentCalls:
@@ -862,6 +927,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 66
     OnClick:
       m_PersistentCalls:
@@ -875,6 +941,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 67
     OnClick:
       m_PersistentCalls:
@@ -888,6 +955,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 68
     OnClick:
       m_PersistentCalls:
@@ -901,6 +969,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 69
     OnClick:
       m_PersistentCalls:
@@ -914,6 +983,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 70
     OnClick:
       m_PersistentCalls:
@@ -927,6 +997,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 71
     OnClick:
       m_PersistentCalls:
@@ -940,6 +1011,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 72
     OnClick:
       m_PersistentCalls:
@@ -953,6 +1025,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 73
     OnClick:
       m_PersistentCalls:
@@ -966,6 +1039,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 74
     OnClick:
       m_PersistentCalls:
@@ -979,6 +1053,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 75
     OnClick:
       m_PersistentCalls:
@@ -992,6 +1067,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 76
     OnClick:
       m_PersistentCalls:
@@ -1005,6 +1081,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 77
     OnClick:
       m_PersistentCalls:
@@ -1018,6 +1095,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 78
     OnClick:
       m_PersistentCalls:
@@ -1031,6 +1109,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 79
     OnClick:
       m_PersistentCalls:
@@ -1044,6 +1123,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 80
     OnClick:
       m_PersistentCalls:
@@ -1057,6 +1137,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 81
     OnClick:
       m_PersistentCalls:
@@ -1070,6 +1151,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 82
     OnClick:
       m_PersistentCalls:
@@ -1083,6 +1165,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 83
     OnClick:
       m_PersistentCalls:
@@ -1096,6 +1179,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 84
     OnClick:
       m_PersistentCalls:
@@ -1109,6 +1193,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 85
     OnClick:
       m_PersistentCalls:
@@ -1122,6 +1207,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 86
     OnClick:
       m_PersistentCalls:
@@ -1135,6 +1221,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 87
     OnClick:
       m_PersistentCalls:
@@ -1148,6 +1235,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 88
     OnClick:
       m_PersistentCalls:
@@ -1161,6 +1249,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 89
     OnClick:
       m_PersistentCalls:
@@ -1174,6 +1263,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 90
     OnClick:
       m_PersistentCalls:
@@ -1187,6 +1277,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 91
     OnClick:
       m_PersistentCalls:
@@ -1200,6 +1291,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 92
     OnClick:
       m_PersistentCalls:
@@ -1213,6 +1305,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 93
     OnClick:
       m_PersistentCalls:
@@ -1226,6 +1319,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 94
     OnClick:
       m_PersistentCalls:
@@ -1239,6 +1333,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 95
     OnClick:
       m_PersistentCalls:
@@ -1252,6 +1347,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 96
     OnClick:
       m_PersistentCalls:
@@ -1265,6 +1361,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 97
     OnClick:
       m_PersistentCalls:
@@ -1278,6 +1375,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 98
     OnClick:
       m_PersistentCalls:
@@ -1291,6 +1389,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 99
     OnClick:
       m_PersistentCalls:
@@ -1304,6 +1403,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 100
     OnClick:
       m_PersistentCalls:
@@ -1317,6 +1417,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 101
     OnClick:
       m_PersistentCalls:
@@ -1330,6 +1431,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 102
     OnClick:
       m_PersistentCalls:
@@ -1343,6 +1445,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 103
     OnClick:
       m_PersistentCalls:
@@ -1356,6 +1459,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 104
     OnClick:
       m_PersistentCalls:
@@ -1369,6 +1473,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 105
     OnClick:
       m_PersistentCalls:
@@ -1382,6 +1487,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 106
     OnClick:
       m_PersistentCalls:
@@ -1395,6 +1501,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 107
     OnClick:
       m_PersistentCalls:
@@ -1408,6 +1515,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 108
     OnClick:
       m_PersistentCalls:
@@ -1421,6 +1529,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 109
     OnClick:
       m_PersistentCalls:
@@ -1434,6 +1543,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 110
     OnClick:
       m_PersistentCalls:
@@ -1447,6 +1557,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 111
     OnClick:
       m_PersistentCalls:
@@ -1460,6 +1571,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 112
     OnClick:
       m_PersistentCalls:
@@ -1473,6 +1585,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 113
     OnClick:
       m_PersistentCalls:
@@ -1486,6 +1599,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 114
     OnClick:
       m_PersistentCalls:
@@ -1499,6 +1613,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 115
     OnClick:
       m_PersistentCalls:
@@ -1512,6 +1627,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 116
     OnClick:
       m_PersistentCalls:
@@ -1525,6 +1641,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 117
     OnClick:
       m_PersistentCalls:
@@ -1538,6 +1655,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 118
     OnClick:
       m_PersistentCalls:
@@ -1551,6 +1669,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 119
     OnClick:
       m_PersistentCalls:
@@ -1564,6 +1683,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 120
     OnClick:
       m_PersistentCalls:
@@ -1577,6 +1697,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 121
     OnClick:
       m_PersistentCalls:
@@ -1590,6 +1711,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 122
     OnClick:
       m_PersistentCalls:
@@ -1603,6 +1725,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 123
     OnClick:
       m_PersistentCalls:
@@ -1616,6 +1739,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 124
     OnClick:
       m_PersistentCalls:
@@ -1629,6 +1753,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 125
     OnClick:
       m_PersistentCalls:
@@ -1642,6 +1767,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 126
     OnClick:
       m_PersistentCalls:
@@ -1655,6 +1781,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 127
     OnClick:
       m_PersistentCalls:
@@ -1668,6 +1795,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 128
     OnClick:
       m_PersistentCalls:
@@ -1681,6 +1809,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 129
     OnClick:
       m_PersistentCalls:
@@ -1694,6 +1823,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 130
     OnClick:
       m_PersistentCalls:
@@ -1707,6 +1837,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 131
     OnClick:
       m_PersistentCalls:
@@ -1720,6 +1851,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 132
     OnClick:
       m_PersistentCalls:
@@ -1733,6 +1865,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 133
     OnClick:
       m_PersistentCalls:
@@ -1746,6 +1879,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 134
     OnClick:
       m_PersistentCalls:
@@ -1759,6 +1893,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 135
     OnClick:
       m_PersistentCalls:
@@ -1772,6 +1907,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 136
     OnClick:
       m_PersistentCalls:
@@ -1785,6 +1921,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 137
     OnClick:
       m_PersistentCalls:
@@ -1798,6 +1935,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 138
     OnClick:
       m_PersistentCalls:
@@ -1811,6 +1949,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 139
     OnClick:
       m_PersistentCalls:
@@ -1824,6 +1963,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 140
     OnClick:
       m_PersistentCalls:
@@ -1837,6 +1977,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 141
     OnClick:
       m_PersistentCalls:
@@ -1850,6 +1991,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 142
     OnClick:
       m_PersistentCalls:
@@ -1863,6 +2005,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 143
     OnClick:
       m_PersistentCalls:
@@ -1876,6 +2019,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 144
     OnClick:
       m_PersistentCalls:
@@ -1889,6 +2033,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 145
     OnClick:
       m_PersistentCalls:
@@ -1902,6 +2047,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 146
     OnClick:
       m_PersistentCalls:
@@ -1915,6 +2061,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 147
     OnClick:
       m_PersistentCalls:
@@ -1928,6 +2075,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 148
     OnClick:
       m_PersistentCalls:
@@ -1941,6 +2089,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 149
     OnClick:
       m_PersistentCalls:
@@ -1954,6 +2103,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 150
     OnClick:
       m_PersistentCalls:
@@ -1967,6 +2117,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 151
     OnClick:
       m_PersistentCalls:
@@ -1980,6 +2131,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 152
     OnClick:
       m_PersistentCalls:
@@ -1993,6 +2145,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 153
     OnClick:
       m_PersistentCalls:
@@ -2006,6 +2159,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 154
     OnClick:
       m_PersistentCalls:
@@ -2019,6 +2173,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 155
     OnClick:
       m_PersistentCalls:
@@ -2032,6 +2187,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 156
     OnClick:
       m_PersistentCalls:
@@ -2045,6 +2201,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 157
     OnClick:
       m_PersistentCalls:
@@ -2058,6 +2215,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 158
     OnClick:
       m_PersistentCalls:
@@ -2071,6 +2229,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 159
     OnClick:
       m_PersistentCalls:
@@ -2084,6 +2243,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 160
     OnClick:
       m_PersistentCalls:
@@ -2097,6 +2257,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 161
     OnClick:
       m_PersistentCalls:
@@ -2110,6 +2271,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 162
     OnClick:
       m_PersistentCalls:
@@ -2123,6 +2285,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 163
     OnClick:
       m_PersistentCalls:
@@ -2136,6 +2299,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 164
     OnClick:
       m_PersistentCalls:
@@ -2149,6 +2313,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 165
     OnClick:
       m_PersistentCalls:
@@ -2162,6 +2327,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 166
     OnClick:
       m_PersistentCalls:
@@ -2175,6 +2341,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 167
     OnClick:
       m_PersistentCalls:
@@ -2188,6 +2355,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 168
     OnClick:
       m_PersistentCalls:
@@ -2201,6 +2369,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 169
     OnClick:
       m_PersistentCalls:
@@ -2214,6 +2383,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 170
     OnClick:
       m_PersistentCalls:
@@ -2227,6 +2397,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 171
     OnClick:
       m_PersistentCalls:
@@ -2240,6 +2411,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 172
     OnClick:
       m_PersistentCalls:
@@ -2253,6 +2425,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 173
     OnClick:
       m_PersistentCalls:
@@ -2266,6 +2439,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 174
     OnClick:
       m_PersistentCalls:
@@ -2279,6 +2453,7 @@ MonoBehaviour:
     starsToUnlock: 0
     numberOfRounds: 0
     numberOfOpponentsInLevel: 0
+    difficulties: 
     levelNumber: 175
     OnClick:
       m_PersistentCalls:

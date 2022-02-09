@@ -44,7 +44,7 @@ public class PlayerNetwork_KnockbackState : PlayerNetwork_AbilityState
     {
         base.LateUpdate();
         
-        racer.jumpVelocity = 0f;
+        //racer.jumpVelocity = 0f;
         if (isAnimationFinished)
         {
             playerData.knockbackVelocity = Vector2.zero;

@@ -45,7 +45,7 @@ public class PlayerNetwork_SlideState : PlayerNetwork_AbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        racer.SetAccelerations(Racer.RacerType.Player);
+        racer.SetAccelerations(Racer.RacerType.Player, racer.moveVelocityResource);
         racer.SetVelocityX(racer.movementVelocity);
         racer.SetVelocityY(0);
     }

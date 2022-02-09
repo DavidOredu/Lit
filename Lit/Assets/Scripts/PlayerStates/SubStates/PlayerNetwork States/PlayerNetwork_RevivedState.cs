@@ -27,11 +27,12 @@ public class PlayerNetwork_RevivedState : PlayerNetwork_AbilityState
     public override void Enter()
     {
         base.Enter();
+        racer.RemovePowerups();
         racer.Recover();
         revivedStateTimer = new Timer(playerData.invulnerabilityTimer);
         revivedStateTimer.SetTimer();
 
-        racer.moveVelocityResource = playerData.topSpeed;
+        
         racer.isInvulnerable = true;
     }
 
@@ -39,6 +40,7 @@ public class PlayerNetwork_RevivedState : PlayerNetwork_AbilityState
     {
         base.Exit();
 
+    //    racer.moveVelocityResource = playerData.topSpeed;
         racer.isInvulnerable = false;
     }
 

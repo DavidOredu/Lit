@@ -182,7 +182,10 @@ public class Player : Racer
         base.OnCollisionEnter2D(other);
 
 
-
+        if (other.collider.CompareTag("PowerPlatform"))
+        {
+            poweredPlatform = other.gameObject.GetComponent<PoweredPlatform>();
+        }
     }
     public override void SlopeCheckVertical(Vector2 checkPos)
     {

@@ -4,18 +4,38 @@ using UnityEngine;
 [System.Serializable]
 public class Probability<T>
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public Dictionary<T, int> probabilityPair = new Dictionary<T, int>();
+    /// <summary>
+    /// A list of objects to obtain a result based on the defined probability.
+    /// </summary>
     public List<T> array = new List<T>();
+    /// <summary>
+    /// The main probability. Object where the probability percentages are stored.
+    /// </summary>
     public AnimationCurve probability;
 
-    bool hasFound = false;
+    /// <summary>
+    /// Determine if has found an object based on probaiblity in a search.
+    /// </summary>
+    bool hasFoundProbableObject = false;
 
     public int maximumProbabilityRange { get; private set; }
 
+    /// <summary>
+    /// Initialize the probability object.
+    /// </summary>
+    /// <param name="probability">The probability element.</param>
     public Probability(AnimationCurve probability)
     {
         this.probability = probability;
     }
+    /// <summary>
+    /// Initialize the probable elements according to their positions in the list. This must be called before using any other method in this class.
+    /// </summary>
+    /// <param name="array">The list of probable elements. The position of the elements in the list is HIGHLY important.</param>
     public void InitDictionary(List<T> array)
     {
         int position = 1;
@@ -26,31 +46,41 @@ public class Probability<T>
             position++;
         }
         this.array = array;
-        GetMaxProbabilityRange(array);
+        SetMaximumProbabilityRange(array);
     }
-    //
-    // Summary: 
-    //      Render.
+    
+    /// <summary>
+    /// The main probability distrubutor.
+    /// </summary>
+    /// <returns>An element based on the probability.</returns>
     public T ProbabilityGenerator()
     {
         T item = default;
-
-        var random = Random.Range(0, maximumProbabilityRange - 1);
+        float random;
+        if (maximumProbabilityRange <= 1 && array.Count == 2)
+        {
+            random = Random.value;
+        }
+        else
+        {
+            random = Random.Range(0, maximumProbabilityRange);
+        }
+        Debug.Log(maximumProbabilityRange);
         Debug.Log($"The random int is: {random}");
 
         for (int i = 0; i < array.Count; i++)
         {
             var newItem = IsWithinRange(i, random);
-            if (hasFound)
+            if (hasFoundProbableObject)
             {
-                hasFound = false;
+                hasFoundProbableObject = false;
                 item = newItem;
                 return item;
             }
         }
         return item;
     }
-    private T IsWithinRange(int currentIteration, int random)
+    private T IsWithinRange(int currentIteration, float random)
     {
         Debug.Log(GetRange(array[currentIteration]).start);
         Debug.Log(GetRange(array[currentIteration]).length);
@@ -59,13 +89,13 @@ public class Probability<T>
         var range = GetRange(array[currentIteration]);
         if (Within(random, range.start, range.end))
         {
-            hasFound = true;
+            hasFoundProbableObject = true;
             return array[currentIteration];
         }
         
         return default;
     }
-    private bool Within(int value, int min, int max)
+    private bool Within(float value, int min, int max)
     {
         if(value >= min && value < max)
         {
@@ -73,15 +103,15 @@ public class Probability<T>
         }
         return false;
     }
-    private void GetMaxProbabilityRange(List<T> array)
+    private void SetMaximumProbabilityRange(List<T> array)
     {
-        float totalRange = 0;
+        int totalRange = 0;
         for (int i = 0; i < array.Count; i++)
         {
             var range = GetRange(array[i]).length;
             totalRange += range;
         }
-        maximumProbabilityRange = (int)totalRange;
+        maximumProbabilityRange = totalRange;
     }
     public T HighestProbability()
     {

@@ -15,6 +15,7 @@ public class RoomPlayerLobby : NetworkBehaviour
     [SerializeField] protected Button startGameButton = null;
     [SerializeField] protected Button readyButton = null;
     [SerializeField] protected List<Stickman> displayPrefabs = new List<Stickman>();
+    public Entity.Difficulty difficulty;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName = "Loading...";

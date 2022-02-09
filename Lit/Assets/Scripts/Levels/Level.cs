@@ -15,6 +15,7 @@ public class Level
     public int numberOfRounds;
     [Range(0, 7)]
     public int numberOfOpponentsInLevel;
+    public List<Entity.Difficulty> difficulties = new List<Entity.Difficulty>(7);
 
     [Header("AUTOMATIC SET")]
     public int levelNumber;

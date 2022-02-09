@@ -5,7 +5,7 @@ using DapperDino.Mirror.Tutorials.Lobby;
 
 public class NonNetworkGamePlayerLobby : GamePlayerLobby
 {
-    
+    protected List<Opponent> opponentList = new List<Opponent>();
     public override void Update()
     {
         base.Update();
@@ -47,7 +47,16 @@ public class NonNetworkGamePlayerLobby : GamePlayerLobby
             players.Reverse();
             players[i].code = Room.GamePlayers[i].colorCode;
 
+            if (players[i].GetComponent<Racer>().currentRacerType == Racer.RacerType.Opponent)
+            {
+                var opponent = players[i].GetComponent<Opponent>();
 
+                if (!opponentList.Contains(opponent))
+                {
+                    opponent.ChangeDifficulty(Room.GamePlayers[i].difficulty);
+                    opponentList.Add(opponent);
+                }
+            }
         }
         base.UpdateDisplay();
     }

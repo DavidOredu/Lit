@@ -92,6 +92,7 @@ public class Racer : NetworkBehaviour
     public PlayerData playerData;
     // The opponent data and stats holder for the opponent object, in case its an opponent racer
     public D_DifficultyData difficultyData;
+
     public AwakenedData awakenedData;
     public PowerupData powerupData;
 
@@ -149,9 +150,9 @@ public class Racer : NetworkBehaviour
     public Runner runner;
     #endregion
 
-    public LitPlatformNetwork litPlatform { get; private set; }
-    public Collider2D currentPlatform { get; private set; }
-    protected PoweredPlatform poweredPlatform;
+    public LitPlatformNetwork litPlatform { get; protected set; }
+    public PoweredPlatform poweredPlatform { get; protected set; }
+    public Collider2D currentPlatform { get; protected set; }
 
     public Image testImage;
 
@@ -170,6 +171,7 @@ public class Racer : NetworkBehaviour
     public PlayerInputHandlerNetwork InputHandler { get; set; }
     #endregion
     #region Check Variables   
+    public Transform playerCenter;
     public Transform GroundCheck;
     public Transform litCheck;
     public Transform projectileArm;
@@ -300,6 +302,7 @@ public class Racer : NetworkBehaviour
       //  ChangeStatsWhileOnLit();
         ResetOverdrive();
         CheckAwakenStateRequirements();
+        IncreaseSpeedWhenOtherIsOnLit();
         if (myDamages.IsDamaged())
         {
             foreach (var damage in myDamages.DamageList())
@@ -335,8 +338,8 @@ public class Racer : NetworkBehaviour
     public virtual void LateUpdate()
     {
         if (!hasAuthority && currentRacerType == RacerType.Player) { return; }
-        IncreaseSpeedWhenOtherIsOnLit();
-        if (OnLitPlatform() && DetectedLitPlatform() == litPlatform)
+        
+        if (OnLitPlatform() && (DetectedLitPlatform() == litPlatform))
         {
             isStayingOnLit = true;
         }
@@ -346,6 +349,7 @@ public class Racer : NetworkBehaviour
         }
 
         isOnPower = OnPowerPlatform();
+        
         CurrentVelocity = RB.velocity;
     }
     public virtual void FixedUpdate()
@@ -354,7 +358,6 @@ public class Racer : NetworkBehaviour
         SlopeCheck();
         CheckIfOnAnotherLit();
         CheckOtherPlayersOnLit();
-        otherIsOnLitCount = CheckOtherPlayersOnLit();
         CheckHighestOtherOnLitCount();
 
         currentPosition = transform.position.x;
@@ -456,52 +459,46 @@ public class Racer : NetworkBehaviour
         CurrentVelocity = RB.velocity;
     }
     /// <summary>
-    /// Function to accelerate the runner till he reaches his top speed.
+    /// Function to accelerate the runner till he reaches the cap velocity.
     /// </summary>
     /// <param name="racerType">The current type of player: Player or Opponent</param>
-    public virtual void SetAccelerations(RacerType racerType)
+    /// <param name="capVelocity">Value to limit moveVelocity to.</param>
+    public virtual void SetAccelerations(RacerType racerType, float capVelocity)
     {
         switch (racerType)
         {
             case RacerType.Player:
                 movementVelocity += acceleration * Time.deltaTime;
-                //           jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRate = acceleration;
                 playerData.knockbackVelocity.x += knockbackAccelRate * Time.deltaTime;
                 playerData.knockbackVelocity.y += knockbackAccelRate * Time.deltaTime;
 
                 playerData.knockbackVelocity.x = Mathf.Min(playerData.knockbackVelocity.x, playerData.maxKnockbackVelocity.x);
                 playerData.knockbackVelocity.y = Mathf.Min(playerData.knockbackVelocity.y, playerData.maxKnockbackVelocity.y);
-                movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-                //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+                movementVelocity = Mathf.Min(movementVelocity, capVelocity);
                 break;
             case RacerType.Opponent:
                 movementVelocity += acceleration * Time.deltaTime;
-                //            jumpVelocity += accelRatePerSec * Time.deltaTime;
                 float knockbackAccelRateO = acceleration * 0.667f;
                 difficultyData.knockbackVelocity.x += knockbackAccelRateO * Time.deltaTime;
                 difficultyData.knockbackVelocity.y += knockbackAccelRateO * Time.deltaTime;
 
                 difficultyData.knockbackVelocity.x = Mathf.Min(difficultyData.knockbackVelocity.x, difficultyData.maxKnockbackVelocity.x);
                 difficultyData.knockbackVelocity.y = Mathf.Min(difficultyData.knockbackVelocity.y, difficultyData.maxKnockbackVelocity.y);
-                movementVelocity = Mathf.Min(movementVelocity, moveVelocityResource);
-                //            jumpVelocity = Mathf.Min(jumpVelocity, jumpVelocityResource);
+                movementVelocity = Mathf.Min(movementVelocity, capVelocity);
                 break;
             default:
                 break;
         }
-
-
-
     }
     /// <summary>
-    /// Function to decelerate a runner, under given conditions, till he reaches 0 velocity.
+    /// Function to decelerate a runner, under given conditions, till he reaches the cap velocity.
     /// </summary>
-    public virtual void SetDecelerations()
+    /// <param name="capVelocity">Value to limit moveVelocity to.</param>
+    public virtual void SetDecelerations(float capVelocity)
     {
         movementVelocity += deceleration * Time.deltaTime;
-
-        movementVelocity = Mathf.Max(movementVelocity, 0);
+        movementVelocity = Mathf.Max(movementVelocity, capVelocity);
 
     }
     /// <summary>
@@ -510,7 +507,6 @@ public class Racer : NetworkBehaviour
     public virtual void SetBrakes()
     {
         movementVelocity += brakeRatePerSec * Time.deltaTime;
-        //    jumpVelocity = 0f;
         movementVelocity = Mathf.Max(movementVelocity, 0);
     }
     /// <summary>
@@ -519,7 +515,10 @@ public class Racer : NetworkBehaviour
     public virtual void SetStop()
     {
         movementVelocity = 0f;
-        //    jumpVelocity = 0f;
+    }
+    public void SetPowerPlatformToNull()
+    {
+        poweredPlatform = null;
     }
     #endregion
 
@@ -586,8 +585,6 @@ public class Racer : NetworkBehaviour
             currentPlatform = other.collider;
             isOnPower = true;
             //     testImage.gameObject.SetActive(true); 
-            poweredPlatform = other.gameObject.GetComponent<PoweredPlatform>();
-
         }
         if (other.collider.CompareTag("BasePlatform"))
         {
@@ -693,6 +690,17 @@ public class Racer : NetworkBehaviour
     public virtual bool OnPowerPlatform()
     {
         return Physics2D.Raycast(litCheck.position, Vector2.down, playerData.powerCheckDistance, playerData.whatIsPower);
+    }
+    public virtual PoweredPlatform PowerPlatform()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(litCheck.position, Vector2.down, playerData.powerCheckDistance, playerData.whatIsPower);
+        PoweredPlatform poweredPlatform = null;
+        if (hit.collider != null)
+        {
+            poweredPlatform = hit.collider.GetComponent<PoweredPlatform>();
+        }
+
+        return poweredPlatform;
     }
     public virtual void SlopeCheck()
     {
@@ -893,15 +901,36 @@ public class Racer : NetworkBehaviour
     }
     public virtual void IncreaseSpeedWhenOtherIsOnLit()
     {
-        if (otherIsOnLitCount != 0 && isOnLit)
+        int othersOnLit = CheckOtherPlayersOnLit();
+
+        if (othersOnLit != 0 && isOnLit)
         {
-            moveVelocityResource += playerData.otherOnLitIncreaseValue * otherIsOnLitCount;
             overdrive = true;
         }
-        else if (otherIsOnLitCount != 0 && !isOnLit)
+        else if (othersOnLit != 0 && !isOnLit)
         {
-            moveVelocityResource += playerData.otherOnLitIncreaseValue * otherIsOnLitCount;
             overdrive = false;
+        }
+
+        if (otherIsOnLitCount != othersOnLit)
+        {
+            otherIsOnLitCount = othersOnLit;
+
+            switch (currentRacerType)
+            {
+                case RacerType.Player:
+                    if (overdrive)
+                        moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, playerData.overdriveIncreasePercentage * otherIsOnLitCount);
+                    else
+                        moveVelocityResource += Utils.PercentageValue(playerData.topSpeed, playerData.otherOnLitIncreasePercentage * otherIsOnLitCount);
+                    break;
+                case RacerType.Opponent:
+                    if (overdrive)
+                        moveVelocityResource += Utils.PercentageValue(difficultyData.topSpeed, difficultyData.overdriveIncreasePercentage * otherIsOnLitCount);
+                    else
+                        moveVelocityResource += Utils.PercentageValue(difficultyData.topSpeed, difficultyData.otherOnLitIncreasePercentage * otherIsOnLitCount);
+                    break;
+            }
         }
     }
     // FUNCTION: Used to change the stats of the player while on lit. Especially if the runner has already collided with the litplatform
@@ -937,31 +966,15 @@ public class Racer : NetworkBehaviour
     /// <summary>
     /// The function that gets called when damage occurs. The runner damages operator struct holds the neccessary information to deal appropriate damage.
     /// </summary>
-    /// <param name="runnerDamages">The struct that holds all neccessary damage information.</param>
+    /// <param name="runnerDamages">A struct that holds all neccessary damage information.</param>
     public virtual void DamageRunner(RunnerDamagesOperator runnerDamages)
     {
-        //completely ignore damaging if is invulnerable or damage type is identical to our color
+        // completely ignore damaging if is invulnerable or damage type is identical to our color
         if (isInvulnerable || runnerDamages.DamageList()[0].damageInt == runner.stickmanNet.currentColor.colorID) { return; }
 
-        for (int i = 0; i < powerupController.activePowerups.Count; i++)
-        {
-            switch (powerupController.activePowerups[i].powerup.powerupID)
-            {
-                case Powerup.PowerupID.SpeedUp:
-                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
-                    continue;
-                case Powerup.PowerupID.ElementField:
-                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
-                    continue;
-                case Powerup.PowerupID.Projectile:
-                    // TODO: change to disable powerup selected nature
-                    continue;
-                case Powerup.PowerupID.Bomb:
-                    // TODO: change to disable powerup selected nature
-                    continue;
-            }
-            
-        }
+        // if we have been damaged, remove current powerup ability or disable a selected powerup.
+        RemovePowerups();
+
         //check if the runner is previously damaged, and if so do damage again, this time instantly depleting the runner's stamina and knocking him out
         if (myDamages.IsDamaged())
         {
@@ -1008,6 +1021,10 @@ public class Racer : NetworkBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Function responsible for dealing the appropriate effects on the strength of a racer.
+    /// </summary>
+    /// <returns></returns>
     public virtual IEnumerator DamageEffectsOnStrength()
     {
         float finalStrength = 0;
@@ -1196,6 +1213,31 @@ public class Racer : NetworkBehaviour
         damageMatrix[previousDamageIndex, newDamageIndex] = true;
         StrengthBreak();
         //   CheckBoolArray(damageMatrix, dynamicDamageStates[currentRacerType][new Vector2(previousDamageIndex, newDamageIndex)]);
+    }
+    /// <summary>
+    /// Removes current powerup ability or disables a selected powerup.
+    /// </summary>
+    public void RemovePowerups()
+    {
+        // if we have been damaged, remove current powerup ability or disable a selected powerup.
+        for (int i = 0; i < powerupController.activePowerups.Count; i++)
+        {
+            switch (powerupController.activePowerups[i].powerup.powerupID)
+            {
+                case Powerup.PowerupID.SpeedUp:
+                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
+                    continue;
+                case Powerup.PowerupID.ElementField:
+                    powerupController.TurnDurationTo0(powerupController.activePowerups[i]);
+                    continue;
+                case Powerup.PowerupID.Projectile:
+                    // TODO: change to disable powerup selected nature
+                    continue;
+                case Powerup.PowerupID.Bomb:
+                    // TODO: change to disable powerup selected nature
+                    continue;
+            }
+        }
     }
     public virtual GameObject InstantiateObject(GameObject original, Vector3 position, Quaternion rotation, Transform parent = null)
     {
@@ -1396,6 +1438,7 @@ public class Racer : NetworkBehaviour
         Player,
         Opponent
     }
+    
     public virtual void DestroyObject(GameObject gameObject)
     {
         Destroy(gameObject);

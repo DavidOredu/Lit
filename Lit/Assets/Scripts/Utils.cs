@@ -10,20 +10,23 @@ public static class Utils
         {
             beamScript.ownerRacer = racer;
             beamScript.damageType = damageType;
-            beamScript.damageStrength = powerupData.beamDamageStrength;
+            beamScript.damagePercentage = powerupData.beamDamagePercentage;
+            beamScript.damageRate = powerupData.beamDamageRate;
         }
         else if (awakenedData != null)
         {
             beamScript.ownerRacer = racer;
             beamScript.damageType = damageType;
-            beamScript.damageStrength = awakenedData.purpleBeamDamageStrength;
+            beamScript.damagePercentage = awakenedData.purpleBeamDamagePercentage;
+            beamScript.damageRate = awakenedData.purpleBeamDamageRate;
         }
     }
     public static void SetBombVariables(Racer racer, BombScript bombScript, int damageType, PowerupData powerupData)
     {
         bombScript.OwnerRacer = racer;
         bombScript.damageType = damageType;
-        bombScript.damageStrength = powerupData.bombDamageStrength;
+        bombScript.damagePercentage = powerupData.bombDamagePercentage;
+        bombScript.damageRate = powerupData.bombDamageRate;
         bombScript.explosiveForce = powerupData.bombExplosiveForce;
         bombScript.explosiveRadius = powerupData.bombExplosiveRadius;
         bombScript.upwardsModifier = powerupData.bombUpwardsModifier;
@@ -33,7 +36,8 @@ public static class Utils
     {
         mineComp.ownerRacer = racer;
         mineComp.damageType = damageType;
-        mineComp.damageStrength = powerupData.mineDamageStrength;
+        mineComp.damagePercentage = powerupData.mineDamagePercentage;
+        mineComp.damageRate = powerupData.mineDamageRate;
         mineComp.explosiveForce = powerupData.mineExplosiveForce;
         mineComp.explosiveRadius = powerupData.mineExplosiveRadius;
         mineComp.upwardsModifier = powerupData.mineUpwardsModifier;
@@ -50,7 +54,8 @@ public static class Utils
                 case 1:
                     explosionScript.ownerRacer = racer;
                     explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = awakenedData.redDamageStrength;
+                    explosionScript.damagePercentage = awakenedData.redDamagePercentage;
+                    explosionScript.damageRate = awakenedData.redDamageRate;
                     explosionScript.explosiveRadius = PercentageIncreaseOrDecrease(powerupData.bombExplosiveRadius, awakenedData.redExplosiveRadiusPercentageIncrease, AlterType.Increase);
                     ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.IncreaseStartSize, awakenedData.redExplosiveRadiusPercentageIncrease);
                     explosionScript.explosiveForce = powerupData.bombExplosiveForce;
@@ -60,7 +65,8 @@ public static class Utils
                 case 6:
                     explosionScript.ownerRacer = racer;
                     explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = powerupData.bombDamageStrength;
+                    explosionScript.damagePercentage = powerupData.bombDamagePercentage;
+                    explosionScript.damageRate = powerupData.bombDamageRate;
                     explosionScript.explosiveForce = PercentageIncreaseOrDecrease(powerupData.bombExplosiveForce, awakenedData.cyanExplosiveForcePercentageIncrease, AlterType.Increase);
                     explosionScript.explosiveRadius = PercentageIncreaseOrDecrease(powerupData.bombExplosiveRadius, awakenedData.cyanExplosiveRadiusPercentageDecrease, AlterType.Decrease);
                     explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
@@ -69,7 +75,8 @@ public static class Utils
                 default:
                     explosionScript.ownerRacer = racer;
                     explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = powerupData.bombDamageStrength;
+                    explosionScript.damagePercentage = powerupData.bombDamagePercentage;
+                    explosionScript.damageRate = powerupData.bombDamageRate;
                     explosionScript.explosiveForce = powerupData.bombExplosiveForce;
                     explosionScript.explosiveRadius = powerupData.bombExplosiveRadius;
                     explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
@@ -82,7 +89,8 @@ public static class Utils
         {
             explosionScript.ownerRacer = racer;
             explosionScript.damageInt = damageType;
-            explosionScript.damagePercentage = powerupData.bombDamageStrength;
+            explosionScript.damagePercentage = powerupData.bombDamagePercentage;
+            explosionScript.damageRate = powerupData.bombDamageRate;
             explosionScript.explosiveForce = powerupData.bombExplosiveForce;
             explosionScript.explosiveRadius = powerupData.bombExplosiveRadius;
             explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
@@ -93,7 +101,8 @@ public static class Utils
     {
         explosionComp.ownerRacer = mineScript.ownerRacer;
         explosionComp.damageInt = mineScript.damageType;
-        explosionComp.damagePercentage = mineScript.damageStrength;
+        explosionComp.damagePercentage = mineScript.damagePercentage;
+        explosionComp.damageRate = mineScript.damageRate;
         explosionComp.explosiveForce = mineScript.explosiveForce;
         explosionComp.explosiveRadius = mineScript.explosiveRadius;
         explosionComp.upwardsModifier = mineScript.upwardsModifier;

@@ -89,30 +89,54 @@ public class Opponent : Entity
     {
         base.FixedUpdate();
 
-        if (isOnPower && StateMachine.CurrentState != opponentKnockbackState && StateMachine.CurrentState != opponentSlideState && poweredPlatform != null && CheckIfGrounded())
+        //foreach (var sensor in aISensors)
+        //{
+        //    sensor.Value.Detect(false);
+        //}
+        higherPlatformSensor.Detect(false);
+        obstacleSensor.Detect(false);
+        ledgeSensor.Detect(false);
+        projectileSensor.Detect(false);
+        playerDefenseSensor.Detect(true);
+        playerAttackSensor.Detect(true);
+
+
+        if (isOnPower && !hasUsedPower && StateMachine.CurrentState != opponentKnockbackState && StateMachine.CurrentState != opponentSlideState && poweredPlatform != null)
         {
             // some check should be put here to determine difficulty to know the rate at which the ai should respond
+            if(poweredPlatform != oldPowerPlatform)
             {
-                switch (poweredPlatform.currentPowerAid)
+                if (poweredPlatform.currentPowerAidType == PoweredPlatform.PowerPlatformAidType.Booster)
                 {
-                    case PoweredPlatform.PowerAid.Instantaneous:
-                        canUsePowerPlatform = instantaneousPowerPlatformProbability.ProbabilityGenerator();
-                        break;
-                    case PoweredPlatform.PowerAid.Continuous:
-                        if(poweredPlatform.currentPower == PoweredPlatform.Power.Stop)
-                        {
+                      
+                    canUsePowerPlatform = boosterPowerPlatformUseProbability.ProbabilityGenerator();
+                    
+                    if (canUsePowerPlatform)
+                    {
+                        Debug.Log("Decided to use power platform!");
+                    }
+                    else
+                    {
 
-                        }
-                        break;
-                    default:
-                        break;
+                        Debug.Log("Ignored power platform!");
+                    }
+                    UsePowerPlatform(false);
+                    hasUsedPower = true;
                 }
-                poweredPlatform.DefinePower(this);
-            }
 
+            }
         }
     }
-
+    public void UsePowerPlatform(bool multipleUsage)
+    {
+        if (canUsePowerPlatform)
+        {
+            poweredPlatform.DefinePower(this);
+            oldPowerPlatform = poweredPlatform;
+            canUsePowerPlatform = multipleUsage;
+            Debug.Log($"Has used powerup {poweredPlatform.currentPower}");
+        }
+    }
 
     public override void LateUpdate()
     {
@@ -132,5 +156,14 @@ public class Opponent : Entity
     public override void OnCollisionEnter2D(Collision2D other)
     {
         base.OnCollisionEnter2D(other);
+    }
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        foreach (var sensor in aISensors)
+        {
+            sensor.Value.GizmosDebug(sensor.Value.sensorDirection, sensor.Value.sensorDistance, sensor.Value.sensorRadius);
+        }
     }
 }

@@ -6,7 +6,8 @@ public class AwakenedData : ScriptableObject
 {
     [Header("RED")]
     public float redExplosiveRadiusPercentageIncrease = 0.5f;
-    public float redDamageStrength;
+    public float redDamagePercentage;
+    public float redDamageRate;
     public float redSpeedIncreasePercentage = 2f;
 
     [Header("BLUE")]
@@ -22,7 +23,8 @@ public class AwakenedData : ScriptableObject
     public float purpleOrbSpeed = 40f;
     public float purpleOrbRadius = 40f;
     public float purpleOrbLifeTime = 7f;
-    public float purpleBeamDamageStrength = 10f;
+    public float purpleBeamDamagePercentage = .8f;
+    public float purpleBeamDamageRate = .8f;
     public LayerMask purpleWhatToHit;
 
     [Header("CYAN")]

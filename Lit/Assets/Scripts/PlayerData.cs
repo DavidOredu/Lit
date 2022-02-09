@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
-public class PlayerData : ScriptableObject
+public class PlayerData : RacerData
 {
     /// <summary>
     /// The name of the runner. This name will be used in dialogue in the game's story, and will be used in the multiplayer section the discern players.
@@ -82,8 +82,8 @@ public class PlayerData : ScriptableObject
     public float litSpeedUpPercentage = .5f;
     public float litSlowDownPercentage = .3f;
     public float jumpAddition;
-    public float otherOnLitIncreaseValue;
-    public float litSpeedAlterRate = 6f;
+    public float overdriveIncreasePercentage = 1.5f;
+    public float otherOnLitIncreasePercentage = .5f;
 
     [Header("CHECK VARIABLES")]
     public float groundCheckRadius = 0.3f;
