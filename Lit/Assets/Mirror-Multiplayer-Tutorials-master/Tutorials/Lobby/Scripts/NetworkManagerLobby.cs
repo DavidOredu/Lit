@@ -38,14 +38,12 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         public static event Action<NetworkConnection> OnServerReadied;
         public static event Action OnServerStopped;
 
-        public List<RoomPlayerLobby> RoomPlayers { get; } = new List<RoomPlayerLobby>();
+        public List<RoomPlayerLobby> RoomPlayers { get; private set; } = new List<RoomPlayerLobby>();
         
-        public List<GamePlayerLobby> GamePlayers { get; } = new List<GamePlayerLobby>();
-        public List<StickmanNet> players { get; } = new List<StickmanNet>();
+        public List<GamePlayerLobby> GamePlayers { get; private set; } = new List<GamePlayerLobby>();
+        
         public List<int> freeColors { get; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 10 };
         public readonly Dictionary<GamePlayerLobby, GameObject> gamePlayerConnect = new Dictionary<GamePlayerLobby, GameObject>();
-
-        public int numberOfRoomPlayers;
 
         public override void Awake()
         {
@@ -250,7 +248,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 case NetworkState.State.Network:
                     if (SceneManager.GetActiveScene().path == menuScene && newSceneName.Contains("Scene_Game"))
                     {
-                        numberOfRoomPlayers = RoomPlayers.Count;
+                        // A reverse loop is used here because the first room player at index 0 is our main or 'server' runner. We should replace his connection last so as to maintain correct logic.
                         for (int i = RoomPlayers.Count - 1; i >= 0; i--)
                         {
                             var conn = RoomPlayers[i].connectionToClient;
@@ -269,14 +267,14 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 case NetworkState.State.NonNetwork:
                     if (SceneManager.GetActiveScene().path == menuScene && newSceneName.Contains("Scene_Game"))
                     {
-                        numberOfRoomPlayers = RoomPlayers.Count;
                         for (int i = RoomPlayers.Count - 1; i >= 0; i--)
                         {
+                            GamePlayerLobby gameplayerInstance;
                             switch (RoomPlayers[i].roomPlayerType)
                             {
                                 case Racer.RacerType.Player:
                                     var conn = RoomPlayers[i].connectionToClient;
-                                    var gameplayerInstance = Instantiate(nonNetworkGamePlayerPrefab);
+                                    gameplayerInstance = Instantiate(nonNetworkGamePlayerPrefab);
                                     gameplayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
                                     gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
                                     
@@ -290,15 +288,15 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
                                 case Racer.RacerType.Opponent:
                                     var conn2 = RoomPlayers[i].connectionToClient;
-                                    var gameplayerInstance2 = Instantiate(opponentGamePlayerPrefab);
-                                    gameplayerInstance2.gamePlayerType = RoomPlayers[i].roomPlayerType;
-                                    gameplayerInstance2.SetDisplayName(RoomPlayers[i].DisplayName);
-                                    gameplayerInstance2.difficulty = RoomPlayers[i].difficulty;
+                                    gameplayerInstance = Instantiate(opponentGamePlayerPrefab);
+                                    gameplayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
+                                    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+                                    gameplayerInstance.difficulty = RoomPlayers[i].difficulty;
                                     //TODO: change back to normal
-                                    gameplayerInstance2.SetColor(RoomPlayers[i].currentColorCode);
+                                    gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
 
                                     NetworkServer.Destroy(RoomPlayers[i].gameObject);
-                                    NetworkServer.Spawn(gameplayerInstance2.gameObject);
+                                    NetworkServer.Spawn(gameplayerInstance.gameObject);
                                     break;
                                 default:
                                     break;

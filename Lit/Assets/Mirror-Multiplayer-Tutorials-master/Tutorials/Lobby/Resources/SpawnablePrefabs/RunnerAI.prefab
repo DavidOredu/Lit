@@ -489,6 +489,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3707681473321125816, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: racer
+      value: 
+      objectReference: {fileID: -505225184817380498}
     - target: {fileID: 3753190241897030164, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
@@ -577,7 +582,7 @@ PrefabInstance:
     - target: {fileID: 3885015011641506177, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_TagString
-      value: Opponent
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3885015011641506181, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}

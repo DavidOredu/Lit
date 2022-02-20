@@ -112,7 +112,7 @@ public class BombScript : MonoBehaviour
     }
     public void OnBombDragStart(Vector2 mousePosition)
     {
-        if (canControl)
+      //  if (canControl)
         {
             DeactivateRb();
             isDragging = true;
@@ -123,7 +123,7 @@ public class BombScript : MonoBehaviour
     }
     public void OnDrag(Vector2 mousePosition)
     {
-        if (canControl)
+      //  if (!hasFired || canControl)
         {
             //  endPoint = cam.ScreenToWorldPoint(mousePosition);
             Vector3 worldCoordinates = cam.ScreenToWorldPoint(startScreenCoordinates);
@@ -163,7 +163,6 @@ public class BombScript : MonoBehaviour
 
         explosionComp.runnerDamages.InitDamages();
         explosionComp.Explode(explodeWithDamage);
-     //   OwnerRacer.GamePlayer.powerupButton.UsePowerup(true);
         if (canControl)
         {
             if (OwnerRacer.GamePlayer.enemyPowerup == null)

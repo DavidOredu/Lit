@@ -435,6 +435,7 @@ MonoBehaviour:
   gameStatsPanel: {fileID: 9112972862884934109}
   racer: {fileID: 0}
   stickman: {fileID: 0}
+  difficulty: 0
   powerup:
     prefab: {fileID: 0}
     name: 
@@ -3444,6 +3445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eea3a6401d16d4bae9da5e6fdbdb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   justRotate: {fileID: 1620505903415031093}
   justRotateSmall: {fileID: 0}
 --- !u!1 &7533075298808224082
@@ -3737,6 +3739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eea3a6401d16d4bae9da5e6fdbdb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 8705534740647347075}
   justRotate: {fileID: 5604826934414269496}
   justRotateSmall: {fileID: 0}
 --- !u!1 &8236869614673030669

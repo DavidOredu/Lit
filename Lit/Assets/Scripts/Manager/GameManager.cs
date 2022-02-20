@@ -1,27 +1,40 @@
-﻿using DapperDino.Tutorials.Lobby;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager script to govern the affairs of game states and render logic for these individual states.
+/// </summary>
 [Serializable]
 public class GameManager : SingletonDontDestroy<GameManager>
 {
+    /// <summary>
+    /// FPS to be aimed to render at.
+    /// </summary>
     [SerializeField]
     private int targetFps = 42;
 
-    public GameState currentGameState { get; private set; }
-    public GameModes.Modes currentGameMode { get; set; }
-
+    /// <summary>
+    /// The present state the game is in. If in menu, or in-game or lobby, etc.
+    /// </summary>
+    public GameState currentGameState;
+    /// <summary>
+    /// The current mode being played in the game scene.
+    /// </summary>
+    public GameModes.Modes currentGameMode;
+    /// <summary>
+    /// The name of the current scene rendered in the game.
+    /// </summary>
     protected string currentScene;
 
-    public Racer netPlayer { get; set; }
-    public Racer nonNetPlayer { get; set; }
+    public Racer MainPlayer { get; set; }
+    public StickmanNet MainStickman { get; set; }
+
 
     // used in getting player positions
     public List<Racer> allRacers { get; private set; } = new List<Racer>();
-    public List<Racer> playersList { get; private set; } = new List<Racer>();
+    public List<StickmanNet> allStickmenColors { get; private set; } = new List<StickmanNet>();
     public List<float> playerPositions { get; private set; } = new List<float>();
 
     public StickmanNet[] stickmenNetInGame { get; set; }
@@ -33,19 +46,12 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
     private Vector3 pointsOffset;
 
-    protected Player playerNN { get; private set; }
-
     public GameObject powerupManager;
     public GameObject deathLaser;
 
     public static event Action OnGameCompleted;
     protected bool isGameCompleted = false;
 
-    // used when in a network game
-    public List<Player> allNetworkPlayers = new List<Player>();
-    public StickmanNet netStickman { get; set; }
-    // used when in a non network game
-    public List<GameObject> opponents { get; set; } = new List<GameObject>();
     public List<GameObject> powerupManagers { get; private set; } = new List<GameObject>();
     public Level currentLevel { get; set; }
 
@@ -61,18 +67,11 @@ public class GameManager : SingletonDontDestroy<GameManager>
     // Start is called before the first frame update
     public virtual void Start()
     {
-        playerNN = Resources.Load<Player>("SpawnablePrefabs/Runner(Network)");
         deathLaser = Resources.Load<GameObject>("DeathLaser");
         powerupManager = Resources.Load<GameObject>("PowerupManager");
 
         isGameCompleted = false;
         OnGameCompleted += GameManager_OnGameCompleted;
-
-
-
-        //  AddPlayer();
-        //   numberOfRunners = players.Count;
-
     }
     private void GameManager_OnGameCompleted()
     {
@@ -120,8 +119,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
             case GameState.MainMenu:
                 break;
             case GameState.InGame:
-                numberOfRunners = GameObject.FindGameObjectsWithTag("Player").Count() + GameObject.FindGameObjectsWithTag("Opponent").Count();
-
                 startPoint = GameObject.FindGameObjectWithTag("FlagPoint").transform.Find("StartPoint").transform.position;
                 endPoint = GameObject.FindGameObjectWithTag("FlagPoint").transform.Find("EndPoint").transform.position;
 
@@ -147,50 +144,19 @@ public class GameManager : SingletonDontDestroy<GameManager>
     }
     public void InitInGameObjects()
     {
-        switch (NetworkState.instance.currentNetworkState)
+        // -------------------INSTANTIATE POWERUP MANAGERS-------------------//
+        for (int i = 0; i < numberOfRunners; i++)
         {
-            case NetworkState.State.None:
-                break;
-                //  for network state behaviour
-            case NetworkState.State.Network:
-                var players = GameObject.FindGameObjectsWithTag("Player");
-                // -------------------INSTANTIATE POWERUP MANAGERS-------------------//
-                for (int i = 0; i < players.Count(); i++)
-                {
-                    var powerupM = Instantiate(powerupManager);
-                    powerupManagers.Add(powerupM);
-                }
-
-                for (int i = 0; i < players.Count(); i++)
-                {
-                    Debug.Log($"i is: {i}");
-                    powerupManagers[i].GetComponent<PowerupController>().racer = players[i].GetComponent<Player>();
-                }
-                // -------------------------------------------------------------------//
-                break;
-                // for non network state behaviour
-            case NetworkState.State.NonNetwork:
-                var player = GameObject.FindGameObjectWithTag("Player");
-                opponents = GameObject.FindGameObjectsWithTag("Opponent").ToList();
-                var number = opponents.Count + 1;
-                // -------------------INSTANTIATE POWERUP MANAGERS-------------------//
-                for (int i = 0; i < number; i++)
-                {
-                    var powerupM = Instantiate(powerupManager);
-                    powerupManagers.Add(powerupM);
-                }
-                powerupManagers[0].GetComponent<PowerupController>().racer = player.GetComponent<Player>();
-
-                for (int i = 0; i < opponents.Count; i++)
-                {
-                    Debug.Log($"i is: {i}");
-                    powerupManagers[i + 1].GetComponent<PowerupController>().racer = opponents[i].GetComponent<Opponent>();
-                }
-                // -------------------------------------------------------------------//
-                break;
-            default:
-                break;
+            var powerupM = Instantiate(powerupManager);
+            powerupManagers.Add(powerupM);
         }
+
+        for (int i = 0; i < numberOfRunners; i++)
+        {
+            PowerupController powerupController = powerupManagers[i].GetComponent<PowerupController>();
+            powerupController.racer = allRacers[i];
+        }
+        // -------------------------------------------------------------------//
     }
     public void SetGameScoring()
     {
@@ -205,7 +171,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     // Set random structure for quick play. Initially locked till level 2 or 3 is reached
                     if (isGameCompleted)
                     {
-                        ScoreSystem.QuickplayAndArcadeScore.position = netPlayer.Rank;
+                        ScoreSystem.QuickplayAndArcadeScore.position = MainPlayer.Rank;
                     }
                     break;
                 case GameModes.Modes.ClassicDeathmatch:
@@ -215,9 +181,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
                     if (isGameCompleted)
                     {
-                        ScoreSystem.ClassicDeathmatchScore.positionScore = netPlayer.Rank;
-                        ScoreSystem.ClassicDeathmatchScore.litPlatformCount = netPlayer.LitPlatformCount();
-                        ScoreSystem.ClassicDeathmatchScore.othersOnLitCount = netPlayer.highestOtherIsOnLitCount;
+                        ScoreSystem.ClassicDeathmatchScore.positionScore = MainPlayer.Rank;
+                        ScoreSystem.ClassicDeathmatchScore.litPlatformCount = MainPlayer.LitPlatformCount();
+                        ScoreSystem.ClassicDeathmatchScore.othersOnLitCount = MainPlayer.highestOtherIsOnLitCount;
                         Debug.Log(ScoreSystem.ClassicDeathmatchScore.positionScore + " position");
                         Debug.Log(ScoreSystem.ClassicDeathmatchScore.litPlatformCount + " litplatforms");
                         Debug.Log(ScoreSystem.ClassicDeathmatchScore.othersOnLitCount + " others on lit");
@@ -227,12 +193,12 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     break;
                 case GameModes.Modes.PowerBattle:
                     // Set score calculations, number of powers used, how many runners affected by said powers, etc. Initially locked till x level is reached
-                    foreach (var stickman in stickmenNetInGame)
+                    foreach (var stickman in allStickmenColors)
                     {
                         if (!ScoreSystem.PowerBattleScore.runnerColorBoolsNet.ContainsKey(stickman))
                             ScoreSystem.PowerBattleScore.runnerColorBoolsNet.Add(stickman, 0);
                     }
-               //     Debug.Log(ScoreSystem.PowerBattleScore.runnerColorBoolsNet[stickmenNetInGame[0]] + "score");
+                    //     Debug.Log(ScoreSystem.PowerBattleScore.runnerColorBoolsNet[stickmenNetInGame[0]] + "score");
                     break;
                 case GameModes.Modes.Domination:
                     // Set score system to determine the winner of a domination game. Runner with the most stats wins. Initially locked till x level is reached
@@ -245,7 +211,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     // Set up a base for a player to set his own stats for a game. Initially locked till x level is reached
                     if (isGameCompleted)
                     {
-                        ScoreSystem.QuickplayAndArcadeScore.position = netPlayer.Rank;
+                        ScoreSystem.QuickplayAndArcadeScore.position = MainPlayer.Rank;
                     }
                     break;
                 case GameModes.Modes.Tutorial:
@@ -271,9 +237,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     case GameState.InGame:
                         stickmenNetInGame = FindObjectsOfType<StickmanNet>();
                         if (playerEvents == null)
-                            playerEvents = netPlayer.GetComponent<PlayerEvents>();
+                            playerEvents = MainPlayer.GetComponent<PlayerEvents>();
                         SetPositionSystem();
-                        CheckGameEnd(netPlayer);
+                        CheckGameEnd(MainPlayer);
                         break;
                     case GameState.Lobby:
                         break;
@@ -289,12 +255,10 @@ public class GameManager : SingletonDontDestroy<GameManager>
                         break;
                     case GameState.InGame:
                         stickmenNetInGame = FindObjectsOfType<StickmanNet>();
-                        if (nonNetPlayer == null)
-                            nonNetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
                         if (playerEvents == null)
-                            playerEvents = nonNetPlayer.GetComponent<PlayerEvents>();
+                            playerEvents = MainPlayer.GetComponent<PlayerEvents>();
                         SetPositionSystem();
-                        CheckGameEnd(nonNetPlayer);
+                        CheckGameEnd(MainPlayer);
                         break;
                     case GameState.Lobby:
                         break;
@@ -309,7 +273,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
     }
     void SetPositionSystem()
     {
-        AddPlayer(NetworkState.instance.currentNetworkState);
         GetRunnerPositions();
         CheckRunnerPositions();
     }
@@ -320,71 +283,25 @@ public class GameManager : SingletonDontDestroy<GameManager>
             GameCompleted();
         }
     }
-    void AddPlayer(NetworkState.State state)
-    {
-        List<GameObject> playersNew;
-        switch (state)
-        {
-            case NetworkState.State.None:
-                break;
-            case NetworkState.State.Network:
-                playersNew = GameObject.FindGameObjectsWithTag("Player").ToList();
-                for (int i = 0; i < numberOfRunners; i++)
-                {
-                    Debug.Log($"{i} iteration");
-                    var player = playersNew[i].GetComponent<Player>();
 
-                    playersList.Insert(playersList.Count, player);
-                    allNetworkPlayers.Insert(allNetworkPlayers.Count, player);
-                }
-                allRacers = new List<Racer>(playersList);
-                playersNew.Clear();
-                break;
-            case NetworkState.State.NonNetwork:
-                playersNew = GameObject.FindGameObjectsWithTag("Opponent").ToList();
-                var player2 = nonNetPlayer.gameObject;
-                playersNew.Add(player2);
-                for (int i = 0; i < numberOfRunners; i++)
-                {
-                    var player = playersNew[i].GetComponent<Racer>();
-
-                    if(!playersList.Contains(player))
-                    playersList.Insert(playersList.Count, player);
-                }
-                allRacers = new List<Racer>(playersList);
-                playersNew.Clear();
-                break;
-            default:
-                break;
-        }
-
-
-        //List<Player> playersList = new List<Player>(numberOfRunners);
-
-
-    }
     void GetRunnerPositions()
     {
-        foreach (var player in playersList)
+        foreach (var player in allRacers)
         {
             float position;
             position = player.currentPosition;
             player.currentPositionPercentage = (position / pointsOffset.x) * 100;
-            playerPositions.Insert(playersList.IndexOf(player), position);
+            playerPositions.Insert(allRacers.IndexOf(player), position);
         }
-
-
     }
     void CheckRunnerPositions()
     {
         playerPositions.Sort();
         playerPositions.Reverse();
 
-
-
         foreach (var position in playerPositions)
         {
-            foreach (var player in playersList)
+            foreach (var player in allRacers)
             {
                 if (player.currentPosition == position)
                 {
@@ -392,7 +309,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
                 }
             }
         }
-        playersList.Clear();
         playerPositions.Clear();
     }
 

@@ -12,6 +12,7 @@ public class PowerupSpawner : MonoBehaviour
     private float _spawnTime;
 
     private PowerupController controller;
+    private PowerupBehaviour currentPowerup;
 
     public bool hasPowerup;
     // Start is called before the first frame update
@@ -33,9 +34,18 @@ public class PowerupSpawner : MonoBehaviour
             _spawnTime -= Time.deltaTime;
         if (_spawnTime <= 0)
         {
-            SpawnRandomPowerup(Random.Range(0, controller.powerups.Count));
+            currentPowerup = SpawnRandomPowerup(Random.Range(0, controller.powerups.Count));
             _spawnTime = spawnTime;       
             hasPowerup = true;
+        }
+        if (currentPowerup != null)
+        {
+            if (!currentPowerup.image.enabled)
+                hasPowerup = false;
+        }
+        else
+        {
+            hasPowerup = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,7 +53,7 @@ public class PowerupSpawner : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Opponent"))
         {
             //    if(Time.time >= startTime + spawnTime)
-            hasPowerup = false;
+          //  hasPowerup = false;
             //StopCoroutine(SpawnRandomPowerup());
             //StartCoroutine(SpawnRandomPowerup());
         }
@@ -64,12 +74,10 @@ public class PowerupSpawner : MonoBehaviour
         return powerupGameObject;
     }
 
-   void SpawnRandomPowerup(int index)
+   PowerupBehaviour SpawnRandomPowerup(int index)
     {
-
-
-        spawnPowerup(controller.powerups[index], spawnPoint.position);
-
-        
+        GameObject powerupGO;
+        powerupGO = spawnPowerup(controller.powerups[index], spawnPoint.position);
+        return powerupGO.GetComponent<PowerupBehaviour>();
     }
 }

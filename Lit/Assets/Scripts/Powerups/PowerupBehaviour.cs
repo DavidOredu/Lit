@@ -8,10 +8,10 @@ using UnityEngine.UI;
 /// </summary>
 public class PowerupBehaviour : MonoBehaviour
 {
+    public SpriteRenderer image { get; private set; }
     PowerupData powerupData;
     PowerupInformation powerupInformation;
     public PowerupController powerupController;
-    SpriteRenderer image;
 
     public Probability<int> ammoProbability;
     List<int> ammoSizes = new List<int> { 1, 2, 3, 4, 5 };
@@ -56,10 +56,13 @@ public class PowerupBehaviour : MonoBehaviour
                                 powerupAmmo = ammoProbability.ProbabilityGenerator();
                             }
                             PlayerEvents.instance.GottenPowerup();
-                            player.GamePlayer.powerupButton.powerupBehaviour = this;
-                            //var powerupImg = player.GamePlayer.powerupButton.i.powerupSlot.GetComponent<Image>();
-                            //powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
+                            var powerupImg = player.GamePlayer.powerupButton.image;
+                            var oldPowerupBehaviour = player.GamePlayer.powerupButton.powerupBehaviour;
+                            powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
+                            if(oldPowerupBehaviour != null)
+                                Destroy(player.GamePlayer.powerupButton.powerupBehaviour.gameObject);
                             player.GamePlayer.powerup = powerup;
+                            player.GamePlayer.powerupButton.powerupBehaviour = this;
 
                             GameObject powerupMM = null;
 

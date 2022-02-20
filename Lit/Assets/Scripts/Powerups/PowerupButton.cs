@@ -7,7 +7,7 @@ public class PowerupButton : MonoBehaviour
     private Button button;
     GamePlayerLobby gamePlayer;
     public PowerupBehaviour powerupBehaviour { get; set; }
-    private Image image;
+    public Image image;
     [SerializeField] private JustRotate justRotate;
     [SerializeField] private JustRotate justRotateSmall;
 
@@ -19,17 +19,18 @@ public class PowerupButton : MonoBehaviour
     {
         var buttonGO = transform.Find("PowerupButton");
         button = buttonGO.GetComponent<Button>();
-        image = button.transform.Find("Image").GetComponent<Image>();
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         rotateSpeedTemp = justRotate.rotateSpeed;
 
         isSelected = false;
-     //   button.onClick.AddListener(() => UsePowerup(false));
+        //   button.onClick.AddListener(() => UsePowerup(false));
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gamePlayer == null)
+            gamePlayer = transform.root.gameObject.GetComponent<GamePlayerLobby>();
         button.interactable = !(powerupBehaviour == null);
         if (button.interactable)
             image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
@@ -55,22 +56,13 @@ public class PowerupButton : MonoBehaviour
     {
         Debug.Log("UsePowerupCalled");
         if (powerupBehaviour == null) { return; }
-        if (gamePlayer == null)
-            gamePlayer = transform.root.gameObject.GetComponent<GamePlayerLobby>();
+        
         if (!gamePlayer.racer.canUsePowerup) { return; }
-       
+
         gamePlayer.racer.InputHandler.UsePowerupInput();
-        if (gamePlayer.powerup.isSelectable && isSelected && !endPowerup)
+        if (gamePlayer.powerup.isSelectable&&!endPowerup)
         {
-            gamePlayer.powerup.isSelected = false;
-            isSelected = false;
-            gamePlayer.powerup.SelectedEnd(gamePlayer.racer);
-        }
-        else if (gamePlayer.powerup.isSelectable && !isSelected && !endPowerup)
-        {
-            gamePlayer.powerup.isSelected = true;
-            isSelected = true;
-            gamePlayer.powerup.SelectedStart(gamePlayer.racer);
+            TurnSelectableState(!isSelected);
         }
         else if (!gamePlayer.powerup.isSelectable || endPowerup)
         {
@@ -84,10 +76,27 @@ public class PowerupButton : MonoBehaviour
                 gamePlayer.powerup.isSelected = false;
                 isSelected = false;
                 gamePlayer.powerup = null;
-                powerupBehaviour = null;
                 Destroy(powerupBehaviour.gameObject);
+                powerupBehaviour = null;
             }
         }
-        
+
+    }
+    public void TurnSelectableState(bool selected)
+    {
+        if(gamePlayer.powerup == null) { return; }
+
+        if (gamePlayer.powerup.isSelectable && isSelected)
+        {
+            gamePlayer.powerup.isSelected = selected;
+            isSelected = selected;
+            gamePlayer.powerup.SelectedEnd(gamePlayer.racer);
+        }
+        else if (gamePlayer.powerup.isSelectable && !isSelected)
+        {
+            gamePlayer.powerup.isSelected = selected;
+            isSelected = selected;
+            gamePlayer.powerup.SelectedStart(gamePlayer.racer);
+        }
     }
 }

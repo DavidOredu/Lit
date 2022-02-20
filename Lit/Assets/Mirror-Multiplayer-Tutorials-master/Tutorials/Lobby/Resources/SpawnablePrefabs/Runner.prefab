@@ -7566,6 +7566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  racer: {fileID: 3885015011641506180}
   stickmanNet: {fileID: 901176723347737698}
 --- !u!114 &-7668232660317813813
 MonoBehaviour:

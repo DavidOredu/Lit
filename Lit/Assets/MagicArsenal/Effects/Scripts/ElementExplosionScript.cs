@@ -22,48 +22,54 @@ public class ElementExplosionScript : MonoBehaviour
     public void Explode(bool explodeWithDamage)
     {
         var objectsToBlow = Physics2D.OverlapCircleAll(transform.position, explosiveRadius);
-
-        foreach (var objectToBlow in objectsToBlow)
-        {
-            var objectRB = objectToBlow.GetComponent<Rigidbody2D>();
-            if (objectRB != null)
+            foreach (var objectToBlow in objectsToBlow)
             {
-                if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
+                var objectRB = objectToBlow.GetComponent<Rigidbody2D>();
+                if (objectRB != null)
                 {
-                    if (explodeWithDamage)
+                    if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
                     {
-                        if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageInt)
+                        if (explodeWithDamage)
                         {
-                            objectRB.AddExplosionForce(explosiveForce, transform.position, explosiveRadius, upwardsModifier, forceMode);
-                            Debug.Log($"Has exploded! BOOM!: {objectToBlow.name}");
-                            Debug.Log($"Damage Type at point of explosion is: {damageInt}");
-                            Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, objectRB.gameObject);
+                            if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageInt)
+                            {
+                                objectRB.AddExplosionForce(explosiveForce, transform.position, explosiveRadius, upwardsModifier, forceMode);
+                                Debug.Log($"Has exploded! BOOM!: {objectToBlow.name}");
+                                Debug.Log($"Damage Type at point of explosion is: {damageInt}");
+                                Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, objectRB.gameObject);
+                            }
                         }
                     }
-                }
-                if (objectRB.CompareTag("Obstacle"))
-                {
-                    var obstacle = objectRB.GetComponent<Obstacle>();
-                    if(obstacle.currentObstacleType == Obstacle.ObstacleType.Breakable)
+                    if (objectRB.CompareTag("Obstacle"))
                     {
-                        obstacle.BreakObstacle();
+                        var obstacle = objectRB.GetComponent<Obstacle>();
+                        if (obstacle.currentObstacleType == Obstacle.ObstacleType.Breakable)
+                        {
+                            obstacle.BreakObstacle();
+                        }
+                        else if (obstacle.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
+                        {
+                            obstacle.ExplodeLaserOrb();
+                        }
+                        else if (obstacle.currentObstacleType == Obstacle.ObstacleType.ReleasedLaserBarricade)
+                        {
+                            obstacle.DestroyBarricade();
+                        }
                     }
-                    else if(obstacle.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
+                    if (objectRB.CompareTag("Projectile"))
                     {
-                        obstacle.ExplodeLaserOrb();
+                        var projectileScript = objectRB.GetComponent<MagicProjectileScript>();
+                        var bombScript = objectRB.GetComponent<BombScript>();
+                        if (projectileScript)
+                            projectileScript.Collide(false);
+                        //else if (bombScript)
+                        //{
+                        //    if(bombScript == this) { return; }
+                        //    bombScript.Explode(false);
+                        //}
                     }
-                    else if(obstacle.currentObstacleType == Obstacle.ObstacleType.ReleasedLaserBarricade)
-                    {
-                        obstacle.DestroyBarricade();
-                    }
-                }
-                if (objectRB.CompareTag("Projectile"))
-                {
-                    var projectileScript = objectRB.GetComponent<MagicProjectileScript>();
-                    projectileScript.Collide(false);
                 }
             }
-        }
     }
     private void OnDrawGizmos()
     {

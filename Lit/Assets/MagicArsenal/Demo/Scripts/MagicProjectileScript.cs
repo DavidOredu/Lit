@@ -116,7 +116,7 @@ public class MagicProjectileScript : MonoBehaviour
         {
             if (ownerRacer.GamePlayer.enemyPowerup == null)
             {
-                ownerRacer.GamePlayer.powerupButton.UsePowerup(false);
+                ownerRacer.GamePlayer.powerupButton.TurnSelectableState(false);
                 ownerRacer.GamePlayer.powerupButton.UsePowerup(true);
             }
             else if(ownerRacer.GamePlayer.powerupButton == null)

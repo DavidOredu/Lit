@@ -61,10 +61,6 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
                     GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
 
-                    //for (int i = 0; i < Room.GamePlayers.Count; i++)
-                    //{
-                    //   Room.gamePlayerConnect[Room.GamePlayers[i]] = Room.players[i].gameObject;
-                    //}
                     NetworkServer.Spawn(playerInstance, conn);
 
                     nextIndex++;
@@ -97,38 +93,11 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                         nextIndex++;
                     }
 
-
-                    //for (int i = 0; i < Room.GamePlayers.Count; i++)
-                    //{
-                    //   Room.gamePlayerConnect[Room.GamePlayers[i]] = Room.players[i].gameObject;
-                    //}
-                    //if (!CheckIfPlayerExists())
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                       
-                    //}
-                    
-
                     break;
                 default:
                     break;
             }
             
         }
-        private bool CheckIfPlayerExists()
-    {
-        if (GameObject.FindGameObjectWithTag("Player"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
-    }
-    
 }

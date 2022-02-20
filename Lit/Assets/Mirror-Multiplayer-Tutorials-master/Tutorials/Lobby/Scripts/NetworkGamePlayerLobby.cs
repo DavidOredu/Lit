@@ -14,11 +14,6 @@ public class NetworkGamePlayerLobby : GamePlayerLobby
         base.OnStartClient();
     }
 
-    public override void Update()
-    {
-        base.Update();
-    }
-
     public override void UpdateDisplay()
     {
         if (!isLocalPlayer)
@@ -34,14 +29,12 @@ public class NetworkGamePlayerLobby : GamePlayerLobby
 
             return;
         }
+        GameManager.allStickmenColors.Reverse();
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
-            players = new List<StickmanNet>(Room.players);
-            players.Reverse();
-            players[i].code = Room.GamePlayers[i].colorCode;
-
-
+            GameManager.allStickmenColors[i].code = Room.GamePlayers[i].colorCode;
         }
+        GameManager.allStickmenColors.Reverse();
         base.UpdateDisplay();
     }
 }

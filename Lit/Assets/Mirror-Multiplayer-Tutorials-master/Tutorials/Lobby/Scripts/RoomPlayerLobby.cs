@@ -53,7 +53,6 @@ public class RoomPlayerLobby : NetworkBehaviour
         }
     }
 
-    public bool foundColor { get; set; } = false;
     protected virtual void UpdateDisplay()
     {
         if (!hasAuthority)

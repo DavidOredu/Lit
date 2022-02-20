@@ -678,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 1
   currentPower: 3
-  currentPowerAid: 0
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!114 &168465202
@@ -2720,7 +2720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 1
-  currentPowerAid: 0
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!251 &318609201
@@ -9132,7 +9132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 2
-  currentPowerAid: 1
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!114 &1059214229
@@ -9567,7 +9567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 1
-  currentPowerAid: 0
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!61 &1095806397
@@ -9679,7 +9679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 2
-  currentPowerAid: 1
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!114 &1120980361
@@ -10008,7 +10008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 1
-  currentPowerAid: 0
+  currentPowerAidType: 0
   jumpForce: 26
   speedBoost: 0
 --- !u!114 &1147032063
@@ -10430,7 +10430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 1
-  currentPowerAid: 0
+  currentPowerAidType: 0
   jumpForce: 70
   speedBoost: 0
 --- !u!114 &1261742908
@@ -13549,7 +13549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformType: 2
   currentPower: 2
-  currentPowerAid: 1
+  currentPowerAidType: 0
   jumpForce: 50
   speedBoost: 0
 --- !u!114 &1922245595
@@ -13866,12 +13866,12 @@ PrefabInstance:
         type: 3}
       propertyPath: powerups.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 3765488261685951142, guid: cb13132356439a845a932ce9e8521c97,
+      objectReference: {fileID: 3765488261685951142, guid: 451ee308f09e7054a8fa1d122b8db933,
         type: 3}
     - target: {fileID: 2914788514423761763, guid: 8b46361ea813e864e88e5790c137865e,
         type: 3}
       propertyPath: powerups.Array.data[0].name
-      value: Speed Boost
+      value: Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 2914788514423761763, guid: 8b46361ea813e864e88e5790c137865e,
         type: 3}
@@ -13882,7 +13882,7 @@ PrefabInstance:
         type: 3}
       propertyPath: powerups.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 3765488261685951142, guid: 451ee308f09e7054a8fa1d122b8db933,
+      objectReference: {fileID: 3765488261685951142, guid: 92aa2c2b974e7574fb21002e61a832ea,
         type: 3}
     - target: {fileID: 2914788514423761763, guid: 8b46361ea813e864e88e5790c137865e,
         type: 3}

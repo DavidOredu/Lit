@@ -1,13 +1,15 @@
 ﻿using Mirror;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace DapperDino.Mirror.Tutorials.Lobby
 {
+    /// <summary>
+    /// Governs inner logic and network behaviour of a runner, while in-game.
+    /// </summary>
     public class GamePlayerLobby : NetworkBehaviour
     {
         [SyncVar]
@@ -16,25 +18,31 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         public int colorCode;
         [SyncVar(hook = nameof(HandleGameSceneBool))]
         public bool inGameScene = false;
-        [SerializeField] private List<TargetTrackerNetwork> targetTrackers = new List<TargetTrackerNetwork>(9);
-        protected List<StickmanNet> players;
 
-        public PlayerData playerData;
+        [SerializeField] private List<TargetTrackerNetwork> targetTrackers = new List<TargetTrackerNetwork>(9);
+
         public Racer.RacerType gamePlayerType;
         public GameObject gameStatsPanel;
         public Racer racer;
         public StickmanNet stickman;
         public Entity.Difficulty difficulty;
 
-       bool hasInit = false;
-
         public Powerup powerup;
         public PowerupButton powerupButton;
         public Button awakenedStateButton;
         public EnemyPowerup enemyPowerup;
         public Slider strengthBar;
-        private GameManager gameManager;
+
+        protected GameManager gameManager;
         protected NetworkManagerLobby room;
+        protected GameManager GameManager
+        {
+            get
+            {
+                if (gameManager != null) { return gameManager; }
+                return gameManager = GameManager.instance;
+            }
+        }
         protected NetworkManagerLobby Room
         {
             get
@@ -44,70 +52,22 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             }
         }
 
-        IEnumerator ChangeBool()
+        private void Start()
+        {
+            StartCoroutine(CheckIfInGame());
+        }
+
+        IEnumerator CheckIfInGame()
         {
             yield return new WaitUntil(CheckScene);
-          //  yield return new WaitForSeconds(3f);
             inGameScene = true;
         }
-        private void Awake()
-        {
-           
-        }
+
         bool CheckScene()
         {
-            if (SceneManager.GetActiveScene().path.Contains("Scene_Game"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return SceneManager.GetActiveScene().path.Contains("Scene_Game");
         }
-        [Client]
-        public virtual void Update()
-        {
 
-            if (gameManager == null)
-            {
-                gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            }
-            //if (Room.GamePlayers.Count == Room.players.Count)
-            // {
-            //     Debug.Log($"Trying to run update function in {ToString()}");
-            //     CmdUpdateDisplay();
-            //     Debug.Log("Has run update display in the update function!");
-            // }
-            if (SceneManager.GetActiveScene().name.Contains("Scene_Game") && gameManager.numberOfRunners == Room.numberOfRoomPlayers)
-            {
-                StartCoroutine(ChangeBool());
-                var players = GameObject.FindGameObjectsWithTag("Player");
-                for (int i = 0; i < Room.GamePlayers.Count; i++)
-                {
-                    if (Room.GamePlayers[i].GetComponent<NetworkIdentity>().hasAuthority && (gameManager.netPlayer == null || gameManager.netStickman == null))
-                    {
-                        gameManager.netPlayer = Room.GamePlayers[i].racer;
-                        gameManager.netStickman = Room.GamePlayers[i].stickman;
-                    }
-                    if (Room.GamePlayers[i].GetComponent<NetworkIdentity>().hasAuthority && !hasInit && Room.GamePlayers[i].gamePlayerType == Racer.RacerType.Player)
-                    {
-                        GameManager.instance.InitInGameObjects();
-                        if(gamePlayerType == Racer.RacerType.Player)
-                        awakenedStateButton.onClick.AddListener(() => racer.Awaken(racer.runner.stickmanNet.currentColor.colorID));
-                        hasInit = true;
-                    }
-                   else { continue; }
-                }
-
-            }
-            
-            //Debug.Log($"{Room.GamePlayers.Count} Game Players exist!");
-            //Debug.Log($"{Room.RoomPlayers.Count} Room player exist!");
-            //Debug.Log($"{Room.players.Count} Stickman Players exist!");
-
-            UpdateDisplay();
-        }
         public override void OnStartAuthority()
         {
             gameStatsPanel.SetActive(true);
@@ -117,28 +77,29 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             DontDestroyOnLoad(gameObject);
 
             Room.GamePlayers.Add(this);
-            
+
         }
 
         public override void OnStopClient()
         {
             Room.GamePlayers.Remove(this);
             Room.gamePlayerConnect.Remove(this);
-            foreach(var player in Room.players)
+            foreach (var player in GameManager.allStickmenColors)
             {
-                if(player.code == colorCode)
+                if (player.code == colorCode)
                 {
-                    Room.players.Remove(player);
+                    GameManager.allStickmenColors.Remove(player);
                     return;
                 }
 
             }
             UpdateDisplay();
         }
-       
-       
+
+
         public virtual void UpdateDisplay()
         {
+            // Run for a player even if he doesn't have authority. This is done so that a non-server player does not have administrative rights to call this function.
             if (!hasAuthority)
             {
                 foreach (var player in Room.GamePlayers)
@@ -152,80 +113,47 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
                 return;
             }
-            //var myIndex = Room.GamePlayers.IndexOf(this);
-            //Room.gamePlayerConnect[this] = Room.players[myIndex].gameObject;
-            //player = Room.gamePlayerConnect[this].GetComponent<PlayerNN>();
-            //stickman = Room.gamePlayerConnect[this].GetComponent<StickmanNet>();
-            //var obj = GameObject.FindGameObjectsWithTag("Player");
-            //foreach (var item in obj)
-            //{
-            //    var i = item.GetComponent<Stickman>();
-            //    players.Add(i);
-            //}
-            //for (int i = 0; i < Room.GamePlayers.Count; i++)
-            //{
-            //    players[i].code = Room.GamePlayers[i].colorCode;
-            //}
-            //players.Clear();
+
+            GameManager.numberOfRunners = Room.GamePlayers.Count;
 
             for (int i = 0; i < Room.GamePlayers.Count; i++)
             {
-                if(Room.GamePlayers[i].racer != players[i].gameObject.GetComponent<Racer>())
-                    Room.GamePlayers[i].racer = players[i].gameObject.GetComponent<Racer>();
-                if (Room.GamePlayers[i].stickman != players[i].gameObject.GetComponent<StickmanNet>())
-                    Room.GamePlayers[i].stickman = players[i].gameObject.GetComponent<StickmanNet>();
-                if (Room.GamePlayers[i].racer.GamePlayer != Room.GamePlayers[i])
-                    Room.GamePlayers[i].racer.GamePlayer = Room.GamePlayers[i];
-
-                if (Room.GamePlayers[i].gamePlayerType == Racer.RacerType.Player)
+                if (Room.GamePlayers[i].GetComponent<NetworkIdentity>().hasAuthority)
                 {
-                    awakenedStateButton.interactable = Room.GamePlayers[i].racer.canAwaken;
+                    GameManager.MainPlayer = Room.GamePlayers[i].racer;
+                    GameManager.MainStickman = Room.GamePlayers[i].stickman;
+
+                    GameManager.instance.InitInGameObjects();
+                    if (gamePlayerType == Racer.RacerType.Player)
+                        awakenedStateButton.onClick.AddListener(() => racer.Awaken(racer.runner.stickmanNet.currentColor.colorID));
                 }
             }
-            
-            //var myPosition = Room.GamePlayers.IndexOf(this);
-            //foreach (var player in players)
-            //{
-            //    if(players[myPosition] == player)
-            //    {
-            //        player.gameObject.GetComponent<PlayerNN>().inputHandler.enabled = true;
-            //    }
-            //    else
-            //    {
-            //        player.gameObject.GetComponent<PlayerNN>().inputHandler.enabled = false;
-            //    }
-            //}
-            
+            GameManager.allRacers.Reverse();
+            for (int i = 0; i < Room.GamePlayers.Count; i++)
+            {
+                Room.GamePlayers[i].racer = GameManager.allRacers[i].gameObject.GetComponent<Racer>();
+                Room.GamePlayers[i].stickman = GameManager.allRacers[i].gameObject.GetComponent<StickmanNet>();
+                Room.GamePlayers[i].racer.GamePlayer = Room.GamePlayers[i];
+            }
+            GameManager.allRacers.Reverse();
+
             for (int i = 0; i < targetTrackers.Count; i++)
             {
                 targetTrackers[i].gameObject.SetActive(false);
             }
             for (int i = 0; i < Room.GamePlayers.Count; i++)
             {
-                targetTrackers[i].gameObject.SetActive(true);  
+                targetTrackers[i].gameObject.SetActive(true);
             }
             for (int i = 0; i < Room.GamePlayers.Count; i++)
             {
-                targetTrackers[i].player = players[i].gameObject.GetComponent<Racer>();//Room.gamePlayerConnect[Room.GamePlayers[i]].gameObject.GetComponent<PlayerNN>();
-                targetTrackers[i].stickman = players[i].gameObject.GetComponent<StickmanNet>();//Room.gamePlayerConnect[Room.GamePlayers[i]].gameObject.GetComponent<StickmanNet>();
+                targetTrackers[i].player = GameManager.allRacers[i];
+                targetTrackers[i].stickman = GameManager.allStickmenColors[i];
             }
 
-            //player = Room.gamePlayerConnect[this].GetComponent<PlayerNN>();
-            //stickman = Room.gamePlayerConnect[this].GetComponent<StickmanNet>();
-
-            //foreach (var stickman in Room.players)
-            //{
-            //    foreach (var player in Room.GamePlayers)
-            //    {
-            //        if(stickman.displayName == player.displayName)
-            //        {
-            //            stickman.code = player.colorCode
-            //        }
-            //    }
-            //}
             for (int i = 0; i < Room.GamePlayers.Count; i++)
             {
-                if(Room.GamePlayers[i].strengthBar != null)
+                if (Room.GamePlayers[i].strengthBar != null)
                     Room.GamePlayers[i].strengthBar.value = Room.GamePlayers[i].racer.normalizedStrength;
             }
         }

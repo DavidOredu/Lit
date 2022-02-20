@@ -389,14 +389,14 @@ public class PowerupActions : MonoBehaviour
                 }
                 else
                 {
-                    if (racer.GamePlayer.enemyPowerup == null)
-                        racer.GamePlayer.powerupButton.UsePowerup(true);
-                    else if (racer.GamePlayer.powerupButton == null)
-                        racer.GamePlayer.enemyPowerup.UsePowerup();
-                    else
-                        return;
-                    racer.GamePlayer.powerup.isSelected = false;
-                    racer.GamePlayer.powerupButton.isSelected = false;
+                    //if (racer.GamePlayer.enemyPowerup == null)
+                    //    racer.GamePlayer.powerupButton.UsePowerup(true);
+                    //else if (racer.GamePlayer.powerupButton == null)
+                    //    racer.GamePlayer.enemyPowerup.UsePowerup();
+                    //else
+                    //    return;
+                    //racer.GamePlayer.powerup.isSelected = false;
+                    //racer.GamePlayer.powerupButton.isSelected = false;
                 }
             }
 
@@ -432,8 +432,8 @@ public class PowerupActions : MonoBehaviour
     {
         #region Checks
         if (racer == null) { return; }
-        if (racer.GamePlayer.powerup != null)
-            if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
+        if (racer.GamePlayer.powerup == null) { return; }
+        if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
         if (!racer.GamePlayer.powerup.isSelected) { return; }
         #endregion
 
@@ -455,8 +455,8 @@ public class PowerupActions : MonoBehaviour
     {
         #region Checks
         if (racer == null) { return; }
-        if (racer.GamePlayer.powerup != null)
-            if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
+        if (racer.GamePlayer.powerup == null) { return; }
+        if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Projectile) { return; }
         if (!racer.GamePlayer.powerup.isSelected) { return; }
         #endregion
 
@@ -538,18 +538,22 @@ public class PowerupActions : MonoBehaviour
             colorCode = racer.GetComponent<StickmanNet>().currentColor.colorID;
             bombEffect.effectGO = Resources.Load<GameObject>($"{colorCode}/Bomb");
             racer.Anim.SetBool("throw", true);
-            if (!GameObject.Find("Bomb(Clone)"))
+            this.racer = racer;
+
+            GameObject bombInScene = GameObject.Find("Bomb(Clone)");
+            if (!bombInScene)
             {
                 bomb = Instantiate(bombEffect.effectGO, racer.bombArm.position, Quaternion.identity);
             }
             else
             {
-                if (GameObject.Find("Bomb(Clone)").GetComponent<BombScript>().isDiscarded)
+                BombScript bombInSceneScript = bombInScene.GetComponent<BombScript>();
+                if (bombInSceneScript.canControl) { return; }
+                if (bombInSceneScript.isDiscarded || bombInSceneScript.hasFired)
                     bomb = Instantiate(bombEffect.effectGO, racer.bombArm.position, Quaternion.identity);
                 else
-                    bomb = GameObject.Find("Bomb(Clone)");
+                    bomb = bombInScene;
             }
-
 
             if (bomb == null) { return; }
             powerupData = Resources.Load<PowerupData>($"{colorCode}/PowerupData");
@@ -565,7 +569,7 @@ public class PowerupActions : MonoBehaviour
         {
             if (bombScript == null) { return; }
             bombScript.FollowPlayer(racer.bombArm);
-            if (bombScript.hasFired)
+           // if (bombScript.hasFired)
             {
 
                 bombScript.canControl = racer.StateMachine.AwakenedState == racer.playerAwakenedState || racer.StateMachine.AwakenedState == racer.opponentAwakenedState || GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID;
@@ -575,16 +579,15 @@ public class PowerupActions : MonoBehaviour
                 }
                 else
                 {
-                    if (racer.GamePlayer.enemyPowerup == null)
-                    {
-                        racer.GamePlayer.powerup.isSelected = false;
-                        racer.GamePlayer.powerupButton.isSelected = false;
-                        racer.GamePlayer.powerupButton.UsePowerup(true);
-                    }
-                    else if (racer.GamePlayer.powerupButton == null)
-                        racer.GamePlayer.enemyPowerup.UsePowerup();
-                    else
-                        return;
+                    //if (racer.GamePlayer.enemyPowerup == null)
+                    //{
+                    //    racer.GamePlayer.powerupButton.TurnSelectableState(false);
+                    //    racer.GamePlayer.powerupButton.UsePowerup(true);
+                    //}
+                    //else if (racer.GamePlayer.powerupButton == null)
+                    //    racer.GamePlayer.enemyPowerup.UsePowerup();
+                    //else
+                    //    return;
 
                 }
             }
@@ -602,6 +605,7 @@ public class PowerupActions : MonoBehaviour
             if (bomb != null)
             {
                 var bombScript = bomb.GetComponent<BombScript>();
+                if (bombScript.hasFired) { return; }
                 bombScript.canExplode = false;
                 bombScript.canControl = false;
                 bombScript.isDiscarded = true;
@@ -619,8 +623,15 @@ public class PowerupActions : MonoBehaviour
     }
     void StartDragging(Vector2 touchPosition, float time, Finger finger)
     {
+        #region Checks
+        if (racer == null) { return; }
+        if (racer.GamePlayer.powerup == null) { return; }
+        if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Bomb) { return; }
+        if (!racer.GamePlayer.powerup.isSelected) { return; }
+        #endregion
+
         if (bombScript == null) { return; }
-        //  if (!bombScript.hasFired || bombScript.canControl)
+          if (!bombScript.hasFired || bombScript.canControl)
         {
             Vector3 screenCoordinates = new Vector3(touchPosition.x, touchPosition.y, cam.nearClipPlane);
             Vector3 worldCoordinates = cam.ScreenToWorldPoint(screenCoordinates);
@@ -632,8 +643,15 @@ public class PowerupActions : MonoBehaviour
     }
     void UpdateDragging(Vector2 touchPosition, float time, Finger finger)
     {
+        #region Checks
+        if (racer == null) { return; }
+        if (racer.GamePlayer.powerup == null) { return; }
+        if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Bomb) { return; }
+        if (!racer.GamePlayer.powerup.isSelected) { return; }
+        #endregion
+
         if (bombScript == null) { return; }
-        //  if (!bombScript.hasFired || bombScript.canControl)
+        if (!bombScript.hasFired || bombScript.canControl)
         {
             Vector3 screenCoordinates = new Vector3(touchPosition.x, touchPosition.y, cam.nearClipPlane);
             Vector3 worldCoordinates = cam.ScreenToWorldPoint(screenCoordinates);
@@ -643,11 +661,25 @@ public class PowerupActions : MonoBehaviour
     }
     void EndDragging(Vector2 touchPosition, float time, Finger finger)
     {
+        #region Checks
+        if (racer == null) { return; }
+        if (racer.GamePlayer.powerup == null) { return; }
+        if (racer.GamePlayer.powerup.powerupID != Powerup.PowerupID.Bomb) { return; }
+        if (!racer.GamePlayer.powerup.isSelected) { return; }
+        #endregion
+
         if (bombScript == null) { return; }
         if (!bombScript.hasFired || bombScript.canControl)
         {
             Utils.SetBombVariables(racer, bombScript, colorCode, powerupData);
             bombScript.OnBombDragEnd();
+        }
+
+        if (!bombScript.canControl)
+        {
+            racer.GamePlayer.powerupButton.TurnSelectableState(false);
+            racer.GamePlayer.powerupButton.UsePowerup(true);
+            bombScript = null;
         }
     }
 
@@ -701,8 +733,9 @@ public class PowerupActions : MonoBehaviour
             projectileScript.direction = direction;
             if (!projectileScript.canControl)
             {
-                racer.GamePlayer.powerupButton.UsePowerup(false);
+                racer.GamePlayer.powerupButton.TurnSelectableState(false);
                 racer.GamePlayer.powerupButton.UsePowerup(true);
+                this.projectileScript = null;
             }
             //      else
             {

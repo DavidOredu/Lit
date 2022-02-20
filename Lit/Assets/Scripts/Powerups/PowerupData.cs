@@ -36,7 +36,7 @@ public class PowerupData : ScriptableObject
     public float beamDamageRate = .6f;
 
     [Header("BOMB")]
-    public float bombThrowForce = 4f;
+    public float bombThrowForce = 3f;
     public float bombDamagePercentage = .9f;
     public float bombDamageRate = .9f;
     public float bombExplosiveForce = 200f;

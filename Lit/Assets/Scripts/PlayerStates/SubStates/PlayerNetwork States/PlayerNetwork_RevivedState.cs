@@ -28,6 +28,7 @@ public class PlayerNetwork_RevivedState : PlayerNetwork_AbilityState
     {
         base.Enter();
         racer.RemovePowerups();
+        racer.GamePlayer.powerupButton.TurnSelectableState(false);
         racer.Recover();
         revivedStateTimer = new Timer(playerData.invulnerabilityTimer);
         revivedStateTimer.SetTimer();

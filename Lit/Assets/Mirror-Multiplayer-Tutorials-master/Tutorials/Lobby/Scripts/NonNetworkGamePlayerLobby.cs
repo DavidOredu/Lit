@@ -6,11 +6,7 @@ using DapperDino.Mirror.Tutorials.Lobby;
 public class NonNetworkGamePlayerLobby : GamePlayerLobby
 {
     protected List<Opponent> opponentList = new List<Opponent>();
-    public override void Update()
-    {
-        base.Update();
-        UpdateDisplay();
-    }
+    
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
@@ -25,6 +21,7 @@ public class NonNetworkGamePlayerLobby : GamePlayerLobby
     {
         base.OnStopClient();
     }
+    [ContextMenu("UpdateDisplay")]
     public override void UpdateDisplay()
     {
         if(gamePlayerType == Racer.RacerType.Opponent) { return; }
@@ -41,15 +38,14 @@ public class NonNetworkGamePlayerLobby : GamePlayerLobby
 
             return;
         }
+        GameManager.allStickmenColors.Reverse();
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
-            players = new List<StickmanNet>(Room.players);
-            players.Reverse();
-            players[i].code = Room.GamePlayers[i].colorCode;
+            GameManager.allStickmenColors[i].code = Room.GamePlayers[i].colorCode;
 
-            if (players[i].GetComponent<Racer>().currentRacerType == Racer.RacerType.Opponent)
+            if (GameManager.allStickmenColors[i].GetComponent<Racer>().currentRacerType == Racer.RacerType.Opponent)
             {
-                var opponent = players[i].GetComponent<Opponent>();
+                var opponent = GameManager.allStickmenColors[i].GetComponent<Opponent>();
 
                 if (!opponentList.Contains(opponent))
                 {
@@ -58,6 +54,7 @@ public class NonNetworkGamePlayerLobby : GamePlayerLobby
                 }
             }
         }
+        GameManager.allStickmenColors.Reverse();
         base.UpdateDisplay();
     }
 }
