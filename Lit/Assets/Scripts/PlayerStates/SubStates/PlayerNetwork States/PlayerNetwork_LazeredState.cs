@@ -33,7 +33,6 @@ public class PlayerNetwork_LazeredState : PlayerNetwork_DamagedState
     public override void Exit()
     {
         base.Exit();
-        racer.RB.gravityScale = racer.gravityScaleTemp;
     }
 
     public override void LateUpdate()

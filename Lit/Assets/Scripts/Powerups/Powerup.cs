@@ -58,6 +58,14 @@ public class Powerup
         Debug.Log($"Has reassigned ownership to {gameObject.name}!");
         if(PowerupActions == gameObject.GetComponent<PowerupActions>()) { return; }
         PowerupActions = gameObject.GetComponent<PowerupActions>();
+
+        startAction.RemoveAllListeners();
+        activeAction.RemoveAllListeners();
+        endAction.RemoveAllListeners();
+        selectedStartAction.RemoveAllListeners();
+        selectedActiveAction.RemoveAllListeners();
+        selectedEndAction.RemoveAllListeners();
+
         switch (powerupID)
         {
             case PowerupID.SpeedUp:
@@ -67,7 +75,6 @@ public class Powerup
                 break;
             case PowerupID.Shield:
                 startAction.AddListener(PowerupActions.ShieldStartAction);
-                activeAction.AddListener(PowerupActions.ShieldActiveAction);
                 endAction.AddListener(PowerupActions.ShieldEndAction);
                 break;
             case PowerupID.ElementField:

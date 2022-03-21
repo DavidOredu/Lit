@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ActivatedStateEffect
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: eb66493ac5c39e94ab7c4d7a0773dc1f, type: 3}
-  size: 1.88
+  size: 3.59
   color: {r: 1.7207954, g: 0.1621692, b: 0, a: 1}
   colorOverLife:
     serializedVersion: 2
@@ -79,6 +79,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   velocityRandomA: {x: -0.5, y: -0.3, z: -0.333}
   velocityRandomB: {x: 0.5, y: 1.8, z: 0.333}
-  lifetimeRandomA: 2
-  lifetimeRandomB: 2.5
+  lifetimeRandomA: 1.2
+  lifetimeRandomB: 1.5
   radius: 2.3

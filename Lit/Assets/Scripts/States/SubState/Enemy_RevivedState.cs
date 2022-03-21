@@ -27,13 +27,22 @@ public class Enemy_RevivedState : Enemy_AbilityState
     public override void Enter()
     {
         base.Enter();
-        racer.RemovePowerups();
-        racer.Recover();
+        racerEntity.actionController.ClearDetections();
+        racer.racerDamages.RemovePowerups();
+
+        if (racer.strength <= 0)
+            racer.racerDamages.RestoreStrength();
+
         revivedStateTimer = new Timer(difficultyData.invulnerabilityTimer);
         revivedStateTimer.SetTimer();
 
-     //   racer.moveVelocityResource = difficultyData.topSpeed;
         racer.isInvulnerable = true;
+
+        // Speed computation is done in this manner because the first line below gives a current percentage value of speed. In order to reduce speed, we need to use the amount of speed reduced to calculate current speed
+        var newMoveVelocityNormalized = difficultyData.strengthToTopSpeedCurve.Evaluate(racer.normalizedStrength);
+
+        newMoveVelocityNormalized = racer.previousStrengthNormalized - newMoveVelocityNormalized;
+        racer.moveVelocityResource -= newMoveVelocityNormalized * difficultyData.topSpeed;
     }
 
     public override void Exit()

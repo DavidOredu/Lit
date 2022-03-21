@@ -29,9 +29,6 @@ public class Enemy_GroundedState : State
     public override void Enter()
     {
         base.Enter();
-
-        canJumpToLitIfIsLit = new Probability<bool>(difficultyData.jumpToLitIfLitProbabilityCurve);
-        canJumpToLitIfIsLit.InitDictionary(bools);
     }
 
     public override void Exit()

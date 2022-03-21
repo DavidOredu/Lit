@@ -36,7 +36,8 @@ public class PlayerNetwork_DamageKnockDownState : PlayerNetwork_KnockedDownState
     {
         base.Exit();
 
-        racer.Recover();
+        racer.racerDamages.Recover();
+        racer.moveVelocityResource = playerData.topSpeed;
     }
 
     public override void LateUpdate()

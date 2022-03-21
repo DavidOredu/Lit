@@ -2,7 +2,9 @@
 using Mirror;
 using UnityEngine;
 
-//ROLE: To initialize the "runner" player gameobject in the network manager since network manager does not view it as a local player
+/// <summary>
+/// To initialize the "runner" player gameobject in the network manager since network manager does not view it as a local player.
+/// </summary>
 public class InitPlayerNetwork : NetworkBehaviour
 {
     // get the stickman component attached to the gameobject

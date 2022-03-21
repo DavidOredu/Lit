@@ -15,8 +15,7 @@ public class ProbabilityTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        racerSpawnProbability = new Probability<bool>(probabilityCurve);
-        racerSpawnProbability.InitDictionary(colorCodes);
+        racerSpawnProbability = new Probability<bool>(probabilityCurve, colorCodes);
     }
 
     // Update is called once per frame

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
 {
@@ -12,7 +10,7 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-        
+
     }
 
     public override void AnimationTrigger()
@@ -30,13 +28,15 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
         racer.Anim.SetBool("damaged", true);
         base.Enter();
     }
-
     public override void Exit()
     {
         racer.Anim.SetBool("damaged", false);
         base.Exit();
 
         Utils.ParticleSystemAction(damageEffect, Utils.ParticleSystemActions.TurnOffLooping);
+
+        // Speed computation is done in this manner because the first line below gives a current percentage value of speed. In order to reduce speed, we need to use the amount of speed reduced to calculate current speed
+        
     }
 
     public override void LateUpdate()
@@ -47,9 +47,9 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-      
 
-        
+
+
 
     }
 
@@ -72,6 +72,6 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
     {
         base.PhysicsUpdate();
 
-        
+
     }
 }

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: LightningBoxMaterial
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_ShaderKeywords: _EMISSION _ENVIRONMENTREFLECTIONS_OFF
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -73,10 +73,10 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionScaleUI: 1
-    - _EnvironmentReflections: 1
-    - _GlossMapScale: 1
+    - _EnvironmentReflections: 0
+    - _GlossMapScale: 0
     - _Glossiness: 0
-    - _GlossyReflections: 1
+    - _GlossyReflections: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -97,7 +97,7 @@ Material:
     - _EmissionColor: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
     - _EmissionColorUI: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
---- !u!114 &5666563625403369398
+--- !u!114 &4760154289703442458
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

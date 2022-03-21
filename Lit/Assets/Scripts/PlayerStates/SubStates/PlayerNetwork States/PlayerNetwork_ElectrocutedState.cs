@@ -29,6 +29,8 @@ public class PlayerNetwork_ElectrocutedState : PlayerNetwork_DamagedState
 
         var damageEffectPrefab = Resources.Load<GameObject>($"{5}/DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
+
+        racer.runnerFeedbacks.electrocutedFeedback.PlayFeedbacks();
     }
 
     public override void Exit()

@@ -51,7 +51,7 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
         {
             if(racer.moveVelocityResource > racer.movementVelocity)
             {
-                racer.SetAccelerations(Racer.RacerType.Player, racer.moveVelocityResource);
+                racer.SetAccelerations(racer.moveVelocityResource);
             }
             else if (racer.moveVelocityResource < racer.movementVelocity)
             {
@@ -63,7 +63,7 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
         {
             if (racer.moveVelocityResource > racer.movementVelocity)
             {
-                racer.SetAccelerations(Racer.RacerType.Player, racer.moveVelocityResource);
+                racer.SetAccelerations(racer.moveVelocityResource);
             }
             else if (racer.moveVelocityResource < racer.movementVelocity)
             {

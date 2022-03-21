@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dda081a837e3f448d20033fbefe645, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
+  playerName: AI Normal
   maxStrength: 20
   strengthToTopSpeedCurve:
     serializedVersion: 2
@@ -66,34 +67,20 @@ MonoBehaviour:
   timeMaxToZero: 4
   timeBrakeToZero: 0.0001
   maxJumpVelocity: 40
-  minIdleTime: 0.5
-  maxIdleTime: 3
+  amountOfJumps: 1
+  actionForce: 20
   knockoutTime: 4
   ultimateDamageKnockoutTime: 10
   invulnerabilityTimer: 5
-  actionForce: 20
   requiredLitPlatformsToAwaken: 5
   awakenCount: 1
-  jumpAddition: 5
   litSpeedUpPercentage: 0.5
   litSlowDownPercentage: 0.3
-  otherOnLitIncreaseValue: 5
-  litSpeedAlterRate: 6
-  knockbackVelocity: {x: 18.142397, y: 12}
-  maxKnockbackVelocity: {x: 22, y: 12}
-  playerDefenseCheckRadius: 0.5
-  playerAttackCheckRadius: 0.5
+  overdriveIncreasePercentage: 1.5
+  otherOnLitIncreasePercentage: 0.5
   groundCheckRadius: 0.5
-  higherPlatformCheckDistance: 15
-  ledgeCheckDistance: 0.5
-  obstacleCheckRadius: 8
-  projectileCheckRadius: 0.8
-  jumpCheckRadius: 12
   litCheckDistance: 3
   powerCheckDistance: 5
-  higherPlatformCheckDirection: {x: 0, y: 1}
-  ledgeCheckDirection: {x: 0, y: -1}
-  powerCheckDirection: {x: 0, y: -1}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 3584
@@ -103,6 +90,25 @@ MonoBehaviour:
   whatIsPower:
     serializedVersion: 2
     m_Bits: 2048
+  whatIsSlope:
+    serializedVersion: 2
+    m_Bits: 3584
+  knockbackVelocity: {x: 18.142397, y: 12}
+  maxKnockbackVelocity: {x: 22, y: 12}
+  powerupRadius: 3.4
+  whatToDamage:
+    serializedVersion: 2
+    m_Bits: 8448
+  playerDefenseCheckRadius: 0.5
+  playerAttackCheckRadius: 0.5
+  higherPlatformCheckDistance: 15
+  ledgeCheckDistance: 0.5
+  obstacleCheckRadius: 8
+  projectileCheckRadius: 0.8
+  jumpCheckRadius: 12
+  higherPlatformCheckDirection: {x: 0, y: 1}
+  ledgeCheckDirection: {x: 0, y: -1}
+  powerCheckDirection: {x: 0, y: -1}
   whatToJumpTo:
     serializedVersion: 2
     m_Bits: 3584
@@ -115,13 +121,6 @@ MonoBehaviour:
   whatIsProjectile:
     serializedVersion: 2
     m_Bits: 4096
-  whatIsSlope:
-    serializedVersion: 2
-    m_Bits: 3584
-  powerupRadius: 3.4
-  whatToDamage:
-    serializedVersion: 2
-    m_Bits: 8448
   jumpToLitProbabilityCurve:
     serializedVersion: 2
     m_Curve:

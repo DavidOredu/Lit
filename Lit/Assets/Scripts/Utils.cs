@@ -279,6 +279,16 @@ public static class Utils
         runnerDamages.Damages[damageInt].racer = ownerRacer;
         hitObject.transform.SendMessage("DamageRunner", runnerDamages);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <returns></returns>
+    public static int RandomValue(int minValue, int maxValue)
+    {
+        return Random.Range(minValue, maxValue);
+    }
     public enum ParticleSystemActions
     {
         TurnOffLooping,

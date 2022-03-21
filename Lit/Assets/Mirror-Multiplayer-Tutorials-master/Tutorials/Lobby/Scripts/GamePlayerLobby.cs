@@ -16,8 +16,10 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         private string displayName = "Loading...";
         [SyncVar]
         public int colorCode;
-        [SyncVar(hook = nameof(HandleGameSceneBool))]
+        [SyncVar]
         public bool inGameScene = false;
+        [SyncVar(hook = nameof(HandleAllIsReady))]
+        public bool allIsReady = false;
 
         [SerializeField] private List<TargetTrackerNetwork> targetTrackers = new List<TargetTrackerNetwork>(9);
 
@@ -56,7 +58,13 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         {
             StartCoroutine(CheckIfInGame());
         }
+        private void Update()
+        {
+               if(!allIsReady)
+            //CheckIfAllIsReady();
 
+            UpdateDisplay();
+        }
         IEnumerator CheckIfInGame()
         {
             yield return new WaitUntil(CheckScene);
@@ -78,21 +86,13 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
             Room.GamePlayers.Add(this);
 
+            UpdateDisplay();
         }
 
         public override void OnStopClient()
         {
             Room.GamePlayers.Remove(this);
-            Room.gamePlayerConnect.Remove(this);
-            foreach (var player in GameManager.allStickmenColors)
-            {
-                if (player.code == colorCode)
-                {
-                    GameManager.allStickmenColors.Remove(player);
-                    return;
-                }
 
-            }
             UpdateDisplay();
         }
 
@@ -114,7 +114,12 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 return;
             }
 
-            GameManager.numberOfRunners = Room.GamePlayers.Count;
+            if (GameManager.numberOfRunners != Room.GamePlayers.Count) { return; }
+
+            for (int i = 0; i < GameManager.numberOfRunners; i++)
+            {
+                if (!Room.GamePlayers[i].inGameScene) { return; }
+            }
 
             for (int i = 0; i < Room.GamePlayers.Count; i++)
             {
@@ -123,9 +128,8 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                     GameManager.MainPlayer = Room.GamePlayers[i].racer;
                     GameManager.MainStickman = Room.GamePlayers[i].stickman;
 
-                    GameManager.instance.InitInGameObjects();
-                    if (gamePlayerType == Racer.RacerType.Player)
-                        awakenedStateButton.onClick.AddListener(() => racer.Awaken(racer.runner.stickmanNet.currentColor.colorID));
+                    if(GameManager.powerupManagers.Count != GameManager.numberOfRunners)
+                        GameManager.InitInGameObjects();
                 }
             }
             GameManager.allRacers.Reverse();
@@ -134,6 +138,8 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 Room.GamePlayers[i].racer = GameManager.allRacers[i].gameObject.GetComponent<Racer>();
                 Room.GamePlayers[i].stickman = GameManager.allRacers[i].gameObject.GetComponent<StickmanNet>();
                 Room.GamePlayers[i].racer.GamePlayer = Room.GamePlayers[i];
+                GameManager.allRacers[i].powerupData = Resources.Load<PowerupData>($"{Room.GamePlayers[i].colorCode}/PowerupData");
+                GameManager.allRacers[i].awakenedData = Resources.Load<AwakenedData>($"{Room.GamePlayers[i].colorCode}/AwakenedData");
             }
             GameManager.allRacers.Reverse();
 
@@ -155,7 +161,13 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             {
                 if (Room.GamePlayers[i].strengthBar != null)
                     Room.GamePlayers[i].strengthBar.value = Room.GamePlayers[i].racer.normalizedStrength;
+                if (gamePlayerType == Racer.RacerType.Player)
+                    awakenedStateButton.onClick.AddListener(() => racer.racerAwakening.Awaken(racer.runner.stickmanNet.currentColor.colorID));
+                Room.GamePlayers[i].racer.isInNativeMap = GameManager.instance.currentLevel.buttonMap == Room.GamePlayers[i].racer.runner.stickmanNet.currentColor.colorID;
             }
+
+            allIsReady = true;
+            Debug.Log("Has run UpdateDisplay Function.");
         }
 
         [Server]
@@ -168,7 +180,18 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         {
             colorCode = code;
         }
-        public void HandleGameSceneBool(bool oldValue, bool newValue)
+        [Server]
+        public void CheckIfAllIsReady()
+        {
+            if(GameManager.numberOfRunners != Room.GamePlayers.Count) { return; }
+
+            for (int i = 0; i < GameManager.numberOfRunners; i++)
+            {
+                if (!Room.GamePlayers[i].inGameScene) { return; }
+            }
+            allIsReady = true;
+        }
+        public void HandleAllIsReady(bool oldValue, bool newValue)
         {
             UpdateDisplay();
         }

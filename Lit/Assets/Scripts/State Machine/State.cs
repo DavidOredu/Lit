@@ -12,7 +12,7 @@ public class State
 
     public float startTime { get; protected set; }
 
-    protected string animBoolName;
+    public string animBoolName { get; private set; }
 
     protected bool isAnimationFinished;
 

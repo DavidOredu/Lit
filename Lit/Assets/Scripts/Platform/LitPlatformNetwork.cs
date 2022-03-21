@@ -110,7 +110,7 @@ public class LitPlatformNetwork : NetworkBehaviour
         {
             if (runner != firstRunner && runner.player != null)
             {
-                if (runner.player.isOnAnotherLit && runner.player.isStayingOnLit)
+                if (runner.player.isOnAnotherLit && runner.player.litPlatform == this)
                 {
                     otherIsOnLit = true;
                     return;

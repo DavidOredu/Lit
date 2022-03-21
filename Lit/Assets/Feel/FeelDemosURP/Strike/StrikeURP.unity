@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
+  m_IndirectSpecularColor: {r: 0.57034767, g: 0.6432593, b: 0.7327232, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8902,6 +8902,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9006,6 +9007,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9061,6 +9063,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9116,6 +9119,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9171,6 +9175,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9289,6 +9294,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9344,6 +9350,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9469,6 +9476,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9693,6 +9701,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9748,6 +9757,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -9873,6 +9883,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -11894,6 +11905,10 @@ MonoBehaviour:
     TargetBPM: 120
   DebugActive: 0
   PauseDuration: 0
+  RandomizePauseDuration: 0
+  MinPauseDuration: 1
+  MaxPauseDuration: 3
+  RandomizeOnEachPlay: 1
   ScriptDriven: 0
   AutoResume: 0
   AutoResumeAfter: 0.25
@@ -14077,6 +14092,10 @@ MonoBehaviour:
     TargetBPM: 120
   DebugActive: 0
   PauseDuration: 0
+  RandomizePauseDuration: 0
+  MinPauseDuration: 1
+  MaxPauseDuration: 3
+  RandomizeOnEachPlay: 1
   ScriptDriven: 0
   AutoResume: 0
   AutoResumeAfter: 0.25
@@ -14382,6 +14401,10 @@ MonoBehaviour:
     TargetBPM: 120
   DebugActive: 0
   PauseDuration: 0.2
+  RandomizePauseDuration: 0
+  MinPauseDuration: 1
+  MaxPauseDuration: 3
+  RandomizeOnEachPlay: 1
   ScriptDriven: 0
   AutoResume: 0
   AutoResumeAfter: 0.25
@@ -14516,6 +14539,10 @@ MonoBehaviour:
     TargetBPM: 120
   DebugActive: 0
   PauseDuration: 0.25
+  RandomizePauseDuration: 0
+  MinPauseDuration: 1
+  MaxPauseDuration: 3
+  RandomizeOnEachPlay: 1
   ScriptDriven: 0
   AutoResume: 0
   AutoResumeAfter: 0.25
@@ -14808,6 +14835,10 @@ MonoBehaviour:
     TargetBPM: 120
   DebugActive: 0
   PauseDuration: 0.22
+  RandomizePauseDuration: 0
+  MinPauseDuration: 1
+  MaxPauseDuration: 3
+  RandomizeOnEachPlay: 1
   ScriptDriven: 0
   AutoResume: 0
   AutoResumeAfter: 0.25
@@ -14959,6 +14990,7 @@ MonoBehaviour:
   FlickerOctave: 0.04
   FlickerColor: {r: 1, g: 1, b: 1, a: 1}
   MaterialIndexes: 
+  UseMaterialPropertyBlocks: 0
 --- !u!114 &994770586
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -15001,6 +15033,7 @@ MonoBehaviour:
   FlickerOctave: 0.04
   FlickerColor: {r: 1, g: 1, b: 1, a: 1}
   MaterialIndexes: 
+  UseMaterialPropertyBlocks: 0
 --- !u!114 &994770587
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -25977,7 +26010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -421.5}
+  m_AnchoredPosition: {x: 0, y: 4.994751}
   m_SizeDelta: {x: 0, y: 733.9895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1557570897
@@ -27469,34 +27502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be76e5f14cfee674cb30b491fb72b09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boost: 3.5
-  positionLerpTime: 0.2
-  mouseSensitivityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 5
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 2.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rotationLerpTime: 0.01
-  invertY: 0
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -34087,10 +34092,7 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
-    ModeOverride: 0
     LensShift: {x: 0, y: 0}
-    GateFit: 0
-    m_SensorSize: {x: 1.6809015, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -34126,7 +34128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ApplyAfter: 1
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
@@ -41689,7 +41690,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1015468896}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9990714
+  m_Size: 0.49319506
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

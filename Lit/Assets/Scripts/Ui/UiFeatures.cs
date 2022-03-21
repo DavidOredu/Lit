@@ -32,6 +32,10 @@ public class UiFeatures : ScriptableObject
     public AudioClip hoverSound;
     public AudioClip clickSound;
 
+    [Header("MAIN CAMERA")]
+    public bool renderPostProcessing;
+    public LayerMask volumeLayerMask;
+
     [Header("UI POPUP")]
     public Animator popUpAnimator;
 

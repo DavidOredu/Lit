@@ -38,7 +38,7 @@ public class RunnerEffectsCollider : MonoBehaviour
         {
             if (other.CompareTag("Player") || other.CompareTag("Opponent"))
             {
-                if (!other.GetComponent<Racer>().myDamages.IsDamaged())
+                if (!other.GetComponent<RacerDamages>().myDamages.IsDamaged())
                 {
                     Utils.SetDamageVariables(runnerDamages, racer, damageInt, damagePercentage, damageRate, other);
                 }

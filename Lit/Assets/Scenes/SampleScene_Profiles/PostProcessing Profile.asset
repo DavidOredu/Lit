@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.86
+    value: 1.88
   color:
     overrideState: 1
     value: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
@@ -102,10 +102,10 @@ MonoBehaviour:
     value: 0.394
   temperature:
     overrideState: 1
-    value: -5
+    value: 0
   tint:
     overrideState: 1
-    value: 21
+    value: 0
   colorFilter:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -797,7 +797,7 @@ MonoBehaviour:
       - 0.984375
       - 0.9921875
   hueVsHueCurve:
-    overrideState: 1
+    overrideState: 0
     value:
       curve:
         serializedVersion: 2
@@ -1381,22 +1381,22 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
+    value: {r: 0, g: 0, b: 0, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.767
+    value: 0
   smoothness:
     overrideState: 1
-    value: 0.885
+    value: 1
   roundness:
     overrideState: 1
-    value: 0.72
+    value: 1
   rounded:
     overrideState: 1
-    value: 0
+    value: 1
   mask:
     overrideState: 1
     value: {fileID: 2800000, guid: ea83aa8c8e21ed14eb8a97034a8ebdcc, type: 3}
@@ -1425,7 +1425,7 @@ MonoBehaviour:
     value: 190
   sampleCount:
     overrideState: 1
-    value: 26
+    value: 18
 --- !u!114 &-1110200954060722026
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1444,25 +1444,25 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 4.88
+    value: 2.89
   threshold:
     overrideState: 1
-    value: 0.58
+    value: 0.8
   softKnee:
     overrideState: 1
-    value: 0.4
+    value: 0
   clamp:
     overrideState: 1
     value: 65472
   diffusion:
     overrideState: 1
-    value: 7.26
+    value: 4.7
   anamorphicRatio:
     overrideState: 1
     value: 0
   color:
     overrideState: 1
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
   fastMode:
     overrideState: 1
     value: 1
@@ -1472,7 +1472,7 @@ MonoBehaviour:
     defaultState: 1
   dirtIntensity:
     overrideState: 1
-    value: 0
+    value: 1.07
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1511,7 +1511,7 @@ MonoBehaviour:
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 40.040512, y: 85.04051}
+    value: {x: 18.02602, y: 63.02603}
   minLuminance:
     overrideState: 1
     value: 0.1
@@ -1542,7 +1542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -1552,7 +1552,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.47
+    value: 0
   fastMode:
     overrideState: 1
-    value: 0
+    value: 1

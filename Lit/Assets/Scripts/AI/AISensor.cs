@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Class responsible for holding AI sensory data and logic.
@@ -29,6 +27,11 @@ public class AISensor
     public float sensorRadius;
 
     /// <summary>
+    /// Should the sensor detect all object of the type in its detection range?
+    /// </summary>
+    public bool detectAll;
+
+    /// <summary>
     /// Layer for objects to be detected by sensor.
     /// </summary>
     public LayerMask whatToDetect;
@@ -36,14 +39,14 @@ public class AISensor
     /// <summary>
     /// Latest accepted detection made by the sensor.
     /// </summary>
-    public dynamic currentDetection = null;
+    public dynamic currentDetection;
     /// <summary>
     /// The new detection made by the sensor, waiting to be processed and accepted.
     /// </summary>
-    public dynamic newDetection = null;
+    public dynamic newDetection;
 
-    private dynamic cacheDetection;
-    
+    public dynamic cacheDetection;
+
     /// <summary>
     /// True if a new detection has been made. False else.
     /// </summary>
@@ -65,7 +68,7 @@ public class AISensor
     /// <param name="sensorDistance">If is a linear sensor, determine it's distance.</param>
     /// <param name="sensorDirection">If is a linear sensor, determine it's direction.</param>
     /// <param name="sensorRadius">If is a radial sensor, determine it's radius.</param>
-    public AISensor(Transform sensorTransform, LayerMask whatToDetect, SensorType sensorType, float sensorDistance = 0, Vector2 sensorDirection = default, float sensorRadius = 0f)
+    public AISensor(Transform sensorTransform, LayerMask whatToDetect, SensorType sensorType, float sensorDistance = 0, Vector2 sensorDirection = default, float sensorRadius = 0f, bool detectAll = false)
     {
         this.sensorTransform = sensorTransform;
         this.whatToDetect = whatToDetect;
@@ -73,14 +76,21 @@ public class AISensor
         this.sensorDistance = sensorDistance;
         this.sensorDirection = sensorDirection;
         this.sensorRadius = sensorRadius;
+        this.detectAll = detectAll;
 
         switch (sensorType)
         {
             case SensorType.Linear:
-                cacheDetection = new RaycastHit2D();
+                if (detectAll)
+                    cacheDetection = new RaycastHit2D[0];
+                else
+                    cacheDetection = new RaycastHit2D();
                 break;
             case SensorType.Radial:
-                cacheDetection = new Collider2D();
+                if (detectAll)
+                    cacheDetection = new Collider2D[0];
+                else
+                    cacheDetection = new Collider2D();
                 break;
             default:
                 break;
@@ -90,14 +100,14 @@ public class AISensor
     /// Function called to run detection logic.
     /// </summary>
     /// <param name="detectAll">True if should return all detected objects found in the detection path and False if should return the first found.</param>
-    public void Detect(bool detectAll)
+    public void Detect()
     {
         dynamic detection;
         switch (sensorType)
         {
             case SensorType.Linear:
                 detection = LinearSensor(detectAll);
-                if (detection != null)
+                if (detection.collider != null)
                 {
                     newDetection = detection;
                 }
@@ -109,7 +119,7 @@ public class AISensor
                 if (detection != null)
                     newDetection = detection;
                 else
-                   return;
+                    return;
                 break;
         }
         if (!firstDetection)
@@ -125,9 +135,9 @@ public class AISensor
         else
             hasNewDetection = CheckIfHasMadeNewDetection();
 
-        
 
-        
+
+
     }
     /// <summary>
     /// Function called to run specific search in a defined manner.
@@ -152,7 +162,7 @@ public class AISensor
     /// <returns>Either a "Collider2D" or "Collider2D[]" object. Discarded if returns null.</returns>
     private dynamic RadarSensor(bool detectAll)
     {
-        if(detectAll)
+        if (detectAll)
             return Physics2D.OverlapCircleAll(sensorTransform.position, sensorRadius, whatToDetect);
         else
             return Physics2D.OverlapCircle(sensorTransform.position, sensorRadius, whatToDetect);
@@ -169,7 +179,7 @@ public class AISensor
             return Physics2D.RaycastAll(sensorTransform.position, sensorDirection, sensorDistance, whatToDetect);
         else
         {
-           var detection = Physics2D.Raycast(sensorTransform.position, sensorDirection, sensorDistance, whatToDetect);
+            var detection = Physics2D.Raycast(sensorTransform.position, sensorDirection, sensorDistance, whatToDetect);
 
             return detection;
         }
@@ -195,7 +205,14 @@ public class AISensor
         //            return false;
         //}
         //return default;
-        return newDetection != currentDetection;
+        switch (sensorType)
+        {
+            case SensorType.Linear:
+                return newDetection.collider != currentDetection.collider;
+            case SensorType.Radial:
+                return newDetection != currentDetection;
+        }
+        return false;
     }
     private void CheckIfIsFirstDetection()
     {
@@ -204,14 +221,14 @@ public class AISensor
     }
     private dynamic LinearSensorSearch(System.Type type, float searchDistance, float searchIncrement)
     {
-        Transform transform = sensorTransform; 
+        Transform transform = sensorTransform;
         float distance = searchDistance;
 
-        for (float i = 0; i < searchDistance; i+=searchIncrement)
+        for (float i = 0; i < searchDistance; i += searchIncrement)
         {
             var detection = LinearSensor(transform);
 
-            if(detection.GetType() == type)
+            if (detection.GetType() == type)
             {
                 return detection;
             }
@@ -370,8 +387,12 @@ public class AISensor
         /// This type of sensor detects an object within a given radius, at the transform's position.
         /// </summary>
         Radial,
+        /// <summary>
+        /// This type of sensor detects if an object isn't detected.
+        /// </summary>
+        Null,
     }
-    
+
     public void GizmosDebug(Vector2 sensorDirection = default, float sensorDistance = default, float sensorRadius = default)
     {
         switch (sensorType)

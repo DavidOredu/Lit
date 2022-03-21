@@ -25,8 +25,7 @@ public class PowerupBehaviour : MonoBehaviour
     {
         powerupData = Resources.Load<PowerupData>("PowerupData");
         image = GetComponent<SpriteRenderer>();
-        ammoProbability = new Probability<int>(powerupData.ammoCurve);
-        ammoProbability.InitDictionary(ammoSizes);
+        ammoProbability = new Probability<int>(powerupData.ammoCurve, ammoSizes);
         isTaken = false;
     }
     private void Update()
@@ -44,84 +43,63 @@ public class PowerupBehaviour : MonoBehaviour
             if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
             {
                 isTaken = true;
+                var racer = other.gameObject.GetComponent<Racer>();
+                PowerupBehaviour oldPowerupBehaviour;
                 switch (other.GetComponent<Racer>().currentRacerType)
                 {
                     case Racer.RacerType.Player:
                         if (other.gameObject.GetComponent<NetworkIdentity>().hasAuthority)
                         {
-                            var player = other.gameObject.GetComponent<Player>();
-
                             if (powerup.canBeMany)
                             {
                                 powerupAmmo = ammoProbability.ProbabilityGenerator();
                             }
                             PlayerEvents.instance.GottenPowerup();
-                            var powerupImg = player.GamePlayer.powerupButton.image;
-                            var oldPowerupBehaviour = player.GamePlayer.powerupButton.powerupBehaviour;
+                            var powerupImg = racer.GamePlayer.powerupButton.image;
+                            oldPowerupBehaviour = racer.GamePlayer.powerupButton.powerupBehaviour;
                             powerupImg.sprite = powerup.prefab.GetComponent<SpriteRenderer>().sprite;
                             if(oldPowerupBehaviour != null)
-                                Destroy(player.GamePlayer.powerupButton.powerupBehaviour.gameObject);
-                            player.GamePlayer.powerup = powerup;
-                            player.GamePlayer.powerupButton.powerupBehaviour = this;
-
-                            GameObject powerupMM = null;
-
-                            foreach (var powerupManager in GameManager.instance.powerupManagers)
-                            {
-                                if (powerupManager.GetComponent<PowerupController>().racer == player)
-                                {
-                                    powerupMM = powerupManager;
-                                    break;
-                                }
-                                else
-                                {
-                                    continue;
-                                }
-                            }
-                            powerupController = powerupMM.GetComponent<PowerupController>();
-                         //   if (player != powerup.PowerupActions.racer)
-                            powerup.ReassignOwner(powerupMM);
-                            // Call this function insteaad when we click gthe powerup button
-                            //  ActivatePowerup();
-                            image.enabled = false;
-                            image.gameObject.GetComponent<Collider2D>().enabled = false;
+                                Destroy(racer.GamePlayer.powerupButton.powerupBehaviour.gameObject);
+                            racer.GamePlayer.powerup = powerup;
+                            racer.GamePlayer.powerupButton.powerupBehaviour = this;
                         }
                         break;
                     case Racer.RacerType.Opponent:
-                        var opponent = other.gameObject.GetComponent<Opponent>();
-
-                        PlayerEvents.instance.GottenPowerup();
-                        opponent.GamePlayer.enemyPowerup.powerupBehaviour = this;
-                        opponent.GamePlayer.powerup = powerup;
-                        GameObject powerupM = null;
-
-                        foreach (var powerupManager in GameManager.instance.powerupManagers)
+                        if (powerup.canBeMany)
                         {
-                            if (powerupManager.GetComponent<PowerupController>().racer == opponent)
-                            {
-                                powerupM = powerupManager;
-                                break;
-                            }
-                            else
-                            {
-                                continue;
-                            }
+                            powerupAmmo = ammoProbability.ProbabilityGenerator();
                         }
 
-                        powerupController = powerupM.GetComponent<PowerupController>();
-                        powerup.ReassignOwner(powerupM);
-                        // Call this function insteaad when we click the powerup button
-                        //  ActivatePowerup();
-                        image.enabled = false;
-                        image.gameObject.GetComponent<Collider2D>().enabled = false;
+                        PlayerEvents.instance.GottenPowerup();
+                        oldPowerupBehaviour = racer.GamePlayer.enemyPowerup.powerupBehaviour;
+                        if (oldPowerupBehaviour != null)
+                            Destroy(racer.GamePlayer.enemyPowerup.powerupBehaviour.gameObject);
+                        racer.GamePlayer.powerup = powerup;
+                        racer.GamePlayer.enemyPowerup.powerupBehaviour = this;
                         break;
                     default:
                         break;
                 }
+                GameObject powerupM = null;
 
+                foreach (var powerupManager in GameManager.instance.powerupManagers)
+                {
+                    if (powerupManager.GetComponent<PowerupController>().racer == racer)
+                    {
+                        powerupM = powerupManager;
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
 
+                powerupController = powerupM.GetComponent<PowerupController>();
+                powerup.ReassignOwner(powerupM);
+                image.enabled = false;
+                image.gameObject.GetComponent<Collider2D>().enabled = false;
             }
-
         }
     }
 

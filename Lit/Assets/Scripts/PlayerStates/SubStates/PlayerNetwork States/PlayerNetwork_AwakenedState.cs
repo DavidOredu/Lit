@@ -29,7 +29,9 @@ public class PlayerNetwork_AwakenedState : State
         base.Enter();
 
         racer.isAwakened = true;
-
+        PostProcessingHandler.instance.vignette.active = true;
+        PostProcessingHandler.instance.chromaticAberration.active = true;
+        racer.runnerFeedbacks.awakeningFeedback.PlayFeedbacks();
         // make the powerups infinte if we are already in our homeland
         if (racer.GamePlayer.powerup != null)
         {
@@ -68,7 +70,7 @@ public class PlayerNetwork_AwakenedState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
+        
     }
 
     public override void OnCollisionEnter(Collision2D collision)
@@ -92,10 +94,10 @@ public class PlayerNetwork_AwakenedState : State
 
         if (canUseAbility)
         {
-            racer.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
+            racer.racerAwakening.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
             canUseAbility = false;
         }
-        racer.AwakenedGimmick(racer.runner.stickmanNet.currentColor.colorID);
+        racer.racerAwakening.AwakenedGimmick(racer.runner.stickmanNet.currentColor.colorID);
     }
     
 }

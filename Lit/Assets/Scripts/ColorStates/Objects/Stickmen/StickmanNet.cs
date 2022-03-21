@@ -3,6 +3,9 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that governs the color property and lit behaviour of a runner.
+/// </summary>
 [ExecuteInEditMode]
 public class StickmanNet : NetworkBehaviour
 {

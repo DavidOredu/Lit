@@ -36,7 +36,8 @@ public class Enemy_DamageKnockDownState : Enemy_KnockedDownState
     {
         base.Exit();
 
-        racer.Recover();
+        racer.racerDamages.Recover();
+        racer.moveVelocityResource = difficultyData.topSpeed;
     }
 
     public override void LateUpdate()

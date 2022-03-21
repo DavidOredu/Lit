@@ -7,14 +7,8 @@ public class PowerupActions : MonoBehaviour
 {
     public Racer racer;
 
-    private PlayerData playerData;
-    private D_DifficultyData opponentData;
-    private PowerupData powerupData;
     int colorCode;
     Camera cam;
-
-    private float playerMovementVelocityTemp;
-    private float playerMovementVelocityResourceTemp;
 
     public InputManager InputManager;
 
@@ -23,6 +17,7 @@ public class PowerupActions : MonoBehaviour
 
     private RunnerDamagesOperator runnerDamages;
 
+    [System.Serializable]
     /// <summary>
     /// Class to hold related effect names to their gameobjects.
     /// </summary>
@@ -59,7 +54,6 @@ public class PowerupActions : MonoBehaviour
     private void OnEnable()
     {
         cam = Camera.main;
-        playerData = Resources.Load<PlayerData>("PlayerData");
         InputManager = InputManager.instance;
 
         InputManager.OnStartTouch += StartDragging;
@@ -82,10 +76,10 @@ public class PowerupActions : MonoBehaviour
         InputManager.OnMoveTouch -= UpdateAiming;
         InputManager.OnEndTouch -= EndAiming;
     }
-    private void LateUpdate()
+    private void Update()
     {
-
     }
+
     #region Shield Powerup
     public void ShieldStartAction(Racer racer)
     {
@@ -98,76 +92,7 @@ public class PowerupActions : MonoBehaviour
             shieldEffect.effectName = effectInGame.name;
         }
     }
-    public void ShieldActiveAction(Racer racer)
-    {
-        if (racer != null)
-        {
-            var playerCenter = racer.transform.Find("PlayerCenter");
 
-            switch (racer.currentRacerType)
-            {
-                case Racer.RacerType.Player:
-                    var hitObjectsPlayer = Physics2D.OverlapCircleAll(playerCenter.position, playerData.powerupRadius, playerData.whatToDamage);
-                    foreach (var hitRacer in hitObjectsPlayer)
-                    {
-                        var objectRB = hitRacer.GetComponent<Rigidbody2D>();
-                        var damageType = racer.runner.stickmanNet.currentColor.colorID;
-                        powerupData = Resources.Load<PowerupData>($"{damageType}/PowerupData");
-                        // instantiate appropriate element effect on hit player
-                        if (objectRB.CompareTag("Obstacle"))
-                        {
-                            var obstacle = objectRB.GetComponent<Obstacle>();
-                            if(obstacle.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
-                            {
-                                obstacle.ExplodeLaserOrb();
-                            }
-                        }
-                        // take to appropriate paralyzed state version
-                        // determine length of duration of effect or consider making a variable on racers to govern stun time
-                    }
-                    break;
-                case Racer.RacerType.Opponent:
-                    var opponentData = racer.difficultyData;
-                    var hitObjectsOpponent = Physics2D.OverlapCircleAll(playerCenter.position, opponentData.powerupRadius, opponentData.whatToDamage);
-                    foreach (var hitRacer in hitObjectsOpponent)
-                    {
-
-                        var objectRB = hitRacer.GetComponent<Rigidbody2D>();
-                        var damageType = racer.runner.stickmanNet.currentColor.colorID;
-                        powerupData = Resources.Load<PowerupData>($"{damageType}/PowerupData");
-                        // instantiate appropriate element effect on hit player
-                        if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
-                        {
-                            foreach (var damage in hitRacer.GetComponent<Racer>().myDamages.DamageList())
-                            {
-                                if (damage.damageInt == damageType)
-                                    return;
-                                else
-                                    continue;
-                            }
-                            if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageType)
-                            {
-                                objectRB.AddExplosionForce(powerupData.fieldExplosiveForce, transform.position, playerData.powerupRadius, 0f, powerupData.fieldForceMode);
-                                Debug.Log($"Damage Type at point of contact is: {damageType}");
-                                runnerDamages.Damages[damageType].damaged = true;
-                                runnerDamages.Damages[damageType].damageInt = damageType;
-                                runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamagePercentage;
-                                runnerDamages.Damages[damageType].racer = racer;
-                                objectRB.transform.SendMessage("DamageRunner", runnerDamages);
-                            }
-
-
-                            // instantiate appropriate element effect on hit player
-                            // take to appropriate paralyzed state version
-                            // determine length of duration of effect or consider making a variable on racers to govern stun time
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
     public void ShieldEndAction(Racer racer)
     {
         if (racer != null)
@@ -191,9 +116,9 @@ public class PowerupActions : MonoBehaviour
             speedBurstEffect.effectGO = Resources.Load<GameObject>($"{stickman.currentColor.colorID}/SpeedBurst");
             var effectInGame = Instantiate(speedBurstEffect.effectGO, racer.transform.position, speedBurstEffect.effectGO.transform.rotation);
             speedBurstEffect.effectName = effectInGame.name;
-            
+
             racer.RB.AddForce(new Vector2(20f, 0f), ForceMode2D.Impulse);
-            racer.moveVelocityResource += Utils.PercentageValue(racer.playerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
+            racer.moveVelocityResource += Utils.PercentageValue(racer.racerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
             racer.movementVelocity = racer.moveVelocityResource;
 
             Debug.Log("Has run 'SpeedUpStartAction' function!");
@@ -209,13 +134,13 @@ public class PowerupActions : MonoBehaviour
         //    racer.movementVelocity += powerupData.speedUpPercentageIncrease;
         //    racer.moveVelocityResource += powerupData.speedUpPercentageIncrease;
         //}
-      //  Debug.Log("Is constantly running 'SpeedUpActiveAction' function!");
+        //  Debug.Log("Is constantly running 'SpeedUpActiveAction' function!");
     }
     public void SpeedUpEndAction(Racer racer)
     {
         if (racer != null)
         {
-            racer.moveVelocityResource -= Utils.PercentageValue(racer.playerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
+            racer.moveVelocityResource -= Utils.PercentageValue(racer.racerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
             Debug.Log("Has ended speedup powerup!");
         }
     }
@@ -230,15 +155,9 @@ public class PowerupActions : MonoBehaviour
             var stickman = racer.GetComponent<StickmanNet>();
 
             elementFieldEffect.effectGO = Resources.Load<GameObject>($"{stickman.currentColor.colorID}/ElementField");
-            var effectInGame = Instantiate(elementFieldEffect.effectGO, racer.transform.Find("PlayerCenter").position, Quaternion.identity, racer.transform);
+            var effectInGame = Instantiate(elementFieldEffect.effectGO, racer.playerCenter.position, Quaternion.identity, racer.transform);
             elementFieldEffect.effectName = effectInGame.name;
-            //effectInGame.GetComponent<ParticleSystem>().Play();
-            //var objectsInChildren = effectInGame.GetComponentsInChildren<ParticleSystem>();
-            //foreach (var child in objectsInChildren)
-            //{
-            //    child.Play();
-            //}
-
+            Debug.Log("Has instantiated element field effect.");
         }
     }
     public void ElementFieldActiveAction(Racer racer)
@@ -246,55 +165,23 @@ public class PowerupActions : MonoBehaviour
         if (racer != null)
         {
             {
-                var playerCenter = racer.transform.Find("PlayerCenter");
-                switch (racer.currentRacerType)
-                {
-                    case Racer.RacerType.Player:
-                        var hitObjectsPlayer = Physics2D.OverlapCircleAll(playerCenter.position, playerData.powerupRadius, playerData.whatToDamage);
-                        foreach (var hitRacer in hitObjectsPlayer)
-                        {
-                            var objectRB = hitRacer.GetComponent<Rigidbody2D>();
-                            var damageType = racer.runner.stickmanNet.currentColor.colorID;
-                            powerupData = Resources.Load<PowerupData>($"{damageType}/PowerupData");
-                            // instantiate appropriate element effect on hit player
-                            if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
-                            {
-                                foreach (var damage in hitRacer.GetComponent<Racer>().myDamages.DamageList())
-                                {
-                                    if (damage.damageInt == damageType)
-                                        return;
-                                    else
-                                        continue;
-                                }
-                                if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageType)
-                                {
-                                    objectRB.AddExplosionForce(powerupData.fieldExplosiveForce, transform.position, playerData.powerupRadius, 0f, powerupData.fieldForceMode);
-                                    Debug.Log($"Damage Type at point of contact is: {damageType}");
-                                    runnerDamages.Damages[damageType].damaged = true;
-                                    runnerDamages.Damages[damageType].damageInt = damageType;
-                                    runnerDamages.Damages[damageType].damagePercentage = powerupData.fieldDamagePercentage;
-                                    runnerDamages.Damages[damageType].racer = racer;
-                                    objectRB.transform.SendMessage("DamageRunner", runnerDamages);
-                                }
+                var racerData = racer.racerData;
+                var hitObjects = Physics2D.OverlapCircleAll(racer.playerCenter.position, racerData.powerupRadius, racerData.whatToDamage);
 
-                            }
-                            // take to appropriate paralyzed state version
-                            // determine length of duration of effect or consider making a variable on racers to govern stun time
-                        }
-                        break;
-                    case Racer.RacerType.Opponent:
-                        var opponentData = racer.difficultyData;
-                        var hitObjectsOpponent = Physics2D.OverlapCircleAll(playerCenter.position, opponentData.powerupRadius, opponentData.whatToDamage);
-                        foreach (var hitRacer in hitObjectsOpponent)
-                        {
-                            // instantiate appropriate element effect on hit player
-                            // take to appropriate paralyzed state version
-                            // determine length of duration of effect or consider making a variable on racers to govern stun time
-                        }
-                        break;
-                    default:
-                        break;
+                foreach (var hitRacer in hitObjects)
+                {
+                    var objectRB = hitRacer.GetComponent<Rigidbody2D>();
+                    var damageType = racer.runner.stickmanNet.currentColor.colorID;
+
+                    // instantiate appropriate element effect on hit player
+                    if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
+                    {
+                        objectRB.AddExplosionForce(racer.powerupData.fieldExplosiveForce, transform.position, racerData.powerupRadius, 0f, racer.powerupData.fieldForceMode);
+                        Utils.SetDamageVariables(runnerDamages, racer, damageType, racer.powerupData.fieldDamagePercentage, racer.powerupData.fieldDamageRate, hitRacer.gameObject); ;
+
+                    }
                 }
+
             }
             // run code on all hit objects
         }
@@ -303,9 +190,10 @@ public class PowerupActions : MonoBehaviour
     {
         if (racer != null)
         {
-            if (racer.transform.Find(elementFieldEffect.effectName))
+            var effect = racer.transform.Find(elementFieldEffect.effectName);
+            if (effect)
             {
-                var field = racer.transform.Find("ElementField(Clone)").gameObject;
+                var field = effect.gameObject;
                 Utils.ParticleSystemAction(field, Utils.ParticleSystemActions.TurnOffLooping);
                 if (racer.GamePlayer.powerup != null)
                 {
@@ -509,7 +397,7 @@ public class PowerupActions : MonoBehaviour
             beamEffect.effectName = effectInGame.name;
 
             Utils.SetBeamVariables(racer, beamScript, stickman.code, powerupData);
-            
+
         }
     }
     public void BeamEndAction(Racer racer)
@@ -556,11 +444,10 @@ public class PowerupActions : MonoBehaviour
             }
 
             if (bomb == null) { return; }
-            powerupData = Resources.Load<PowerupData>($"{colorCode}/PowerupData");
             bombEffect.effectName = bomb.name;
             bombScript = bomb.GetComponent<BombScript>();
 
-            Utils.SetBombVariables(racer, bombScript, colorCode, powerupData);
+            Utils.SetBombVariables(racer, bombScript, colorCode, racer.powerupData);
         }
     }
     public void BombSelectedActiveAction(Racer racer)
@@ -569,7 +456,7 @@ public class PowerupActions : MonoBehaviour
         {
             if (bombScript == null) { return; }
             bombScript.FollowPlayer(racer.bombArm);
-           // if (bombScript.hasFired)
+            // if (bombScript.hasFired)
             {
 
                 bombScript.canControl = racer.StateMachine.AwakenedState == racer.playerAwakenedState || racer.StateMachine.AwakenedState == racer.opponentAwakenedState || GameManager.instance.currentLevel.buttonMap == racer.runner.stickmanNet.currentColor.colorID;
@@ -631,12 +518,12 @@ public class PowerupActions : MonoBehaviour
         #endregion
 
         if (bombScript == null) { return; }
-          if (!bombScript.hasFired || bombScript.canControl)
+        if (!bombScript.hasFired || bombScript.canControl)
         {
             Vector3 screenCoordinates = new Vector3(touchPosition.x, touchPosition.y, cam.nearClipPlane);
             Vector3 worldCoordinates = cam.ScreenToWorldPoint(screenCoordinates);
             worldCoordinates.z = 0f;
-            bombScript.throwForce = powerupData.bombThrowForce;
+            bombScript.throwForce = racer.powerupData.bombThrowForce;
             bombScript.startScreenCoordinates = screenCoordinates;
             bombScript.OnBombDragStart(worldCoordinates);
         }
@@ -671,7 +558,7 @@ public class PowerupActions : MonoBehaviour
         if (bombScript == null) { return; }
         if (!bombScript.hasFired || bombScript.canControl)
         {
-            Utils.SetBombVariables(racer, bombScript, colorCode, powerupData);
+            Utils.SetBombVariables(racer, bombScript, colorCode, racer.powerupData);
             bombScript.OnBombDragEnd();
         }
 
@@ -765,7 +652,7 @@ public class PowerupActions : MonoBehaviour
             }
         }
     }
-    
+
     private void CheckColliders(Racer racer)
     {
 

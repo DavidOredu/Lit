@@ -11,15 +11,10 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         
         [SerializeField] private List<ColorButtonNetwork> colorButtons = new List<ColorButtonNetwork>();
 
-        
-
-        
         private void Awake()
         {
-        ///    playerData = Resources.Load<PlayerData>("PlayerData");
-        /// Randomly select a color so as to not interfere with the preselected color in player data
             currentColorCode = 10;
-            // this is what sets the ready button active later... set it false on start
+            //this is what sets the ready button active later... set it false on start
             hasChosenColor = false;
         }
         public override void OnStartClient()

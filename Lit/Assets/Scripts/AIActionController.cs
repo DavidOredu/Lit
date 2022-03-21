@@ -11,7 +11,7 @@ public class AIActionController : MonoBehaviour
     //public List<System.Type> types1 = new List<System.Type>() { typeof(Racer), typeof(YieldInstruction), typeof(tk2dAnimatedSprite), typeof(RunnerDamagesOperator) };
 
     [Header("PROBABILITIES")]
-    public Probability<bool> jumpToLitProbability;
+    public Probability<bool> jumpToLitReactionProbability;
     public Probability<bool> jumpToLitIfIsLitProbability;
     public Probability<bool> jumpToLitIfIsDarkProbability;
     public Probability<bool> jumpToPowerProbability;
@@ -21,23 +21,27 @@ public class AIActionController : MonoBehaviour
     private List<bool> boolList = new List<bool> { true, false };
 
     private bool hasObtainedProbability = false;
+
+    private float reactionTime;
+    private bool hasMadeAction;
+
+    private Timer reactionTimer;
     // Start is called before the first frame update
     void Start()
     {
         #region Probabilities Initialization
-        jumpToLitProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitProbabilityCurve);
-        jumpToLitIfIsLitProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitIfLitProbabilityCurve);
-        jumpToLitIfIsDarkProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitIfDarkProbabilityCurve);
-        jumpToPowerProbability = new Probability<bool>(aIRacer.difficultyData.jumpToPowerProbabilityCurve);
-        jumpToBaseProbability = new Probability<bool>(aIRacer.difficultyData.jumpToBaseProbabilityCurve);
-        defensivePowerPlatformUseProbability = new Probability<bool>(aIRacer.difficultyData.defensivePowerPlatformProbabilityCurve);
-        jumpToLitProbability.InitDictionary(boolList);
-        jumpToLitIfIsLitProbability.InitDictionary(boolList);
-        jumpToLitIfIsDarkProbability.InitDictionary(boolList);
-        jumpToPowerProbability.InitDictionary(boolList);
-        jumpToBaseProbability.InitDictionary(boolList);
-        defensivePowerPlatformUseProbability.InitDictionary(boolList);
+        jumpToLitReactionProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitProbabilityCurve, boolList);
+        jumpToLitIfIsLitProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitIfLitProbabilityCurve, boolList);
+        jumpToLitIfIsDarkProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitIfDarkProbabilityCurve, boolList);
+        jumpToPowerProbability = new Probability<bool>(aIRacer.difficultyData.jumpToPowerProbabilityCurve, boolList);
+        jumpToBaseProbability = new Probability<bool>(aIRacer.difficultyData.jumpToBaseProbabilityCurve, boolList);
+        defensivePowerPlatformUseProbability = new Probability<bool>(aIRacer.difficultyData.defensivePowerPlatformProbabilityCurve, boolList);
         #endregion
+
+        reactionTime = aIRacer.difficultyData.reactionTime;
+
+        reactionTimer = new Timer(reactionTime);
+        reactionTimer.SetTimer();
     }
 
     // Update is called once per frame
@@ -72,6 +76,17 @@ public class AIActionController : MonoBehaviour
                 }
             }
         }
+
+        if (hasMadeAction)
+        {
+            if (!reactionTimer.isTimeUp)
+                reactionTimer.UpdateTimer();
+            else
+            {
+                hasMadeAction = false;
+                reactionTimer.ResetTimer();
+            }
+        }
     }
 
     #region Sensor Actions
@@ -81,7 +96,7 @@ public class AIActionController : MonoBehaviour
     /// <param name="sensor">The sensor object that detected the higher platform.</param>
     private void ProcessHigherPlatformDetection(AISensor sensor)
     {
-        if (sensor.sensorType != AISensor.SensorType.Linear)
+        if (sensor.sensorType == AISensor.SensorType.Linear)
         {
             if (sensor.IsNewDetectionNull()) { return; }
 
@@ -90,8 +105,13 @@ public class AIActionController : MonoBehaviour
                 LitPlatformNetwork litPlatform = sensor.GetComponentFromDetection<LitPlatformNetwork>(sensor.newDetection);
 
 
-                // run probability based on intelligence
-                bool canJumpToLit = jumpToLitProbability.ProbabilityGenerator();
+                // run probability based on reflex
+                bool canJumpToLit;
+
+                if (hasMadeAction)
+                    canJumpToLit = jumpToLitReactionProbability.ProbabilityGenerator();
+                else
+                    canJumpToLit = true;
 
 
                 bool jump;
@@ -104,7 +124,7 @@ public class AIActionController : MonoBehaviour
                 else
                 {
                     // check if litplatform is lit
-                    if (litPlatform.isLit)
+                    if (litPlatform.isLit && litPlatform.colorStateCode.colorID != aIRacer.runner.stickmanNet.currentColor.colorID)
                     {
                         var canJumpToLitIfLit = jumpToLitIfIsLitProbability.ProbabilityGenerator();
                         jump = canJumpToLit && canJumpToLitIfLit;
@@ -116,10 +136,9 @@ public class AIActionController : MonoBehaviour
                 }
 
                 // determine action of ai
-                JumpAction(jump);
-
-                // accept new detection
-                sensor.AcceptNewDetection();
+                hasMadeAction = jump;
+                JumpAction(sensor, jump);
+;
                 Debug.Log(jump);
                 Debug.Log("Has accepted detection for higher platform sensor!");
                 Debug.Log(sensor.newDetection.collider.name);
@@ -137,12 +156,18 @@ public class AIActionController : MonoBehaviour
                         if (poweredPlatform.currentPower == PoweredPlatform.Power.Action)
                         {
                             // run probability check
-                            jump = jumpToPowerProbability.ProbabilityGenerator();
+                            if(hasMadeAction)
+                                jump = jumpToPowerProbability.ProbabilityGenerator();
+                            else
+                                jump = true;
                         }
                         break;
                     case PoweredPlatform.PowerPlatformAidType.Booster:
                         // run probability check
-                        jump = jumpToPowerProbability.ProbabilityGenerator();
+                        if (hasMadeAction)
+                            jump = jumpToPowerProbability.ProbabilityGenerator();
+                        else
+                            jump = true;
                         break;
                     default:
                         break;
@@ -151,10 +176,9 @@ public class AIActionController : MonoBehaviour
                 // if is defensive, check if is 'action' power platform
 
                 // determine action of ai
-                JumpAction(jump);
+                hasMadeAction = jump;
+                JumpAction(sensor, jump);
 
-                // accept new detection
-                sensor.AcceptNewDetection();
                 Debug.Log(jump);
                 Debug.Log("Has accepted detection for higher platform sensor!");
                 Debug.Log(sensor.newDetection.collider.name);
@@ -163,11 +187,14 @@ public class AIActionController : MonoBehaviour
             else if (sensor.CompareNewDetectionTag("BasePlatform"))
             {
                 // run probability
-                bool jump = jumpToBaseProbability.ProbabilityGenerator();
+                bool jump;
+                if (hasMadeAction)
+                jump = jumpToBaseProbability.ProbabilityGenerator();
+                else
+                    jump = true;
                 // determine action of ai
-                JumpAction(jump);
-                // accept new detection
-                sensor.AcceptNewDetection();
+                hasMadeAction = jump;
+                JumpAction(sensor, jump);
                 Debug.Log(jump);
                 Debug.Log("Has accepted detection for higher platform sensor!");
                 Debug.Log(sensor.newDetection.collider.name);
@@ -302,13 +329,16 @@ public class AIActionController : MonoBehaviour
     #endregion
 
     #region Other Functions
-    private void JumpAction(bool jump)
+    private void JumpAction(AISensor sensor, bool jump)
     {
+        if(aIRacer.StateMachine.CurrentState == aIRacer.opponentInAirState) { return; }
+
         if (jump)
         {
             aIRacer.StateMachine.ChangeState(aIRacer.opponentJumpState);
             Debug.Log("AI decided to jump to as action!");
         }
+        sensor.AcceptNewDetection();
     }
     private void DetermineObstacleTypeLogic(AISensor sensor, Obstacle obstacle)
     {
@@ -399,6 +429,7 @@ public class AIActionController : MonoBehaviour
     }
     private bool FindActivePowerup(Racer racer, string powerupName)
     {
+        if(racer.powerupController == null) { return false; }
         foreach (var powerupInformation in racer.powerupController.activePowerups)
         {
             if (powerupInformation.powerup.name == powerupName)
@@ -452,4 +483,14 @@ public class AIActionController : MonoBehaviour
         }
     }
     #endregion
+
+     public void ClearDetections()
+    {
+        foreach (var sensor in aIRacer.aISensors)
+        {
+            sensor.Value.newDetection = sensor.Value.cacheDetection;
+            sensor.Value.currentDetection = sensor.Value.cacheDetection;
+            sensor.Value.hasNewDetection = false;
+        }
+    }
 }

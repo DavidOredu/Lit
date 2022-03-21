@@ -71,10 +71,10 @@ public class Opponent : Entity
         brakeRatePerSec = -difficultyData.topSpeed / difficultyData.timeBrakeToZero;
 
         moveVelocityResource = difficultyData.topSpeed;
-        strengthResource = difficultyData.maxStrength;
         jumpVelocityResource = difficultyData.maxJumpVelocity;
         jumpVelocity = jumpVelocityResource;
         strength = difficultyData.maxStrength;
+        damageResistance = difficultyData.damageResistance;
     }
     public override void Start()
     {
@@ -93,12 +93,12 @@ public class Opponent : Entity
         //{
         //    sensor.Value.Detect(false);
         //}
-        higherPlatformSensor.Detect(false);
-        obstacleSensor.Detect(false);
-        ledgeSensor.Detect(false);
-        projectileSensor.Detect(false);
-        playerDefenseSensor.Detect(true);
-        playerAttackSensor.Detect(true);
+        higherPlatformSensor.Detect();
+        obstacleSensor.Detect();
+        ledgeSensor.Detect();
+        projectileSensor.Detect();
+        playerDefenseSensor.Detect();
+        playerAttackSensor.Detect();
 
 
         if (isOnPower && !hasUsedPower && StateMachine.CurrentState != opponentKnockbackState && StateMachine.CurrentState != opponentSlideState && poweredPlatform != null)

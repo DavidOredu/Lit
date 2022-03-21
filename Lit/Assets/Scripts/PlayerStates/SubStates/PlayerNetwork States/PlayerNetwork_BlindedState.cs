@@ -29,6 +29,8 @@ public class PlayerNetwork_BlindedState : PlayerNetwork_DamagedState
 
         var damageEffectPrefab = Resources.Load<GameObject>($"{4}/DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
+
+        racer.runnerFeedbacks.blindedFeedback.PlayFeedbacks();
     }
 
     public override void Exit()

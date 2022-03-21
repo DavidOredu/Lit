@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : Racer
 {
+    public AIActionController actionController;
+
     [Header("DIFFICULTY")]
     public Difficulty currentDifficulty;
     public D_Entity entityData;
@@ -33,8 +34,6 @@ public class Entity : Racer
     protected bool hasUsedPower;
     public PoweredPlatform oldPowerPlatform;
 
-    public EnemyPowerup enemyPowerup { get; private set; }
-
     public Probability<bool> boosterPowerPlatformUseProbability;
 
     public override void Awake()
@@ -45,18 +44,17 @@ public class Entity : Racer
     {
         base.Start();
         
-        enemyPowerup = transform.GetComponentInChildren<EnemyPowerup>();
+        actionController = GetComponent<AIActionController>();
 
-        boosterPowerPlatformUseProbability = new Probability<bool>(difficultyData.boosterPowerPlatformProbabilityCurve);
-        boosterPowerPlatformUseProbability.InitDictionary(new List<bool> { true, false });
+        boosterPowerPlatformUseProbability = new Probability<bool>(difficultyData.boosterPowerPlatformProbabilityCurve, new List<bool> { true, false });
 
         powerPlatformSensor = new AISensor(GroundCheck, difficultyData.whatIsPower, AISensor.SensorType.Linear, difficultyData.powerCheckDistance, difficultyData.powerCheckDirection);
         higherPlatformSensor = new AISensor(jumpCheck, difficultyData.whatToJumpTo, AISensor.SensorType.Linear, difficultyData.higherPlatformCheckDistance, difficultyData.higherPlatformCheckDirection);
         obstacleSensor = new AISensor(obstacleCheck, difficultyData.whatIsObstacle, AISensor.SensorType.Radial, sensorRadius: difficultyData.obstacleCheckRadius);
         ledgeSensor = new AISensor(ledgeCheck, difficultyData.whatIsGround, AISensor.SensorType.Linear, difficultyData.ledgeCheckDistance, difficultyData.ledgeCheckDirection);
         projectileSensor = new AISensor(playerCenter, difficultyData.whatIsProjectile, AISensor.SensorType.Radial, sensorRadius: difficultyData.projectileCheckRadius);
-        playerDefenseSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerDefenseCheckRadius);
-        playerAttackSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerAttackCheckRadius);
+        playerDefenseSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerDefenseCheckRadius, detectAll: true);
+        playerAttackSensor = new AISensor(playerCheck, difficultyData.whatIsPlayer, AISensor.SensorType.Radial, sensorRadius: difficultyData.playerAttackCheckRadius, detectAll: true);
 
         aISensors.Add(Sensors.HigherPlatformSensor, higherPlatformSensor);
         aISensors.Add(Sensors.ObstacleSensor, obstacleSensor);
@@ -164,6 +162,7 @@ public class Entity : Racer
             default:
                 break;
         }
+        racerData = difficultyData;
     }
     public void ChangeDifficulty(Difficulty newDifficulty)
     {

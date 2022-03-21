@@ -27,14 +27,26 @@ public class PlayerNetwork_RevivedState : PlayerNetwork_AbilityState
     public override void Enter()
     {
         base.Enter();
-        racer.RemovePowerups();
+        racer.racerDamages.RemovePowerups();
         racer.GamePlayer.powerupButton.TurnSelectableState(false);
-        racer.Recover();
+
+        if (racer.strength <= 0)
+        {
+            racer.racerDamages.RestoreStrength();
+        }
+
+       
+
         revivedStateTimer = new Timer(playerData.invulnerabilityTimer);
         revivedStateTimer.SetTimer();
 
-        
         racer.isInvulnerable = true;
+
+        // Speed computation is done in this manner because the first line below gives a current percentage value of speed. In order to reduce speed, we need to use the amount of speed reduced to calculate current speed
+        var newMoveVelocityNormalized = playerData.strengthToTopSpeedCurve.Evaluate(racer.normalizedStrength);
+
+        newMoveVelocityNormalized = racer.previousStrengthNormalized - newMoveVelocityNormalized;
+        racer.moveVelocityResource -= newMoveVelocityNormalized * playerData.topSpeed;
     }
 
     public override void Exit()

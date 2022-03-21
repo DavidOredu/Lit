@@ -33,6 +33,7 @@ public class EnemyPowerup : MonoBehaviour
             powerupBehaviour.ActivatePowerup();
         }
         gamePlayer.powerup = null;
+        Destroy(powerupBehaviour.gameObject);
         powerupBehaviour = null;
         
     }

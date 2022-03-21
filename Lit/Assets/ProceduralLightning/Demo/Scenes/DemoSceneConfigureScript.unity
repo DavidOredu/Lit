@@ -5348,6 +5348,38 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: LightningTintColor.r
+      value: 0.8627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: LightningTintColor.g
+      value: 0.7137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: GlowTintColor.r
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: GlowTintColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: MainTrunkTintColor.r
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: MainTrunkTintColor.g
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: Camera
+      value: 
+      objectReference: {fileID: 2001936542}
+    - target: {fileID: 11441356, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
+      propertyPath: Turbulence
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe7ce21b79d570149aa7274a519cd126, type: 3}
 --- !u!1 &1257566386

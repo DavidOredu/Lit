@@ -69,8 +69,6 @@ MonoBehaviour:
   maxJumpVelocity: 40
   amountOfJumps: 1
   actionForce: 50
-  coyoteTime: 0.2
-  variableJumpHeightMultiplier: 0.5
   knockoutTime: 4
   ultimateDamageKnockoutTime: 10
   invulnerabilityTimer: 5
@@ -78,9 +76,8 @@ MonoBehaviour:
   awakenCount: 3
   litSpeedUpPercentage: 0.5
   litSlowDownPercentage: 0.3
-  jumpAddition: 5
-  otherOnLitIncreaseValue: 5
-  litSpeedAlterRate: 4
+  overdriveIncreasePercentage: 1.5
+  otherOnLitIncreasePercentage: 0.5
   groundCheckRadius: 0.3
   litCheckDistance: 3
   powerCheckDistance: 5
@@ -102,4 +99,6 @@ MonoBehaviour:
   whatToDamage:
     serializedVersion: 2
     m_Bits: 24832
-  colorCode: 4
+  coyoteTime: 0.2
+  variableJumpHeightMultiplier: 0.5
+  colorCode: 7

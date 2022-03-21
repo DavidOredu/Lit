@@ -28,34 +28,73 @@ public class GameManager : SingletonDontDestroy<GameManager>
     /// </summary>
     protected string currentScene;
 
+    /// <summary>
+    /// The main racer object in-game. The runner controlled by our game instance.
+    /// </summary>
     public Racer MainPlayer { get; set; }
+    /// <summary>
+    /// The main stickman object in-game. The runner controlled by our game instance.
+    /// </summary>
     public StickmanNet MainStickman { get; set; }
 
-
-    // used in getting player positions
+    /// <summary>
+    /// A list reference of all racers found in a game scene.
+    /// </summary>
     public List<Racer> allRacers { get; private set; } = new List<Racer>();
+    /// <summary>
+    /// A list reference of all stickmen found in a game scene.
+    /// </summary>
     public List<StickmanNet> allStickmenColors { get; private set; } = new List<StickmanNet>();
+    /// <summary>
+    /// Cache to configure runner positions.
+    /// </summary>
     public List<float> playerPositions { get; private set; } = new List<float>();
+    /// <summary>
+    /// A list reference to all PowerupManagers found in-game.
+    /// </summary>
+    public List<GameObject> powerupManagers { get; private set; } = new List<GameObject>();
+    /// <summary>
+    /// A cache of all finished racers.
+    /// </summary>
+    public List<Racer> finishedRacers = new List<Racer>();
 
-    public StickmanNet[] stickmenNetInGame { get; set; }
+    /// <summary>
+    /// A reference to the current game level.
+    /// </summary>
+    public Level currentLevel { get; set; }
+    /// <summary>
+    /// A number of all runners found in a game scene.
+    /// </summary>
     public int numberOfRunners { get; set; }
-    public PlayerEvents playerEvents { get; set; }
 
+    /// <summary>
+    /// The start point of a level in-game.
+    /// </summary>
     private Vector3 startPoint;
+    /// <summary>
+    /// The end point of a level in-game.
+    /// </summary>
     private Vector3 endPoint;
 
+    /// <summary>
+    /// Difference between the start point and end point.
+    /// </summary>
     private Vector3 pointsOffset;
 
+    /// <summary>
+    /// Reference to the PowerupManager prefab.
+    /// </summary>
     public GameObject powerupManager;
+    /// <summary>
+    /// Reference to the DeathLaser prefab.
+    /// </summary>
     public GameObject deathLaser;
 
-    public static event Action OnGameCompleted;
+
     protected bool isGameCompleted = false;
 
-    public List<GameObject> powerupManagers { get; private set; } = new List<GameObject>();
-    public Level currentLevel { get; set; }
+    public static event Action OnGameCompleted;
 
-    public List<Racer> finishedRacers = new List<Racer>();
 
     public override void Awake()
     {
@@ -235,9 +274,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
                         break;
                     case GameState.InGame:
-                        stickmenNetInGame = FindObjectsOfType<StickmanNet>();
-                        if (playerEvents == null)
-                            playerEvents = MainPlayer.GetComponent<PlayerEvents>();
                         SetPositionSystem();
                         CheckGameEnd(MainPlayer);
                         break;
@@ -254,9 +290,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
                         break;
                     case GameState.InGame:
-                        stickmenNetInGame = FindObjectsOfType<StickmanNet>();
-                        if (playerEvents == null)
-                            playerEvents = MainPlayer.GetComponent<PlayerEvents>();
                         SetPositionSystem();
                         CheckGameEnd(MainPlayer);
                         break;

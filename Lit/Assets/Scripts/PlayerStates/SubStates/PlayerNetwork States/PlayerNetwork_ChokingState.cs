@@ -29,11 +29,15 @@ public class PlayerNetwork_ChokingState : PlayerNetwork_DamagedState
 
         var damageEffectPrefab = Resources.Load<GameObject>($"{3}/DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
+
+        racer.runnerFeedbacks.poisonedFeedback.PlayFeedbacks();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        racer.runnerFeedbacks.poisonedFeedback.StopFeedbacks();
     }
 
     public override void LateUpdate()

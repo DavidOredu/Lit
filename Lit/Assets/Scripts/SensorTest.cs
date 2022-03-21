@@ -18,17 +18,17 @@ public class SensorTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        boxSensor = new AISensor(boxCheck, whatIsBox, sensorType,sensorRadius:boxCheckRadius);
+        boxSensor = new AISensor(boxCheck, whatIsBox, sensorType,sensorRadius:boxCheckRadius, detectAll: detectAll);
         groundSensor = new AISensor(boxCheck, whatIsGround, AISensor.SensorType.Linear, sensorDistance, sensorDirection);
     }
     public void DetectGround()
     {
-        groundSensor.Detect(false);
+        groundSensor.Detect();
         Debug.Log($"{groundSensor.newDetection.collider.name} was the box found.");
     }
     public void DetectBox()
     {
-        boxSensor.Detect(detectAll);
+        boxSensor.Detect();
         if (!detectAll)
             Debug.Log($"{boxSensor.newDetection.name} was the box found.");
 

@@ -15,7 +15,9 @@ public class Timer
     {
         this.time = time;
     }
-    // This sets the timer to get ready. NOTE: This must be used before using either the "StartTimer" or "UpdateTimer" functions or else they won't work.
+    /// <summary>
+    ///  This sets the timer to get ready. NOTE: This must be used before using either the "StartTimer" or "UpdateTimer" functions or else they won't work.
+    /// </summary>
     public void SetTimer()
     {
         _time = time;
@@ -36,7 +38,10 @@ public class Timer
         isTimeUp = true;
         _time = 0f;
     }
-    // This will be used in the case of a timer in any update function. For example, a timer that starts when you activate a powerup, or stun time.
+
+    /// <summary>
+    /// This will be used in the case of a timer in any update function. For example, a timer that starts when you activate a powerup, or stun time.
+    /// </summary>
     // If this is put in the start function the game won't crash BUT your timer won't go anywhere as it would last only one frame. Must be anti-climatic
     public void UpdateTimer()
     {
@@ -51,22 +56,28 @@ public class Timer
             _time = 0f;
         }
     }
-    // This places a control over the timer's update. It simply pauses or plays the timer.
+    /// <summary>
+    /// This places a control over the timer's update. It simply pauses or plays the timer.
+    /// </summary>
     public void PauseOrPlayTimer()
     {
         pause = !pause;
     }
-    // This resets the timer to the value of the timer set in the constructor.
+    /// <summary>
+    /// This resets the timer to the value of the timer set in the constructor.
+    /// </summary>
     public void ResetTimer()
     {
         if (timerStarted)
         {
             _time = time;
             isTimeUp = false;
-            UpdateTimer();
         }
     }
-    // This resets the time to a new time set in the arguments of this function.
+    /// <summary>
+    /// This resets the time to a new time set in the arguments of this function.
+    /// </summary>
+    /// <param name="newTime">The new countdown time.</param>
     public void ResetTimer(float newTime)
     {
         if (timerStarted)
@@ -74,10 +85,12 @@ public class Timer
             time = newTime;
             _time = time;
             isTimeUp = false;
-            UpdateTimer();
         }
     }
-    // Checks if the timer is still running.
+    /// <summary>
+    /// Checks if the timer is still running.
+    /// </summary>
+    /// <returns>True if the timer is running and false if not.</returns>
     public bool IsTimerRunning()
     {
         if(isTimeUp || pause)
@@ -89,12 +102,18 @@ public class Timer
             return true;
         }
     }
-    // Checks if the timer is paused
+    /// <summary>
+    /// Checks if the timer is paused.
+    /// </summary>
+    /// <returns>The pause boolean state.</returns>
     public bool IsTimerPaused()
     {
         return pause;
     }
-    // Checks the current time of the timer
+    /// <summary>
+    /// Checks the current time of the timer.
+    /// </summary>
+    /// <returns>The current time as float.</returns>
     public float CurrentTime()
     {
         return _time;
@@ -115,7 +134,10 @@ public class Timer
                 return _time.ToString();
         }
     }
-    // Checks the normalized value of the timer compared to the predetermined time. A value between 0 and 1.
+    /// <summary>
+    /// Checks the normalized value of the timer compared to the predetermined time. A value between 0 and 1.
+    /// </summary>
+    /// <returns>Return a value between 0 and 1.</returns>
     public float CurrentTimeNormalized()
     {
         var normalized = 1 - (_time / time);

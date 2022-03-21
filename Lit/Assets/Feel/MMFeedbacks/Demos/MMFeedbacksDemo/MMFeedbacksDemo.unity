@@ -1486,6 +1486,7 @@ MonoBehaviour:
   ShakeDuration: 0.01
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2079,6 +2080,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2134,6 +2136,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2252,6 +2255,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2377,6 +2381,7 @@ MonoBehaviour:
   ShakeDuration: 1
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2537,6 +2542,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -2592,6 +2598,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -28797,6 +28804,7 @@ MonoBehaviour:
   ShakeDuration: 0.5
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -28852,6 +28860,7 @@ MonoBehaviour:
   ShakeDuration: 0.5
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29016,7 +29025,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ApplyAfter: 1
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
@@ -29046,10 +29054,7 @@ MonoBehaviour:
     NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
-    ModeOverride: 0
     LensShift: {x: 0, y: 0}
-    GateFit: 0
-    m_SensorSize: {x: 1.8524946, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -29378,6 +29383,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29433,6 +29439,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29551,6 +29558,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29676,6 +29684,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29836,6 +29845,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -29891,6 +29901,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -37326,6 +37337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143359171}
   - component: {fileID: 1143359169}
+  - component: {fileID: 1143359170}
   m_Layer: 0
   m_Name: UICamera
   m_TagString: Untagged
@@ -37376,6 +37388,37 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1143359170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143359168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!4 &1143359171
 Transform:
   m_ObjectHideFlags: 0
@@ -38774,6 +38817,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -38829,6 +38873,7 @@ MonoBehaviour:
   ShakeDuration: 0.8
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -38947,6 +38992,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -39072,6 +39118,7 @@ MonoBehaviour:
   ShakeDuration: 1
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -39232,6 +39279,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -39287,6 +39335,7 @@ MonoBehaviour:
   ShakeDuration: 0.2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -39920,11 +39969,13 @@ MonoBehaviour:
   GameObjectToInstantiate: {fileID: 67927128625321388, guid: 1ae56196f5de043419e106824d0fa51d,
     type: 3}
   PositionMode: 1
+  AlsoApplyRotation: 0
+  AlsoApplyScale: 0
   TargetTransform: {fileID: 699640085}
   TargetPosition: {x: 0, y: 0, z: 0}
-  VfxPositionOffset: {x: 0, y: 5, z: 0}
-  VfxCreateObjectPool: 0
-  VfxObjectPoolSize: 5
+  PositionOffset: {x: 0, y: 5, z: 0}
+  CreateObjectPool: 0
+  ObjectPoolSize: 5
 --- !u!114 &1227122026
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -42823,6 +42874,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -42878,6 +42930,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -42933,6 +42986,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -42988,6 +43042,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -43043,6 +43098,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -43098,6 +43154,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -43162,6 +43219,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -43217,6 +43275,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48713,6 +48772,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48768,6 +48828,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48823,6 +48884,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48878,6 +48940,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48933,6 +48996,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -48988,6 +49052,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -49052,6 +49117,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -49107,6 +49173,7 @@ MonoBehaviour:
   ShakeDuration: 2
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -49542,10 +49609,7 @@ MonoBehaviour:
     NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
-    ModeOverride: 0
     LensShift: {x: 0, y: 0}
-    GateFit: 0
-    m_SensorSize: {x: 1.8524946, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -49645,7 +49709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ApplyAfter: 1
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
@@ -49665,6 +49728,7 @@ MonoBehaviour:
   ShakeDuration: 0.5
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -49720,6 +49784,7 @@ MonoBehaviour:
   ShakeDuration: 0.5
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -52854,7 +52919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2291.169}
+  m_AnchoredPosition: {x: 0, y: -2268.524}
   m_SizeDelta: {x: 0, y: 4903.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1557570897
@@ -58782,6 +58847,7 @@ MonoBehaviour:
   ShakeDuration: 0.01
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -59579,6 +59645,7 @@ MonoBehaviour:
   ShakeDuration: 0.01
   PlayOnAwake: 0
   Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
   Shaking: 0
   ForwardDirection: 1
   TimescaleMode: 0
@@ -60856,6 +60923,7 @@ GameObject:
   - component: {fileID: 1841711013}
   - component: {fileID: 1841711019}
   - component: {fileID: 1841711008}
+  - component: {fileID: 1841711009}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -60876,6 +60944,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimescaleMode: 0
+--- !u!114 &1841711009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841711007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!81 &1841711010
 AudioListener:
   m_ObjectHideFlags: 0
@@ -61001,7 +61100,9 @@ MonoBehaviour:
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: MK.Glow.LWRP.MKGlow, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_AfterStackBundles: []
 --- !u!114 &1841711019
 MonoBehaviour:
@@ -67284,7 +67385,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1015468896}
   m_Direction: 2
   m_Value: 0.9596347
-  m_Size: 0.18801785
+  m_Size: 0.07361653
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

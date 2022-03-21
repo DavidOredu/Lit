@@ -35,7 +35,6 @@ public class Enemy_LazeredState : Enemy_DamagedState
     public override void Exit()
     {
         base.Exit();
-        racer.RB.gravityScale = racer.gravityScaleTemp;
     }
 
     public override void LateUpdate()

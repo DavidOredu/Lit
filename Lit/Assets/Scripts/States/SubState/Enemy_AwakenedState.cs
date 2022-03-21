@@ -87,7 +87,7 @@ public class Enemy_AwakenedState : State
 
         if (canUseAbility)
         {
-            racer.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
+            racer.racerAwakening.AwakenedAbility(racer.runner.stickmanNet.currentColor.colorID);
             canUseAbility = false;
         }
     }

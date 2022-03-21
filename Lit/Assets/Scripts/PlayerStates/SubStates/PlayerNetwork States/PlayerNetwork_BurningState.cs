@@ -30,16 +30,26 @@ public class PlayerNetwork_BurningState : PlayerNetwork_DamagedState
         var damageEffectPrefab = Resources.Load<GameObject>($"{1}/DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
 
+        var red = racer.runner.stickmanNet.redColor.color;
+        PostProcessingHandler.instance.vignette.active = true;
+        PostProcessingHandler.instance.vignette.color.Override(red);
+
+        racer.runnerFeedbacks.burningFeedback.PlayFeedbacks();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        racer.runnerFeedbacks.burningFeedback.StopFeedbacks();
+        PostProcessingHandler.instance.vignette.active = false;
     }
 
     public override void LateUpdate()
     {
         base.LateUpdate();
+
+        
     }
 
     public override void LogicUpdate()

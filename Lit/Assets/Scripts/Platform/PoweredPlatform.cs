@@ -209,7 +209,7 @@ public class PoweredPlatform : MonoBehaviour
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Opponent"))
         {
             Racer racer = other.GetComponent<Racer>();
-            racer.PowerTriggerExit(this);
+            racer.PowerTriggerExit();
         }
     }
 }

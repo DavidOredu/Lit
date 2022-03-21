@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class Features_Camera : Features_Object<Canvas>
 {
@@ -16,7 +12,7 @@ public class Features_Camera : Features_Object<Canvas>
     protected override void LateUpdate()
     {
         base.LateUpdate();
-        
+
     }
 
     protected override void Start()
@@ -29,13 +25,18 @@ public class Features_Camera : Features_Object<Canvas>
         base.UpdateUI();
         component.renderMode = RenderMode.ScreenSpaceCamera;
         if (component.worldCamera == null)
-            //if(Camera.main)
-            //component.worldCamera = Camera.main;
-            
-            {
-               uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
-                component.worldCamera = uiCamera;
-            }
-        
+        {
+            if (Camera.main)
+                component.worldCamera = Camera.main;
+        }
+        // in case we want to split the camera functions
+        //{
+        //    if (GameObject.FindGameObjectWithTag("UICamera"))
+        //    {
+        //        uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
+        //        component.worldCamera = uiCamera;
+        //    }
+        //}
+
     }
 }

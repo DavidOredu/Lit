@@ -4722,6 +4722,82 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6140352839327140135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343849276507056994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14177e637dc9949429cf13864ad93db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Chromatic Aberration URP
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Channel: 0
+  Duration: 0.2
+  ResetShakerValuesAfterShake: 1
+  ResetTargetValuesAfterShake: 1
+  RemapIntensityZero: 0
+  RemapIntensityOne: 1
+  Intensity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Amplitude: 1
+  RelativeIntensity: 0
 --- !u!1001 &6286811216858403510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4769,6 +4845,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.99949694
       objectReference: {fileID: 0}
+    - target: {fileID: 372051227807979126, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 372051227807979126, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: Feedbacks.Array.data[1]
+      value: 
+      objectReference: {fileID: 3786754027320321347}
+    - target: {fileID: 372051227807979126, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: Feedbacks.Array.data[2]
+      value: 
+      objectReference: {fileID: 6140352839327140135}
     - target: {fileID: 805567055077427881, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -5320,5 +5411,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88a86df250a103f41adb07ddf0cd7c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2343849276507056994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8626709964050348500, guid: 5ef45f225d846f446896bf8ad947b75a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6286811216858403510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3786754027320321347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7183942652163553269, guid: 5ef45f225d846f446896bf8ad947b75a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6286811216858403510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343849276507056994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132935fb36951d349a25a3cc5a8d8bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

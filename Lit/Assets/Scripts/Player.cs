@@ -23,12 +23,18 @@ public class Player : Racer
 
     #endregion
 
+    Dictionary<string, State> playerStates = new Dictionary<string, State>();
     public override void Awake()
     {
         base.Awake();
 
+        playerData = Resources.Load<PlayerData>("PlayerData");
+        racerData = playerData;
+
         playerIdleState = new PlayerNetwork_IdleState(null, StateMachine, "idle", this, playerData, null);
+        playerStates.Add(playerIdleState.animBoolName, playerIdleState);
         playerMoveState = new PlayerNetwork_MoveState(null, StateMachine, "move", this, playerData, null);
+        playerStates.Add(playerMoveState.animBoolName, playerMoveState);
         playerJumpState = new PlayerNetwork_JumpState(null, StateMachine, "inAir", this, playerData, null);
         playerInAirState = new PlayerNetwork_InAirState(null, StateMachine, "inAir", this, playerData, null);
         playerLandState = new PlayerNetwork_LandState(null, StateMachine, "land", this, playerData, null);
@@ -40,8 +46,8 @@ public class Player : Racer
         playerShadowedState = new PlayerNetwork_ShadowedState(null, StateMachine, "shadowed", this, playerData, null);
         playerBurningState = new PlayerNetwork_BurningState(null, StateMachine, "burning", this, playerData, null);
         playerFrozenState = new PlayerNetwork_FrozenState(null, StateMachine, "frozen", this, playerData, null);
-        playerChokingState = new PlayerNetwork_ChokingState(null, StateMachine, "choking", this, playerData, null);
-        playerBlindedState = new PlayerNetwork_BlindedState(null, StateMachine, "blinded", this, playerData, null);
+        PlayerChokingState = new PlayerNetwork_ChokingState(null, StateMachine, "choking", this, playerData, null);
+        PlayerBlindedState = new PlayerNetwork_BlindedState(null, StateMachine, "blinded", this, playerData, null);
         playerElectrocutedState = new PlayerNetwork_ElectrocutedState(null, StateMachine, "electrocuted", this, playerData, null);
         playerBlownState = new PlayerNetwork_BlownState(null, StateMachine, "blown", this, playerData, null);
         playerCursedState = new PlayerNetwork_CursedState(null, StateMachine, "cursed", this, playerData, null);
@@ -64,9 +70,9 @@ public class Player : Racer
             // frozen state
         /* 2 */   playerFrozenState,
             // poisoned state
-        /* 3 */   playerChokingState,
+        /* 3 */   PlayerChokingState,
             // blinded state
-        /* 4 */   playerBlindedState,
+        /* 4 */   PlayerBlindedState,
             // electrocuted state
         /* 5 */   playerElectrocutedState,
             // blown state
@@ -88,10 +94,10 @@ public class Player : Racer
         playerData.knockbackVelocity = Vector2.zero;
 
         moveVelocityResource = playerData.topSpeed;
-        strengthResource = playerData.maxStrength;
         jumpVelocityResource = playerData.maxJumpVelocity;
         jumpVelocity = jumpVelocityResource;
         strength = playerData.maxStrength;
+        damageResistance = playerData.damageResistance;
     }
 
 

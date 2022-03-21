@@ -36,6 +36,9 @@ public class Enemy_DamagedState : State
         base.Exit();
 
         Utils.ParticleSystemAction(damageEffect, Utils.ParticleSystemActions.TurnOffLooping);
+
+        // Speed computation is done in this manner because the first line below gives a current percentage value of speed. In order to reduce speed, we need to use the amount of speed reduced to calculate current speed
+        
     }
 
     public override void LateUpdate()

@@ -14,26 +14,25 @@ public class InGameTextsNetwork : MonoBehaviour
     [SerializeField] private TextMeshProUGUI litPlatformsText;
     [SerializeField] private GamePlayerLobby gamePlayerLobby;
 
-    private GameObject gameManagerGO;
-    private GameManager gameManager;
-    // Start is called before the first frame update
-    void Start()
+    protected GameManager gameManager;
+
+    protected GameManager GameManager
     {
-        
+        get
+        {
+            if (gameManager != null) { return gameManager; }
+            return gameManager = GameManager.instance;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameManagerGO == null)
-            gameManagerGO = GameObject.FindGameObjectWithTag("GameManager");
-        if (gameManager == null)
-            gameManager = gameManagerGO.GetComponent<GameManager>();
         if (racer == null)
             racer = gamePlayerLobby.racer;
         if (stickman == null)
             stickman = gamePlayerLobby.stickman;
-        maxPosText.text = gameManager.numberOfRunners.ToString();
+        maxPosText.text = GameManager.numberOfRunners.ToString();
         currentPosText.text = racer.Rank.ToString();
         litCountText.text = racer.litPlatforms.Count.ToString();
         litCountText.color = Resources.Load<Material>($"{gamePlayerLobby.colorCode}").color;

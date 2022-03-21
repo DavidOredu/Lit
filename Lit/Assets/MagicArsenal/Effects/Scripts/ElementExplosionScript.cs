@@ -18,6 +18,7 @@ public class ElementExplosionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        runnerDamages.InitDamages();
     }
     public void Explode(bool explodeWithDamage)
     {
@@ -70,6 +71,11 @@ public class ElementExplosionScript : MonoBehaviour
                     }
                 }
             }
+    }
+    [ContextMenu("Explode")]
+    public void DebugExplode()
+    {
+        Explode(true);
     }
     private void OnDrawGizmos()
     {

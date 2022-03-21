@@ -19,6 +19,8 @@ public struct RunnerDamagesOperator
     public DamageForm deathLaser;
     public DamageForm knockout;
 
+    public int activeDamageCount;
+
     public List<DamageForm> Damages;
     public void InitDamages()
     {
@@ -48,6 +50,37 @@ public struct RunnerDamagesOperator
             deathLaser,
             knockout
         };
+    }
+    public void AddDamage(int damageType, DamageForm damage)
+    {
+        Damages[damageType].damageInt = damage.damageInt;
+        Damages[damageType].damageName = damage.damageName;
+        Damages[damageType].damagerType = damage.damagerType;
+        Damages[damageType].damagePercentage = damage.damagePercentage;
+        Damages[damageType].damageRate = damage.damageRate;
+        Damages[damageType].damaged = true;
+
+        if (damage.racer != null)
+        {
+            Damages[damageType].racer = damage.racer;
+            Damages[damageType].ultimateDamage = damage.racer.isAwakened && damage.racer.isInNativeMap;
+            Damages[damageType].hyperDamage = damage.racer.isAwakened || damage.racer.isInNativeMap;
+        }
+        activeDamageCount++;
+    }
+    public void RemoveAllDamages()
+    {
+        foreach (var damage in DamageList())
+        {
+            damage.damaged = false;
+            damage.damageInt = 8;
+            damage.damagePercentage = 0;
+            damage.damageRate = 0;
+            damage.hyperDamage = false;
+            damage.ultimateDamage = false;
+            damage.racer = null;
+        }
+        activeDamageCount = 0;
     }
     public bool SimilarDamages(RunnerDamagesOperator otherRunnerDamages)
     {

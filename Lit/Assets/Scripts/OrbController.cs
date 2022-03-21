@@ -57,9 +57,9 @@ public class OrbController : MonoBehaviour
 
             if (struckRacers.Contains(racer)) { return; }
 
-            if (racer.myDamages.IsDamaged())
+            if (racer.racerDamages.myDamages.IsDamaged())
             {
-                foreach (var damage in racer.myDamages.DamageList())
+                foreach (var damage in racer.racerDamages.myDamages.DamageList())
                 {
                     if(damage.damageInt == damageType)
                     {

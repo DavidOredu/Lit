@@ -29,11 +29,15 @@ public class PlayerNetwork_BlownState : PlayerNetwork_DamagedState
 
         var damageEffectPrefab = Resources.Load<GameObject>($"{6}/DamageEffect");
         damageEffect = racer.InstantiateObject(damageEffectPrefab, racer.transform.position, Quaternion.identity, racer.transform);
+
+        racer.runnerFeedbacks.windFeedback.PlayFeedbacks();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        racer.runnerFeedbacks.windFeedback.StopFeedbacks();
     }
 
     public override void LateUpdate()

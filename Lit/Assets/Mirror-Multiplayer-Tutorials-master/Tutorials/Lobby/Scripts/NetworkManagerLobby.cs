@@ -31,6 +31,16 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         [SerializeField] private GameObject objectSpawnSystem = null;
         [SerializeField] private GameObject roundSystem = null;
 
+        protected GameManager gameManager;
+        protected GameManager GameManager
+        {
+            get
+            {
+                if (gameManager != null) { return gameManager; }
+                return gameManager = GameManager.instance;
+            }
+        }
+
         private MapHandler mapHandler;
 
         public static event Action OnClientConnected;
@@ -39,11 +49,10 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         public static event Action OnServerStopped;
 
         public List<RoomPlayerLobby> RoomPlayers { get; private set; } = new List<RoomPlayerLobby>();
-        
+
         public List<GamePlayerLobby> GamePlayers { get; private set; } = new List<GamePlayerLobby>();
-        
-        public List<int> freeColors { get; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 10 };
-        public readonly Dictionary<GamePlayerLobby, GameObject> gamePlayerConnect = new Dictionary<GamePlayerLobby, GameObject>();
+
+        public List<int> freeColors { get; private set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
 
         public override void Awake()
         {
@@ -51,25 +60,17 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
             SetNetworkMode.OnModeSelected += SetNetworkMode_OnModeSelected;
         }
-        
+
         private void SetNetworkMode_OnModeSelected()
         {
             StartServer();
             Debug.Log("The host has been started by the event action 'OnModeSelected'!");
         }
-        private void Update()
-        {
-         //   Debug.Log($"{RoomPlayers.Count} room players exist in the list!");
-        }
+
         [Server]
         public override void OnStartServer()
         {
             spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
-
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    colorCodes[i + 1] = false;
-            //}
         }
 
         public override void OnStartClient()
@@ -80,12 +81,6 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             {
                 ClientScene.RegisterPrefab(prefab);
             }
-
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    colorCodes[i + 1] = false;
-            //}
-
         }
 
         public override void OnClientConnect(NetworkConnection conn)
@@ -121,8 +116,6 @@ namespace DapperDino.Mirror.Tutorials.Lobby
         {
             switch (NetworkState.instance.currentNetworkState)
             {
-                case NetworkState.State.None:
-                    break;
                 case NetworkState.State.Network:
                     if (SceneManager.GetActiveScene().path == menuScene)
                     {
@@ -133,9 +126,9 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                         roomPlayerInstance.IsLeader = isLeader;
 
                         NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
-
                     }
                     break;
+
                 case NetworkState.State.NonNetwork:
                     if (SceneManager.GetActiveScene().path == menuScene)
                     {
@@ -146,13 +139,12 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                         roomPlayerInstance.IsLeader = isLeader;
 
                         NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
-                        var nonNetworkRoomPlayer = roomPlayerInstance.GetComponent<NonNetworkRoomPlayerLobby>();
 
                         // Instantiate opponent runners for the level
-                        for (int i = 0; i < nonNetworkRoomPlayer.currentLevel.level.numberOfOpponentsInLevel; i++)
+                        for (int i = 0; i < GameManager.currentLevel.numberOfOpponentsInLevel; i++)
                         {
                             var opponentRoomPlayer = Instantiate(opponentRoomPlayerPrefab);
-                            opponentRoomPlayer.difficulty = nonNetworkRoomPlayer.currentLevel.level.difficulties[i];
+                            opponentRoomPlayer.difficulty = GameManager.currentLevel.difficulties[i];
                             opponentRoomPlayer.IsLeader = false;
                         }
                     }
@@ -160,30 +152,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                 default:
                     break;
             }
-            
         }
-        //public void InstanDisplayPlayer()
-        //{
-
-        //    foreach (var roomPlayer in RoomPlayers)
-        //    {
-        //        if (roomPlayer == this)
-        //        {
-        //            var displayPlayerInstance = Instantiate(displayPlayer, displayPrefabs[RoomPlayers.IndexOf(roomPlayer)]);
-        //            NetworkServer.Spawn(displayPlayerInstance);
-        //            displayPlayerInstance.GetComponent<Stickman>().playerData = roomPlayer.playerData;
-        //        }
-        //    }
-
-
-        //    foreach (var player in Room.RoomPlayers)
-        //    {
-        //        if (player.DisplayName == DisplayName)
-        //        {
-
-        //        }
-        //    }
-        //}
 
         public override void OnServerDisconnect(NetworkConnection conn)
         {
@@ -241,88 +210,84 @@ namespace DapperDino.Mirror.Tutorials.Lobby
 
         public override void ServerChangeScene(string newSceneName)
         {
+            // From menu to game
             switch (NetworkState.instance.currentNetworkState)
             {
-                case NetworkState.State.None:
-                    break;
                 case NetworkState.State.Network:
                     if (SceneManager.GetActiveScene().path == menuScene && newSceneName.Contains("Scene_Game"))
                     {
-                        // A reverse loop is used here because the first room player at index 0 is our main or 'server' runner. We should replace his connection last so as to maintain correct logic.
+                        // A reverse loop is used here because the first room player at index 0 is our main or 'server' runner. We should replace his connection last since the network originates from him.
                         for (int i = RoomPlayers.Count - 1; i >= 0; i--)
                         {
+                            // Set the Game Player properties from the Room Player properties.
                             var conn = RoomPlayers[i].connectionToClient;
                             var gameplayerInstance = Instantiate(networkGamePlayerPrefab);
                             gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-                           
-                            //TODO: change back to normal
                             gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
 
+                            // Destroy the previous object with the connection "conn". That must be the Room Player.
                             NetworkServer.Destroy(conn.identity.gameObject);
-
+                            // Replace the connection "conn" with the newly instantiated Game Player object.
                             NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject);
                         }
                     }
                     break;
+
                 case NetworkState.State.NonNetwork:
                     if (SceneManager.GetActiveScene().path == menuScene && newSceneName.Contains("Scene_Game"))
                     {
+                        // A reverse loop is used here because the first room player at index 0 is our main or 'server' runner. We should replace his connection last since the network originates from him.
                         for (int i = RoomPlayers.Count - 1; i >= 0; i--)
                         {
-                            GamePlayerLobby gameplayerInstance;
-                            switch (RoomPlayers[i].roomPlayerType)
+                            // Instantiate variables.
+                            var conn = RoomPlayers[i].connectionToClient;
+                            GamePlayerLobby gamePlayerInstance;
+
+                            // if we are a player type, instantiate a player type prefab. Else, instantiate an opponent type prefab.
+                            if (RoomPlayers[i].roomPlayerType == Racer.RacerType.Player)
+                                gamePlayerInstance = Instantiate(nonNetworkGamePlayerPrefab);
+                            else
+                                gamePlayerInstance = Instantiate(opponentGamePlayerPrefab);
+
+                            // Set the Game Player properties from the Room Player properties.
+                            gamePlayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
+                            gamePlayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+                            gamePlayerInstance.SetColor(RoomPlayers[i].currentColorCode);
+
+                            // Destroy the previous object with the connection "conn". That must be the Room Player.
+                            NetworkServer.Destroy(RoomPlayers[i].gameObject);
+                            // Replace the connection "conn" with the newly instantiated Game Player object. Do this only for the main player object.
+                            if(gamePlayerInstance.gamePlayerType == Racer.RacerType.Player)
+                                NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
+
+                            // If we are an opponent, do an extra property adjustment and Network Spawn the object intead of replace the connection since we are running them on the same computer.
+                            // and we don't want to replace the main player's connection.
+                            if (gamePlayerInstance.gamePlayerType == Racer.RacerType.Opponent)
                             {
-                                case Racer.RacerType.Player:
-                                    var conn = RoomPlayers[i].connectionToClient;
-                                    gameplayerInstance = Instantiate(nonNetworkGamePlayerPrefab);
-                                    gameplayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
-                                    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-                                    
-                                    //TODO: change back to normal
-                                    gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
-
-                                    NetworkServer.Destroy(RoomPlayers[i].gameObject);
-
-                                    NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject);
-                                    break;
-
-                                case Racer.RacerType.Opponent:
-                                    var conn2 = RoomPlayers[i].connectionToClient;
-                                    gameplayerInstance = Instantiate(opponentGamePlayerPrefab);
-                                    gameplayerInstance.gamePlayerType = RoomPlayers[i].roomPlayerType;
-                                    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-                                    gameplayerInstance.difficulty = RoomPlayers[i].difficulty;
-                                    //TODO: change back to normal
-                                    gameplayerInstance.SetColor(RoomPlayers[i].currentColorCode);
-
-                                    NetworkServer.Destroy(RoomPlayers[i].gameObject);
-                                    NetworkServer.Spawn(gameplayerInstance.gameObject);
-                                    break;
-                                default:
-                                    break;
+                                gamePlayerInstance.difficulty = RoomPlayers[i].difficulty;
+                                NetworkServer.Spawn(gamePlayerInstance.gameObject);
                             }
                         }
                     }
                     break;
-                default:
-                    break;
             }
-            // From menu to game
 
             base.ServerChangeScene(newSceneName);
-          
         }
 
         public override void OnServerSceneChanged(string sceneName)
         {
             if (sceneName.Contains("Scene_Game"))
             {
+                // Spawn the system that will spawn the network player object. The main racer objects.
                 GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
                 NetworkServer.Spawn(playerSpawnSystemInstance);
 
+                // Spawn the system responsible for setting and changing rounds.
                 GameObject roundSystemInstance = Instantiate(roundSystem);
                 NetworkServer.Spawn(roundSystemInstance);
 
+                // In case we want to use an object spawn system, uncomment this.
                 //GameObject objectSpawnSystemInstance = Instantiate(objectSpawnSystem);
                 //NetworkServer.Spawn(objectSpawnSystemInstance);
             }

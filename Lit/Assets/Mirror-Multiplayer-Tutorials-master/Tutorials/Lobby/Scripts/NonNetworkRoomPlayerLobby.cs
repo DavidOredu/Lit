@@ -10,12 +10,9 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
     private LevelManager levelManager;
     private MapHandler mapHandler;
 
-
-    public LevelButton currentLevel { get; private set; }
     private void Awake()
     {
         levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-        currentLevel = levelManager.selectedLevel;
     }
     private void Start()
     {
@@ -45,9 +42,7 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
 
 
     }
-    private void Update()
-    {
-    }
+
     protected override void UpdateDisplay()
     {
         base.UpdateDisplay();
@@ -58,7 +53,6 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
         levelManager.selectedLevel.level.ChangeGameMode();
         mapHandler = new MapHandler(levelManager.selectedLevel.level.levelScene, levelManager.selectedLevel.level.numberOfRounds);
         
-      //  UIManager.instance.UpdateUI(100);
         Room.ServerChangeScene(mapHandler.StartMap(levelManager.selectedLevel.level.levelPos - 1));
    }
 }

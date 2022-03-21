@@ -44,6 +44,7 @@ public class RoomPlayerLobby : NetworkBehaviour
         }
     }
     private NetworkManagerLobby room;
+    protected GameManager gameManager;
     protected NetworkManagerLobby Room
     {
         get
@@ -52,7 +53,14 @@ public class RoomPlayerLobby : NetworkBehaviour
             return room = NetworkManager.singleton as NetworkManagerLobby;
         }
     }
-
+    protected GameManager GameManager
+    {
+        get
+        {
+            if (gameManager != null) { return gameManager; }
+            return gameManager = GameManager.instance;
+        }
+    }
     protected virtual void UpdateDisplay()
     {
         if (!hasAuthority)
@@ -68,6 +76,8 @@ public class RoomPlayerLobby : NetworkBehaviour
 
             return;
         }
+
+        GameManager.numberOfRunners = Room.RoomPlayers.Count;
 
         for (int i = 0; i < playerNameTexts.Length; i++)
         {

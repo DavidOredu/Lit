@@ -28,15 +28,16 @@ public class Probability<T>
     /// Initialize the probability object.
     /// </summary>
     /// <param name="probability">The probability element.</param>
-    public Probability(AnimationCurve probability)
+    public Probability(AnimationCurve probability, List<T> array)
     {
         this.probability = probability;
+        InitDictionary(array);
     }
     /// <summary>
     /// Initialize the probable elements according to their positions in the list. This must be called before using any other method in this class.
     /// </summary>
     /// <param name="array">The list of probable elements. The position of the elements in the list is HIGHLY important.</param>
-    public void InitDictionary(List<T> array)
+    private void InitDictionary(List<T> array)
     {
         int position = 1;
 
