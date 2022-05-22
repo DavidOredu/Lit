@@ -1,11 +1,9 @@
 ﻿using DapperDino.Mirror.Tutorials.Lobby;
 using Mirror;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 /// <summary>
 /// Class that determines the entire behaviour of all racers, whether player or opponent.
@@ -19,6 +17,7 @@ public class Racer : NetworkBehaviour
     #endregion
 
     #region Player State Objects
+    public PlayerNetwork_ReadyingState playerReadyingState { get; set; }
     public PlayerNetwork_IdleState playerIdleState { get; set; }
     public PlayerNetwork_MoveState playerMoveState { get; set; }
     public PlayerNetwork_JumpState playerJumpState { get; set; }
@@ -46,12 +45,14 @@ public class Racer : NetworkBehaviour
     public PlayerNetwork_HoverGlideState playerHoverGlideState { get; set; }
     public PlayerNetwork_SlideGlideState playerSlideGlideState { get; set; }
     public PlayerNetwork_NullState playerNullState { get; set; }
-
+    public PlayerNetwork_WinState playerWinState { get; set; }
+    public PlayerNetwork_LoseState playerLoseState { get; set; }
     public List<State> playerDamageStates;
     public Dictionary<Vector2, State> playerDynamicDamageStates;
     #endregion
 
     #region Opponent State Objects
+    public Enemy_ReadyingState opponentReadyingState { get; set; }
     public Enemy_MoveState opponentMoveState { get; set; }
     public Enemy_IdleState opponentIdleState { get; set; }
     public Enemy_InAirState opponentInAirState { get; set; }
@@ -79,6 +80,9 @@ public class Racer : NetworkBehaviour
     public Enemy_HoverGlideState opponentHoverGlideState { get; set; }
     public Enemy_SlideGlideState opponentSlideGlideState { get; set; }
     public Enemy_NullState opponentNullState { get; set; }
+    public Enemy_WinState opponentWinState { get; set; }
+    public Enemy_LoseState opponentLoseState { get; set; }
+
     public List<State> opponentDamageStates;
     public Dictionary<Vector2, State> opponentDynamicDamageStates;
     #endregion
@@ -116,11 +120,11 @@ public class Racer : NetworkBehaviour
     public float moveVelocityResource;
     public float movementVelocity;
     public float normalizedMovementVelocity;
+    public bool burstSpeed;
     public float strength;
     public float recentStrength;
     public float previousStrengthNormalized;
     public float normalizedStrength;
-    public float damageResistance;
     protected float acceleration;
     protected float deceleration;
     protected float brakeRatePerSec;
@@ -129,6 +133,7 @@ public class Racer : NetworkBehaviour
     [Header("Jump State")]
     public float jumpVelocityResource;
     public float jumpVelocity;
+    public int amountOfJumps;
 
     public Vector2 slopeNormalPerpendicular { get; set; }
 
@@ -141,8 +146,9 @@ public class Racer : NetworkBehaviour
     public bool canUsePowerup { get; set; } = true;
     public bool isAwakened = false;
     public bool isInNativeMap = false;
+    public bool drive { get; private set; }
     public bool overdrive { get; private set; }
-    
+
     public bool canSpawnDust { get; set; } = false;
     public bool isOnSlope { get; set; }
     public bool canWalkOnSlope { get; set; }
@@ -150,6 +156,8 @@ public class Racer : NetworkBehaviour
     private bool isSlowOnPlatform = false;
     public int otherIsOnLitCount { get; private set; }
     public int highestOtherIsOnLitCount { get; private set; } = 0;
+    public bool perfectLaunch { get; set; }
+    public bool canRace { get; set; }
     #endregion
 
     #region Components
@@ -158,7 +166,9 @@ public class Racer : NetworkBehaviour
     protected LitPlatformHandler litHandler;
     public RacerDamages racerDamages;
     public RacerAwakening racerAwakening;
-    
+    public PerkHandler perkHandler;
+    public CameraFollowNetwork cameraFollow;
+
     public RunnerFeedbacks runnerFeedbacks;
     public Animator Anim { get; private set; }
     // public GameManager GM { get; private set; }
@@ -205,7 +215,7 @@ public class Racer : NetworkBehaviour
 
     public int FacingDirection { get; private set; }
     #endregion
-    
+
     #endregion
 
     #region Functions
@@ -219,8 +229,7 @@ public class Racer : NetworkBehaviour
         RB = GetComponent<Rigidbody2D>();
         ThisCollider = GetComponent<CapsuleCollider2D>();
         litHandler = GetComponent<LitPlatformHandler>();
-        runner.player = this;
-        runner.stickmanNet = GetComponent<StickmanNet>();
+        runner = new Runner(null, GetComponent<StickmanNet>(), null, this);
         PlayerEvents.OnBlackOverride += BlackOverrider_OnBlackOverride;
 
         playerDynamicDamageStates = new Dictionary<Vector2, State>
@@ -263,7 +272,7 @@ public class Racer : NetworkBehaviour
 
         previousStrengthNormalized = strength / racerData.maxStrength;
 
-        
+
         awakenedData = Resources.Load<AwakenedData>($"{runner.stickmanNet.code}/AwakenedData");
         powerupData = Resources.Load<PowerupData>($"{runner.stickmanNet.code}/PowerupData");
     }
@@ -298,7 +307,6 @@ public class Racer : NetworkBehaviour
         if (!hasAuthority && currentRacerType == RacerType.Player) { return; }
         SlopeCheck();
         CheckIfOnAnotherLit();
-        CheckOtherPlayersOnLit();
         CheckHighestOtherOnLitCount();
 
         currentPosition = transform.position.x;
@@ -327,11 +335,7 @@ public class Racer : NetworkBehaviour
     }
 
     #endregion
-    private void CapMoveResource()
-    {
-        if (moveVelocityResource < 0)
-            moveVelocityResource = Mathf.Max(0, moveVelocityResource);
-    }
+
     #region Set Functions
     /// <summary>
     /// Function to set the velocity of the rigidbody2d component directly, on the x-axis.
@@ -395,6 +399,11 @@ public class Racer : NetworkBehaviour
     public virtual void SetStop()
     {
         movementVelocity = 0f;
+    }
+    private void CapMoveResource()
+    {
+        if (moveVelocityResource < 0)
+            moveVelocityResource = Mathf.Max(0, moveVelocityResource);
     }
     #endregion
 
@@ -503,6 +512,7 @@ public class Racer : NetworkBehaviour
     #endregion
 
     #region Check Functions
+    
     public virtual void WaitToChangeStats(LitPlatformNetwork litPlatform)
     {
         if (litPlatform.isLit)
@@ -698,7 +708,7 @@ public class Racer : NetworkBehaviour
         {
             isOnAnotherLit = true;
         }
-        else if ((isOnLit && litPlatform.colorStateCode.colorID != runner.stickmanNet.currentColor.colorID) || !isOnLit)
+        else
         {
             isOnAnotherLit = false;
         }
@@ -707,23 +717,23 @@ public class Racer : NetworkBehaviour
     {
         int othersOnLit = CheckOtherPlayersOnLit();
 
-        if (othersOnLit != 0 && isOnLit)
+        if (othersOnLit != 0 && isOnLit && !overdrive)
         {
+            if (othersOnLit >= otherIsOnLitCount)
+            {
+                otherIsOnLitCount = othersOnLit;
+                moveVelocityResource += Utils.PercentageValue(racerData.topSpeed, racerData.overdriveIncreasePercentage * otherIsOnLitCount);
+            }
             overdrive = true;
         }
-        else if (othersOnLit != 0 && !isOnLit)
+        else if (othersOnLit != 0 && !isOnLit && !drive)
         {
-            overdrive = false;
-        }
-
-        if (otherIsOnLitCount != othersOnLit)
-        {
-            otherIsOnLitCount = othersOnLit;
-
-            if (overdrive)
-                moveVelocityResource += Utils.PercentageValue(racerData.topSpeed, racerData.overdriveIncreasePercentage * otherIsOnLitCount);
-            else
+            if (othersOnLit >= otherIsOnLitCount)
+            {
+                otherIsOnLitCount = othersOnLit;
                 moveVelocityResource += Utils.PercentageValue(racerData.topSpeed, racerData.otherOnLitIncreasePercentage * otherIsOnLitCount);
+            }
+            drive = true;
         }
     }
     /// <summary>
@@ -731,7 +741,6 @@ public class Racer : NetworkBehaviour
     /// </summary>
     public virtual void ChangeStatsWhileOnLit()
     {
-
         if (isOnLit)
         {
 
@@ -741,8 +750,25 @@ public class Racer : NetworkBehaviour
     }
     public virtual void ResetOverdrive()
     {
-        if (!isOnLit)
-            overdrive = false;
+        int currentOtherOnLitCount = CheckOtherPlayersOnLit();
+        if (overdrive)
+        {
+            if (!isOnLit || currentOtherOnLitCount != otherIsOnLitCount)
+            {
+                moveVelocityResource -= Utils.PercentageValue(racerData.topSpeed, racerData.overdriveIncreasePercentage * otherIsOnLitCount);
+                otherIsOnLitCount = currentOtherOnLitCount;
+                overdrive = false;
+            }
+        }
+        else if (drive)
+        {
+            if (isOnLit || currentOtherOnLitCount != otherIsOnLitCount)
+            {
+                moveVelocityResource -= Utils.PercentageValue(racerData.topSpeed, racerData.otherOnLitIncreasePercentage * otherIsOnLitCount);
+                otherIsOnLitCount = currentOtherOnLitCount;
+                drive = false;
+            }
+        }
     }
     public virtual int LitPlatformCount()
     {
@@ -772,11 +798,16 @@ public class Racer : NetworkBehaviour
     {
         Destroy(gameObject);
     }
+    public void Revive()
+    {
+        StateMachine.ChangeDamagedState(opponentRevivedState);
+        StateMachine.ChangeState(opponentMoveState);
+    }
     public virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, powerupData.mineExplosiveRadius);
         Gizmos.DrawWireSphere(GroundCheck.position, racerData.groundCheckRadius);
-        Gizmos.DrawWireSphere(playerCenter.position, racerData.powerupRadius);
+        Gizmos.DrawWireSphere(playerCenter.position, racerData.powerupSelfRadius);
         Gizmos.DrawLine(litCheck.position, litCheck.position + (Vector3)(Vector2.down * racerData.litCheckDistance));
         Gizmos.DrawLine(litCheck.position, litCheck.position + (Vector3)(Vector2.down * racerData.powerCheckDistance));
     }

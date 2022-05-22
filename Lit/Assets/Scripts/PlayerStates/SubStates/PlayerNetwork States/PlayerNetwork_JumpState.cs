@@ -67,7 +67,7 @@
 
     public void ResetAmountOfJumpLeft()
     {
-        amountOfJumpsLeft = playerData.amountOfJumps;
+        amountOfJumpsLeft = racer.amountOfJumps;
     }
 
     public void DecreaseAmountOfJumpsLeft()

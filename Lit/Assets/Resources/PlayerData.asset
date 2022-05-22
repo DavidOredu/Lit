@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: KiNG
   maxStrength: 20
+  strengthIncreaseRate: 0.05
+  damageResistance: 0
+  contactDamage: 0
   strengthToTopSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -66,14 +69,50 @@ MonoBehaviour:
   timeZeroToMax: 3
   timeMaxToZero: 4
   timeBrakeToZero: 1
+  burstSpeed: 0
   maxJumpVelocity: 40
   amountOfJumps: 1
   actionForce: 50
   knockoutTime: 4
   ultimateDamageKnockoutTime: 10
   invulnerabilityTimer: 5
-  requiredLitPlatformsToAwaken: 3
-  awakenCount: 3
+  dissolveTime: 5
+  dissolveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.077963404
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 0.019052677
+      outSlope: 0.019052677
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07239461
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08273673
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  requiredLitPlatformsToAwaken: 1
+  awakenCount: 1
+  awakenTime: 10
   litSpeedUpPercentage: 0.5
   litSlowDownPercentage: 0.3
   overdriveIncreasePercentage: 1.5
@@ -93,12 +132,21 @@ MonoBehaviour:
   whatIsSlope:
     serializedVersion: 2
     m_Bits: 3584
-  knockbackVelocity: {x: 22, y: 12}
+  knockbackVelocity: {x: 10.011, y: 10.011}
   maxKnockbackVelocity: {x: 22, y: 12}
-  powerupRadius: 3.4
+  powerupSelfRadius: 3.4
+  blastRadiusMultiplier: 1
   whatToDamage:
     serializedVersion: 2
     m_Bits: 24832
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
-  colorCode: 7
+  proximitySearchRadius: 40
+  attackSearchRadius: 80
+  whatToSearch:
+    serializedVersion: 2
+    m_Bits: 73984
+  whatToAttack:
+    serializedVersion: 2
+    m_Bits: 8448
+  colorCode: 1

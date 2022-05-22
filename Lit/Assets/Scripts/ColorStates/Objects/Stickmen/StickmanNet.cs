@@ -14,7 +14,7 @@ public class StickmanNet : NetworkBehaviour
     [SyncVar]
     public string displayName;
 
-    private Material material;
+    public Material material;
     private Material auraMaterial;
 
     public ColorStateCode blackColor { get; private set; }
@@ -116,28 +116,18 @@ public class StickmanNet : NetworkBehaviour
         if (gameManager == null)
             if(GameObject.FindGameObjectWithTag("GameManager"))
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        ///     if (stickmenNet == null)
-        ///        stickmenNet = GetComponent<StickmenNet>();
-        if (gameManager.currentGameState == GameManager.GameState.InGame)
-        {
+        
             DefineCode();
-        }
-
-
     }
 
     // Update is called once per frame
     private void Update()
     {
-
-       
-
-
         if (dynamicUpdate == true)
             DefineCode();
     }
 
-    void DefineCode()
+    public void DefineCode()
     {
 
         foreach (ColorStateCode colorStateCode in colorStateCodes)
@@ -148,13 +138,12 @@ public class StickmanNet : NetworkBehaviour
                 {
                     colorStateCode.isPicked = true;
                     currentColor = colorStateCode;
-                    material = Resources.Load<Material>($"{currentColor.colorID}");
         //            auraMaterial = Resources.Load<Material>("1/FlameMat");
 
 
                     foreach (SpriteRenderer renderer in stickmanColorRenderers)
                     {
-                        //renderer.material = material;
+                        renderer.material = material;
                         renderer.color = new Color(currentColor.color.r, currentColor.color.g, currentColor.color.b);
                     }
                     foreach (SpriteRenderer renderer in auraRenderers)

@@ -15,7 +15,7 @@ public class ClickFalse : MonoBehaviour, IPointerClickHandler {
 				transform.parent.gameObject.SetActive (false);
 			}
 		} else {
-			transform.parent.FindChild ("Complete").gameObject.SetActive (true);
+			transform.parent.Find ("Complete").gameObject.SetActive (true);
 			transform.gameObject.SetActive (false);
 		}
 

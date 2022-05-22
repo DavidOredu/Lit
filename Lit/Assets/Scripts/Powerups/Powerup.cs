@@ -106,6 +106,10 @@ public class Powerup
                 selectedActiveAction.AddListener(PowerupActions.BombSelectedActiveAction);
                 selectedEndAction.AddListener(PowerupActions.BombSelectedEndAction);
                 break;
+            case PowerupID.StrengthPotion:
+                startAction.AddListener(PowerupActions.StrengthPotionStartAction);
+                endAction.AddListener(PowerupActions.StrengthPotionEndAction);
+                break;
             default:
                 break;
         }
@@ -154,6 +158,7 @@ public class Powerup
         Projectile,
         Beam,
         Bomb,
+        StrengthPotion,
     }
     /// <summary>
     /// The way a powerup will behave if the powerup is already enabled on a runner.

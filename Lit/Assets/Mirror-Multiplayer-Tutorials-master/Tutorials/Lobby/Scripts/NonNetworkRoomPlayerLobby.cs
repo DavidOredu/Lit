@@ -54,5 +54,8 @@ public class NonNetworkRoomPlayerLobby : RoomPlayerLobby
         mapHandler = new MapHandler(levelManager.selectedLevel.level.levelScene, levelManager.selectedLevel.level.numberOfRounds);
         
         Room.ServerChangeScene(mapHandler.StartMap(levelManager.selectedLevel.level.levelPos - 1));
+        GameManager.raceCountdownTimer.ResetTimer();
+
+        GameManager.GameStarted();
    }
 }

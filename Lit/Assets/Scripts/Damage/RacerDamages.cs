@@ -7,12 +7,23 @@ public class RacerDamages : MonoBehaviour, IEffectable
     public Racer racer;
     public RunnerDamagesOperator myDamages;
 
+    public float damageResistance;
+    public float blastRadiusMultiplier;
+
+    public bool contactDamage;
+    public bool canIncreaseStrength;
     // Start is called before the first frame update
     void Start()
     {
+        damageResistance = racer.racerData.damageResistance;
+        blastRadiusMultiplier = racer.racerData.blastRadiusMultiplier;
+
         myDamages.InitDamages();
     }
-
+    private void FixedUpdate()
+    {
+        CheckIncreaseStrength();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +36,9 @@ public class RacerDamages : MonoBehaviour, IEffectable
         }
 
         if (myDamages.activeDamageCount == 1)
-            DamageEffectsOnStrength();
+            DamageEffects();
+
+        DoContactDamage();
     }
 
     #region Damage Functions
@@ -92,16 +105,17 @@ public class RacerDamages : MonoBehaviour, IEffectable
         else
             racer.strength = Mathf.Max(racer.strength, finalStrength);
     }
-    public virtual void HandleDamageFinished(float finalStrength)
+    public virtual void HandleDamageFinished(float finalStrength, bool wasAwakened)
     {
         racer.normalizedStrength = racer.strength / racer.racerData.maxStrength;
+
         if (racer.strength <= 0)
         {
             racer.movementVelocity = 0;
             RemoveDamage();
             StrengthBreak();
         }
-        else if (racer.strength <= finalStrength)
+        else if (racer.strength <= finalStrength || wasAwakened)
         {
             switch (racer.currentRacerType)
             {
@@ -114,6 +128,7 @@ public class RacerDamages : MonoBehaviour, IEffectable
                 default:
                     break;
             }
+            Invoke("SetCanIncreaseStrength", 3f);
             RemoveDamage();
         }
     }
@@ -122,27 +137,41 @@ public class RacerDamages : MonoBehaviour, IEffectable
     /// </summary>
     /// <returns></returns>
 
-    public virtual void DamageEffectsOnStrength()
+    public virtual void DamageEffects()
     {
         float finalStrength = 0;
 
         foreach (var damage in myDamages.DamageList())
         {
-            var totalDamage = Utils.PercentageValue(racer.racerData.maxStrength, damage.damagePercentage);
-            finalStrength = racer.recentStrength - totalDamage;
-            var rate = Utils.PercentageValue(totalDamage, damage.damageRate);
-
-            Debug.Log($"Final strength is: {finalStrength}");
-
-            if (racer.strength > finalStrength)
+            if (racer.isAwakened)
             {
+                var total = Utils.PercentageValue(racer.racerData.awakenTime, damage.damagePercentage * (1 - damageResistance));
+
+                racer.racerAwakening.awakenTimer.ReduceTime(total);
+
+                CheckIfStrengthIsDepleted(finalStrength);
+                HandleDamageFinished(finalStrength, true); 
+            }
+            else if (racer.strength > finalStrength)
+            {
+                float totalDamage;
+                if(damage.canResistDamage)
+                    totalDamage = Utils.PercentageValue(racer.racerData.maxStrength, damage.damagePercentage * (1 - damageResistance));
+                else
+                    totalDamage = Utils.PercentageValue(racer.racerData.maxStrength, damage.damagePercentage);
+
+                finalStrength = racer.recentStrength - totalDamage;
+                var rate = Utils.PercentageValue(totalDamage, damage.damageRate);
+
                 racer.strength -= rate * (Time.deltaTime /* / 5*/ );
                 Debug.Log($"Rate of Damage on {name} is: {rate}");
+
+                CheckIfStrengthIsDepleted(finalStrength);
+                HandleDamageFinished(finalStrength, false);
             }
         }
 
-        CheckIfStrengthIsDepleted(finalStrength);
-        HandleDamageFinished(finalStrength);
+       
     }
     public virtual void ChangeToDamageState(RunnerDamagesOperator runnerDamages, DamageForm damage, State stateToChangeTo)
     {
@@ -180,7 +209,7 @@ public class RacerDamages : MonoBehaviour, IEffectable
         racer.strength = Mathf.Round(racer.strength);
 
         CheckIfStrengthIsDepleted(racer.strength);
-        HandleDamageFinished(racer.strength);
+        HandleDamageFinished(racer.strength, false);
     }
     public virtual void StrengthBreak()
     {
@@ -189,15 +218,38 @@ public class RacerDamages : MonoBehaviour, IEffectable
         switch (racer.currentRacerType)
         {
             case Racer.RacerType.Player:
-                racer.StateMachine.ChangeState(racer.playerDamageKnockDownState);
+                if(racer.StateMachine.DamagedState != racer.playerDeadState)
+                    racer.StateMachine.ChangeState(racer.playerDamageKnockDownState);
                 break;
             case Racer.RacerType.Opponent:
-                racer.StateMachine.ChangeState(racer.opponentDamageKnockDownState);
+                if (racer.StateMachine.DamagedState != racer.opponentDeadState)
+                    racer.StateMachine.ChangeState(racer.opponentDamageKnockDownState);
                 break;
             default:
                 break;
         }
     }
+    public void CheckIncreaseStrength()
+    {
+        if (canIncreaseStrength)
+        {
+            if(!myDamages.IsDamaged() && !(racer.normalizedStrength >= 1))
+            {
+                var rate = Utils.PercentageValue(racer.racerData.maxStrength, racer.racerData.strengthIncreaseRate);
+
+                if (!(racer.strength > racer.racerData.maxStrength))
+                {
+                    racer.strength += rate * (Time.deltaTime /* / 5*/ );
+                    racer.strength = Mathf.Min(racer.strength, racer.racerData.maxStrength);
+                }
+            }
+            else if(racer.normalizedStrength >= 1)
+            {
+                canIncreaseStrength = false;
+            }
+        }
+    }
+    public void SetCanIncreaseStrength() => canIncreaseStrength = true;
     /// <summary>
     /// Removes current powerup ability or disables a selected powerup.
     /// </summary>
@@ -225,6 +277,30 @@ public class RacerDamages : MonoBehaviour, IEffectable
         }
     }
     #endregion
+
+    public void DoContactDamage()
+    {
+        if(!contactDamage) { return; }
+
+        var racerData = racer.racerData;
+        var hitObjects = Physics2D.OverlapCircleAll(racer.playerCenter.position, racerData.powerupSelfRadius, racerData.whatToDamage);
+
+        RunnerDamagesOperator runnerDamages = new RunnerDamagesOperator();
+        runnerDamages.InitDamages();
+
+        foreach (var hitRacer in hitObjects)
+        {
+            var objectRB = hitRacer.GetComponent<Rigidbody2D>();
+            var damageType = racer.runner.stickmanNet.currentColor.colorID;
+
+            // instantiate appropriate element effect on hit player
+            if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
+            {
+                objectRB.AddExplosionForce(racer.powerupData.fieldExplosiveForce, transform.position, racerData.powerupSelfRadius, 0f, racer.powerupData.fieldForceMode);
+                Utils.SetDamageVariables(runnerDamages, racer, damageType, racer.powerupData.fieldDamagePercentage, racer.powerupData.fieldDamageRate, hitRacer.gameObject);
+            }
+        }
+    }
     public void ApplyPerk()
     {
         throw new System.NotImplementedException();

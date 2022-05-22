@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public static class Utils
@@ -23,7 +22,7 @@ public static class Utils
     }
     public static void SetBombVariables(Racer racer, BombScript bombScript, int damageType, PowerupData powerupData)
     {
-        bombScript.OwnerRacer = racer;
+        bombScript.ownerRacer = racer;
         bombScript.damageType = damageType;
         bombScript.damagePercentage = powerupData.bombDamagePercentage;
         bombScript.damageRate = powerupData.bombDamageRate;
@@ -47,68 +46,44 @@ public static class Utils
     }
     public static void SetExplosionVariables(Racer racer, ElementExplosionScript explosionScript, int damageType, PowerupData powerupData = null, AwakenedData awakenedData = null)
     {
-        if (racer.isAwakened)
-        {
-            switch (damageType)
-            {
-                case 1:
-                    explosionScript.ownerRacer = racer;
-                    explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = awakenedData.redDamagePercentage;
-                    explosionScript.damageRate = awakenedData.redDamageRate;
-                    explosionScript.explosiveRadius = PercentageIncreaseOrDecrease(powerupData.bombExplosiveRadius, awakenedData.redExplosiveRadiusPercentageIncrease, AlterType.Increase);
-                    ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.IncreaseStartSize, awakenedData.redExplosiveRadiusPercentageIncrease);
-                    explosionScript.explosiveForce = powerupData.bombExplosiveForce;
-                    explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
-                    explosionScript.forceMode = powerupData.bombForceMode;
-                    break;
-                case 6:
-                    explosionScript.ownerRacer = racer;
-                    explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = powerupData.bombDamagePercentage;
-                    explosionScript.damageRate = powerupData.bombDamageRate;
-                    explosionScript.explosiveForce = PercentageIncreaseOrDecrease(powerupData.bombExplosiveForce, awakenedData.cyanExplosiveForcePercentageIncrease, AlterType.Increase);
-                    explosionScript.explosiveRadius = PercentageIncreaseOrDecrease(powerupData.bombExplosiveRadius, awakenedData.cyanExplosiveRadiusPercentageDecrease, AlterType.Decrease);
-                    explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
-                    explosionScript.forceMode = powerupData.bombForceMode;
-                    break;
-                default:
-                    explosionScript.ownerRacer = racer;
-                    explosionScript.damageInt = damageType;
-                    explosionScript.damagePercentage = powerupData.bombDamagePercentage;
-                    explosionScript.damageRate = powerupData.bombDamageRate;
-                    explosionScript.explosiveForce = powerupData.bombExplosiveForce;
-                    explosionScript.explosiveRadius = powerupData.bombExplosiveRadius;
-                    explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
-                    explosionScript.forceMode = powerupData.bombForceMode;
-                    break;
-            }
+        explosionScript.ownerRacer = racer;
+        explosionScript.damageInt = damageType;
+        explosionScript.damagePercentage = powerupData.bombDamagePercentage;
+        explosionScript.damageRate = powerupData.bombDamageRate;
+        explosionScript.explosiveForce = powerupData.bombExplosiveForce;
+        explosionScript.explosiveRadius = powerupData.bombExplosiveRadius;
+        explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
+        explosionScript.forceMode = powerupData.bombForceMode;
 
-        }
-        else if (powerupData != null)
-        {
-            explosionScript.ownerRacer = racer;
-            explosionScript.damageInt = damageType;
-            explosionScript.damagePercentage = powerupData.bombDamagePercentage;
-            explosionScript.damageRate = powerupData.bombDamageRate;
-            explosionScript.explosiveForce = powerupData.bombExplosiveForce;
-            explosionScript.explosiveRadius = powerupData.bombExplosiveRadius;
-            explosionScript.upwardsModifier = powerupData.bombUpwardsModifier;
-            explosionScript.forceMode = powerupData.bombForceMode;
-        }
+        ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.IncreaseStartSize, racer.racerDamages.blastRadiusMultiplier - 1);
     }
-    public static void SetMineToBombVariables(ElementExplosionScript explosionComp, MineScript mineScript)
+    public static void SetBombToExplosionVariables(ElementExplosionScript explosionScript, BombScript bombScript)
     {
-        explosionComp.ownerRacer = mineScript.ownerRacer;
-        explosionComp.damageInt = mineScript.damageType;
-        explosionComp.damagePercentage = mineScript.damagePercentage;
-        explosionComp.damageRate = mineScript.damageRate;
-        explosionComp.explosiveForce = mineScript.explosiveForce;
-        explosionComp.explosiveRadius = mineScript.explosiveRadius;
-        explosionComp.upwardsModifier = mineScript.upwardsModifier;
-        explosionComp.forceMode = mineScript.forceMode;
+        explosionScript.ownerRacer = bombScript.ownerRacer;
+        explosionScript.bombScript = bombScript;
+        explosionScript.damageInt = bombScript.damageType;
+        explosionScript.damagePercentage = bombScript.damagePercentage;
+        explosionScript.damageRate = bombScript.damageRate;
+        explosionScript.explosiveForce = bombScript.explosiveForce;
+        explosionScript.explosiveRadius = bombScript.explosiveRadius * bombScript.ownerRacer.racerDamages.blastRadiusMultiplier;
+        explosionScript.upwardsModifier = bombScript.upwardsModifier;
+        explosionScript.forceMode = bombScript.forceMode;
 
-        ParticleSystemAction(explosionComp.gameObject, ParticleSystemActions.DecreaseStartSize, mineScript.explosiveRadiusDecreasePercentage);
+        ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.IncreaseStartSize, bombScript.ownerRacer.racerDamages.blastRadiusMultiplier - 1);
+    }
+    public static void SetMineToExplosionVariables(ElementExplosionScript explosionScript, MineScript mineScript)
+    {
+        explosionScript.ownerRacer = mineScript.ownerRacer;
+        explosionScript.damageInt = mineScript.damageType;
+        explosionScript.damagePercentage = mineScript.damagePercentage;
+        explosionScript.damageRate = mineScript.damageRate;
+        explosionScript.explosiveForce = mineScript.explosiveForce;
+        explosionScript.explosiveRadius = mineScript.explosiveRadius * mineScript.ownerRacer.racerDamages.blastRadiusMultiplier;
+        explosionScript.upwardsModifier = mineScript.upwardsModifier;
+        explosionScript.forceMode = mineScript.forceMode;
+
+        ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.DecreaseStartSize, mineScript.explosiveRadiusDecreasePercentage);
+        ParticleSystemAction(explosionScript.gameObject, ParticleSystemActions.IncreaseStartSize, mineScript.ownerRacer.racerDamages.blastRadiusMultiplier - 1);
     }
     public static List<ParticleSystem> GetParticlesInGameObject(GameObject particleObject)
     {
@@ -121,12 +96,12 @@ public static class Utils
 
         foreach (var childParticle in childParticles)
         {
-            if(!particleList.Contains(childParticle))
+            if (!particleList.Contains(childParticle))
                 particleList.Add(childParticle);
         }
         Debug.Log(particleList.Count);
         return particleList;
-        
+
     }
     /// <summary>
     /// Neccessary actions needed to be taken on particle systems during runtime.
@@ -138,8 +113,8 @@ public static class Utils
     {
         var particle = particleObject.GetComponent<ParticleSystem>();
         ParticleSystem.MainModule particleMain = new ParticleSystem.MainModule();
-        if(particle != null)
-           particleMain = particle.main;
+        if (particle != null)
+            particleMain = particle.main;
         var childParticles = particleObject.GetComponentsInChildren<ParticleSystem>();
         switch (actions)
         {
@@ -149,7 +124,7 @@ public static class Utils
                     particleMain.loop = false;
                     particleMain.stopAction = ParticleSystemStopAction.Destroy;
                 }
-                
+
                 foreach (var childParticle in childParticles)
                 {
                     var childParticleMain = childParticle.main;
@@ -175,23 +150,26 @@ public static class Utils
                             break;
                     }
                 }
-                foreach (var childParticle in childParticles)
+                if (childParticles.Length != 0)
                 {
-                    var childParticleMain = childParticle.main;
-
-                    switch (particleMain.startSize.mode)
+                    foreach (var childParticle in childParticles)
                     {
-                        case ParticleSystemCurveMode.Constant:
-                            var newSize = childParticleMain.startSize.constant + PercentageValue(childParticleMain.startSize.constant, alterPercentage);
-                            childParticleMain.startSize = new ParticleSystem.MinMaxCurve(newSize);
-                            break;
-                        case ParticleSystemCurveMode.TwoConstants:
-                            var newMinSize = childParticleMain.startSize.constantMin + PercentageValue(childParticleMain.startSize.constantMin, alterPercentage);
-                            var newMaxSize = childParticleMain.startSize.constantMax + PercentageValue(childParticleMain.startSize.constantMax, alterPercentage);
-                            childParticleMain.startSize = new ParticleSystem.MinMaxCurve(newMinSize, newMaxSize);
-                            break;
-                        default:
-                            break;
+                        var childParticleMain = childParticle.main;
+
+                        switch (particleMain.startSize.mode)
+                        {
+                            case ParticleSystemCurveMode.Constant:
+                                var newSize = childParticleMain.startSize.constant + PercentageValue(childParticleMain.startSize.constant, alterPercentage);
+                                childParticleMain.startSize = new ParticleSystem.MinMaxCurve(newSize);
+                                break;
+                            case ParticleSystemCurveMode.TwoConstants:
+                                var newMinSize = childParticleMain.startSize.constantMin + PercentageValue(childParticleMain.startSize.constantMin, alterPercentage);
+                                var newMaxSize = childParticleMain.startSize.constantMax + PercentageValue(childParticleMain.startSize.constantMax, alterPercentage);
+                                childParticleMain.startSize = new ParticleSystem.MinMaxCurve(newMinSize, newMaxSize);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 break;
@@ -241,10 +219,10 @@ public static class Utils
         switch (alterType)
         {
             case AlterType.Increase:
-                 value = originalValue + (originalValue * percentage);
+                value = originalValue + (originalValue * percentage);
                 break;
             case AlterType.Decrease:
-                 value =  originalValue - (originalValue * percentage);
+                value = originalValue - (originalValue * percentage);
                 break;
             default:
                 break;
@@ -269,13 +247,15 @@ public static class Utils
     /// <param name="damageInt">The color code of the damage done. Use '8' if is laser damage.</param>
     /// <param name="damagePercentage">The percentage of damage done, relating to the damaged runner's max strength.</param>
     /// <param name="damageRate">The rate at which the damage reduces strength.</param>
+    /// <param name="canResistDamage">Can the affected racer resist some degree of the current damage.</param>
     /// <param name="hitObject">The object to be damaged. This object should have the 'racer' component on it.</param>
-    public static void SetDamageVariables(RunnerDamagesOperator runnerDamages,Racer ownerRacer, int damageInt, float damagePercentage, float damageRate, GameObject hitObject)
+    public static void SetDamageVariables(RunnerDamagesOperator runnerDamages, Racer ownerRacer, int damageInt, float damagePercentage, float damageRate, GameObject hitObject, bool canResistDamage = true)
     {
         runnerDamages.Damages[damageInt].damaged = true;
         runnerDamages.Damages[damageInt].damageInt = damageInt;
         runnerDamages.Damages[damageInt].damagePercentage = damagePercentage;
         runnerDamages.Damages[damageInt].damageRate = damageRate;
+        runnerDamages.Damages[damageInt].canResistDamage = canResistDamage;
         runnerDamages.Damages[damageInt].racer = ownerRacer;
         hitObject.transform.SendMessage("DamageRunner", runnerDamages);
     }
@@ -288,6 +268,24 @@ public static class Utils
     public static int RandomValue(int minValue, int maxValue)
     {
         return Random.Range(minValue, maxValue);
+    }
+    public static bool HitContainsObject(Collider2D[] hit, GameObject objectToCheck)
+    {
+        foreach (var obj in hit)
+        {
+            if (obj.gameObject == objectToCheck)
+                return true;
+        }
+        return false;
+    }
+    public static bool HitContainsObject(RaycastHit2D[] hit, GameObject objectToCheck)
+    {
+        foreach (var obj in hit)
+        {
+            if (obj.transform.gameObject == objectToCheck)
+                return true;
+        }
+        return false;
     }
     public enum ParticleSystemActions
     {

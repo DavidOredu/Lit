@@ -67,10 +67,7 @@ public class LitPlatformNetwork : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (runners.Count == 0) { return; }
-
         CheckRunnerOnLit();
-
     }
     
 
@@ -106,6 +103,12 @@ public class LitPlatformNetwork : NetworkBehaviour
     }
     void CheckRunnerOnLit()
     {
+        if(runners.Count == 0)
+        {
+            otherIsOnLit = false;
+            return;
+        }
+
         foreach (var runner in runners)
         {
             if (runner != firstRunner && runner.player != null)
@@ -117,6 +120,7 @@ public class LitPlatformNetwork : NetworkBehaviour
                 }
             }
         }
+        otherIsOnLit = false;
     }
 
 

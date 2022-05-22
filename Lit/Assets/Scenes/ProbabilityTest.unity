@@ -649,6 +649,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f8637e66e55ac429fe067f4b8d930b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testFloatPerk:
+    perkName: 0
+    perkData: {fileID: 0}
+    perkValue: 0
+    perkChance: 0
+    isPerkActive: 0
+    perkState: 0
+  testBoolPerk:
+    perkName: 0
+    perkData: {fileID: 0}
+    perkValue: 0
+    perkChance: 0
+    isPerkActive: 0
+    perkState: 0
   floatValueToChange: 5
   boolValueToChange: 0
   floatPerkData: {fileID: 11400000, guid: 0c7ca8f938f27824884da3cecdfd497d, type: 2}
@@ -1017,6 +1031,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 113958113597347880, guid: efd7affc1a81ba74c9ebbfd6c5f5dd91,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 304966218834225971, guid: efd7affc1a81ba74c9ebbfd6c5f5dd91,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -1121,6 +1140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Runner(Network)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506798388601609443, guid: efd7affc1a81ba74c9ebbfd6c5f5dd91,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efd7affc1a81ba74c9ebbfd6c5f5dd91, type: 3}

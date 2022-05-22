@@ -10,6 +10,13 @@ public class ObstacleData : ScriptableObject
 
     [Header("LASER")]
     public float laserDamagePercentage = .1f;
-    public float laserDamageRate;
+    public float laserDamageRate = .5f;
+    public float timeToStartLaser = 2f;
+    public float laserLifeTime = 3f;
 
+    [Header("FINAL WALL")]
+    public float finalWallLaserStartTime = 5f;
+
+    [Header("TRIGGERED LASER")]
+    public float triggeredLaserStartTime = 3f;
 }

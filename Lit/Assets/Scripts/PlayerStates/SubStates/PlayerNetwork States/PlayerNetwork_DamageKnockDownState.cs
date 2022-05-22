@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerNetwork_DamageKnockDownState : PlayerNetwork_KnockedDownState
 {
-    private Timer knockoutTimer;
     public PlayerNetwork_DamageKnockDownState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {
     }
@@ -28,8 +27,6 @@ public class PlayerNetwork_DamageKnockDownState : PlayerNetwork_KnockedDownState
     {
         base.Enter();
 
-        knockoutTimer = new Timer(playerData.knockoutTime);
-        knockoutTimer.SetTimer();
     }
 
     public override void Exit()
@@ -49,11 +46,6 @@ public class PlayerNetwork_DamageKnockDownState : PlayerNetwork_KnockedDownState
     {
         base.LogicUpdate();
 
-        if (knockoutTimer.isTimeUp)
-        {
-            StateMachine.ChangeDamagedState(racer.playerRevivedState);
-            StateMachine.ChangeState(racer.playerMoveState);
-        }
     }
 
     public override void OnCollisionEnter(Collision2D collision)
@@ -75,7 +67,5 @@ public class PlayerNetwork_DamageKnockDownState : PlayerNetwork_KnockedDownState
     {
         base.PhysicsUpdate();
 
-        if (!knockoutTimer.isTimeUp)
-            knockoutTimer.UpdateTimer();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newPerkData", menuName = "Data/Perk Data")]
+[CreateAssetMenu(fileName = "newPerkData", menuName = "Data/Perks/Perk Data")]
 public class PerkData : ScriptableObject
 {
     /// <summary>
@@ -10,6 +10,12 @@ public class PerkData : ScriptableObject
     /// </summary>
     [Tooltip("The name of the perk.")]
     public string perkName;
+
+    /// <summary>
+    /// The perk name, represented in a enum format.
+    /// </summary>
+    [Tooltip("The perk name, represented in a enum format.")]
+    public Perk.PerkNames perkNameType;
 
     /// <summary>
     /// The value of the perk. Could be a value between 0 and 1 for percentage values or 0 or 1 for boolean values.
@@ -26,10 +32,16 @@ public class PerkData : ScriptableObject
 
 
     /// <summary>
-    /// Perk's activity. When should the perk be used.
+    /// Perk's state. When should the perk be used.
     /// </summary>
-    [Tooltip("Perk's activity. When should the perk be used.")]
-    public PerkState perkActivity;
+    [Tooltip("Perk's state. When should the perk be used.")]
+    public PerkState perkState;
+
+    /// <summary>
+    /// Perk's activity. When should the perk be active.
+    /// </summary>
+    [Tooltip("Perk's activity. When should the perk be active.")]
+    public PerkActivity perkActivity;
 
     /// <summary>
     /// Perk's call rate. How much should a perk be called after activation. NOTE: If we need to set a constant value for number of perk calls, change the enum to an int and set the number of time's a perk should be called.
@@ -37,13 +49,14 @@ public class PerkData : ScriptableObject
     [Tooltip("Perk's call rate. How much should a perk be called after activation. NOTE: If we need to set a constant value for number of perk calls, change the enum to an int and set the number of time's a perk should be called.")]
     public PerkCallRate perkCallRate;
 
-    [Header("BOOLEAN PERK VARIABLES")]
     /// <summary>
     /// A probability for a perk to function.
     /// </summary>
     [Range(0, 100)]
     [Tooltip("A probability for a perk to function.")]
     public float perkChance;
+
+    [Header("BOOLEAN PERK VARIABLES")]
 
     /// <summary>
     /// How should the perk's call chance scale when in an awakened state or in our native map. Can be used either for bool or float type perks.
@@ -91,12 +104,18 @@ public class PerkData : ScriptableObject
     {
         numeric,
         boolean,
+        Percentage,
     }
     public enum PerkState
     {
         Base,
         Hyper,
         Ultimate,
+    }
+    public enum PerkActivity
+    {
+        General,
+        Special,
     }
     public enum PerkCallRate
     {

@@ -8,10 +8,6 @@ public class PowerupButton : MonoBehaviour
     GamePlayerLobby gamePlayer;
     public PowerupBehaviour powerupBehaviour { get; set; }
     public Image image;
-    [SerializeField] private JustRotate justRotate;
-    [SerializeField] private JustRotate justRotateSmall;
-
-    private float rotateSpeedTemp;
 
     public bool isSelected { get; set; }
     // Start is called before the first frame update
@@ -20,7 +16,6 @@ public class PowerupButton : MonoBehaviour
         var buttonGO = transform.Find("PowerupButton");
         button = buttonGO.GetComponent<Button>();
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
-        rotateSpeedTemp = justRotate.rotateSpeed;
 
         isSelected = false;
         //   button.onClick.AddListener(() => UsePowerup(false));
@@ -34,14 +29,6 @@ public class PowerupButton : MonoBehaviour
         button.interactable = !(powerupBehaviour == null);
         if (button.interactable)
             image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
-        if (!button.interactable)
-        {
-            justRotate.rotateSpeed = 0f;
-        }
-        else
-        {
-            justRotate.rotateSpeed = rotateSpeedTemp;
-        }
         if (isSelected)
         {
             // TODO: display feedback to show that its selected

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ElementExplosionScript : MonoBehaviour
 {
@@ -15,62 +13,47 @@ public class ElementExplosionScript : MonoBehaviour
     public ForceMode2D forceMode = ForceMode2D.Impulse;
 
     public RunnerDamagesOperator runnerDamages;
+
+    public BombScript bombScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        runnerDamages.InitDamages();
     }
     public void Explode(bool explodeWithDamage)
     {
+        if (bombScript)
+        {
+            bombScript.EndBomb();
+            Destroy(bombScript.gameObject);
+        }
+
         var objectsToBlow = Physics2D.OverlapCircleAll(transform.position, explosiveRadius);
-            foreach (var objectToBlow in objectsToBlow)
+        for (int i = 0; i < objectsToBlow.Length; i++)
+        {
+            var objectRB = objectsToBlow[i].GetComponent<Rigidbody2D>();
+            
+            if (objectRB != null)
             {
-                var objectRB = objectToBlow.GetComponent<Rigidbody2D>();
-                if (objectRB != null)
+                objectRB.AddExplosionForce(explosiveForce, transform.position, explosiveRadius, upwardsModifier, forceMode);
+            }
+
+            if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
+            {
+                if (explodeWithDamage)
                 {
-                    if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
-                    {
-                        if (explodeWithDamage)
-                        {
-                            if (objectRB.GetComponent<StickmanNet>().currentColor.colorID != damageInt)
-                            {
-                                objectRB.AddExplosionForce(explosiveForce, transform.position, explosiveRadius, upwardsModifier, forceMode);
-                                Debug.Log($"Has exploded! BOOM!: {objectToBlow.name}");
-                                Debug.Log($"Damage Type at point of explosion is: {damageInt}");
-                                Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, objectRB.gameObject);
-                            }
-                        }
-                    }
-                    if (objectRB.CompareTag("Obstacle"))
-                    {
-                        var obstacle = objectRB.GetComponent<Obstacle>();
-                        if (obstacle.currentObstacleType == Obstacle.ObstacleType.Breakable)
-                        {
-                            obstacle.BreakObstacle();
-                        }
-                        else if (obstacle.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
-                        {
-                            obstacle.ExplodeLaserOrb();
-                        }
-                        else if (obstacle.currentObstacleType == Obstacle.ObstacleType.ReleasedLaserBarricade)
-                        {
-                            obstacle.DestroyBarricade();
-                        }
-                    }
-                    if (objectRB.CompareTag("Projectile"))
-                    {
-                        var projectileScript = objectRB.GetComponent<MagicProjectileScript>();
-                        var bombScript = objectRB.GetComponent<BombScript>();
-                        if (projectileScript)
-                            projectileScript.Collide(false);
-                        //else if (bombScript)
-                        //{
-                        //    if(bombScript == this) { return; }
-                        //    bombScript.Explode(false);
-                        //}
-                    }
+                    Debug.Log($"Has exploded! BOOM!: {objectsToBlow[i].name}");
+                    Debug.Log($"Damage Type at point of explosion is: {damageInt}");
+                    Utils.SetDamageVariables(runnerDamages, ownerRacer, damageInt, damagePercentage, damageRate, objectsToBlow[i].gameObject);
+
                 }
             }
+            if (GetComponent<IDamageable>() != null)
+            {
+                var damageable = GetComponent<IDamageable>();
+                damageable.Damage();
+            }
+        }
     }
     [ContextMenu("Explode")]
     public void DebugExplode()

@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 680885001440326882}
   - component: {fileID: 680885001440326881}
-  - component: {fileID: 680885001440326880}
+  - component: {fileID: 6858682693557825593}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -81,69 +81,35 @@ MonoBehaviour:
   currentBeam: 2
   damageType: 0
   beamType: 1
+  extensionType: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 9984
   startVFXOffset: {x: 0, y: 0, z: 0}
-  extensionSpeed: {x: 0, y: -4, z: 0}
+  extensionSpeed: {x: 0, y: 4, z: 0}
   directionToHit: {x: 0, y: -1}
+  extensionLimit: 0
   beamEndOffset: 2
   textureScrollSpeed: 4
   textureLengthScale: 12
-  growthSpeed: 100
-  damageStrength: 0
+  damagePercentage: 0
+  damageRate: 0
+  canExtend: 1
   endOffSetSlider: {fileID: 0}
   scrollSpeedSlider: {fileID: 0}
   textBeamName: {fileID: 0}
---- !u!114 &680885001440326880
+--- !u!114 &6858682693557825593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680885001440326883}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b8122604ee7d94abaeb9df289bf84b, type: 3}
+  m_Script: {fileID: 11500000, guid: 960aed7cac160e14eb8576de6cfe79d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamLineRendererPrefab:
-  - {fileID: 168570, guid: 1f7452042ec77d94ea7cece5cc4816fc, type: 3}
-  - {fileID: 168570, guid: 3827d5026e528924493e36340309f078, type: 3}
-  - {fileID: 168570, guid: 8fe4893f4372fc84fb0c43a1c8860725, type: 3}
-  - {fileID: 168570, guid: dde30d1733e55b941ada7e3a234bb74c, type: 3}
-  - {fileID: 168570, guid: 13d778ebbfff82149bdc5ed15fbda9c9, type: 3}
-  - {fileID: 168570, guid: 36346b1c7b5c7ed48aa6244c315c55cf, type: 3}
-  - {fileID: 168570, guid: 4cda6df8f00347b4f9a35657fe9374d3, type: 3}
-  - {fileID: 168570, guid: f8910e850e9dcdc44bb3454608bf7f64, type: 3}
-  - {fileID: 168570, guid: d22930b63c5f91049b1539535ad958cd, type: 3}
-  - {fileID: 168570, guid: cc9af0e16354a3c4aaa2860db34ca4a0, type: 3}
-  beamStartPrefab:
-  - {fileID: 158756, guid: 8396fce600232da4dbbf9a8c440e40ba, type: 3}
-  - {fileID: 179694, guid: cf0bdea0aea918340a7a202187457d8c, type: 3}
-  - {fileID: 101350, guid: ea72aca1214b2ab4daca57345d563d07, type: 3}
-  - {fileID: 134198, guid: 0b1a09f32ca9ca84b8ffecba7c9410b3, type: 3}
-  - {fileID: 146808, guid: 3b44f00d62229884a99c8bd5c5a1a247, type: 3}
-  - {fileID: 169500, guid: 79baaa55e641be0439275b8dae7af740, type: 3}
-  - {fileID: 117412, guid: 90b9eccaf45751f4dbef1da136dfb7e2, type: 3}
-  - {fileID: 158942, guid: 7746042b76677fa4897bba11a2964416, type: 3}
-  - {fileID: 137820, guid: 170db8eff3ea73c41b1a515951f03d70, type: 3}
-  - {fileID: 132702, guid: 44b39dcf5d036464b9791669232296aa, type: 3}
-  beamEndPrefab:
-  - {fileID: 175948, guid: d6fd535eb4c308f45b5c78773315e81c, type: 3}
-  - {fileID: 146702, guid: 887fc254e5b40474e9591de0ae156bd8, type: 3}
-  - {fileID: 143488, guid: 7ab599370938e1948a5eb2967f1cbd66, type: 3}
-  - {fileID: 113256, guid: 01b32c1e97b390f4b82f26b2d4a847ee, type: 3}
-  - {fileID: 182458, guid: 192a807de5bc83c498bf94f94e6f6b75, type: 3}
-  - {fileID: 171424, guid: 33fa9eb9b5b7b784abdb65ad8c16ee80, type: 3}
-  - {fileID: 110462, guid: 1cf4c9887d4c6874692243f51e44796a, type: 3}
-  - {fileID: 114968, guid: 66daa82b181beef4d9465affcd97d06e, type: 3}
-  - {fileID: 100050, guid: 325422360e5730141adac507f0c6a393, type: 3}
-  - {fileID: 133292, guid: 75d3878d3e4132f41966e0e54fa81406, type: 3}
-  beamEndOffset: 2
-  textureScrollSpeed: 4
-  textureLengthScale: 12
-  growthSpeed: 100
-  endOffSetSlider: {fileID: 0}
-  scrollSpeedSlider: {fileID: 0}
-  textBeamName: {fileID: 0}
+  currentObstacleType: 8
+  fixedLaserBeamDistance: 0
+  direction: {x: 0, y: 0}

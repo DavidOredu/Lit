@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: AwakenedData
   m_EditorClassIdentifier: 
   redExplosiveRadiusPercentageIncrease: 0.6
-  redDamageStrength: 0
+  redDamagePercentage: 0.6
+  redDamageRate: 0.6
   redSpeedIncreasePercentage: 6
   blueSpeedIncreasePercentage: 1.5
   blueOppositionSpeedReductionValue: 0
@@ -23,7 +24,8 @@ MonoBehaviour:
   purpleOrbSpeed: 40
   purpleOrbRadius: 40
   purpleOrbLifeTime: 7
-  purpleBeamDamageStrength: 10
+  purpleBeamDamagePercentage: 0.8
+  purpleBeamDamageRate: 0.8
   purpleWhatToHit:
     serializedVersion: 2
     m_Bits: 0

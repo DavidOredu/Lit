@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_DeadState: Enemy_AbilityState
+public class Enemy_DeadState: Enemy_DamagedState
 {
+    private Timer dissolveTimer;
     public Enemy_DeadState(Entity entity, FiniteStateMachine StateMachine, string animBoolName, Racer racer, PlayerData playerData = null, D_DifficultyData difficultyData = null) : base(entity, StateMachine, animBoolName, racer, playerData, difficultyData)
     {
     }
@@ -27,10 +28,16 @@ public class Enemy_DeadState: Enemy_AbilityState
     {
         base.Enter();
 
-        racerEntity.SetVelocityX(0);
         racerEntity.SetVelocityY(0);
 
-        
+        racer.RB.gravityScale = 0;
+        racer.StateMachine.ChangeState(racer.opponentQuickHaltState);
+
+        racer.runner.stickmanNet.material = Resources.Load<Material>($"{racer.runner.stickmanNet.currentColor.colorID}/DissolveMat");
+        racer.runner.stickmanNet.DefineCode();
+
+        dissolveTimer = new Timer(difficultyData.dissolveTime);
+        dissolveTimer.SetTimer();
     }
 
     public override void Exit()
@@ -44,10 +51,6 @@ public class Enemy_DeadState: Enemy_AbilityState
     {
         base.LateUpdate();
 
-        if (isAnimationFinished)
-        {
-            racerEntity.DestroyObject(racer.gameObject);
-        }
     }
 
     public override void LogicUpdate()
@@ -73,5 +76,19 @@ public class Enemy_DeadState: Enemy_AbilityState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        var completion = 1 - (dissolveTimer.CurrentTime() / dissolveTimer.MainTime());
+        var amount = Mathf.Lerp(0, 1, difficultyData.dissolveCurve.Evaluate(completion));
+        racer.runner.stickmanNet.material.SetFloat("_DissolveAmount", amount);
+
+        if (dissolveTimer.isTimeUp)
+        {
+
+        }
+        else
+        {
+            dissolveTimer.UpdateTimer();
+            Debug.Log($"current dissolve time is {dissolveTimer.CurrentTime()}");
+        }
     }
 }

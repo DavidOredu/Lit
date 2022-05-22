@@ -4756,8 +4756,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRacer: {fileID: 0}
-  damageType: 0
-  damageStrength: 0
+  damageInt: 0
+  damagePercentage: 0
+  damageRate: 0
   explosiveForce: 0
   explosiveRadius: 0
   upwardsModifier: 0
@@ -4769,7 +4770,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     frost:
@@ -4778,7 +4780,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     poison:
@@ -4787,7 +4790,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     light:
@@ -4796,7 +4800,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     lightning:
@@ -4805,7 +4810,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     wind:
@@ -4814,7 +4820,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     magic:
@@ -4823,7 +4830,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     shadow:
@@ -4832,7 +4840,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     laser:
@@ -4841,7 +4850,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     deathLaser:
@@ -4850,7 +4860,8 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
     knockout:
@@ -4859,9 +4870,11 @@ MonoBehaviour:
       damageInt: 0
       damaged: 0
       racer: {fileID: 0}
-      damageStrength: 0
+      damageRate: 0
+      damagePercentage: 0
       hyperDamage: 0
       ultimateDamage: 0
+    activeDamageCount: 0
     Damages: []
 --- !u!82 &-2537579736364598996
 AudioSource:

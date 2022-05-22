@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8429255242921881416}
   - component: {fileID: 8429255242690986485}
   - component: {fileID: 7712845905144884254}
+  - component: {fileID: -7966130035732260836}
   m_Layer: 12
   m_Name: hit-3-LOOP
   m_TagString: Obstacle
@@ -4747,13 +4748,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObstacleType: 1
-  laserLifeTimer:
-    timerStarted: 0
-  laserStartTimer:
-    timerStarted: 0
-  timeToStartLaser: 2
-  laserLifeTime: 3
-  beamProjectileScript: {fileID: 0}
+  fixedLaserBeamDistance: 0
+  direction: {x: 0, y: 0}
+--- !u!114 &-7966130035732260836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428842952291212616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4519732ff3fb29a4891a0edfe62a8c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerRacer: {fileID: 0}
+  damageType: 0
+  damagePercentage: 0
+  damageRate: 0
+  explosiveRadiusDecreasePercentage: 0
+  explosiveForce: 0
+  explosiveRadius: 0
+  upwardsModifier: 0
+  forceMode: 1
 --- !u!1 &8428878193681996176
 GameObject:
   m_ObjectHideFlags: 0

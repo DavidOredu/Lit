@@ -11,6 +11,12 @@ public class ObjectPooler : Singleton<ObjectPooler>
         public string tag;
         public GameObject prefab;
         public int size;
+        public Pool(string tag, GameObject prefab, int size)
+        {
+            this.tag = tag;
+            this.prefab = prefab;
+            this.size = size;
+        }
     }
     //#region Singleton
     //public static ObjectPooler instance;

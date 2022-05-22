@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandlerNetwork : NetworkBehaviour
 {
     public InputManager inputManager;
-    private PlayerInputActions inputActions;
+    public PlayerInputActions inputActions;
     public Vector2 RawMovementInput { get; private set; }
     public Vector2 MousePosition { get; private set; }
     public int NormalizedInputX { get; private set; }
@@ -39,6 +39,16 @@ public class PlayerInputHandlerNetwork : NetworkBehaviour
     }
     private void OnEnable()
     {
+        
+    }
+    private void OnDisable()
+    {
+        DeregisterInputs();
+    }
+
+    #region Input Assignment Functions
+    public void RegisterInputs()
+    {
         inputActions.Mechanics.Jump.started += ctx => Jump_Started(ctx);
         inputActions.Mechanics.Jump.performed += ctx => Jump_Performed(ctx);
         inputActions.Mechanics.Jump.canceled += ctx => Jump_Canceled(ctx);
@@ -46,12 +56,14 @@ public class PlayerInputHandlerNetwork : NetworkBehaviour
         inputActions.Mechanics.Powerup.performed += ctx => Powerup_Performed(ctx);
         inputActions.Mechanics.Powerup.canceled += ctx => Powerup_Canceled(ctx);
     }
-    private void OnDisable()
+
+    public void DeregisterInputs()
     {
         inputActions.Mechanics.Jump.started -= ctx => Jump_Started(ctx);
         inputActions.Mechanics.Jump.performed -= ctx => Jump_Performed(ctx);
         inputActions.Mechanics.Jump.canceled -= ctx => Jump_Canceled(ctx);
     }
+#endregion
 
     #region Jump Action
     void Jump_Started(InputAction.CallbackContext ctx)
@@ -122,9 +134,8 @@ public class PlayerInputHandlerNetwork : NetworkBehaviour
         MousePosition = context.ReadValue<Vector2>();
 
     }
-    public void OnJumpInput(InputAction.CallbackContext context)
+    public void OnTapInput(InputAction.CallbackContext context)
     {
-
 
     }
 

@@ -27,7 +27,7 @@ MonoBehaviour:
     buttonMap: 1
     levelScene: {fileID: 11400000, guid: 85a699955ab3ce6438874282d31cf30c, type: 2}
     isUnlocked: 1
-  - levelGameMode: 3
+  - levelGameMode: 2
     starsToUnlock: 0
     numberOfRounds: 1
     numberOfOpponentsInLevel: 2

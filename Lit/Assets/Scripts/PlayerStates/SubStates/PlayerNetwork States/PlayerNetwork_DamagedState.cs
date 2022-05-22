@@ -9,13 +9,11 @@ public class PlayerNetwork_DamagedState : PlayerNetwork_AbilityState
 
     public override void AnimationFinishTrigger()
     {
-        base.AnimationFinishTrigger();
 
     }
 
     public override void AnimationTrigger()
     {
-        base.AnimationTrigger();
     }
 
     public override void DoChecks()

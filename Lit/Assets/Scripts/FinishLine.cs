@@ -5,11 +5,7 @@ using UnityEngine;
 public class FinishLine : MonoBehaviour
 {
     private GameManager gameManager;
-    [SerializeField] private float lineDistance;
-    public static bool hasCrossedLine = false;
 
-    public BoxCollider2D finishArea;
-    public LayerMask whatIsRunner;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,29 +23,16 @@ public class FinishLine : MonoBehaviour
                 switch (racer.currentRacerType)
                 {
                     case Racer.RacerType.Player:
-                        racer.StateMachine.ChangeState(racer.playerQuickHaltState);
+                        racer.StateMachine.ChangeState(racer.playerWinState);
                         break;
                     case Racer.RacerType.Opponent:
-                        racer.StateMachine.ChangeState(racer.opponentQuickHaltState);
+                        racer.StateMachine.ChangeState(racer.opponentWinState);
                         break;
                     default:
                         break;
                 }
+                gameManager.GameCompleted();
             }
         }
-    }
-    private bool hasCrossed()
-    {
-        return Physics2D.Raycast(transform.position, new Vector2(transform.position.x, transform.position.y + lineDistance), whatIsRunner);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (hasCrossed())
-            hasCrossedLine = true;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y + lineDistance));
     }
 }

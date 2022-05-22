@@ -117,9 +117,13 @@ public class PowerupActions : MonoBehaviour
             var effectInGame = Instantiate(speedBurstEffect.effectGO, racer.transform.position, speedBurstEffect.effectGO.transform.rotation);
             speedBurstEffect.effectName = effectInGame.name;
 
-            racer.RB.AddForce(new Vector2(20f, 0f), ForceMode2D.Impulse);
+            racer.RB.AddForce(new Vector2(30f, 0f), ForceMode2D.Impulse);
             racer.moveVelocityResource += Utils.PercentageValue(racer.racerData.topSpeed, racer.powerupData.speedUpPercentageIncrease);
-            racer.movementVelocity = racer.moveVelocityResource;
+
+            if (racer.burstSpeed)
+                racer.movementVelocity = racer.moveVelocityResource;
+            else
+                racer.movementVelocity += Utils.PercentageValue(racer.moveVelocityResource, .4f);
 
             Debug.Log("Has run 'SpeedUpStartAction' function!");
         }
@@ -166,7 +170,7 @@ public class PowerupActions : MonoBehaviour
         {
             {
                 var racerData = racer.racerData;
-                var hitObjects = Physics2D.OverlapCircleAll(racer.playerCenter.position, racerData.powerupRadius, racerData.whatToDamage);
+                var hitObjects = Physics2D.OverlapCircleAll(racer.playerCenter.position, racerData.powerupSelfRadius, racerData.whatToDamage);
 
                 foreach (var hitRacer in hitObjects)
                 {
@@ -176,7 +180,7 @@ public class PowerupActions : MonoBehaviour
                     // instantiate appropriate element effect on hit player
                     if (objectRB.CompareTag("Opponent") || objectRB.CompareTag("Player"))
                     {
-                        objectRB.AddExplosionForce(racer.powerupData.fieldExplosiveForce, transform.position, racerData.powerupRadius, 0f, racer.powerupData.fieldForceMode);
+                        objectRB.AddExplosionForce(racer.powerupData.fieldExplosiveForce, transform.position, racerData.powerupSelfRadius, 0f, racer.powerupData.fieldForceMode);
                         Utils.SetDamageVariables(runnerDamages, racer, damageType, racer.powerupData.fieldDamagePercentage, racer.powerupData.fieldDamageRate, hitRacer.gameObject); ;
 
                     }
@@ -259,6 +263,7 @@ public class PowerupActions : MonoBehaviour
         {
             this.racer = racer;
             racer.Anim.SetBool("shoot", true);
+            racer.cameraFollow.attackMode = true;
         }
     }
     public void ProjectileSelectedActiveAction(Racer racer)
@@ -302,6 +307,7 @@ public class PowerupActions : MonoBehaviour
         if (racer != null)
         {
             racer.Anim.SetBool("shoot", false);
+            racer.cameraFollow.attackMode = false;
         }
     }
     public void ProjectileEndAction(Racer racer)
@@ -448,6 +454,7 @@ public class PowerupActions : MonoBehaviour
             bombScript = bomb.GetComponent<BombScript>();
 
             Utils.SetBombVariables(racer, bombScript, colorCode, racer.powerupData);
+            racer.cameraFollow.attackMode = true;
         }
     }
     public void BombSelectedActiveAction(Racer racer)
@@ -497,6 +504,7 @@ public class PowerupActions : MonoBehaviour
                 bombScript.canControl = false;
                 bombScript.isDiscarded = true;
                 Utils.ParticleSystemAction(bomb, Utils.ParticleSystemActions.TurnOffLooping);
+                racer.cameraFollow.attackMode = false;
             }
             else { return; }
         }
@@ -558,7 +566,6 @@ public class PowerupActions : MonoBehaviour
         if (bombScript == null) { return; }
         if (!bombScript.hasFired || bombScript.canControl)
         {
-            Utils.SetBombVariables(racer, bombScript, colorCode, racer.powerupData);
             bombScript.OnBombDragEnd();
         }
 
@@ -570,6 +577,17 @@ public class PowerupActions : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Strength Potion
+    public void StrengthPotionStartAction(Racer racer)
+    {
+        racer.strength = racer.racerData.maxStrength;
+    }
+    public void StrengthPotionEndAction(Racer racer)
+    {
+
+    }
     #endregion
 
     #region Coins
@@ -616,6 +634,7 @@ public class PowerupActions : MonoBehaviour
             projectileScript.damageInt = racer.runner.stickmanNet.code;
             projectileScript.impactNormal = new Vector3(0, 0, rotationZ);
             projectileScript.damagePercentage = powerupData.projectileDamagePercentage;
+            projectileScript.damageRate = powerupData.projectileDamageRate;
             projectileScript.speed = powerupData.projectileSpeed;
             projectileScript.direction = direction;
             if (!projectileScript.canControl)

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newDifficultyData", menuName = "Data/Difficulty Data")]
 public class D_DifficultyData : RacerData
 {
+    [Header("REVIVE")]
+    public int reviveCount = 0;
     [Header("AI VARIABLES")]
     public float reactionTime = 4f;
 
@@ -32,4 +34,5 @@ public class D_DifficultyData : RacerData
     public AnimationCurve jumpToBaseProbabilityCurve;
     public AnimationCurve boosterPowerPlatformProbabilityCurve;
     public AnimationCurve defensivePowerPlatformProbabilityCurve;
+    public AnimationCurve perfectLaunchProbabilityCurve;
 }

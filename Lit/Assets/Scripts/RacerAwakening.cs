@@ -13,6 +13,8 @@ public class RacerAwakening : MonoBehaviour
 
     public RunnerEffects runnerEffects;
     public VFXConnector VFXConnector;
+
+    public Timer awakenTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,9 @@ public class RacerAwakening : MonoBehaviour
         runnerEffects = new RunnerEffects(runnerEffectComp);
 
         runnerEffects.runnerVFX.Stop();
+
+        awakenTimer = new Timer(racer.racerData.awakenTime);
+        awakenTimer.SetTimer();
     }
 
     // Update is called once per frame
@@ -41,8 +46,25 @@ public class RacerAwakening : MonoBehaviour
         {
             runnerEffects.runnerVFX.Stop();
         }
-    }
 
+        
+    }
+    private void FixedUpdate()
+    {
+        if (racer.isAwakened)
+        {
+            if (awakenTimer.isTimeUp)
+            {
+                // remove awakening buffs
+                // play unawaken feedbacks
+                racer.isAwakened = false;
+            }
+            else
+            {
+                awakenTimer.UpdateTimer();
+            }
+        }
+    }
     #region Awaken Functions
     /// <summary>
     /// Puts the runner in an awakened state, where the runner is allowed to use his base power more freely.
@@ -50,6 +72,7 @@ public class RacerAwakening : MonoBehaviour
     /// <param name="colorCode">The color signature of the runner.</param>
     public void Awaken(int colorCode)
     {
+        if(!canAwaken) { return; }
         // if the runner is previously damaged, remove the damage
         if (racer.racerDamages.myDamages.IsDamaged())
         {
@@ -65,6 +88,7 @@ public class RacerAwakening : MonoBehaviour
                 racer.StateMachine.ChangeAwakenedState(racer.opponentAwakenedState);
                 break;
         }
+        awakenTimer.ResetTimer();
         awakenCount--;
         canAwaken = false;
     }

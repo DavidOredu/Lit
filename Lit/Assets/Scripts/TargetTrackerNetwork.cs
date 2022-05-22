@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TargetTrackerNetwork : MonoBehaviour
@@ -23,9 +21,10 @@ public class TargetTrackerNetwork : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {     if(player == null || stickman == null) { return; }
-                mainPos = ((player.currentPositionPercentage / 100) * posOffset.x) + startingPos;
-                transform.position = new Vector3(mainPos, transform.position.y);
+    {
+        if (player == null || stickman == null) { return; }
+        mainPos = ((player.currentPositionPercentage / 100) * posOffset.x) + startingPos;
+        transform.position = new Vector3(mainPos, transform.position.y);
         image.material = Resources.Load<Material>($"{stickman.currentColor.colorID}");
     }
 }

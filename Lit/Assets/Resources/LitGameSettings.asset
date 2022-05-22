@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0269d0208fdf6a84680bd5e329dfa51d, type: 3}
   m_Name: LitGameSettings
   m_EditorClassIdentifier: 
-  musicVolume: 0.6834334
+  musicVolume: 0
   sfxVolume: 1
   musicPitch: 1
   sfxPitch: 1

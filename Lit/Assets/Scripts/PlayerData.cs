@@ -9,6 +9,12 @@ public class PlayerData : RacerData
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMultiplier = 0.5f;
 
+    [Header("CAMERA CONTROL VARIABLES")]
+    public float proximitySearchRadius;
+    public float attackSearchRadius;
+    public LayerMask whatToSearch;
+    public LayerMask whatToAttack;
+
     [Header("COLOR VARIABLES")]
     [Range(0, 10)]
     public int colorCode;

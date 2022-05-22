@@ -7,6 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class Perk
 {
+    public PerkNames perkName;
     public PerkData perkData;
     public dynamic valueToAffect;
     public float perkValue;
@@ -38,9 +39,15 @@ public class Perk
     {
         RunPerkAction(valueToAffect);
     }
-
-    public dynamic HandleActivePerk(dynamic valueToAffect)
+    /// <summary>
+    /// Calls the perk action, if the perk is active. A 'Once' call type perk calls one time and a 'Continuous' type calls continuously, with a given count.
+    /// </summary>
+    /// <param name="valueToAffect">The value of the object assigned.</param>
+    /// <param name="callCount">The call count. In we use a continuous call perk. Use 'Mathf.Infinity' if you want a perk to call infinitely.</param>
+    /// <returns></returns>
+    public dynamic HandleActivePerk(dynamic valueToAffect, int callCount = 1)
     {
+        if(perkData == null) { return valueToAffect; }
         dynamic value = valueToAffect;
         switch (perkData.perkCallRate)
         {
@@ -49,7 +56,8 @@ public class Perk
                 isPerkActive = false;
                 break;
             case PerkData.PerkCallRate.Continuous:
-                value = RunPerkAction(valueToAffect);
+                for (int i = 0; i < callCount; i++)
+                    value = RunPerkAction(valueToAffect);
                 break;
         }
         return value;
@@ -104,6 +112,20 @@ public class Perk
                         Debug.LogError("Perk Value is neither 0 or 1 for a boolean type perk. Set value to be either 0 or 1.");
                 }
                 break;
+            case PerkData.PerkType.Percentage:
+                if (!CheckPerkChance()) { return valueToAffect; }
+                perkCallTracker.Add(perkState);
+                switch (perkData.perkNature)
+                {
+                    case PerkData.PerkNature.Positive:
+                        value += perkValue;
+                        break;
+                    case PerkData.PerkNature.Negative:
+                        value -= perkValue;
+                        value = Mathf.Max(0, value);
+                        break;
+                }
+                break;
         }
         return value;
     }
@@ -130,7 +152,21 @@ public class Perk
             case PerkData.PerkType.boolean:
                 value = originalValue;
                 break;
-
+            case PerkData.PerkType.Percentage:
+                foreach (var state in perkCallTracker)
+                {
+                    switch (perkData.perkNature)
+                    {
+                        case PerkData.PerkNature.Positive:
+                            value -= GetPerkValue(state);
+                            value = Mathf.Max(0, value);
+                            break;
+                        case PerkData.PerkNature.Negative:
+                            value += GetPerkValue(state);
+                            break;
+                    }
+                }
+                break; 
         }
         perkCallTracker.Clear();
         return value;
@@ -189,14 +225,18 @@ public class Perk
         }
         return value;
     }
-    public void SetPerkActivity(bool inNativeMap, bool isAwakened)
+    public bool SetPerkActivity(bool inNativeMap, bool isAwakened)
     {
+        var formerPerkState = perkState;
+
         if (inNativeMap && isAwakened)
             perkState = PerkData.PerkState.Ultimate;
         else if (inNativeMap || isAwakened)
             perkState = PerkData.PerkState.Hyper;
         else
             perkState = PerkData.PerkState.Base;
+
+        return formerPerkState != perkState;
     }
     public bool CheckPerkChance()
     {
@@ -204,6 +244,29 @@ public class Perk
         else if (perkChance == 0) { return false; }
         else if (Utils.RandomValue(0, 100) <= perkChance) { return true; }
         else { return false; }
+    }
+
+    public enum PerkNames
+    {
+        DamageResistance,
+        IncreasedSpeed,
+        IncreasedBlastRadius,
+        BurstSpeed,
+        ContactDamage,
+        IncreasedDamage,
+        IncreasedJumpVelocity,
+        IncreasedJumpCount,
+        StrengthIncreaseRateBuff,
+        BurnResistance,
+        FreezeResistance,
+        Mushin,
+        HomingProjectile,
+        ShieldAbsorption,
+        ReducedSpeed,
+        IncreasedGliderSpeed,
+        HaltRacer,
+        SabotageInput,
+        IncreasedPowerupDuration,
     }
 }
 

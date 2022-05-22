@@ -64,6 +64,19 @@ namespace DapperDino.Mirror.Tutorials.Lobby
             //CheckIfAllIsReady();
 
             UpdateDisplay();
+
+            if (!hasAuthority) { return; }
+            if (allIsReady)
+            {
+                if (GameManager.raceCountdownTimer.isTimeUp)
+                {
+                    GameManager.hasRaceStarted = true;
+                }
+                else
+                {
+                    GameManager.raceCountdownTimer.UpdateTimer();
+                }
+            }
         }
         IEnumerator CheckIfInGame()
         {
@@ -128,7 +141,7 @@ namespace DapperDino.Mirror.Tutorials.Lobby
                     GameManager.MainPlayer = Room.GamePlayers[i].racer;
                     GameManager.MainStickman = Room.GamePlayers[i].stickman;
 
-                    if(GameManager.powerupManagers.Count != GameManager.numberOfRunners)
+                    if(GameManager.powerupManagers.Count != GameManager.numberOfRunners && GameManager.MainPlayer != null)
                         GameManager.InitInGameObjects();
                 }
             }

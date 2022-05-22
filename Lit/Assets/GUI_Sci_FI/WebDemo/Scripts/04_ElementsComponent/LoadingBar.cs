@@ -8,7 +8,7 @@ public class LoadingBar : MonoBehaviour {
 	private Text loadingCount;
 
 	void Start () {
-		loadingCount = transform.FindChild ("txt_loading").GetComponent<Text>();
+		loadingCount = transform.Find ("txt_loading").GetComponent<Text>();
 		slider = GetComponent<Slider> ();
 		StartCoroutine (TimeCheck ());
 	}

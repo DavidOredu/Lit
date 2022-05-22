@@ -145,13 +145,16 @@ MonoBehaviour:
   moveVelocityResource: 0
   movementVelocity: 0
   normalizedMovementVelocity: 0
+  burstSpeed: 0
   strength: 0
   recentStrength: 0
   previousStrengthNormalized: 0
   normalizedStrength: 0
   jumpVelocityResource: 0
   jumpVelocity: 0
+  amountOfJumps: 0
   isAwakened: 0
+  isInNativeMap: 0
   runner:
     runner: {fileID: 0}
     stickman: {fileID: 0}
@@ -160,6 +163,7 @@ MonoBehaviour:
     player: {fileID: 0}
   racerDamages: {fileID: 9185604600991111525}
   racerAwakening: {fileID: 80056647007850164}
+  perkHandler: {fileID: 4225322731029661817}
   runnerFeedbacks: {fileID: 5005613469761386145}
   playerCenter: {fileID: 5201167860215532315}
   GroundCheck: {fileID: 5319341248167596168}
@@ -175,6 +179,7 @@ MonoBehaviour:
   actionController: {fileID: 0}
   currentDifficulty: 1
   entityData: {fileID: 11400000, guid: f695cf9fa80505b48909a3c42af985c7, type: 2}
+  reviveCount: 0
   playerCheck: {fileID: 813363231950930894}
   ledgeCheck: {fileID: 7590166131024667170}
   jumpCheck: {fileID: 9062928021041912596}
@@ -342,6 +347,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.9988576
       objectReference: {fileID: 0}
+    - target: {fileID: 901176723347737698, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1219810491629081323, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -727,6 +737,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.9997055
       objectReference: {fileID: 0}
+    - target: {fileID: 5087691662525161846, guid: 5ef45f225d846f446896bf8ad947b75a,
+        type: 3}
+      propertyPath: racer
+      value: 
+      objectReference: {fileID: -505225184817380498}
     - target: {fileID: 5334969408824950504, guid: 5ef45f225d846f446896bf8ad947b75a,
         type: 3}
       propertyPath: m_RootOrder
@@ -851,6 +866,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb3cfce74f2daa4199df5e33dfaf59a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4225322731029661817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5087691662525161846, guid: 5ef45f225d846f446896bf8ad947b75a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8950974900402612495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319341248167596174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58941e57ee83ce7459347df550558324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &6559148140647445056 stripped

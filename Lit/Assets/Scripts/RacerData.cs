@@ -8,19 +8,26 @@ public class RacerData : ScriptableObject
     /// The name of the runner. This name will be used in dialogue in the game's story, and will be used in the multiplayer section the discern players.
     /// </summary>
     [Header("RACER PROFILE")]
+    [Tooltip("The name of the runner. This name will be used in dialogue in the game's story, and will be used in the multiplayer section the discern players.")]
     public string playerName;
+
     /// <summary>
     /// The maximum strength of the runner. The strength variable is used to resist damage by runner's and obstacles. It also determines the top speed of the runner.
     /// </summary>
     [Header("RACER STRENGTH")]
+    [Tooltip("The maximum strength of the runner. The strength variable is used to resist damage by runner's and obstacles. It also determines the top speed of the runner.")]
     public int maxStrength = 20;
+    public float strengthIncreaseRate = .05f;
     public float damageResistance = 0f;
+    public bool contactDamage = false;
 
     /// <summary>
     /// The relationship between strength and top speed. This governs the dynamic ratios strength has to top speed.
     /// </summary>
     [Header("ANIMATION CURVES")]
+    [Tooltip("The relationship between strength and top speed. This governs the dynamic ratios strength has to top speed.")]
     public AnimationCurve strengthToTopSpeedCurve;
+
     /// <summary>
     /// [Deprecated] The relationship between speed and jump. This used to measure to jump amount a runner should have depending on speed, but I found the game gets less fluid that way.
     /// </summary>
@@ -45,6 +52,11 @@ public class RacerData : ScriptableObject
     public float timeBrakeToZero = 1f;
 
     /// <summary>
+    /// Should the player instantly reach top speed on certain occasions like speed up powerup, lit platform, etc
+    /// </summary>
+    public bool burstSpeed = false;
+
+    /// <summary>
     /// The highest jump velocity possible.
     /// </summary>
     [Header("JUMP STATE")]
@@ -67,10 +79,15 @@ public class RacerData : ScriptableObject
     [Header("REVIVED STATE")]
     public float invulnerabilityTimer = 5f;
 
+    [Header("DEAD STATE")]
+    public float dissolveTime;
+    public AnimationCurve dissolveCurve;
+
 
     [Header("AWAKENED STATE")]
     public int requiredLitPlatformsToAwaken = 3;
     public int awakenCount = 3;
+    public float awakenTime = 10f;
 
 
     [Header("LIT VARIABLES")]
@@ -94,6 +111,7 @@ public class RacerData : ScriptableObject
 
 
     [Header("POWERUP VARIABLES")]
-    public float powerupRadius = 3.4f;
+    public float powerupSelfRadius = 3.4f;
+    public float blastRadiusMultiplier = 1f;
     public LayerMask whatToDamage;
 }

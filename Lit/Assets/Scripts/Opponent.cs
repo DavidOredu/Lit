@@ -11,6 +11,7 @@ public class Opponent : Entity
         SetAIDifficulty();
         SetAllVariables();
 
+        opponentReadyingState = new Enemy_ReadyingState(this, StateMachine, "readying", this, null, difficultyData);
         opponentMoveState = new Enemy_MoveState(this, StateMachine, "move", this, null, difficultyData);
         opponentIdleState = new Enemy_IdleState(this, StateMachine, "idle", this, null, difficultyData);
         opponentInAirState = new Enemy_InAirState(this, StateMachine, "inAir", this, null, difficultyData);
@@ -38,6 +39,8 @@ public class Opponent : Entity
         opponentHoverGlideState = new Enemy_HoverGlideState(this, StateMachine, "hoverGlide", this, null, difficultyData);
         opponentSlideGlideState = new Enemy_SlideGlideState(this, StateMachine, "slideGlide", this, null, difficultyData);
         opponentNullState = new Enemy_NullState(this, StateMachine, "null", this, null, difficultyData);
+        opponentWinState = new Enemy_WinState(this, StateMachine, "win", this, null, difficultyData);
+        opponentLoseState = new Enemy_LoseState(this, StateMachine, "lose", this, null, difficultyData);
 
         opponentDamageStates = new List<State>
         {
@@ -74,13 +77,13 @@ public class Opponent : Entity
         jumpVelocityResource = difficultyData.maxJumpVelocity;
         jumpVelocity = jumpVelocityResource;
         strength = difficultyData.maxStrength;
-        damageResistance = difficultyData.damageResistance;
+        reviveCount = difficultyData.reviveCount;
     }
     public override void Start()
     {
         base.Start();
 
-        StateMachine.Initialize(opponentMoveState);
+        StateMachine.Initialize(opponentReadyingState);
         StateMachine.InitializeDamage(opponentNullState);
         StateMachine.InitializeAwakened(opponentNullState);
     }

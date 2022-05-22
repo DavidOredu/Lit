@@ -28,8 +28,11 @@ public class Enemy_DamageKnockDownState : Enemy_KnockedDownState
     {
         base.Enter();
 
-        knockoutTimer = new Timer(difficultyData.knockoutTime);
-        knockoutTimer.SetTimer();
+        if (racerEntity.reviveCount > 0)
+        {
+            knockoutTimer = new Timer(difficultyData.knockoutTime);
+            knockoutTimer.SetTimer();
+        }
     }
 
     public override void Exit()
@@ -44,15 +47,15 @@ public class Enemy_DamageKnockDownState : Enemy_KnockedDownState
     {
         base.LateUpdate();
     }
-
+    
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (knockoutTimer.isTimeUp)
+        if (knockoutTimer.isTimeUp && racerEntity.reviveCount > 0)
         {
-            StateMachine.ChangeDamagedState(racer.opponentRevivedState);
-            StateMachine.ChangeState(racer.opponentMoveState);
+            racerEntity.Revive();
+            racerEntity.reviveCount--;
         }
     }
 
@@ -75,7 +78,7 @@ public class Enemy_DamageKnockDownState : Enemy_KnockedDownState
     {
         base.PhysicsUpdate();
 
-        if (!knockoutTimer.isTimeUp)
+        if (!knockoutTimer.isTimeUp && racerEntity.reviveCount > 0)
             knockoutTimer.UpdateTimer();
     }
 }

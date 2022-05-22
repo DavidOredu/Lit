@@ -21,14 +21,15 @@ public class BeamProjectileScript : MonoBehaviour
     private LineRenderer line;
 
     [Header("Adjustable Variables")]
+    public BeamExtensionType extensionType;
     public LayerMask whatToHit;
     public Vector3 startVFXOffset;
     public Vector3 extensionSpeed;
     public Vector2 directionToHit = Vector2.down;
+    public float extensionLimit;
     public float beamEndOffset = 1f; //How far from the raycast hit point the end effect is positioned
     public float textureScrollSpeed = 8f; //How fast the texture scrolls along the beam
     public float textureLengthScale = 3; //Length of the beam texture
-    public float growthSpeed = 100f;
     public float damagePercentage;
     public float damageRate;
     public bool canExtend = true;
@@ -55,7 +56,12 @@ public class BeamProjectileScript : MonoBehaviour
         beam = Instantiate(beamLineRendererPrefab[currentBeam], new Vector3(0, 0, 0), Quaternion.identity, gameObject.transform);
         line = beam.GetComponent<LineRenderer>();
 
-        beamEnd.SetActive(false);
+        beamEnd.SetActive(true);
+
+        beamStart.transform.LookAt(beamEnd.transform.position);
+        beamEnd.transform.LookAt(beamStart.transform.position);
+
+        beamStart.transform.position = transform.position - startVFXOffset;
 
         line.SetPosition(0, transform.position);
         line.SetPosition(1, line.GetPosition(0));
@@ -91,14 +97,14 @@ public class BeamProjectileScript : MonoBehaviour
     {
         line.positionCount = 2;
         line.SetPosition(0, start);
-        beamStart.transform.position = start - startVFXOffset;
+        
 
-        Vector2 direction = directionToHit * -(line.GetPosition(1) - line.GetPosition(0));
+        Vector3 direction = directionToHit/* * -(line.GetPosition(1) - line.GetPosition(0))*/;
+        float distance = Vector3.Distance(line.GetPosition(0), line.GetPosition(1));
         Vector2 end = Vector3.zero;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, whatToHit);
 
 
-        Debug.DrawRay(transform.position, direction, Color.green);
         if (hit)
         {
             end = hit.point;
@@ -109,24 +115,31 @@ public class BeamProjectileScript : MonoBehaviour
             }
             if(beamType == BeamType.ElectricOrb)
                 Destroy(gameObject);
+            beamEnd.SetActive(true);
+            Debug.DrawLine(transform.position, end, Color.green);
+
         }
         else
         {
-            end = line.GetPosition(1) + new Vector3(extensionSpeed.x, extensionSpeed.y, extensionSpeed.z);
+            if (extensionType == BeamExtensionType.Fixed)
+            {
+                end = line.GetPosition(0) + direction * extensionLimit;
+            }
+            else
+            {
+                var newExtension = extensionSpeed;
+                newExtension.Scale(direction);
+                end = line.GetPosition(1) + newExtension;
+                
+            }
+            Debug.DrawLine(transform.position, end, Color.green);
         }
-
-        beamEnd.transform.position = end;
         line.SetPosition(1, end);
+        beamEnd.SetActive(true);
+        beamEnd.transform.position = end;
 
-        beamStart.transform.LookAt(beamEnd.transform.position);
-        beamEnd.transform.LookAt(beamStart.transform.position);
-
-        if (hit)
-            beamEnd.SetActive(true);
-        else
-            beamEnd.SetActive(false);
-        float distance = Vector3.Distance(start, end);
-        line.sharedMaterial.mainTextureScale = new Vector2(distance / textureLengthScale, 1);
+        float dist = Vector3.Distance(start, end);
+        line.sharedMaterial.mainTextureScale = new Vector2(dist / textureLengthScale, 1);
         line.sharedMaterial.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0);
     }
     void StopLaser(Vector3 start)
@@ -136,10 +149,18 @@ public class BeamProjectileScript : MonoBehaviour
         beamStart.transform.position = start - startVFXOffset;
 
         line.SetPosition(1, start);
+        beamEnd.SetActive(false);
     }
     public enum BeamType
     {
         ElectricOrb, 
         BeamPowerup
+    }
+    public enum BeamExtensionType
+    {
+        [Tooltip("Is the beam the shoot to infinity until it detects an object?")]
+        Infinite,
+        [Tooltip("Is the beam to only shoot a fixed, defined distance?")]
+        Fixed, 
     }
 }

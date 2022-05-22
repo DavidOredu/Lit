@@ -28,7 +28,10 @@ public class InitPlayerNetwork : NetworkBehaviour
     public override void OnStartClient()
     {
         if (!GameManager.allRacers.Contains(racer))
+        {
             GameManager.allRacers.Add(racer);
+            GameManager.activeRacers.Add(racer);
+        }
         if (!GameManager.allStickmenColors.Contains(stickmanNet)) // if the stickman component attached to this gameobject is not found in the stickman player list...
             GameManager.allStickmenColors.Add(stickmanNet);  // add said stickman to the list
     }

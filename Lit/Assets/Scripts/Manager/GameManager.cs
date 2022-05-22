@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +16,8 @@ public class GameManager : SingletonDontDestroy<GameManager>
     /// </summary>
     [SerializeField]
     private int targetFps = 42;
+
+    public float gameLogicUpdateTime = 1f;
 
     /// <summary>
     /// The present state the game is in. If in menu, or in-game or lobby, etc.
@@ -32,15 +36,22 @@ public class GameManager : SingletonDontDestroy<GameManager>
     /// The main racer object in-game. The runner controlled by our game instance.
     /// </summary>
     public Racer MainPlayer { get; set; }
+
     /// <summary>
     /// The main stickman object in-game. The runner controlled by our game instance.
     /// </summary>
     public StickmanNet MainStickman { get; set; }
 
     /// <summary>
-    /// A list reference of all racers found in a game scene.
+    /// A list reference of all racers registered in a lit match.
     /// </summary>
     public List<Racer> allRacers { get; private set; } = new List<Racer>();
+
+    /// <summary>
+    /// A list of all racers still alive and racing in a game scene.
+    /// </summary>
+    public List<Racer> activeRacers { get; set; } = new List<Racer>();
+
     /// <summary>
     /// A list reference of all stickmen found in a game scene.
     /// </summary>
@@ -57,6 +68,10 @@ public class GameManager : SingletonDontDestroy<GameManager>
     /// A cache of all finished racers.
     /// </summary>
     public List<Racer> finishedRacers = new List<Racer>();
+    /// <summary>
+    /// Has a race instance begun?
+    /// </summary>
+    public bool hasRaceStarted { get; set; } = false;
 
     /// <summary>
     /// A reference to the current game level.
@@ -70,32 +85,33 @@ public class GameManager : SingletonDontDestroy<GameManager>
     /// <summary>
     /// The start point of a level in-game.
     /// </summary>
-    private Vector3 startPoint;
+    public Vector3 startPoint { get; set; }
     /// <summary>
     /// The end point of a level in-game.
     /// </summary>
-    private Vector3 endPoint;
+    public Vector3 endPoint { get; set; }
 
     /// <summary>
     /// Difference between the start point and end point.
     /// </summary>
-    private Vector3 pointsOffset;
+    public Vector3 pointsOffset { get; set; }
 
     /// <summary>
     /// Reference to the PowerupManager prefab.
     /// </summary>
-    public GameObject powerupManager;
+    private GameObject powerupManager;
     /// <summary>
-    /// Reference to the DeathLaser prefab.
+    /// Reference to the object pooler prefab.
     /// </summary>
-    public GameObject deathLaser;
+    private GameObject objectPooler;
 
+    public Timer raceCountdownTimer { get; private set; }
 
-    protected bool isGameCompleted = false;
-
+    public static event Action OnGameStarted;
+    public static event Action OnGameUpdate;
     public static event Action OnGameCompleted;
 
-
+    public CinemachineVirtualCamera cmVcam { get; private set; }
     public override void Awake()
     {
         base.Awake();
@@ -106,16 +122,13 @@ public class GameManager : SingletonDontDestroy<GameManager>
     // Start is called before the first frame update
     public virtual void Start()
     {
-        deathLaser = Resources.Load<GameObject>("DeathLaser");
         powerupManager = Resources.Load<GameObject>("PowerupManager");
+        objectPooler = Resources.Load<GameObject>("ObjectPooler");
 
-        isGameCompleted = false;
-        OnGameCompleted += GameManager_OnGameCompleted;
-    }
-    private void GameManager_OnGameCompleted()
-    {
-        Debug.Log("Game has ended.Runner reached the finish line!");
-        isGameCompleted = true;
+        OnGameUpdate += SetPositionSystem;
+
+        raceCountdownTimer = new Timer(3f);
+        raceCountdownTimer.SetTimer();
     }
 
     // Update is called once per frame
@@ -123,11 +136,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
     {
         SetCurrentScene();
         SetCurrentGameState();
-        SetLogicForGameState();
-        SetConditioning();
         SetGameScoring();
     }
-
+    #region Game State Logic
     void SetCurrentScene()
     {
         currentScene = SceneManager.GetActiveScene().path;
@@ -151,29 +162,35 @@ public class GameManager : SingletonDontDestroy<GameManager>
             Debug.LogError("The current scene does not have a registered name. Try to register the scene for the game to recognise it.");
         }
     }
-    void SetLogicForGameState()
-    {
-        switch (currentGameState)
-        {
-            case GameState.MainMenu:
-                break;
-            case GameState.InGame:
-                startPoint = GameObject.FindGameObjectWithTag("FlagPoint").transform.Find("StartPoint").transform.position;
-                endPoint = GameObject.FindGameObjectWithTag("FlagPoint").transform.Find("EndPoint").transform.position;
+    #endregion
 
-                pointsOffset = endPoint - startPoint;
-                break;
-            case GameState.Lobby:
-                break;
-            default:
-                break;
-        }
+    #region In-Game Logic Initializers
+    public void GameStarted()
+    {
+        StartCoroutine(StartGameLogic());
+    }
+    public void GameUpdate()
+    {
+        OnGameUpdate?.Invoke();
+    }
+    IEnumerator StartGameLogic()
+    {
+        yield return new WaitUntil(CheckInGameScene);
+        OnGameStarted?.Invoke();
+        StartCoroutine(UpdateGameLogic());
+    }
+    IEnumerator UpdateGameLogic()
+    {
+        yield return new WaitForSecondsRealtime(gameLogicUpdateTime);
+        OnGameUpdate?.Invoke();
+        Debug.Log("Has updated game logic!");
+        StartCoroutine(UpdateGameLogic());
     }
     public void GameCompleted()
     {
         OnGameCompleted?.Invoke();
     }
-
+    #endregion
 
     public enum GameState
     {
@@ -183,7 +200,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     }
     public void InitInGameObjects()
     {
-        // -------------------INSTANTIATE POWERUP MANAGERS-------------------//
+        // -------------------INSTANTIATE AND SETUP POWERUP MANAGERS-------------------//
         for (int i = 0; i < numberOfRunners; i++)
         {
             var powerupM = Instantiate(powerupManager);
@@ -196,6 +213,15 @@ public class GameManager : SingletonDontDestroy<GameManager>
             powerupController.racer = allRacers[i];
         }
         // -------------------------------------------------------------------//
+
+        // -------------------INSTANTIATE AND SETUP OBJECT POOLER-------------------//
+        var poolerObj = Instantiate(objectPooler);
+        var poolerScript = poolerObj.GetComponent<ObjectPooler>();
+        var newPool = new ObjectPooler.Pool("ElementOrb", Resources.Load<GameObject>($"{MainPlayer.runner.stickmanNet.currentColor.colorID}/ElementOrb"), 30);
+        poolerScript.pools.Add(newPool);
+
+        // -------------------SET VIRTUAL CAMERA-------------------//
+        cmVcam = GameObject.FindGameObjectWithTag("CMvcam").GetComponent<CinemachineVirtualCamera>();
     }
     public void SetGameScoring()
     {
@@ -208,7 +234,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     break;
                 case GameModes.Modes.QuickPlay:
                     // Set random structure for quick play. Initially locked till level 2 or 3 is reached
-                    if (isGameCompleted)
                     {
                         ScoreSystem.QuickplayAndArcadeScore.position = MainPlayer.Rank;
                     }
@@ -218,7 +243,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     //if (!GameObject.FindGameObjectWithTag("DeathLaser"))
                     //    Instantiate(deathLaser);
 
-                    if (isGameCompleted)
                     {
                         ScoreSystem.ClassicDeathmatchScore.positionScore = MainPlayer.Rank;
                         ScoreSystem.ClassicDeathmatchScore.litPlatformCount = MainPlayer.LitPlatformCount();
@@ -239,7 +263,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     }
                     //     Debug.Log(ScoreSystem.PowerBattleScore.runnerColorBoolsNet[stickmenNetInGame[0]] + "score");
                     break;
-                case GameModes.Modes.Domination:
+                case GameModes.Modes.Elimination:
                     // Set score system to determine the winner of a domination game. Runner with the most stats wins. Initially locked till x level is reached
 
                     break;
@@ -248,7 +272,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
                     break;
                 case GameModes.Modes.Arcade:
                     // Set up a base for a player to set his own stats for a game. Initially locked till x level is reached
-                    if (isGameCompleted)
+
                     {
                         ScoreSystem.QuickplayAndArcadeScore.position = MainPlayer.Rank;
                     }
@@ -261,70 +285,21 @@ public class GameManager : SingletonDontDestroy<GameManager>
             }
         }
     }
-    void SetConditioning()
-    {
-        switch (NetworkState.instance.currentNetworkState)
-        {
-            case NetworkState.State.None:
-                break;
-            case NetworkState.State.Network:
-                switch (currentGameState)
-                {
-                    case GameState.MainMenu:
 
-                        break;
-                    case GameState.InGame:
-                        SetPositionSystem();
-                        CheckGameEnd(MainPlayer);
-                        break;
-                    case GameState.Lobby:
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case NetworkState.State.NonNetwork:
-                switch (currentGameState)
-                {
-                    case GameState.MainMenu:
-
-                        break;
-                    case GameState.InGame:
-                        SetPositionSystem();
-                        CheckGameEnd(MainPlayer);
-                        break;
-                    case GameState.Lobby:
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
-
-    }
+    #region Positioning System
     void SetPositionSystem()
     {
         GetRunnerPositions();
         CheckRunnerPositions();
     }
-    void CheckGameEnd(Racer player)
-    {
-        if (player.transform.position.x >= endPoint.x)
-        {
-            GameCompleted();
-        }
-    }
-
     void GetRunnerPositions()
     {
-        foreach (var player in allRacers)
+        foreach (var player in activeRacers)
         {
             float position;
             position = player.currentPosition;
             player.currentPositionPercentage = (position / pointsOffset.x) * 100;
-            playerPositions.Insert(allRacers.IndexOf(player), position);
+            playerPositions.Insert(activeRacers.IndexOf(player), position);
         }
     }
     void CheckRunnerPositions()
@@ -334,7 +309,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
         foreach (var position in playerPositions)
         {
-            foreach (var player in allRacers)
+            foreach (var player in activeRacers)
             {
                 if (player.currentPosition == position)
                 {
@@ -348,7 +323,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public Racer GetRunnerAtPosition(int position)
     {
         Racer runner = null;
-        foreach (var racer in allRacers)
+        foreach (var racer in activeRacers)
         {
             if (racer.Rank == position)
             {
@@ -361,5 +336,30 @@ public class GameManager : SingletonDontDestroy<GameManager>
             }
         }
         return runner;
+    }
+    #endregion
+    /// <summary>
+    /// Checks if we are in the game scene yet.
+    /// </summary>
+    /// <returns>returns true if we are in game scene.</returns>
+    private bool CheckInGameScene()
+    {
+        return currentGameState == GameState.InGame;
+    }
+
+    /// <summary>
+    /// Gives the percentage of the position of an object in race, relative to the full distance of the race.
+    /// </summary>
+    /// <param name="currentPosition">The object's current position.</param>
+    /// <param name="normalized">If true, return's the percentage as a value between 0 and 1.</param>
+    /// <returns>The percentage value: Float.</returns>
+    public float GetObjectPercentageInRace(Vector3 currentPosition, bool normalized = false)
+    {
+        var diffFromStart = currentPosition - startPoint;
+        var percentage = diffFromStart.x / pointsOffset.x;
+        if (normalized)
+            return percentage;
+        else
+            return percentage * 100;
     }
 }

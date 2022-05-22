@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class DamageForm 
 {
-    public DamageForm(string damageName, bool damaged, DamagerType damagerType, Racer racer = null, int damageInt = 8, float damagePercentage = 0, float damageRate = 0, bool hyperDamage = false, bool ultimateDamage = false)
+    public DamageForm(string damageName, bool damaged, DamagerType damagerType, Racer racer = null, int damageInt = 8, float damagePercentage = 0, float damageRate = 0, bool hyperDamage = false, bool ultimateDamage = false, bool canResistDamage = true)
     {
         this.damageName = damageName;
         this.damaged = damaged;
@@ -15,6 +15,7 @@ public class DamageForm
         this.damageRate = damageRate;
         this.hyperDamage = hyperDamage;
         this.ultimateDamage = ultimateDamage;
+        this.canResistDamage = canResistDamage;
     }
     /// <summary>
     /// The name of the damge as a string.
@@ -52,6 +53,10 @@ public class DamageForm
     /// Is the racer doing damage in an awakened state and in his home map?
     /// </summary>
     public bool ultimateDamage;
+    /// <summary>
+    /// Is the current damage resistable to a degree by the affected racer?
+    /// </summary>
+    public bool canResistDamage;
 
         public enum DamagerType
     {

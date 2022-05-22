@@ -47,5 +47,6 @@ public class Features_Text : Features_Object<TextMeshProUGUI>
         component.fontStyle = text.fontStyle;
         component.font = text.font;
         component.characterSpacing = text.characterSpacing;
+        component.enableWordWrapping = text.enableWordWrapping;
     }
 }

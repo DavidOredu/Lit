@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: AI Hard
   maxStrength: 20
+  strengthIncreaseRate: 0.05
+  damageResistance: 0
+  contactDamage: 0
   strengthToTopSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -66,14 +69,50 @@ MonoBehaviour:
   timeZeroToMax: 3
   timeMaxToZero: 4
   timeBrakeToZero: 0.0001
+  burstSpeed: 0
   maxJumpVelocity: 40
   amountOfJumps: 1
   actionForce: 20
   knockoutTime: 4
   ultimateDamageKnockoutTime: 10
   invulnerabilityTimer: 5
+  dissolveTime: 5
+  dissolveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.077963404
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 0.019052677
+      outSlope: 0.019052677
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07239461
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08273673
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   requiredLitPlatformsToAwaken: 5
   awakenCount: 1
+  awakenTime: 10
   litSpeedUpPercentage: 0.5
   litSlowDownPercentage: 0.3
   overdriveIncreasePercentage: 1.5
@@ -95,10 +134,13 @@ MonoBehaviour:
     m_Bits: 3584
   knockbackVelocity: {x: 22, y: 12}
   maxKnockbackVelocity: {x: 22, y: 12}
-  powerupRadius: 3.4
+  powerupSelfRadius: 3.4
+  blastRadiusMultiplier: 1
   whatToDamage:
     serializedVersion: 2
     m_Bits: 8448
+  reviveCount: 2
+  reactionTime: 0.2
   playerDefenseCheckRadius: 0.5
   playerAttackCheckRadius: 0.5
   higherPlatformCheckDistance: 15
@@ -345,6 +387,39 @@ MonoBehaviour:
       value: 100
       inSlope: 0
       outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  perfectLaunchProbabilityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 90
+      outSlope: 90
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 90
+      inSlope: 0.9586538
+      outSlope: 0.9586538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20789301
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 100
+      inSlope: 10
+      outSlope: 10
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

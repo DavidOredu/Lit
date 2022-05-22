@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using DapperDino.Mirror.Tutorials.Lobby;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MineScript : MonoBehaviour
+public class MineScript : MonoBehaviour, IDamageable
 {
     public Racer ownerRacer;
     public int damageType;
@@ -13,6 +14,7 @@ public class MineScript : MonoBehaviour
     public float explosiveRadius;
     public float upwardsModifier;
     public ForceMode2D forceMode = ForceMode2D.Impulse;
+    public MineType mineType = MineType.Mine;
 
     private GameObject explosionGO = null;
 
@@ -25,76 +27,58 @@ public class MineScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-           
+        if(mineType == MineType.Orb && ownerRacer == null)
+        {
+            foreach (var racer in GameManager.instance.allRacers)
+            {
+                if(racer.isInNativeMap)
+                {
+                    ownerRacer = racer;
+                    return; 
+                }
+            }
+        }
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         //--------------FOR PLAYER OBJECTS-----------------//
-        if (other.CompareTag("Player") || other.CompareTag("Opponent"))
+        if (other.collider.CompareTag("Player") || other.collider.CompareTag("Opponent"))
         {
-            if(ownerRacer == other.GetComponent<Racer>()) { return; }
+            if (mineType == MineType.Mine)
+            {
+                if (ownerRacer == other.collider.GetComponent<Racer>()) { return; }
 
-            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
-            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
-            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
-
-            Utils.SetMineToBombVariables(explosionComp, this);
-
-            explosionComp.runnerDamages.InitDamages();
-            explosionComp.Explode(true);
-            Destroy(gameObject);
+                Damage();
+            }
+            else if(mineType == MineType.Orb)
+            {
+                Damage();
+            }
         }
         //------------------------------------------------//
 
-        //---------------FOR OBSTACLE OBJECTS--------------//
-        else if (other.CompareTag("Obstacle"))
+        //---------------FOR OTHER DAMAGEABLE OBJECTS--------------//
+        else 
         {
-            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
-            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
-            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
+            if(other.collider.GetComponent<IDamageable>() == null) { return; }
 
-            Utils.SetMineToBombVariables(explosionComp, this);
-            var obstacleScript = other.GetComponent<Obstacle>();
-
-            if(obstacleScript.currentObstacleType == Obstacle.ObstacleType.LaserOrb)
-            {
-                obstacleScript.ExplodeLaserOrb();
-                explosionComp.Explode(false);
-                Destroy(gameObject);
-            }
-            else if(obstacleScript.currentObstacleType == Obstacle.ObstacleType.Breakable)
-            {
-                obstacleScript.BreakObstacle();
-                explosionComp.Explode(false);
-                Destroy(gameObject);
-            }
+            Damage();
         }
-        //----------------------------------------------------//
+    }
+    public void Damage()
+    {
+        explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
+        var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
+        var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
 
-        //-------------------FOR PROJECTILE OBJECTS----------------------//
-        else if (other.CompareTag("Projectile"))
-        {
-            explosionGO = Resources.Load<GameObject>($"{damageType}/Explosion");
-            var explosionInGame = Instantiate(explosionGO, transform.position, Quaternion.identity);
-            var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
-
-            Utils.SetMineToBombVariables(explosionComp, this);
-
-            if (other.GetComponent<MagicProjectileScript>())
-            {
-                var projectileScript = other.GetComponent<MagicProjectileScript>();
-                projectileScript.Collide(false);
-                explosionComp.Explode(false);
-                Destroy(gameObject);
-            }
-            else if (other.GetComponent<BombScript>())
-            {
-                var bombScript = other.GetComponent<BombScript>();
-                bombScript.Explode(false);
-                explosionComp.Explode(false);
-                Destroy(gameObject);
-            }
-        }
-        //------------------------------------------------------//
+        Utils.SetMineToExplosionVariables(explosionComp, this);
+        explosionComp.runnerDamages.InitDamages();
+        explosionComp.Explode(false);
+        Destroy(gameObject);
+    }
+    public enum MineType
+    {
+        Mine,
+        Orb
     }
 }

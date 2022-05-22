@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MagicProjectileScript : MonoBehaviour
+public class MagicProjectileScript : MonoBehaviour, IDamageable
 {
     public Racer ownerRacer { get; set; }
     public GameObject impactParticle;
@@ -194,5 +194,10 @@ public class MagicProjectileScript : MonoBehaviour
                 Collide(false, hit);
             }
         }
+    }
+
+    public void Damage()
+    {
+        Collide(false);
     }
 }

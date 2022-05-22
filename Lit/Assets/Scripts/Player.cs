@@ -23,18 +23,18 @@ public class Player : Racer
 
     #endregion
 
-    Dictionary<string, State> playerStates = new Dictionary<string, State>();
     public override void Awake()
     {
         base.Awake();
 
+        InputHandler = GetComponent<PlayerInputHandlerNetwork>();
+
         playerData = Resources.Load<PlayerData>("PlayerData");
         racerData = playerData;
 
+        playerReadyingState = new PlayerNetwork_ReadyingState(null, StateMachine, "readying", this, playerData);
         playerIdleState = new PlayerNetwork_IdleState(null, StateMachine, "idle", this, playerData, null);
-        playerStates.Add(playerIdleState.animBoolName, playerIdleState);
         playerMoveState = new PlayerNetwork_MoveState(null, StateMachine, "move", this, playerData, null);
-        playerStates.Add(playerMoveState.animBoolName, playerMoveState);
         playerJumpState = new PlayerNetwork_JumpState(null, StateMachine, "inAir", this, playerData, null);
         playerInAirState = new PlayerNetwork_InAirState(null, StateMachine, "inAir", this, playerData, null);
         playerLandState = new PlayerNetwork_LandState(null, StateMachine, "land", this, playerData, null);
@@ -60,6 +60,8 @@ public class Player : Racer
         playerHoverGlideState = new PlayerNetwork_HoverGlideState(null, StateMachine, "hoverGlide", this, playerData, null);
         playerSlideGlideState = new PlayerNetwork_SlideGlideState(null, StateMachine, "slideGlide", this, playerData, null);
         playerNullState = new PlayerNetwork_NullState(null, StateMachine, "null", this, playerData, null);
+        playerWinState = new PlayerNetwork_WinState(null, StateMachine, "win", this, playerData, null);
+        playerLoseState = new PlayerNetwork_LoseState(null, StateMachine, "lose", this, playerData, null);
 
         playerDamageStates = new List<State>
         {
@@ -96,8 +98,8 @@ public class Player : Racer
         moveVelocityResource = playerData.topSpeed;
         jumpVelocityResource = playerData.maxJumpVelocity;
         jumpVelocity = jumpVelocityResource;
+        amountOfJumps = playerData.amountOfJumps;
         strength = playerData.maxStrength;
-        damageResistance = playerData.damageResistance;
     }
 
 
@@ -109,7 +111,7 @@ public class Player : Racer
     {
         base.Start();
 
-        StateMachine.Initialize(playerMoveState);
+        StateMachine.Initialize(playerReadyingState);
         StateMachine.InitializeDamage(playerNullState);
         StateMachine.InitializeAwakened(playerNullState);
     }
@@ -137,9 +139,6 @@ public class Player : Racer
     [Client]
     public override void FixedUpdate()
     {
-        if (InputHandler == null)
-            InputHandler = GetComponent<PlayerInputHandlerNetwork>();
-
         StateMachine.CurrentState.PhysicsUpdate();
         StateMachine.DamagedState.PhysicsUpdate();
         StateMachine.AwakenedState.PhysicsUpdate();

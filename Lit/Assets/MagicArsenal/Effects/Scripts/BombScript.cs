@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Trajectory))]
-public class BombScript : MonoBehaviour
+public class BombScript : MonoBehaviour, IDamageable
 {
     Camera cam;
-    public Racer OwnerRacer { get; set; } = null;
+    public Racer ownerRacer;
 
     public Trajectory trajectory;
     public Rigidbody2D rb;
@@ -40,6 +40,8 @@ public class BombScript : MonoBehaviour
     public Vector3 startScreenCoordinates;
 
     public Vector3 Pos { get { return transform.position; } }
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -85,7 +87,7 @@ public class BombScript : MonoBehaviour
             if (other.CompareTag("Player") || other.CompareTag("Opponent"))
             {
                 var racer = other.gameObject.GetComponent<Racer>();
-                if (racer == OwnerRacer)
+                if (racer == ownerRacer)
                 {
 
                 }
@@ -94,8 +96,10 @@ public class BombScript : MonoBehaviour
                     Explode(true);
                 }
             }
-            if (other.CompareTag("Obstacle") || other.CompareTag("Projectile"))
+            else
             {
+                if (other.GetComponent<IDamageable>() == null) { return; }
+
                 Explode(false);
             }
         }
@@ -146,35 +150,39 @@ public class BombScript : MonoBehaviour
         Push(force);
         trajectory.HideTrejectory();
     }
+    [ContextMenu("Explode")]
     public void Explode(bool explodeWithDamage)
     {
+        if (!canExplode) { return; }
         var explosion = Resources.Load<GameObject>($"{damageType}/Explosion");
         var explosionInGame = Instantiate(explosion, transform.position, Quaternion.identity);
         var explosionComp = explosionInGame.GetComponent<ElementExplosionScript>();
 
-        explosionComp.ownerRacer = OwnerRacer;
-        explosionComp.damageInt = damageType;
-        explosionComp.damagePercentage = damagePercentage;
-        explosionComp.damageRate = damageRate;
-        explosionComp.explosiveForce = explosiveForce;
-        explosionComp.explosiveRadius = explosiveRadius;
-        explosionComp.upwardsModifier = upwardsModifier;
-        explosionComp.forceMode = forceMode;
+        Utils.SetBombToExplosionVariables(explosionComp, this);
 
         explosionComp.runnerDamages.InitDamages();
+        
+       
         explosionComp.Explode(explodeWithDamage);
+        canExplode = false;
+    }
+    public void EndBomb()
+    {
         if (canControl)
         {
-            if (OwnerRacer.GamePlayer.enemyPowerup == null)
+            if (ownerRacer.GamePlayer.enemyPowerup == null)
             {
-                OwnerRacer.GamePlayer.powerupButton.UsePowerup(false);
-                OwnerRacer.GamePlayer.powerupButton.UsePowerup(true);
+                ownerRacer.GamePlayer.powerupButton.TurnSelectableState(false);
+                ownerRacer.GamePlayer.powerupButton.UsePowerup(true);
             }
-            else if (OwnerRacer.GamePlayer.powerupButton == null)
+            else if (ownerRacer.GamePlayer.powerupButton == null)
             {
-                OwnerRacer.GamePlayer.enemyPowerup.UsePowerup();
+                ownerRacer.GamePlayer.enemyPowerup.UsePowerup();
             }
         }
-        Destroy(gameObject);
+    }
+    public void Damage()
+    {
+        Explode(false);
     }
 }

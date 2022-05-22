@@ -33,7 +33,7 @@ public class LaserTrigger : MonoBehaviour
         Debug.Log($"Spawn Position for laser orbs are {spawnPositions.Length}!");
         foreach (var position in spawnPositions)
         {
-            var orb = ObjectPooler.instance.SpwanFromPool("LaserOrb", position.position, Quaternion.identity);
+            var orb = ObjectPooler.instance.SpwanFromPool("ElementOrb", position.position, Quaternion.identity);
             var orbRB = orb.GetComponent<Rigidbody2D>();
             orbRB.velocity = projectionForce;
             projectionForce.y -= yProjectionTemp;

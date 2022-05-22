@@ -11,7 +11,7 @@ public class ScoreSystem
     {
         ClassicDeathmatchScore,
         PowerBattleScore,
-        DominationScore,
+        EliminationScore,
         QuickPlayAndArcadeScore,
         SurvivalScore
     }
@@ -40,9 +40,10 @@ public class ScoreSystem
         // Scores contained in a survival game
     }
     
-    public static class DominationScore
+    public static class EliminationScore
     {
-        //Scores contained in a domination game
+        //Scores contained in an elimination game
+        // In this game mode, the racers are meant to avoid being the last racer after an elimination countdown is up.
 
         public static int position;
         public static int litPlatformCount;

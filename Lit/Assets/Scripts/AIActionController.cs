@@ -17,6 +17,7 @@ public class AIActionController : MonoBehaviour
     public Probability<bool> jumpToPowerProbability;
     public Probability<bool> jumpToBaseProbability;
     public Probability<bool> defensivePowerPlatformUseProbability;
+    public Probability<bool> perfectLaunchProbability;
 
     private List<bool> boolList = new List<bool> { true, false };
 
@@ -27,7 +28,7 @@ public class AIActionController : MonoBehaviour
 
     private Timer reactionTimer;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         #region Probabilities Initialization
         jumpToLitReactionProbability = new Probability<bool>(aIRacer.difficultyData.jumpToLitProbabilityCurve, boolList);
@@ -36,8 +37,11 @@ public class AIActionController : MonoBehaviour
         jumpToPowerProbability = new Probability<bool>(aIRacer.difficultyData.jumpToPowerProbabilityCurve, boolList);
         jumpToBaseProbability = new Probability<bool>(aIRacer.difficultyData.jumpToBaseProbabilityCurve, boolList);
         defensivePowerPlatformUseProbability = new Probability<bool>(aIRacer.difficultyData.defensivePowerPlatformProbabilityCurve, boolList);
+        perfectLaunchProbability = new Probability<bool>(aIRacer.difficultyData.perfectLaunchProbabilityCurve, boolList);
         #endregion
-
+    }
+    void Start()
+    {
         reactionTime = aIRacer.difficultyData.reactionTime;
 
         reactionTimer = new Timer(reactionTime);
@@ -96,52 +100,61 @@ public class AIActionController : MonoBehaviour
     /// <param name="sensor">The sensor object that detected the higher platform.</param>
     private void ProcessHigherPlatformDetection(AISensor sensor)
     {
+        // make sure the sensor type is linear
         if (sensor.sensorType == AISensor.SensorType.Linear)
         {
+            // make sure we haven't made a null detection
             if (sensor.IsNewDetectionNull()) { return; }
 
+            // if platform is a litplatform
             if (sensor.CompareNewDetectionTag("LitPlatform"))
             {
                 LitPlatformNetwork litPlatform = sensor.GetComponentFromDetection<LitPlatformNetwork>(sensor.newDetection);
 
 
-                // run probability based on reflex
                 bool canJumpToLit;
 
+                // run probability based on reflex
                 if (hasMadeAction)
                     canJumpToLit = jumpToLitReactionProbability.ProbabilityGenerator();
                 else
                     canJumpToLit = true;
 
-
-                bool jump;
-                // check if we are the dark runner
-                if (aIRacer.runner.stickmanNet.currentColor.colorID == 0)
+                if (canJumpToLit)
                 {
-                    var canJumpToLitIfDark = jumpToLitIfIsDarkProbability.ProbabilityGenerator();
-                    jump = canJumpToLit && canJumpToLitIfDark;
-                }
-                else
-                {
-                    // check if litplatform is lit
-                    if (litPlatform.isLit && litPlatform.colorStateCode.colorID != aIRacer.runner.stickmanNet.currentColor.colorID)
+                    bool jump;
+                    // check if we are the dark runner
+                    if (aIRacer.runner.stickmanNet.currentColor.colorID == 0)
                     {
-                        var canJumpToLitIfLit = jumpToLitIfIsLitProbability.ProbabilityGenerator();
-                        jump = canJumpToLit && canJumpToLitIfLit;
+                        var canJumpToLitIfDark = jumpToLitIfIsDarkProbability.ProbabilityGenerator();
+                        jump = canJumpToLit && canJumpToLitIfDark;
                     }
                     else
                     {
-                        jump = canJumpToLit;
+                        // check if litplatform is lit
+                        if (litPlatform.isLit && litPlatform.colorStateCode.colorID != aIRacer.runner.stickmanNet.currentColor.colorID)
+                        {
+                            var canJumpToLitIfLit = jumpToLitIfIsLitProbability.ProbabilityGenerator();
+                            jump = canJumpToLit && canJumpToLitIfLit;
+                        }
+                        else
+                        {
+                            jump = canJumpToLit;
+                        }
                     }
-                }
 
-                // determine action of ai
-                hasMadeAction = jump;
-                JumpAction(sensor, jump);
-;
-                Debug.Log(jump);
-                Debug.Log("Has accepted detection for higher platform sensor!");
-                Debug.Log(sensor.newDetection.collider.name);
+                    // determine action of ai
+                    hasMadeAction = jump;
+                    JumpAction(sensor, jump);
+                    
+                    Debug.Log(jump);
+                    Debug.Log("Has accepted detection for higher platform sensor!");
+                    Debug.Log(sensor.newDetection.collider.name);
+                }
+                else
+                {
+                    JumpAction(sensor, canJumpToLit);
+                }
             }
             else if (sensor.CompareNewDetectionTag("PowerPlatform"))
             {
@@ -173,15 +186,20 @@ public class AIActionController : MonoBehaviour
                         break;
                 }
 
-                // if is defensive, check if is 'action' power platform
+                if (jump)
+                {
+                    // determine action of ai
+                    hasMadeAction = jump;
+                    JumpAction(sensor, jump);
 
-                // determine action of ai
-                hasMadeAction = jump;
-                JumpAction(sensor, jump);
-
-                Debug.Log(jump);
-                Debug.Log("Has accepted detection for higher platform sensor!");
-                Debug.Log(sensor.newDetection.collider.name);
+                    Debug.Log(jump);
+                    Debug.Log("Has accepted detection for higher platform sensor!");
+                    Debug.Log(sensor.newDetection.collider.name);
+                }
+                else
+                {
+                    JumpAction(sensor, jump);
+                }
 
             }
             else if (sensor.CompareNewDetectionTag("BasePlatform"))
@@ -193,11 +211,18 @@ public class AIActionController : MonoBehaviour
                 else
                     jump = true;
                 // determine action of ai
-                hasMadeAction = jump;
-                JumpAction(sensor, jump);
-                Debug.Log(jump);
-                Debug.Log("Has accepted detection for higher platform sensor!");
-                Debug.Log(sensor.newDetection.collider.name);
+                if (jump)
+                {
+                    hasMadeAction = jump;
+                    JumpAction(sensor, jump);
+                    Debug.Log(jump);
+                    Debug.Log("Has accepted detection for higher platform sensor!");
+                    Debug.Log(sensor.newDetection.collider.name);
+                }
+                else
+                {
+                    JumpAction(sensor, jump);
+                }
             }
 
         }
@@ -362,7 +387,7 @@ public class AIActionController : MonoBehaviour
                 break;
             case Obstacle.ObstacleType.ReleasedLaserBarricade:
                 break;
-            case Obstacle.ObstacleType.RotatingLaserBeam:
+            case Obstacle.ObstacleType.FixedLaserBeam:
                 break;
             case Obstacle.ObstacleType.Wall:
                 Debug.Log("Starting wall obstacle behaviour!");
@@ -484,6 +509,10 @@ public class AIActionController : MonoBehaviour
     }
     #endregion
 
+    public bool RunPerfectLaunchProbability()
+    {
+        return perfectLaunchProbability.ProbabilityGenerator();
+    }
      public void ClearDetections()
     {
         foreach (var sensor in aIRacer.aISensors)

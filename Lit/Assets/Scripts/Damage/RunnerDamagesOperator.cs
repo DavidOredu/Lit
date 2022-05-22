@@ -51,20 +51,21 @@ public struct RunnerDamagesOperator
             knockout
         };
     }
-    public void AddDamage(int damageType, DamageForm damage)
+    public void AddDamage(int damageInt, DamageForm damage)
     {
-        Damages[damageType].damageInt = damage.damageInt;
-        Damages[damageType].damageName = damage.damageName;
-        Damages[damageType].damagerType = damage.damagerType;
-        Damages[damageType].damagePercentage = damage.damagePercentage;
-        Damages[damageType].damageRate = damage.damageRate;
-        Damages[damageType].damaged = true;
+        Damages[damageInt].damageInt = damage.damageInt;
+        Damages[damageInt].damageName = damage.damageName;
+        Damages[damageInt].damagerType = damage.damagerType;
+        Damages[damageInt].damagePercentage = damage.damagePercentage;
+        Damages[damageInt].damageRate = damage.damageRate;
+        Damages[damageInt].canResistDamage = damage.canResistDamage;
+        Damages[damageInt].damaged = true;
 
         if (damage.racer != null)
         {
-            Damages[damageType].racer = damage.racer;
-            Damages[damageType].ultimateDamage = damage.racer.isAwakened && damage.racer.isInNativeMap;
-            Damages[damageType].hyperDamage = damage.racer.isAwakened || damage.racer.isInNativeMap;
+            Damages[damageInt].racer = damage.racer;
+            Damages[damageInt].ultimateDamage = damage.racer.isAwakened && damage.racer.isInNativeMap;
+            Damages[damageInt].hyperDamage = damage.racer.isAwakened || damage.racer.isInNativeMap;
         }
         activeDamageCount++;
     }

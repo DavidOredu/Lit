@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: FeedbacksDemoBurger
   m_Shader: {fileID: 4800000, guid: 82c42a0b06f4f684db1ee2c535fb985c, type: 3}
-  m_ShaderKeywords: _NORMALMAP _PARALLAXMAP _SHADOWMIXMODE_MULTIPLY _SHARPRIMLIGHT_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _NORMALMAP _PARALLAXMAP _SHADOWMIXMODE_MULTIPLY
+    _SHARPRIMLIGHT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

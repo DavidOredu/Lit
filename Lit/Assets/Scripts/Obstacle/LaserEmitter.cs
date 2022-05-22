@@ -4,43 +4,30 @@ using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
 {
-    public Timer spawnTimer;
     public float timeToSpawn = 1f;
     public float projectionForce;
-    public GameObject laserOrb;
 
-    private bool canSpawn = false;
     // Start is called before the first frame update
     void Start()
     {
-        spawnTimer = new Timer(timeToSpawn);
-        spawnTimer.SetTimer();
+        StartCoroutine(SpawnPeriodically());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (canSpawn)
-        {
-            SpawnOrb();
-            canSpawn = false;
-        }
-        else
-        {
-            if (!spawnTimer.isTimeUp)
-            {
-                spawnTimer.UpdateTimer();
-            }
-            else
-            {
-                canSpawn = true;
-                spawnTimer.ResetTimer();
-            }
-        }
+        
+    }
+    private IEnumerator SpawnPeriodically()
+    {
+        yield return new WaitForSeconds(timeToSpawn);
+        SpawnOrb();
+
+        StartCoroutine(SpawnPeriodically());
     }
     void SpawnOrb()
     {
-        var orb = ObjectPooler.instance.SpwanFromPool("LaserOrb", transform.position, Quaternion.identity);
+        var orb = ObjectPooler.instance.SpwanFromPool("ElementOrb", transform.position, Quaternion.identity);
         var orbRB = orb.GetComponent<Rigidbody2D>();
         orbRB.AddForce(new Vector2(0f, projectionForce), ForceMode2D.Impulse);
     }

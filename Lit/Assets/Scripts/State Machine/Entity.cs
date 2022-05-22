@@ -8,6 +8,7 @@ public class Entity : Racer
     [Header("DIFFICULTY")]
     public Difficulty currentDifficulty;
     public D_Entity entityData;
+    public int reviveCount;
     
     //private Transform ledgeCheck;
     [Header("CHECK TRANSFORMS")]
@@ -39,13 +40,12 @@ public class Entity : Racer
     public override void Awake()
     {
         base.Awake();
+
+        actionController = GetComponent<AIActionController>();
     }
     public override void Start()
     {
         base.Start();
-        
-        actionController = GetComponent<AIActionController>();
-
         boosterPowerPlatformUseProbability = new Probability<bool>(difficultyData.boosterPowerPlatformProbabilityCurve, new List<bool> { true, false });
 
         powerPlatformSensor = new AISensor(GroundCheck, difficultyData.whatIsPower, AISensor.SensorType.Linear, difficultyData.powerCheckDistance, difficultyData.powerCheckDirection);
