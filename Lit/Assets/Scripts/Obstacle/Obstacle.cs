@@ -28,7 +28,7 @@ public class Obstacle : MonoBehaviour, IDamageable
         obstacleData = Resources.Load<ObstacleData>("ObstacleData");
         runnerDamages.InitDamages();
 
-
+        // For a Laser Beam...
         if (currentObstacleType == ObstacleType.LaserBeam)
         {
 
@@ -44,6 +44,7 @@ public class Obstacle : MonoBehaviour, IDamageable
             beamProjectileScript.damageRate = obstacleData.laserDamageRate;
             beamProjectileScript.damageType = 8;
         }
+        // For a Fixed Laser Beam...
         else if (currentObstacleType == ObstacleType.FixedLaserBeam)
         {
             beamProjectileScript = GetComponent<BeamProjectileScript>();
@@ -55,12 +56,14 @@ public class Obstacle : MonoBehaviour, IDamageable
             beamProjectileScript.extensionLimit = fixedLaserBeamDistance;
             beamProjectileScript.directionToHit = direction;
         }
+        // For a Final Wall...
         else if (currentObstacleType == ObstacleType.FinalWall)
         {
             triggeredLaserStartTimer = new Timer(obstacleData.finalWallLaserStartTime);
             triggeredLaserStartTimer.SetTimer();
             finalWallGO = transform.Find("FinalWallLaserGFX").gameObject;
         }
+        // For a Released Laser Barricade...
         else if (currentObstacleType == ObstacleType.ReleasedLaserBarricade)
         {
             triggeredLaserStartTimer = new Timer(obstacleData.triggeredLaserStartTime);
@@ -83,6 +86,7 @@ public class Obstacle : MonoBehaviour, IDamageable
     }
     private void SwitchLaserBeam()
     {
+        // For a Laser Beam...
         if (currentObstacleType == ObstacleType.LaserBeam)
         {
             if (beamProjectileScript.canExtend && !laserLifeTimer.isTimeUp)
@@ -122,6 +126,7 @@ public class Obstacle : MonoBehaviour, IDamageable
                 }
             }
         }
+        // For a Released Laser Barricade...
         else if (currentObstacleType == ObstacleType.ReleasedLaserBarricade)
         {
             if (isLaserActive)
@@ -232,26 +237,22 @@ public class Obstacle : MonoBehaviour, IDamageable
             case ObstacleType.HardPlatform:
                 if (other.collider.CompareTag("Player") || other.collider.CompareTag("Opponent"))
                 {
-                    if(other.relativeVelocity.x >= 12f || other.relativeVelocity.y >= 15f)
+                    if (other.relativeVelocity.x >= 12f)
                     {
                         Racer racer = other.collider.GetComponent<Racer>();
                         switch (racer.currentRacerType)
                         {
                             case Racer.RacerType.Player:
-                                if (racer.StateMachine.CurrentState != racer.playerSlideState)
-                                {
-                                    racer.StateMachine.ChangeState(racer.playerKnockbackState);
-                                }
+                                racer.StateMachine.ChangeState(racer.playerKnockOutState);
                                 break;
                             case Racer.RacerType.Opponent:
-                                if (racer.StateMachine.CurrentState != racer.opponentSlideState)
-                                {
-                                    racer.StateMachine.ChangeState(racer.opponentKnockbackState);
-                                }
-                                break;
-                            default:
+                                racer.StateMachine.ChangeState(racer.opponentKnockOutState);
                                 break;
                         }
+                    }
+                    if (other.relativeVelocity.y >= 15f)
+                    {
+
                     }
                     // check the velocity of the collision with: other.relativeVelocity and check if this velocity is greater than certain threshold value. If it is, take to impact knockdown state and let the state decide if the player is grounded or not
                     // if the player is grounded, take to hard fall state and reduce speed, if is not grounded, player must have collided with platform body. Take to the fall state and also reduce speed

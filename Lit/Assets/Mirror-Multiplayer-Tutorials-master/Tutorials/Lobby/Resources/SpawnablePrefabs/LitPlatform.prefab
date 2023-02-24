@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5527080701757890755}
   - component: {fileID: 5527080701757890744}
   m_Layer: 10
-  m_Name: LitPlatform (1)
+  m_Name: LitPlatform
   m_TagString: LitPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  platformType: 1
   WaitToDetectPlatform: 0
   colorStateCode:
     colorID: 0

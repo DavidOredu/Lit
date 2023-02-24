@@ -48,6 +48,7 @@ public class PlayerNetwork_InAirState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        Debug.Log($"Is jumping is {isJumping}");
     }
 
     public override void PhysicsUpdate()
@@ -127,6 +128,7 @@ public class PlayerNetwork_InAirState : State
         {
             if (jumpInputStop)
             {
+                    
                 if (!racer.playerJumpState.poweredJump)
                 {
                     racer.SetVelocityY(racer.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);

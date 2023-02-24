@@ -9,107 +9,154 @@ public class PerkHandler : MonoBehaviour
     public RacerDamages racerDamages;
 
     [Header("PERKS")]
-    public Perk DamageResistance;
-    public Perk IncreasedSpeed;
-    public Perk IncreasedBlastRadius;
-    public Perk BurstSpeed;
-    public Perk ContactDamage;
-    public Perk IncreasedDamage;
-    public Perk IncreasedJumpVelocity;
-    public Perk IncreasedJumpCount;
-    public Perk StrengthIncreaseRateBuff;
-    public Perk BurnResistance;
-    public Perk FreezeResistance;
-    public Perk Mushin;
-    public Perk HomingProjectile;
-    public Perk ShieldAbsorption;
-    public Perk ReducedSpeed;
-    public Perk IncreasedGliderSpeed;
-    public Perk HaltRacer;
-    public Perk SabotageInput;
-    public Perk IncreasedPowerupDuration;
-
     public List<Perk> perks = new List<Perk>();
+
+    public List<Perk> activePerks = new List<Perk>();
     void Start()
     {
-        
-        PerkList perkList = Resources.Load<PerkList>($"{racer.runner.stickmanNet.currentColor.colorID}/Perks/PerkList");
-        
-        List<PerkData> perkData = Resources.LoadAll<PerkData>($"{racer.runner.stickmanNet.currentColor.colorID}/Perks").ToList();
+        // rewrite perk initialize as follows: in the variable declaration, before going into the functions, create a list of all perks and add all perks to the list. Then in the start function, run a loop on all perks, then check if the current perk is part of the initial active perks using perkList. If it is, then we initialize the perk, else, else. Then if it is added, we add it to our list of active perks.
 
-        Dictionary<Perk.PerkNames, PerkData> myPerks = new Dictionary<Perk.PerkNames, PerkData>();
-        foreach (var perkDatum in perkData)
+        List<PerkData> perkList = Resources.LoadAll<PerkData>($"{racer.runner.stickmanNet.currentColor.colorID}/Perks").ToList();
+
+        for (int i = 0; i < perkList.Count; i++)
         {
-            myPerks.Add(perkDatum.perkNameType, perkDatum);
+            Perk newPerk = null;
+            switch (perkList[i].perkNameType)
+            {
+                case Perk.PerkNames.DamageResistance:
+                    newPerk = new Perk(perkList[i], racer.racerDamages.damageResistance);
+                    break;
+                case Perk.PerkNames.IncreasedSpeed:
+                    newPerk = new Perk(perkList[i], racer.racerData.topSpeed);
+                    break;
+                case Perk.PerkNames.IncreasedBlastRadius:
+                    newPerk = new Perk(perkList[i], racer.racerData.blastRadiusMultiplier);
+                    break;
+                case Perk.PerkNames.BurstSpeed:
+                    newPerk = new Perk(perkList[i], racer.racerData.burstSpeed);
+                    break;
+                case Perk.PerkNames.ContactDamage:
+                    newPerk = new Perk(perkList[i], racer.racerData.contactDamage);
+                    break;
+                case Perk.PerkNames.IncreasedDamage:
+                    newPerk = new Perk(perkList[i], racer.racerData.contactDamage);
+                    break;
+                case Perk.PerkNames.IncreasedJumpVelocity:
+                    newPerk = new Perk(perkList[i], racer.racerData.maxJumpVelocity);
+                    break;
+                case Perk.PerkNames.IncreasedJumpCount:
+                    newPerk = new Perk(perkList[i], racer.racerData.amountOfJumps);
+                    break;
+                case Perk.PerkNames.StrengthIncreaseRateBuff:
+                    newPerk = new Perk(perkList[i], racer.racerData.strengthIncreaseRate);
+                    break;
+                case Perk.PerkNames.BurnResistance:
+                    break;
+                case Perk.PerkNames.FreezeResistance:
+                    break;
+                case Perk.PerkNames.Mushin:
+                    break;
+                case Perk.PerkNames.HomingProjectile:
+                    break;
+                case Perk.PerkNames.ShieldAbsorption:
+                    break;
+                case Perk.PerkNames.ReducedSpeed:
+                    break;
+                case Perk.PerkNames.IncreasedGliderSpeed:
+                    break;
+                case Perk.PerkNames.HaltRacer:
+                    break;
+                case Perk.PerkNames.SabotageInput:
+                    break;
+                case Perk.PerkNames.IncreasedPowerupDuration:
+                    break;
+                default:
+                    break;
+            }
+            perks.Add(newPerk);
         }
 
-        if (perkList.perkNames.Contains(Perk.PerkNames.DamageResistance))
-        {
-            DamageResistance = new Perk(myPerks[Perk.PerkNames.DamageResistance], racer.racerData.damageResistance);
-            perks.Add(DamageResistance);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.IncreasedSpeed))
-        {
-            IncreasedSpeed = new Perk(myPerks[Perk.PerkNames.IncreasedSpeed], racer.racerData.topSpeed);
-            perks.Add(IncreasedSpeed);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.IncreasedBlastRadius))
-        {
-            IncreasedBlastRadius = new Perk(myPerks[Perk.PerkNames.IncreasedBlastRadius], racer.racerData.blastRadiusMultiplier);
-            perks.Add(IncreasedBlastRadius);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.BurstSpeed))
-        {
-            BurstSpeed = new Perk(myPerks[Perk.PerkNames.BurstSpeed], racer.racerData.burstSpeed);
-            perks.Add(BurstSpeed);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.ContactDamage))
-        {
-            ContactDamage = new Perk(myPerks[Perk.PerkNames.ContactDamage], racer.racerData.contactDamage);
-            perks.Add(ContactDamage);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.IncreasedDamage))
-        {
-            IncreasedDamage = new Perk(myPerks[Perk.PerkNames.IncreasedDamage], racer.racerData.contactDamage);
-            perks.Add(IncreasedDamage);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.IncreasedJumpVelocity))
-        {
-            IncreasedJumpVelocity = new Perk(myPerks[Perk.PerkNames.IncreasedJumpVelocity], racer.racerData.maxJumpVelocity);
-            perks.Add(IncreasedJumpVelocity);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.IncreasedJumpCount))
-        {
-            IncreasedJumpCount = new Perk(myPerks[Perk.PerkNames.IncreasedJumpCount], racer.racerData.amountOfJumps);
-            perks.Add(IncreasedJumpCount);
-        }
-        if (perkList.perkNames.Contains(Perk.PerkNames.StrengthIncreaseRateBuff))
-        {
-            StrengthIncreaseRateBuff = new Perk(myPerks[Perk.PerkNames.StrengthIncreaseRateBuff], racer.racerData.strengthIncreaseRate);
-            perks.Add(StrengthIncreaseRateBuff);
-        }
-
+        InitializeActivePerks();
         ActivateGeneralPerks();
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (var perk in perks)
+        foreach (var perk in activePerks)
             perk.SetPerkActivity(racer.isInNativeMap, racer.isAwakened);
 
-        racerDamages.damageResistance = DamageResistance.HandleActivePerk(racerDamages.damageResistance);
-        racer.moveVelocityResource = IncreasedSpeed.HandleActivePerk(racer.moveVelocityResource);
-        racerDamages.blastRadiusMultiplier = IncreasedBlastRadius.HandleActivePerk(racerDamages.blastRadiusMultiplier);
-        racer.burstSpeed = BurstSpeed.HandleActivePerk(racer.burstSpeed);
-        racerDamages.contactDamage = ContactDamage.HandleActivePerk(racerDamages.contactDamage);
-        racer.jumpVelocity = IncreasedJumpVelocity.HandleActivePerk(racer.jumpVelocity);
-        racer.amountOfJumps = IncreasedJumpCount.HandleActivePerk(racer.amountOfJumps);
+        for (int i = 0; i < perks.Count; i++)
+        {
+            switch (perks[i].perkName)
+            {
+                case Perk.PerkNames.DamageResistance:
+                    racerDamages.damageResistance = perks[i].HandleActivePerk(racer.racerDamages.damageResistance);
+                    break;
+                case Perk.PerkNames.IncreasedSpeed:
+                    racer.moveVelocityResource = perks[i].HandleActivePerk(racer.moveVelocityResource);
+                    break;
+                case Perk.PerkNames.IncreasedBlastRadius:
+                    racerDamages.blastRadiusMultiplier = perks[i].HandleActivePerk(racerDamages.blastRadiusMultiplier);
+                    break;
+                case Perk.PerkNames.BurstSpeed:
+                    racer.burstSpeed = perks[i].HandleActivePerk(racer.burstSpeed);
+                    break;
+                case Perk.PerkNames.ContactDamage:
+                    racerDamages.contactDamage = perks[i].HandleActivePerk(racerDamages.contactDamage);
+                    break;
+                case Perk.PerkNames.IncreasedDamage:
+                    break;
+                case Perk.PerkNames.IncreasedJumpVelocity:
+                    racer.jumpVelocity = perks[i].HandleActivePerk(racer.jumpVelocity);
+                    break;
+                case Perk.PerkNames.IncreasedJumpCount:
+                    racer.amountOfJumps = perks[i].HandleActivePerk(racer.amountOfJumps);
+                    break;
+                case Perk.PerkNames.StrengthIncreaseRateBuff:
+                    break;
+                case Perk.PerkNames.BurnResistance:
+                    break;
+                case Perk.PerkNames.FreezeResistance:
+                    break;
+                case Perk.PerkNames.Mushin:
+                    break;
+                case Perk.PerkNames.HomingProjectile:
+                    break;
+                case Perk.PerkNames.ShieldAbsorption:
+                    break;
+                case Perk.PerkNames.ReducedSpeed:
+                    break;
+                case Perk.PerkNames.IncreasedGliderSpeed:
+                    break;
+                case Perk.PerkNames.HaltRacer:
+                    break;
+                case Perk.PerkNames.SabotageInput:
+                    break;
+                case Perk.PerkNames.IncreasedPowerupDuration:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
+    private void InitializeActivePerks()
+    {
+        PerkList allowedPerks = Resources.Load<PerkList>($"{racer.runner.stickmanNet.currentColor.colorID}/PerkList");
+
+        for (int i = 0; i < perks.Count; i++)
+        {
+            if (allowedPerks.perkNames.Contains(perks[i].perkName))
+            {
+                activePerks.Add(perks[i]);
+            }
+        }
+
+    }
     private void ActivateGeneralPerks()
     {
-        foreach (var perk in perks)
+        foreach (var perk in activePerks)
         {
             if (perk.perkData.perkActivity != PerkData.PerkActivity.General) { continue; }
 

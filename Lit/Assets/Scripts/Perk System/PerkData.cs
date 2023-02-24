@@ -115,7 +115,7 @@ public class PerkData : ScriptableObject
     public enum PerkActivity
     {
         General,
-        Special,
+        Specific,
     }
     public enum PerkCallRate
     {

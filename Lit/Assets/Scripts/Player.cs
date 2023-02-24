@@ -54,6 +54,8 @@ public class Player : Racer
         playerLazeredState = new PlayerNetwork_LazeredState(null, StateMachine, "lazered", this, playerData, null);
         playerStunState = new PlayerNetwork_StunState(null, StateMachine, "stun", this, playerData, null);
         playerDeadState = new PlayerNetwork_DeadState(null, StateMachine, "dead", this, playerData, null);
+        playerKnockOutState = new PlayerNetwork_KnockOutState(null, StateMachine, "knockOut", this, playerData, null);
+        playerFallState = new PlayerNetwork_FallState(null, StateMachine, "fall", this, playerData, null);
         playerDamageKnockDownState = new PlayerNetwork_DamageKnockDownState(null, StateMachine, "damageKnockDown", this, playerData, null);
         playerRevivedState = new PlayerNetwork_RevivedState(null, StateMachine, "revived", this, playerData, null);
         playerAwakenedState = new PlayerNetwork_AwakenedState(null, StateMachine, "awakened", this, playerData, null);
@@ -190,15 +192,6 @@ public class Player : Racer
         if (other.collider.CompareTag("PowerPlatform"))
         {
             poweredPlatform = other.gameObject.GetComponent<PoweredPlatform>();
-        }
-    }
-    public override void SlopeCheckVertical(Vector2 checkPos)
-    {
-        base.SlopeCheckVertical(checkPos);
-
-        if (isOnSlope)
-        {
-            
         }
     }
     public override void OnCollisionStay2D(Collision2D other)

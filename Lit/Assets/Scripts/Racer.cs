@@ -39,6 +39,8 @@ public class Racer : NetworkBehaviour
     public PlayerNetwork_LazeredState playerLazeredState { get; set; }
     public PlayerNetwork_StunState playerStunState { get; set; }
     public PlayerNetwork_DeadState playerDeadState { get; set; }
+    public PlayerNetwork_KnockOutState playerKnockOutState { get; set; }
+    public PlayerNetwork_FallState playerFallState { get; set; }
     public PlayerNetwork_DamageKnockDownState playerDamageKnockDownState { get; set; }
     public PlayerNetwork_RevivedState playerRevivedState { get; set; }
     public PlayerNetwork_AwakenedState playerAwakenedState { get; set; }
@@ -53,8 +55,8 @@ public class Racer : NetworkBehaviour
 
     #region Opponent State Objects
     public Enemy_ReadyingState opponentReadyingState { get; set; }
-    public Enemy_MoveState opponentMoveState { get; set; }
     public Enemy_IdleState opponentIdleState { get; set; }
+    public Enemy_MoveState opponentMoveState { get; set; }
     public Enemy_InAirState opponentInAirState { get; set; }
     public Enemy_LandState opponentLandState { get; set; }
     public Enemy_JumpState opponentJumpState { get; set; }
@@ -74,6 +76,8 @@ public class Racer : NetworkBehaviour
     public Enemy_LazeredState opponentLazeredState { get; set; }
     public Enemy_StunState opponentStunState { get; set; }
     public Enemy_DeadState opponentDeadState { get; set; }
+    public Enemy_KnockOutState opponentKnockOutState { get; set; }
+    public Enemy_FallState opponentFallState { get; set; }
     public Enemy_DamageKnockDownState opponentDamageKnockDownState { get; set; }
     public Enemy_RevivedState opponentRevivedState { get; set; }
     public Enemy_AwakenedState opponentAwakenedState { get; set; }
@@ -305,7 +309,8 @@ public class Racer : NetworkBehaviour
     public virtual void FixedUpdate()
     {
         if (!hasAuthority && currentRacerType == RacerType.Player) { return; }
-        SlopeCheck();
+        // For slope running checks
+        //SlopeCheck();
         CheckIfOnAnotherLit();
         CheckHighestOtherOnLitCount();
 
@@ -567,74 +572,76 @@ public class Racer : NetworkBehaviour
 
         return poweredPlatform;
     }
-    public virtual void SlopeCheck()
-    {
-        Vector2 checkPos = transform.position - new Vector3(0f, colliderSize.y / 2, 0f);
 
-        SlopeCheckHorizontal(checkPos);
-        SlopeCheckVertical(checkPos);
-    }
-    public virtual void SlopeCheckHorizontal(Vector2 checkPos)
-    {
-        RaycastHit2D hitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, racerData.whatIsSlope);
-        RaycastHit2D hitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, racerData.whatIsSlope);
+    // For running on a slope without losing speed. Messes up the game for me, can still add later with some clean ups...
+    //public virtual void SlopeCheck()
+    //{
+    //    Vector2 checkPos = transform.position - new Vector3(0f, colliderSize.y / 2, 0f);
 
-        if (hitFront)
-        {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(hitFront.normal, Vector2.up);
-        }
-        else if (hitBack)
-        {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(hitBack.normal, Vector2.up);
-        }
-        else
-        {
-            slopeSideAngle = 0f;
-            isOnSlope = false;
-        }
-    }
-    public virtual void SlopeCheckVertical(Vector2 checkPos)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, racerData.whatIsSlope);
+    //    SlopeCheckHorizontal(checkPos);
+    //    SlopeCheckVertical(checkPos);
+    //}
+    //public virtual void SlopeCheckHorizontal(Vector2 checkPos)
+    //{
+    //    RaycastHit2D hitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, racerData.whatIsSlope);
+    //    RaycastHit2D hitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, racerData.whatIsSlope);
 
-        if (hit)
-        {
-            slopeNormalPerpendicular = Vector2.Perpendicular(hit.normal).normalized;
-            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+    //    if (hitFront)
+    //    {
+    //        isOnSlope = true;
+    //        slopeSideAngle = Vector2.Angle(hitFront.normal, Vector2.up);
+    //    }
+    //    else if (hitBack)
+    //    {
+    //        isOnSlope = true;
+    //        slopeSideAngle = Vector2.Angle(hitBack.normal, Vector2.up);
+    //    }
+    //    else
+    //    {
+    //        slopeSideAngle = 0f;
+    //        isOnSlope = false;
+    //    }
+    //}
+    //public virtual void SlopeCheckVertical(Vector2 checkPos)
+    //{
+    //    RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, racerData.whatIsSlope);
 
-            if (slopeDownAngle != slopeDownAngleOld && slopeDownAngle != 0)
-                isOnSlope = true;
+    //    if (hit)
+    //    {
+    //        slopeNormalPerpendicular = Vector2.Perpendicular(hit.normal).normalized;
+    //        slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-
-            slopeDownAngleOld = slopeDownAngle;
-
+    //        if (slopeDownAngle != slopeDownAngleOld && slopeDownAngle != 0)
+    //            isOnSlope = true;
 
 
-            Debug.DrawRay(hit.point, slopeNormalPerpendicular, Color.red);
-            Debug.DrawRay(hit.point, hit.normal, Color.green);
-        }
+    //        slopeDownAngleOld = slopeDownAngle;
 
-        if (slopeDownAngle > maxSlopeAngle)
-        {
-            canWalkOnSlope = false;
-        }
-        else
-        {
-            canWalkOnSlope = true;
-        }
-        if (isOnSlope)
-        {
-            transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-        }
 
-        // For sticking to platform when not moving
-        //if (isOnSlope)
-        //    RB.sharedMaterial = fullFriction;
-        //else
-        //    RB.sharedMaterial = noFriction;
-    }
+
+    //        Debug.DrawRay(hit.point, slopeNormalPerpendicular, Color.red);
+    //        Debug.DrawRay(hit.point, hit.normal, Color.green);
+    //    }
+
+    //    if (slopeDownAngle > maxSlopeAngle)
+    //    {
+    //        canWalkOnSlope = false;
+    //    }
+    //    else
+    //    {
+    //        canWalkOnSlope = true;
+    //    }
+    //    if (isOnSlope)
+    //    {
+    //        transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+    //    }
+
+    //    // For sticking to platform when not moving
+    //    //if (isOnSlope)
+    //    //    RB.sharedMaterial = fullFriction;
+    //    //else
+    //    //    RB.sharedMaterial = noFriction;
+    //}
     public virtual void Reseter()
     {
         ResetStats();

@@ -16,6 +16,7 @@ MonoBehaviour:
   perkNameType: 2
   perkValue: 0
   perkType: 0
+  perkState: 0
   perkActivity: 0
   perkCallRate: 0
   perkChance: 0

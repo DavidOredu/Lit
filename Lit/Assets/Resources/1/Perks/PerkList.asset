@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53b8d1217776d7489df405148dc5dfa, type: 3}
   m_Name: PerkList
   m_EditorClassIdentifier: 
-  perkNames: 00000000010000000200000003000000
+  perkNames: 000000000100000002000000030000000a000000

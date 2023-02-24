@@ -33,6 +33,8 @@ public class Opponent : Entity
         opponentLazeredState = new Enemy_LazeredState(this, StateMachine, "lazered", this, null, difficultyData);
         opponentStunState = new Enemy_StunState(this, StateMachine, "stun", this, null, difficultyData);
         opponentDeadState = new Enemy_DeadState(this, StateMachine, "dead", this, null, difficultyData);
+        opponentKnockOutState = new Enemy_KnockOutState(this, StateMachine, "knockOut", this, null, difficultyData);
+        opponentFallState = new Enemy_FallState(this, StateMachine, "fall", this, null, difficultyData);
         opponentDamageKnockDownState = new Enemy_DamageKnockDownState(this, StateMachine, "damageKnockDown", this, null, difficultyData);
         opponentRevivedState = new Enemy_RevivedState(this, StateMachine, "revived", this, null, difficultyData);
         opponentAwakenedState = new Enemy_AwakenedState(this, StateMachine, "awakened", this, null, difficultyData);

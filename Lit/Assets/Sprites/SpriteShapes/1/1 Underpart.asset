@@ -25,13 +25,13 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 20bec0810631d8b44bace498f1fdf821, type: 3}
   - m_CornerType: 1
     m_Sprites:
-    - {fileID: 0}
+    - {fileID: 21300000, guid: 20bec0810631d8b44bace498f1fdf821, type: 3}
   - m_CornerType: 2
     m_Sprites:
-    - {fileID: 0}
+    - {fileID: 21300000, guid: 20bec0810631d8b44bace498f1fdf821, type: 3}
   - m_CornerType: 3
     m_Sprites:
-    - {fileID: 0}
+    - {fileID: 21300000, guid: 20bec0810631d8b44bace498f1fdf821, type: 3}
   - m_CornerType: 4
     m_Sprites:
     - {fileID: 21300000, guid: 20bec0810631d8b44bace498f1fdf821, type: 3}

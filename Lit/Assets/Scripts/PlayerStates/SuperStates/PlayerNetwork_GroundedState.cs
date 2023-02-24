@@ -50,12 +50,11 @@ public class PlayerNetwork_GroundedState : State
     {
         base.LateUpdate();
 
-       
+        Debug.Log("Jump input is " + jumpInput);
         if (jumpInput && racer.playerJumpState.CanJump() && !racer.isOnPower && racer.hasAuthority)
         {
-            
+            jumpInput = false;
             racer.InputHandler.UseJumpInput();
-            
             StateMachine.ChangeState(racer.playerJumpState);
         }
       
@@ -71,7 +70,7 @@ public class PlayerNetwork_GroundedState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
+        
      //   player.landState.SpawnDust();
     }
 

@@ -47,19 +47,8 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (isGrounded && !racer.isOnSlope)
-        {
-            if(racer.moveVelocityResource > racer.movementVelocity)
-            {
-                racer.SetAccelerations(racer.moveVelocityResource);
-            }
-            else if (racer.moveVelocityResource < racer.movementVelocity)
-            {
-                racer.SetDecelerations(racer.moveVelocityResource);
-            }
-            racer.SetVelocityX(racer.movementVelocity);
-        }
-        else if(isGrounded && racer.isOnSlope)
+ 
+        if (isGrounded)
         {
             if (racer.moveVelocityResource > racer.movementVelocity)
             {
@@ -69,8 +58,16 @@ public class PlayerNetwork_MoveState : PlayerNetwork_GroundedState
             {
                 racer.SetDecelerations(racer.moveVelocityResource);
             }
-            racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
-            racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
+
+            if (racer.isOnSlope)
+            {
+                racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
+                racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
+            }
+            else
+            {
+                racer.SetVelocityX(racer.movementVelocity);
+            }
         }
     }
 

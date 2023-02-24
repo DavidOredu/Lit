@@ -74,7 +74,10 @@ public class MineScript : MonoBehaviour, IDamageable
         Utils.SetMineToExplosionVariables(explosionComp, this);
         explosionComp.runnerDamages.InitDamages();
         explosionComp.Explode(false);
-        Destroy(gameObject);
+        if (mineType == MineType.Mine)
+            Destroy(gameObject);
+        else if (mineType == MineType.Orb)
+            gameObject.SetActive(false);
     }
     public enum MineType
     {

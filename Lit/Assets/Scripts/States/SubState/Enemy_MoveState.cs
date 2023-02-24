@@ -47,7 +47,7 @@ public class Enemy_MoveState: Enemy_GroundedState
     {
         base.LogicUpdate();
 
-        if (isGrounded && !racer.isOnSlope)
+        if (isGrounded)
         {
             if (racer.moveVelocityResource > racer.movementVelocity)
             {
@@ -57,20 +57,16 @@ public class Enemy_MoveState: Enemy_GroundedState
             {
                 racer.SetDecelerations(racer.moveVelocityResource);
             }
-            racer.SetVelocityX(racer.movementVelocity);
-        }
-        else if (isGrounded && racer.isOnSlope)
-        {
-            if (racer.moveVelocityResource > racer.movementVelocity)
+
+            if (racer.isOnSlope)
             {
-                racer.SetAccelerations(racer.moveVelocityResource);
+                racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
+                racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
             }
-            else if (racer.moveVelocityResource < racer.movementVelocity)
+            else
             {
-                racer.SetDecelerations(racer.moveVelocityResource);
+                racer.SetVelocityX(racer.movementVelocity);
             }
-            racer.SetVelocityX(racer.movementVelocity * racer.slopeNormalPerpendicular.x * -1);
-            racer.SetVelocityY(racer.movementVelocity * racer.slopeNormalPerpendicular.y * -1);
         }
     }
 

@@ -1,4 +1,8 @@
-﻿public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerNetwork_JumpState : PlayerNetwork_AbilityState
 {
     protected int amountOfJumpsLeft;
     public bool poweredJump;
@@ -30,7 +34,6 @@
         racer.runnerFeedbacks.jumpFeedback?.PlayFeedbacks();
         isAbilityDone = true;
         amountOfJumpsLeft--;
-
         racer.playerInAirState.SetIsJumping();
 
        // racer.canSpawnDust = true;

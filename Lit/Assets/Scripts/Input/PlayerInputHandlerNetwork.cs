@@ -45,7 +45,10 @@ public class PlayerInputHandlerNetwork : NetworkBehaviour
     {
         DeregisterInputs();
     }
-
+    private void FixedUpdate()
+    {
+        Debug.Log("Racer input handler jump input is " + JumpInput);
+    }
     #region Input Assignment Functions
     public void RegisterInputs()
     {
